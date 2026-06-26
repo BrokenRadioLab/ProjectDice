@@ -1,0 +1,216 @@
+# TASK QUEUE
+
+Selected Milestone: M1_COMBAT_CORE
+
+Source Milestone: `MILESTONE_PLAN.md`
+
+GDD References:
+
+- Section 17: Throw Damage
+- Section 21: Battle System
+- Section 22: Victory & Defeat
+- Section 33: Battle Screen
+
+## M1-T001: Normalize Battle Scene Location
+
+Status: DONE
+
+Goal:
+
+Make the Battle scene available at the canonical MVP path before adding combat behavior.
+
+Files:
+
+- `Assets/Scenes/Battle/Battle.unity`
+- `Assets/Scenes/Battle/Battle.unity.meta`
+- `ProjectSettings/EditorBuildSettings.asset`
+
+Requirements:
+
+- Use the existing Battle scene content.
+- Preserve the scene meta GUID by moving the `.meta` file with the scene.
+- Keep the scene inside the existing `Assets/Scenes/Battle/` folder.
+- Update build settings to reference the canonical Battle scene path.
+- Do not create scripts.
+- Do not implement combat behavior yet.
+
+Validation Checklist:
+
+- `Assets/Scenes/Battle/Battle.unity` exists.
+- `Assets/Scenes/Battle/Battle.unity.meta` exists.
+- `Assets/Scenes/BattleScene.unity` no longer exists at the old root scene path.
+- `ProjectSettings/EditorBuildSettings.asset` references `Assets/Scenes/Battle/Battle.unity`.
+- No non-meta script files were created.
+
+Done Criteria:
+
+- Battle scene has a stable canonical path for the remaining M1 work.
+
+## M1-T002: Create Minimal Battle Screen Layout
+
+Status: DONE
+
+Goal:
+
+Create the minimum visible Battle scene layout needed for M1 combat testing.
+
+Files:
+
+- `Assets/Scenes/Battle/Battle.unity`
+
+Requirements:
+
+- Show player side.
+- Show enemy side.
+- Show player HP text or bar.
+- Show enemy HP text or bar.
+- Show a Throw button location.
+- Show a battle log/result text location.
+- Keep layout simple for landscape MVP testing.
+- Use placeholder Unity UI only.
+- Do not add gameplay logic or combat systems.
+
+Validation Checklist:
+
+- Battle scene opens with visible player and enemy areas.
+- HP display locations are visible.
+- Throw action location is visible.
+- Battle log/result text location is visible.
+- No Dice Result Overlay work is included.
+- No gameplay scripts are created.
+
+Done Criteria:
+
+- Battle scene has enough visible UI anchors for combat core wiring.
+
+## M1-T003: Add Minimal Combat State
+
+Status: DONE
+
+Goal:
+
+Create the smallest runtime battle state needed to test fixed throw damage.
+
+Files:
+
+- `Assets/Scripts/Battle/`
+- `Assets/Scenes/Battle/Battle.unity`
+
+Requirements:
+
+- Track player HP.
+- Track enemy HP.
+- Track fixed throw damage.
+- Exclude Dice face result selection.
+- Exclude skill effects.
+- Exclude enemy turn behavior.
+- Do not wire the Throw button yet.
+- Do not apply damage yet.
+
+Validation Checklist:
+
+- Battle starts with known player HP.
+- Battle starts with known enemy HP.
+- Fixed throw damage is readable from combat state.
+- No random damage range exists.
+- No Dice face result selection exists.
+- No enemy turn behavior exists.
+
+Done Criteria:
+
+- Battle scene can hold deterministic M1 combat state.
+
+## M1-T004: Wire Throw Action to Fixed Damage
+
+Status: READY
+
+Goal:
+
+Allow the player to press Throw and reduce enemy HP by fixed damage.
+
+Files:
+
+- `Assets/Scripts/Battle/`
+- `Assets/Scenes/Battle/Battle.unity`
+
+Requirements:
+
+- Throw button triggers one player throw.
+- Enemy HP decreases by fixed throw damage.
+- Damage cannot miss.
+- Damage cannot roll a random value.
+- Enemy turn is not implemented in this task.
+
+Validation Checklist:
+
+- Pressing Throw reduces enemy HP.
+- Each press applies the same damage amount.
+- Enemy HP display updates.
+- No Dice Result Overlay appears yet.
+
+Done Criteria:
+
+- The basic player action loop for M1 is playable.
+
+## M1-T005: Add M1 Victory Stop
+
+Status: READY
+
+Goal:
+
+Stop the M1 combat test when enemy HP reaches zero.
+
+Files:
+
+- `Assets/Scripts/Battle/`
+- `Assets/Scenes/Battle/Battle.unity`
+
+Requirements:
+
+- Detect enemy HP at or below zero.
+- Disable further Throw input after victory.
+- Show simple victory feedback.
+- Do not add rewards.
+- Do not add stage progression.
+
+Validation Checklist:
+
+- Enemy HP cannot continue below the intended clamped value.
+- Throw action stops after victory.
+- Victory state is visible.
+
+Done Criteria:
+
+- M1 combat core can demonstrate a simple player-driven victory.
+
+## M1-T006: Validate M1 Combat Core
+
+Status: READY
+
+Goal:
+
+Confirm M1 exit criteria before requesting human review.
+
+Files:
+
+- `Docs/CURRENT_STATE.md`
+- `Docs/DONE_REPORT.md`
+- `Docs/SELF_REVIEW_REPORT.md`
+- M1 implementation files
+
+Requirements:
+
+- Verify player can perform a throw action.
+- Verify fixed throw damage reduces enemy HP.
+- Verify no random damage range exists.
+- Record any M1 limitations.
+
+Validation Checklist:
+
+- M1 exit criteria are checked.
+- Human review point is documented.
+- No M2 Dice Core behavior is implemented.
+
+Done Criteria:
+
+- M1 is ready for human review.
