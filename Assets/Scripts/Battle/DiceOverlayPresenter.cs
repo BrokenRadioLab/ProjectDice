@@ -5,18 +5,19 @@ public sealed class DiceOverlayPresenter : MonoBehaviour
 {
     [SerializeField] private RectTransform rollingDiceTransform;
     [SerializeField] private Text rollingStateText;
+    [SerializeField] private Text unknownFaceText;
     [SerializeField] private float rollingRotationSpeed = 360f;
 
     private bool isRolling;
 
-    private void Update()
+    public void TickRolling(float deltaTime)
     {
         if (!isRolling || rollingDiceTransform == null)
         {
             return;
         }
 
-        rollingDiceTransform.Rotate(0f, 0f, -rollingRotationSpeed * Time.deltaTime);
+        rollingDiceTransform.Rotate(0f, 0f, -rollingRotationSpeed * deltaTime);
     }
 
     public void ShowRolling()
@@ -31,7 +32,14 @@ public sealed class DiceOverlayPresenter : MonoBehaviour
 
         if (rollingStateText != null)
         {
-            rollingStateText.text = "ROLLING...";
+            rollingStateText.text = "ROLLING...\n[ ? ]";
+            rollingStateText.enabled = true;
+        }
+
+        if (unknownFaceText != null)
+        {
+            unknownFaceText.text = "?";
+            unknownFaceText.enabled = true;
         }
     }
 

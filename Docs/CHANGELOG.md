@@ -20,6 +20,7 @@
 - Wired `BattleController` to show the Dice Overlay before applying existing fixed damage.
 - Added a short rolling overlay delay before HP and Battle Log update.
 - Added `Rolling Dice Placeholder` and `Rolling State Text` under `Dice Overlay Root`.
+- Adjusted the rolling overlay placeholder duration to `1.3` seconds and moved timing to an update-driven unscaled timer.
 
 ### Not Changed
 

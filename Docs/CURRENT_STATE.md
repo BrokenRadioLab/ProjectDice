@@ -114,7 +114,7 @@ Current Battle scene result:
 - Hero and enemy placeholders are sized as future sprite slots instead of oversized debug blocks.
 - `Dice Overlay Root` is centered in the battlefield and hidden by default.
 - `DiceOverlayPresenter` shows `Dice Overlay Root`, rotates the temporary dice slot, displays `ROLLING...`, and hides the overlay.
-- `BattleController` coordinates Throw input, locks input, shows the rolling overlay, waits briefly, applies fixed damage, refreshes HP, updates Battle Log, hides overlay, and unlocks input only if the enemy is still alive.
+- `BattleController` coordinates Throw input, locks input, shows the rolling overlay, waits `1.3` seconds using an update-driven timer, applies fixed damage, refreshes HP, updates Battle Log, hides overlay, and unlocks input only if the enemy is still alive.
 - `BattleCombatState` still stores known player HP, enemy HP, and fixed throw damage values.
 - `BattleHudPresenter` still binds `BattleCombatState` HP values to the Battle scene HP text.
 

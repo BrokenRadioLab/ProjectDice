@@ -22,7 +22,7 @@ Throw now opens a temporary rolling/unknown Dice Overlay placeholder before fixe
 - Converted the Throw flow into a short coroutine sequence.
 - Locked Throw input during the overlay sequence.
 - Showed the overlay immediately after accepted Throw input.
-- Delayed existing fixed damage by `0.65` seconds.
+- Delayed existing fixed damage by `1.3` seconds.
 - Preserved fixed damage, HP refresh, Battle Log update, and victory input lock behavior.
 - Updated task queue, current state, changelog, and self-review documents.
 
@@ -34,7 +34,7 @@ Throw now opens a temporary rolling/unknown Dice Overlay placeholder before fixe
 - Rolling placeholder image exists under `Dice Overlay Root`.
 - `ROLLING...` text exists under `Dice Overlay Root`.
 - Throw sequence calls `ShowRolling` before fixed damage.
-- Throw sequence waits before applying fixed damage.
+- Throw sequence waits `1.3` seconds before applying fixed damage.
 - Fixed damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
 - HP UI still refreshes through `BattleHudPresenter`.
 - Battle Log still updates through `BattleController`.

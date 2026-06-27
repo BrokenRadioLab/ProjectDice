@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,8 +9,11 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private DiceOverlayPresenter diceOverlayPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
-    [SerializeField, Min(0.1f)] private float rollingOverlayDuration = 0.65f;
+    [SerializeField, Min(0.1f)] private float rollingOverlayDuration = 1.3f;
     [SerializeField] private bool inputLocked;
+
+    private bool throwSequenceActive;
+    private float rollingTimer;
 
     private void Start()
     {
@@ -21,9 +23,15 @@ public sealed class BattleController : MonoBehaviour
 
     private void Update()
     {
+        if (throwSequenceActive)
+        {
+            TickThrowSequence();
+            return;
+        }
+
         if (WasThrowPressed())
         {
-            StartCoroutine(ThrowSequence());
+            BeginThrowSequence();
         }
     }
 
@@ -56,19 +64,36 @@ public sealed class BattleController : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(throwButtonHitArea, screenPosition);
     }
 
-    private IEnumerator ThrowSequence()
+    private void BeginThrowSequence()
     {
         if (inputLocked || combatState == null)
         {
-            yield break;
+            return;
         }
 
         inputLocked = true;
+        throwSequenceActive = true;
+        rollingTimer = 0f;
         diceOverlayPresenter?.ShowRolling();
         SetBattleLog("Rolling...");
+    }
 
-        yield return new WaitForSeconds(rollingOverlayDuration);
+    private void TickThrowSequence()
+    {
+        rollingTimer += Time.unscaledDeltaTime;
+        diceOverlayPresenter?.TickRolling(Time.unscaledDeltaTime);
 
+        if (rollingTimer < rollingOverlayDuration)
+        {
+            return;
+        }
+
+        ResolveThrowAfterRolling();
+    }
+
+    private void ResolveThrowAfterRolling()
+    {
+        throwSequenceActive = false;
         int damage = combatState.ApplyFixedThrowDamageToEnemy();
         hudPresenter?.Refresh();
         diceOverlayPresenter?.Hide();
@@ -76,7 +101,7 @@ public sealed class BattleController : MonoBehaviour
         if (combatState.IsEnemyDefeated)
         {
             SetBattleLog($"Throw dealt {damage}. Victory.");
-            yield break;
+            return;
         }
 
         SetBattleLog($"Throw dealt {damage}.");

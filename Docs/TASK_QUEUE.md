@@ -63,7 +63,7 @@ Requirements:
 - Throw input locks immediately.
 - `Dice Overlay Root` becomes active.
 - Overlay displays an unknown rolling placeholder using UI primitives.
-- Existing fixed damage happens after a short overlay delay.
+- Existing fixed damage happens after a `1.3` second overlay delay.
 - HP UI updates after damage through `BattleHudPresenter`.
 - Battle Log updates after damage.
 - Overlay hides after the placeholder sequence.
@@ -83,7 +83,7 @@ Validation Checklist:
 - `BattleController` references `DiceOverlayPresenter`.
 - Rolling placeholder image and `ROLLING...` text exist under `Dice Overlay Root`.
 - Throw sequence calls `ShowRolling` before fixed damage.
-- Throw sequence waits before applying fixed damage.
+- Throw sequence waits `1.3` seconds before applying fixed damage.
 - Fixed damage still uses `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
 - HP UI still refreshes through `BattleHudPresenter`.
 - Battle Log still updates through `BattleController`.

@@ -38,7 +38,7 @@ PASS
 - `Rolling Dice Placeholder` and `Rolling State Text` exist under the overlay.
 - `BattleController` has a serialized `DiceOverlayPresenter` reference.
 - Throw sequence locks input before showing the overlay.
-- Fixed damage happens after a short `WaitForSeconds` delay.
+- Fixed damage happens after a `1.3` second update-driven unscaled timer delay.
 - HP refresh still flows through `BattleHudPresenter.Refresh`.
 - Battle Log update remains in `BattleController`.
 - Enemy defeated state keeps input locked.
@@ -46,5 +46,5 @@ PASS
 
 ## Residual Risk
 
-- Human Play Mode review should confirm that the `0.65` second placeholder duration feels right.
+- Human Play Mode review should confirm that the `1.3` second placeholder duration feels right.
 - The temporary rotating square is intentionally not final dice art and should be replaced by the later Dice Result Overlay work.
