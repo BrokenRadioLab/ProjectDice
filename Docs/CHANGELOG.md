@@ -11,6 +11,8 @@
 - Added scene-only placeholder UI anchors to `Assets/Scenes/Battle/Battle.unity` for hero area, enemy area, player HP, enemy HP, Throw button, and battle log/result text.
 - Added `Assets/Scripts/Battle/BattleCombatState.cs` to store known player HP, enemy HP, and fixed throw damage values for M1.
 - Added a `Battle Combat State` scene object to `Assets/Scenes/Battle/Battle.unity`.
+- Added `Assets/Scripts/Battle/BattleHudPresenter.cs` to present `BattleCombatState` HP values in the existing Battle scene HP placeholders.
+- Updated the Battle scene HP placeholder text to display current stored values.
 - Updated `CURRENT_STATE.md` with M1 progress and the next human decision point.
 
 ### Not Changed
@@ -19,4 +21,5 @@
 - No gameplay action behavior was implemented.
 - The Throw button was not wired.
 - Damage application was not implemented.
+- Turn, victory, defeat, Dice result, skill, reward, and progression logic were not implemented.
 - No external placeholder assets or prefabs were created.

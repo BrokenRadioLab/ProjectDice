@@ -4,7 +4,7 @@ Date: 2026-06-27
 
 Selected Milestone: M1_COMBAT_CORE
 
-Reviewed Task: M1-T003 Add Minimal Combat State
+Reviewed Task: M1-T004 Bind Combat State To HP UI
 
 ## Review Result
 
@@ -12,21 +12,23 @@ PASS
 
 ## Checks
 
-- Scope stayed within M1-T003.
-- Only minimal combat state storage was added.
-- No Throw button behavior was implemented.
-- No damage application was implemented.
-- No Dice Core behavior was implemented.
-- No Dice Result Overlay behavior was implemented.
-- No skill resolution behavior was implemented.
-- No enemy turn behavior was implemented.
-- No future milestone systems were created.
+- Scope stayed within M1-T004.
+- Binding is presentation-only.
+- Existing `BattleCombatState` values are used as the source.
+- Existing Battle scene HP placeholders are used as the targets.
+- Throw button behavior was not implemented.
+- Damage application was not implemented.
+- Dice result selection was not implemented.
+- Turn logic was not implemented.
+- Victory and defeat logic were not implemented.
+- Skills, upgrades, rewards, progression, and future systems were not implemented.
+- No unrelated UI polish was added.
 - GDD was not modified.
 
 ## Notes
 
-The current HP and fixed throw damage values are temporary M1 test values. They are deterministic and exist only to support the next M1 task.
+`BattleHudPresenter` refreshes HP text on enable and in editor validation. It does not mutate combat state or advance battle behavior.
 
 ## Next Review Focus
 
-Before implementing M1-T004, confirm that wiring the Throw placeholder should apply the fixed throw damage value from `BattleCombatState` directly to enemy HP.
+The next implementation decision should explicitly define whether the following M1 task is still button wiring or should be split further before damage application.

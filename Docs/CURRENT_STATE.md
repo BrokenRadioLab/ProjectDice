@@ -15,10 +15,12 @@ The project is in planning and setup state.
 - M1-T001 is DONE.
 - M1-T002 is DONE.
 - M1-T003 is DONE.
+- M1-T004 is DONE.
 - Gameplay actions have not been implemented yet.
 - Throw button behavior has not been implemented yet.
 - Combat systems beyond minimal state storage have not been created.
-- Placeholder assets have not been created for M1-T001, M1-T002, or M1-T003.
+- Damage application has not been implemented yet.
+- Placeholder assets have not been created for M1-T001, M1-T002, M1-T003, or M1-T004.
 - GDD has not been intentionally modified.
 - `MILESTONE_PLAN.md` is the only milestone source.
 - `TASK_QUEUE.md` contains detailed tasks only for the selected M1_COMBAT_CORE milestone.
@@ -83,6 +85,7 @@ Completed task:
 - M1-T001: Normalize Battle Scene Location.
 - M1-T002: Create Minimal Battle Screen Layout.
 - M1-T003: Add Minimal Combat State.
+- M1-T004: Bind Combat State To HP UI.
 
 Current result:
 
@@ -93,7 +96,9 @@ Current result:
 - Battle scene now includes visible placeholder UI anchors for hero area, enemy area, player HP, enemy HP, Throw button, and battle log/result text.
 - `Assets/Scripts/Battle/BattleCombatState.cs` stores known player HP, enemy HP, and fixed throw damage values.
 - `Assets/Scenes/Battle/Battle.unity` contains a `Battle Combat State` scene object using that state component.
+- `Assets/Scripts/Battle/BattleHudPresenter.cs` binds `BattleCombatState` HP values to the existing player and enemy HP UI text placeholders.
+- Battle scene HP placeholders display `PLAYER HP 30 / 30` and `ENEMY HP 20 / 20` from the stored state values.
 
 ## Next Human Decision
 
-Review M1-T003. If approved, continue with the next READY task in `TASK_QUEUE.md`: M1-T004 Wire Throw Action to Fixed Damage.
+Review M1-T004. If approved, select the next READY task in `TASK_QUEUE.md`.

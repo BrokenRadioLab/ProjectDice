@@ -120,13 +120,13 @@ Done Criteria:
 
 - Battle scene can hold deterministic M1 combat state.
 
-## M1-T004: Wire Throw Action to Fixed Damage
+## M1-T004: Bind Combat State To HP UI
 
-Status: READY
+Status: DONE
 
 Goal:
 
-Allow the player to press Throw and reduce enemy HP by fixed damage.
+Display current player and enemy HP from `BattleCombatState` in the existing Battle scene UI placeholders.
 
 Files:
 
@@ -135,22 +135,27 @@ Files:
 
 Requirements:
 
-- Throw button triggers one player throw.
-- Enemy HP decreases by fixed throw damage.
-- Damage cannot miss.
-- Damage cannot roll a random value.
-- Enemy turn is not implemented in this task.
+- Connect existing `BattleCombatState` values to existing HP text placeholders.
+- Display player HP from the current stored state values.
+- Display enemy HP from the current stored state values.
+- Keep this as presentation binding only.
+- Do not add Throw button behavior.
+- Do not apply damage.
+- Do not add Dice result selection.
+- Do not add turn logic.
+- Do not add victory or defeat logic.
 
 Validation Checklist:
 
-- Pressing Throw reduces enemy HP.
-- Each press applies the same damage amount.
-- Enemy HP display updates.
+- Player HP text displays `BattleCombatState` player HP values.
+- Enemy HP text displays `BattleCombatState` enemy HP values.
+- Throw button behavior is not implemented.
+- Damage application is not implemented.
 - No Dice Result Overlay appears yet.
 
 Done Criteria:
 
-- The basic player action loop for M1 is playable.
+- Battle scene presents current deterministic M1 HP state through the existing UI placeholders.
 
 ## M1-T005: Add M1 Victory Stop
 
