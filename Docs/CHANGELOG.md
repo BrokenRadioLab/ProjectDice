@@ -16,11 +16,15 @@
 - Confirmed Unity Editor log loaded `Assets/Scenes/Battle/Battle.unity`.
 - Confirmed serialized scene hierarchy and references for BattleRoot, TopHUD, BattleField, Battle Log, BottomHUD, Throw input, HP text, and hidden Dice Overlay Root.
 - Recorded that Unity batchmode validation was blocked because the project was already open in Unity.
+- Added `DiceOverlayPresenter` to present the temporary rolling/unknown Dice Overlay placeholder.
+- Wired `BattleController` to show the Dice Overlay before applying existing fixed damage.
+- Added a short rolling overlay delay before HP and Battle Log update.
+- Added `Rolling Dice Placeholder` and `Rolling State Text` under `Dice Overlay Root`.
 
 ### Not Changed
 
 - `PROJECT_GDD_v1.0.md` was not modified.
-- No dice rolling, dice result selection, Dice Overlay animation, skills, enemy turns, rewards, progression, or future systems were implemented.
+- No dice result selection, face reveal, skill activation, enemy turns, rewards, progression, or future systems were implemented.
 - `BattleCombatState`, `BattleController`, and `BattleHudPresenter` responsibilities were not expanded beyond their existing boundaries.
 
 ## 2026-06-27

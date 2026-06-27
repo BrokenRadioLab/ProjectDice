@@ -1,16 +1,17 @@
 # TASK QUEUE
 
-Selected Task: M2-001_EDITOR_LAYOUT_VALIDATION
+Selected Task: M2-002_DICE_ROLLING_OVERLAY_PLACEHOLDER
 
 Source Milestone: `MILESTONE_PLAN.md`
 
 GDD References:
 
+- Section 4: Design Philosophy
+- Section 17: Throw Damage
 - Section 19: Dice Result Overlay
+- Section 21: Battle System
 - Section 32: User Interface
-- Section 33: Battle Screen
 - Section 34: Dice Result Overlay
-- Section 37: Art Direction
 
 ## M2-000: Final Battle Layout Foundation
 
@@ -19,12 +20,6 @@ Status: DONE
 Goal:
 
 Rebuild the Battle scene presentation into the permanent gameplay layout foundation that future pixel art assets can replace.
-
-Files:
-
-- `Assets/Scenes/Battle/Battle.unity`
-- `Assets/Scripts/Battle/BattleController.cs`
-- `Assets/Scripts/Battle/BattleHudPresenter.cs`
 
 Done Criteria:
 
@@ -38,11 +33,24 @@ Goal:
 
 Validate the completed M2-000 Battle layout in the current Unity Editor context without adding gameplay systems.
 
+Done Criteria:
+
+- M2-000 layout foundation is validated as structurally ready for human visual review in Play Mode, with no layout/reference/input issues found by Codex.
+
+## M2-002: Dice Rolling Overlay Placeholder
+
+Status: DONE
+
+Goal:
+
+Show a production-positioned rolling/unknown Dice Overlay placeholder immediately after Throw input, before existing fixed damage is applied.
+
 Files:
 
 - `Assets/Scenes/Battle/Battle.unity`
 - `Assets/Scripts/Battle/BattleController.cs`
-- `Assets/Scripts/Battle/BattleHudPresenter.cs`
+- `Assets/Scripts/Battle/DiceOverlayPresenter.cs`
+- `Assets/Scripts/Battle/DiceOverlayPresenter.cs.meta`
 - `Docs/TASK_QUEUE.md`
 - `Docs/CURRENT_STATE.md`
 - `Docs/CHANGELOG.md`
@@ -51,28 +59,39 @@ Files:
 
 Requirements:
 
-- Confirm the Battle scene opens in Unity Editor.
-- Confirm the final layout hierarchy exists.
-- Confirm Hero and Enemy placeholders are production-sized sprite slots, not debug boxes.
-- Confirm `Dice Overlay Root` exists and is hidden by default.
-- Confirm Throw input remains connected to the Throw button hit area.
-- Confirm fixed damage, HP refresh, battle log, victory, and input lock remain wired.
-- Confirm no `NullReferenceException`, `MissingReferenceException`, or UI/Input console errors are present in the recent Unity Editor log.
-- Do not add dice logic, enemy turns, skills, rewards, progression, or future systems.
+- Throw input is accepted through the existing Throw button hit area.
+- Throw input locks immediately.
+- `Dice Overlay Root` becomes active.
+- Overlay displays an unknown rolling placeholder using UI primitives.
+- Existing fixed damage happens after a short overlay delay.
+- HP UI updates after damage through `BattleHudPresenter`.
+- Battle Log updates after damage.
+- Overlay hides after the placeholder sequence.
+- Throw input unlocks only if the enemy is still alive.
+- Enemy defeated state still locks further Throw input.
+- Do not implement dice face selection.
+- Do not implement random results.
+- Do not implement skills.
+- Do not implement enemy turns.
+- Do not implement rewards or progression.
 - Do not modify `PROJECT_GDD_v1.0.md`.
 
 Validation Checklist:
 
-- `Assets/Scenes/Battle/Battle.unity` was loaded by the Unity Editor.
-- `BattleRoot`, `TopHUD`, `BattleField`, `Battle Log Placeholder`, and `BottomHUD` exist.
-- `Player Status` and `Enemy Status` exist.
-- `Hero Sprite Placeholder` and `Enemy Sprite Placeholder` exist.
-- `Dice Overlay Root` exists and has `m_IsActive: 0`.
-- `BattleController` still references `BattleCombatState`, `BattleHudPresenter`, `battleLogText`, and `throwButtonHitArea`.
-- `BattleHudPresenter` still references player and enemy HP text objects.
-- Recent Unity Editor log after Battle scene load contains no `NullReferenceException`, `MissingReferenceException`, old Input/EventSystem errors, or compile errors.
-- No future gameplay systems were added.
+- `Dice Overlay Root` is hidden at scene start.
+- `DiceOverlayPresenter` is assigned on `Dice Overlay Root`.
+- `BattleController` references `DiceOverlayPresenter`.
+- Rolling placeholder image and `ROLLING...` text exist under `Dice Overlay Root`.
+- Throw sequence calls `ShowRolling` before fixed damage.
+- Throw sequence waits before applying fixed damage.
+- Fixed damage still uses `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- HP UI still refreshes through `BattleHudPresenter`.
+- Battle Log still updates through `BattleController`.
+- Throw input remains locked during the overlay sequence.
+- Enemy defeat still keeps Throw input locked.
+- Recent Unity Editor log after script reload contains no target compile, reference, or input errors found by Codex.
+- No dice result selection or skill logic was added.
 
 Done Criteria:
 
-- M2-000 layout foundation is validated as structurally ready for human visual review in Play Mode, with no layout/reference/input issues found by Codex.
+- Throw now feels staged: click, rolling overlay placeholder, fixed damage, HP/log update, overlay hide.

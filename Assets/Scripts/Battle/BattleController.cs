@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -6,8 +7,10 @@ public sealed class BattleController : MonoBehaviour
 {
     [SerializeField] private BattleCombatState combatState;
     [SerializeField] private BattleHudPresenter hudPresenter;
+    [SerializeField] private DiceOverlayPresenter diceOverlayPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
+    [SerializeField, Min(0.1f)] private float rollingOverlayDuration = 0.65f;
     [SerializeField] private bool inputLocked;
 
     private void Start()
@@ -20,7 +23,7 @@ public sealed class BattleController : MonoBehaviour
     {
         if (WasThrowPressed())
         {
-            ThrowOnce();
+            StartCoroutine(ThrowSequence());
         }
     }
 
@@ -53,24 +56,31 @@ public sealed class BattleController : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(throwButtonHitArea, screenPosition);
     }
 
-    private void ThrowOnce()
+    private IEnumerator ThrowSequence()
     {
         if (inputLocked || combatState == null)
         {
-            return;
+            yield break;
         }
+
+        inputLocked = true;
+        diceOverlayPresenter?.ShowRolling();
+        SetBattleLog("Rolling...");
+
+        yield return new WaitForSeconds(rollingOverlayDuration);
 
         int damage = combatState.ApplyFixedThrowDamageToEnemy();
         hudPresenter?.Refresh();
+        diceOverlayPresenter?.Hide();
 
         if (combatState.IsEnemyDefeated)
         {
-            inputLocked = true;
             SetBattleLog($"Throw dealt {damage}. Victory.");
-            return;
+            yield break;
         }
 
         SetBattleLog($"Throw dealt {damage}.");
+        inputLocked = false;
     }
 
     private void SetBattleLog(string message)
