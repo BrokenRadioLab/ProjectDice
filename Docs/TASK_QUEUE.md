@@ -197,7 +197,7 @@ Done Criteria:
 
 ## M1-T006: Validate M1 Combat Core
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -216,12 +216,17 @@ Requirements:
 - Verify fixed throw damage reduces enemy HP.
 - Verify no random damage range exists.
 - Record any M1 limitations.
+- Verify `BattleHudPresenter` remains presentation-only.
+- Verify no future systems were introduced.
 
 Validation Checklist:
 
 - M1 exit criteria are checked.
 - Human review point is documented.
 - No M2 Dice Core behavior is implemented.
+- Throw applies fixed damage through `BattleController` and `BattleCombatState`.
+- HP UI updates through `BattleHudPresenter`.
+- Skills, upgrades, rewards, progression, and future systems are absent.
 
 Done Criteria:
 

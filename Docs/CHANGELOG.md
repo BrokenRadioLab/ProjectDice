@@ -16,6 +16,7 @@
 - Added `Assets/Scripts/Battle/BattleController.cs` for M1-only Throw placeholder interaction, fixed damage application, HP refresh, battle log feedback, and victory input lock.
 - Added an EventSystem to the Battle scene so the Throw placeholder can receive UI pointer input.
 - Extended `BattleCombatState` with deterministic fixed-damage enemy HP reduction and enemy defeated state.
+- Validated M1 combat core scope and documented architecture boundaries for state, controller, HUD presentation, and future damage resolution.
 - Updated `CURRENT_STATE.md` with M1 progress and the next human decision point.
 
 ### Not Changed
@@ -25,4 +26,5 @@
 - No enemy turn behavior was implemented.
 - No Dice result selection was implemented.
 - No skills, upgrades, rewards, progression, or future milestone systems were implemented.
+- No M2 or later milestone systems were introduced during M1 validation.
 - No external placeholder assets or prefabs were created.

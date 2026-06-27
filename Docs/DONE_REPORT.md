@@ -4,35 +4,43 @@ Date: 2026-06-27
 
 Selected Milestone: M1_COMBAT_CORE
 
-Completed Task: M1-T005 Add M1 Victory Stop
+Completed Task: M1-T006 Validate M1 Combat Core
 
 ## Summary
 
-The M1 combat test can now apply fixed throw damage to the enemy, update the existing HP display, show simple log feedback, and stop further Throw input after enemy HP reaches zero.
+M1_COMBAT_CORE has been validated against its exit criteria and is ready for human review.
 
 ## Completed Work
 
-- Added `Assets/Scripts/Battle/BattleController.cs`.
-- Added `Assets/Scripts/Battle/BattleController.cs.meta`.
-- Extended `BattleCombatState` with fixed enemy damage application and enemy defeated state.
-- Attached `BattleController` to the existing Throw Button placeholder.
-- Connected `BattleController` to `BattleCombatState`, `BattleHudPresenter`, and the battle log text placeholder.
-- Added an EventSystem to `Assets/Scenes/Battle/Battle.unity` for UI pointer input.
-- Kept `BattleHudPresenter` presentation-only.
+- Re-read `TASK_QUEUE.md`, `CURRENT_STATE.md`, `PROJECT_GDD_v1.0.md`, and `MILESTONE_PLAN.md`.
+- Validated the M1 implementation files.
+- Confirmed Throw input is coordinated by `BattleController`.
+- Confirmed fixed throw damage is applied through `BattleCombatState`.
+- Confirmed HP display refreshes through `BattleHudPresenter`.
+- Confirmed `BattleHudPresenter` remains presentation-only.
+- Confirmed no M2 Dice Core or later milestone systems were introduced.
 - Updated task queue, current state, changelog, and self-review documents.
 
 ## Validation
 
-- Enemy HP is clamped and cannot continue below zero.
-- Throw input is locked after enemy defeat.
-- Victory feedback is displayed through the existing battle log placeholder.
-- Existing HP display still works through `BattleHudPresenter`.
-- `BattleHudPresenter` does not contain input, damage, or battle-flow logic.
-- No enemy turn behavior was added.
-- No Dice result selection was added.
-- No skills, upgrades, rewards, progression, or future milestone systems were added.
+- Player can perform the M1 Throw action through the Throw placeholder.
+- Throw applies the fixed `BattleCombatState.FixedThrowDamage` value.
+- Enemy HP is reduced and clamped at zero through `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- HP UI refresh is requested by `BattleController` and rendered by `BattleHudPresenter`.
+- Victory feedback appears through the battle log when enemy HP reaches zero.
+- Further Throw input is locked after victory.
+- No random damage range exists.
+- No Dice result selection exists.
+- No enemy turn behavior exists.
+- No skills, upgrades, rewards, progression, or future systems exist in M1.
 - `PROJECT_GDD_v1.0.md` was not modified.
+
+## Limitations
+
+- Validation was static/file-based in this pass; Unity Play Mode was not launched.
+- M1 contains only a simple player-driven fixed-damage victory path.
+- Enemy turn, defeat, Dice result overlay, skill activation, rewards, and stage progression remain future milestone work.
 
 ## Stop Point
 
-Stopped after completing M1-T005 as requested. M1-T006 was not started.
+Stopped after completing M1-T006 as requested. No M1-T007 or future milestone task was started.

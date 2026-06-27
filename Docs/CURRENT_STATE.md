@@ -17,6 +17,8 @@ The project is in planning and setup state.
 - M1-T003 is DONE.
 - M1-T004 is DONE.
 - M1-T005 is DONE.
+- M1-T006 is DONE.
+- M1_COMBAT_CORE is ready for human review.
 - Throw button behavior exists only for the M1 fixed-damage victory-stop test.
 - Damage application exists only as fixed throw damage against the current enemy.
 - Enemy turn behavior has not been implemented yet.
@@ -89,6 +91,7 @@ Completed task:
 - M1-T003: Add Minimal Combat State.
 - M1-T004: Bind Combat State To HP UI.
 - M1-T005: Add M1 Victory Stop.
+- M1-T006: Validate M1 Combat Core.
 
 Current result:
 
@@ -104,7 +107,15 @@ Current result:
 - `Assets/Scripts/Battle/BattleController.cs` handles the M1 Throw placeholder interaction, applies fixed throw damage, refreshes HP display, and locks input after enemy defeat.
 - Battle log shows simple M1 feedback such as ready, throw damage, and victory.
 - `BattleHudPresenter` remains presentation-only.
+- M1 validation confirms no random damage range, Dice result selection, enemy turn, skills, upgrades, rewards, progression, or future milestone systems were introduced.
+
+## Architecture Boundaries
+
+- `BattleCombatState` stores HP, fixed throw damage, and enemy defeated state, with only simple state mutation allowed.
+- `BattleController` coordinates Throw input, fixed damage calls, HP refresh requests, battle log feedback, and input lock.
+- `BattleHudPresenter` only presents state in UI.
+- Future damage formula, Dice result, and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 
 ## Next Human Decision
 
-Review M1-T005. If approved, select the next READY task in `TASK_QUEUE.md`: M1-T006 Validate M1 Combat Core.
+Review M1_COMBAT_CORE. If approved, mark M1 complete and select the next milestone from `MILESTONE_PLAN.md`.
