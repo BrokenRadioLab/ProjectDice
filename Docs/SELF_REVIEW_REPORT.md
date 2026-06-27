@@ -1,10 +1,10 @@
 # SELF REVIEW REPORT
 
-Date: 2026-06-27
+Date: 2026-06-28
 
-Selected Milestone: M1_COMBAT_CORE
+Selected Task: M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION
 
-Reviewed Task: M1-T006 Validate M1 Combat Core
+Reviewed Task: Final Battle Layout Foundation
 
 ## Review Result
 
@@ -12,30 +12,35 @@ PASS
 
 ## Architecture Review
 
-- `BattleCombatState` stores HP, fixed throw damage, and enemy defeated state.
-- `BattleCombatState` only contains simple state mutation for fixed enemy damage.
-- `BattleController` owns Throw input coordination, battle flow calls, HP refresh request, log feedback, and input lock.
-- `BattleHudPresenter` only displays state in UI.
-- `BattleDamageResolver` was not added because M1-T006 does not require damage formulas, Dice results, or skill calculations.
+- `BattleCombatState` responsibilities were not changed.
+- `BattleController` remains responsible for Throw input coordination, fixed damage calls, HP refresh requests, log feedback, and input lock.
+- `BattleHudPresenter` remains presentation-only and displays battle state in UI.
+- No `BattleDamageResolver` or future combat calculation system was added.
+- `Dice Overlay Root` is scene structure only and does not implement dice behavior.
 
 ## Scope Review
 
-- M1-T006 was completed as validation only.
-- M1-T007 was not started.
-- Combat was not redesigned.
+- The Battle scene layout was rebuilt as a presentation foundation only.
+- Gameplay was not redesigned.
+- Combat rules were not changed.
 - GDD was not modified.
 - Dice result selection was not added.
-- Reward or progression logic was not added.
-- Skills, upgrades, and future milestone systems were not added.
+- Dice rolling was not added.
+- Dice Overlay animation was not added.
+- Enemy turn behavior was not added.
+- Skills, rewards, upgrades, progression, and future milestone systems were not added.
+- No placeholder art assets, prefabs, or new external assets were created.
 
 ## Validation Review
 
-- Throw still applies fixed damage correctly by calling `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
-- HP UI still updates through `BattleHudPresenter.Refresh`.
-- Enemy HP cannot continue below zero.
-- Further Throw input locks after victory.
-- No random damage range was introduced.
+- Battle scene contains `Canvas`, `BattleRoot`, `TopHUD`, `BattleField`, `Dice Overlay Root`, `Battle Log Placeholder`, `BottomHUD`, and `Throw Button Placeholder`.
+- Player and Enemy HP text references remain assigned to `BattleHudPresenter`.
+- Battle log and Throw hit area references remain assigned to `BattleController`.
+- `Dice Overlay Root` is hidden by default.
+- Hero and Enemy placeholders are sized as final sprite slots rather than oversized debug panels.
+- The scene now reads as a mobile landscape RPG battle layout foundation.
 
-## Next Review Focus
+## Residual Risk
 
-Human review should decide whether M1_COMBAT_CORE is accepted as complete before selecting the next milestone.
+- Unity Play Mode should be used by the human reviewer to confirm visual scale and touch feel on the target Game view.
+- The HP bar visuals are placeholders only; final fill behavior remains future UI work.

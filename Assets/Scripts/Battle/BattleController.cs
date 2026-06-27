@@ -1,12 +1,13 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public sealed class BattleController : MonoBehaviour, IPointerClickHandler
+public sealed class BattleController : MonoBehaviour
 {
     [SerializeField] private BattleCombatState combatState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private Text battleLogText;
+    [SerializeField] private RectTransform throwButtonHitArea;
     [SerializeField] private bool inputLocked;
 
     private void Start()
@@ -15,9 +16,41 @@ public sealed class BattleController : MonoBehaviour, IPointerClickHandler
         SetBattleLog("Ready to throw.");
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void Update()
     {
-        ThrowOnce();
+        if (WasThrowPressed())
+        {
+            ThrowOnce();
+        }
+    }
+
+    private bool WasThrowPressed()
+    {
+        Vector2 screenPosition;
+
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            screenPosition = Mouse.current.position.ReadValue();
+            return IsInsideThrowArea(screenPosition);
+        }
+
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        {
+            screenPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+            return IsInsideThrowArea(screenPosition);
+        }
+
+        return false;
+    }
+
+    private bool IsInsideThrowArea(Vector2 screenPosition)
+    {
+        if (throwButtonHitArea == null)
+        {
+            return true;
+        }
+
+        return RectTransformUtility.RectangleContainsScreenPoint(throwButtonHitArea, screenPosition);
     }
 
     private void ThrowOnce()

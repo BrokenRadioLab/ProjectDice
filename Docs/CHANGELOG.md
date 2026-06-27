@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## 2026-06-28
+
+### Changed
+
+- Rebuilt `Assets/Scenes/Battle/Battle.unity` into a permanent Battle layout foundation with `Canvas`, `BattleRoot`, `TopHUD`, `BattleField`, `Battle Log Placeholder`, `BottomHUD`, and `Throw Button Placeholder` structure.
+- Replaced oversized hero and enemy debug areas with smaller future sprite placeholder slots.
+- Added Player and Enemy status hierarchy with name text and HP text locations.
+- Added a centered `Dice Overlay Root` reserved for future overlay presentation and kept it hidden by default.
+- Moved the battle log and Throw button into final layout regions while preserving current M1 behavior.
+- Removed legacy EventSystem/InputModule scene dependency and kept input compatible with the active New Input System setup.
+- Added runtime font fallback for scene UI text visibility in the current Unity setup.
+- Updated `TASK_QUEUE.md`, `CURRENT_STATE.md`, `DONE_REPORT.md`, and `SELF_REVIEW_REPORT.md` for `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION`.
+
+### Not Changed
+
+- `PROJECT_GDD_v1.0.md` was not modified.
+- No dice rolling, dice result selection, Dice Overlay animation, skills, enemy turns, rewards, progression, or future systems were implemented.
+- `BattleCombatState`, `BattleController`, and `BattleHudPresenter` responsibilities were not expanded beyond their existing boundaries.
+
 ## 2026-06-27
 
 ### Changed

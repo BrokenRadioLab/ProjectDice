@@ -1,6 +1,6 @@
 # CURRENT STATE
 
-Last Updated: 2026-06-27
+Last Updated: 2026-06-28
 
 ## Source of Truth
 
@@ -8,38 +8,32 @@ Last Updated: 2026-06-27
 
 ## Current Status
 
-The project is in planning and setup state.
+The project is in MVP foundation work.
 
 - M0_PROJECT_SETUP is DONE.
-- M1_COMBAT_CORE is IN_PROGRESS.
-- M1-T001 is DONE.
-- M1-T002 is DONE.
-- M1-T003 is DONE.
-- M1-T004 is DONE.
-- M1-T005 is DONE.
-- M1-T006 is DONE.
-- M1_COMBAT_CORE is ready for human review.
-- Throw button behavior exists only for the M1 fixed-damage victory-stop test.
+- M1_COMBAT_CORE implementation tasks M1-T001 through M1-T006 are DONE.
+- M1_COMBAT_CORE remains ready for human review in `MILESTONE_PLAN.md`.
+- `MILESTONE_PLAN.md` remains the only milestone source.
+- `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` is DONE as a human-selected presentation foundation task.
+- The Battle scene now has a permanent gameplay layout foundation for future pixel art replacement.
+- Throw button behavior exists only for the fixed-damage victory-stop test.
 - Damage application exists only as fixed throw damage against the current enemy.
 - Enemy turn behavior has not been implemented yet.
 - Dice result selection has not been implemented yet.
+- Dice Overlay Root exists only as a hidden reserved scene root; it does not roll, animate, or select results.
 - Skills, upgrades, rewards, progression, and future milestone systems have not been implemented.
-- Placeholder assets have not been created for M1-T001 through M1-T005.
 - GDD has not been intentionally modified.
-- `MILESTONE_PLAN.md` is the only milestone source.
-- `TASK_QUEUE.md` contains detailed tasks only for the selected M1_COMBAT_CORE milestone.
 
 ## Workflow Rule
 
-Codex should not generate detailed implementation tasks until a human selects a milestone for implementation.
+Codex should not generate detailed implementation tasks until a human selects a milestone or task for implementation.
 
-When a milestone is selected:
+When a milestone or task is selected:
 
 - Read the selected milestone from `MILESTONE_PLAN.md`.
 - Re-check the relevant GDD sections.
-- Generate small READY tasks for that milestone only.
-- Keep the implementation inside the selected milestone scope.
-- Write those detailed tasks into `TASK_QUEUE.md`.
+- Keep the implementation inside the selected scope.
+- Write selected detailed tasks into `TASK_QUEUE.md`.
 - Update `CURRENT_STATE.md` after meaningful progress.
 
 ## Milestone Source
@@ -82,9 +76,7 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 
 ## Current Implementation Progress
 
-Selected milestone: M1_COMBAT_CORE
-
-Completed task:
+Completed M1 combat tasks:
 
 - M1-T001: Normalize Battle Scene Location.
 - M1-T002: Create Minimal Battle Screen Layout.
@@ -93,21 +85,36 @@ Completed task:
 - M1-T005: Add M1 Victory Stop.
 - M1-T006: Validate M1 Combat Core.
 
-Current result:
+Completed layout foundation task:
 
-- Battle scene now lives at `Assets/Scenes/Battle/Battle.unity`.
-- The matching scene meta file now lives at `Assets/Scenes/Battle/Battle.unity.meta`.
-- The old root scene path `Assets/Scenes/BattleScene.unity` is no longer used.
-- `ProjectSettings/EditorBuildSettings.asset` now points to the canonical Battle scene path.
-- Battle scene now includes visible placeholder UI anchors for hero area, enemy area, player HP, enemy HP, Throw button, and battle log/result text.
+- M2-000: Final Battle Layout Foundation.
+
+Current Battle scene result:
+
+- Battle scene lives at `Assets/Scenes/Battle/Battle.unity`.
+- `ProjectSettings/EditorBuildSettings.asset` references the canonical Battle scene path.
+- The Battle scene hierarchy now uses:
+  - `Canvas`
+  - `BattleRoot`
+  - `TopHUD`
+  - `Player Status`
+  - `Enemy Status`
+  - `BattleField`
+  - `Hero Sprite Placeholder`
+  - `Enemy Sprite Placeholder`
+  - `Dice Overlay Root`
+  - `Battle Log Placeholder`
+  - `BottomHUD`
+  - `Throw Button Placeholder`
+- Hero and enemy placeholders are sized as future sprite slots instead of oversized debug blocks.
+- `Dice Overlay Root` is centered in the battlefield and hidden by default.
+- HP status areas include name text and HP text positions suitable for final UI replacement.
+- Battle log and Throw button have been moved into final layout regions.
 - `Assets/Scripts/Battle/BattleCombatState.cs` stores known player HP, enemy HP, and fixed throw damage values.
-- `Assets/Scenes/Battle/Battle.unity` contains a `Battle Combat State` scene object using that state component.
-- `Assets/Scripts/Battle/BattleHudPresenter.cs` binds `BattleCombatState` HP values to the existing player and enemy HP UI text placeholders.
-- Battle scene HP placeholders display `PLAYER HP 30 / 30` and `ENEMY HP 20 / 20` from the stored state values.
-- `Assets/Scripts/Battle/BattleController.cs` handles the M1 Throw placeholder interaction, applies fixed throw damage, refreshes HP display, and locks input after enemy defeat.
-- Battle log shows simple M1 feedback such as ready, throw damage, and victory.
+- `Assets/Scripts/Battle/BattleHudPresenter.cs` binds `BattleCombatState` HP values to the Battle scene HP text.
+- `Assets/Scripts/Battle/BattleController.cs` handles the current Throw placeholder interaction, applies fixed damage, refreshes HP display, and locks input after enemy defeat.
+- Battle log shows simple current feedback such as ready, throw damage, and victory.
 - `BattleHudPresenter` remains presentation-only.
-- M1 validation confirms no random damage range, Dice result selection, enemy turn, skills, upgrades, rewards, progression, or future milestone systems were introduced.
 
 ## Architecture Boundaries
 
@@ -118,4 +125,4 @@ Current result:
 
 ## Next Human Decision
 
-Review M1_COMBAT_CORE. If approved, mark M1 complete and select the next milestone from `MILESTONE_PLAN.md`.
+Review the final Battle layout foundation in Unity Play Mode. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.
