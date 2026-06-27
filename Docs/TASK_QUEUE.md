@@ -159,7 +159,7 @@ Done Criteria:
 
 ## M1-T005: Add M1 Victory Stop
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -172,17 +172,24 @@ Files:
 
 Requirements:
 
+- Use a separate battle controller for input and battle flow.
+- Keep `BattleHudPresenter` presentation-only.
 - Detect enemy HP at or below zero.
 - Disable further Throw input after victory.
 - Show simple victory feedback.
 - Do not add rewards.
 - Do not add stage progression.
+- Do not add Dice result selection.
+- Do not add turn logic.
+- Do not add skills, upgrades, or future systems.
 
 Validation Checklist:
 
 - Enemy HP cannot continue below the intended clamped value.
 - Throw action stops after victory.
 - Victory state is visible.
+- Existing HP display still works through `BattleHudPresenter`.
+- `BattleHudPresenter` does not contain damage, input, or battle-flow responsibility.
 
 Done Criteria:
 

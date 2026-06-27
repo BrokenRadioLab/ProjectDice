@@ -13,6 +13,19 @@ public sealed class BattleCombatState : MonoBehaviour
     public int EnemyMaxHp => enemyMaxHp;
     public int EnemyCurrentHp => enemyCurrentHp;
     public int FixedThrowDamage => fixedThrowDamage;
+    public bool IsEnemyDefeated => enemyCurrentHp <= 0;
+
+    public int ApplyFixedThrowDamageToEnemy()
+    {
+        if (IsEnemyDefeated)
+        {
+            return 0;
+        }
+
+        int previousHp = enemyCurrentHp;
+        enemyCurrentHp = Mathf.Max(0, enemyCurrentHp - fixedThrowDamage);
+        return previousHp - enemyCurrentHp;
+    }
 
     private void OnValidate()
     {

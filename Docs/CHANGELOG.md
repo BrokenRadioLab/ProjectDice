@@ -13,13 +13,16 @@
 - Added a `Battle Combat State` scene object to `Assets/Scenes/Battle/Battle.unity`.
 - Added `Assets/Scripts/Battle/BattleHudPresenter.cs` to present `BattleCombatState` HP values in the existing Battle scene HP placeholders.
 - Updated the Battle scene HP placeholder text to display current stored values.
+- Added `Assets/Scripts/Battle/BattleController.cs` for M1-only Throw placeholder interaction, fixed damage application, HP refresh, battle log feedback, and victory input lock.
+- Added an EventSystem to the Battle scene so the Throw placeholder can receive UI pointer input.
+- Extended `BattleCombatState` with deterministic fixed-damage enemy HP reduction and enemy defeated state.
 - Updated `CURRENT_STATE.md` with M1 progress and the next human decision point.
 
 ### Not Changed
 
 - `PROJECT_GDD_v1.0.md` was not modified.
 - No gameplay action behavior was implemented.
-- The Throw button was not wired.
-- Damage application was not implemented.
-- Turn, victory, defeat, Dice result, skill, reward, and progression logic were not implemented.
+- No enemy turn behavior was implemented.
+- No Dice result selection was implemented.
+- No skills, upgrades, rewards, progression, or future milestone systems were implemented.
 - No external placeholder assets or prefabs were created.

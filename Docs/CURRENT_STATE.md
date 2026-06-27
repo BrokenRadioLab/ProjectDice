@@ -16,11 +16,13 @@ The project is in planning and setup state.
 - M1-T002 is DONE.
 - M1-T003 is DONE.
 - M1-T004 is DONE.
-- Gameplay actions have not been implemented yet.
-- Throw button behavior has not been implemented yet.
-- Combat systems beyond minimal state storage have not been created.
-- Damage application has not been implemented yet.
-- Placeholder assets have not been created for M1-T001, M1-T002, M1-T003, or M1-T004.
+- M1-T005 is DONE.
+- Throw button behavior exists only for the M1 fixed-damage victory-stop test.
+- Damage application exists only as fixed throw damage against the current enemy.
+- Enemy turn behavior has not been implemented yet.
+- Dice result selection has not been implemented yet.
+- Skills, upgrades, rewards, progression, and future milestone systems have not been implemented.
+- Placeholder assets have not been created for M1-T001 through M1-T005.
 - GDD has not been intentionally modified.
 - `MILESTONE_PLAN.md` is the only milestone source.
 - `TASK_QUEUE.md` contains detailed tasks only for the selected M1_COMBAT_CORE milestone.
@@ -86,6 +88,7 @@ Completed task:
 - M1-T002: Create Minimal Battle Screen Layout.
 - M1-T003: Add Minimal Combat State.
 - M1-T004: Bind Combat State To HP UI.
+- M1-T005: Add M1 Victory Stop.
 
 Current result:
 
@@ -98,7 +101,10 @@ Current result:
 - `Assets/Scenes/Battle/Battle.unity` contains a `Battle Combat State` scene object using that state component.
 - `Assets/Scripts/Battle/BattleHudPresenter.cs` binds `BattleCombatState` HP values to the existing player and enemy HP UI text placeholders.
 - Battle scene HP placeholders display `PLAYER HP 30 / 30` and `ENEMY HP 20 / 20` from the stored state values.
+- `Assets/Scripts/Battle/BattleController.cs` handles the M1 Throw placeholder interaction, applies fixed throw damage, refreshes HP display, and locks input after enemy defeat.
+- Battle log shows simple M1 feedback such as ready, throw damage, and victory.
+- `BattleHudPresenter` remains presentation-only.
 
 ## Next Human Decision
 
-Review M1-T004. If approved, select the next READY task in `TASK_QUEUE.md`.
+Review M1-T005. If approved, select the next READY task in `TASK_QUEUE.md`: M1-T006 Validate M1 Combat Core.
