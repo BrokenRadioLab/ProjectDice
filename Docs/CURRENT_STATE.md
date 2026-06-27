@@ -14,8 +14,11 @@ The project is in MVP foundation work.
 - M1_COMBAT_CORE implementation tasks M1-T001 through M1-T006 are DONE.
 - M1_COMBAT_CORE remains ready for human review in `MILESTONE_PLAN.md`.
 - `MILESTONE_PLAN.md` remains the only milestone source.
-- `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` is DONE as a human-selected presentation foundation task.
+- `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` is DONE.
+- `M2-001_EDITOR_LAYOUT_VALIDATION` is DONE.
 - The Battle scene now has a permanent gameplay layout foundation for future pixel art replacement.
+- Unity Editor log confirms `Assets/Scenes/Battle/Battle.unity` was opened and loaded successfully.
+- Recent Unity Editor log after Battle scene load contains no `NullReferenceException`, `MissingReferenceException`, old Input/EventSystem errors, or compile errors found by Codex.
 - Throw button behavior exists only for the fixed-damage victory-stop test.
 - Damage application exists only as fixed throw damage against the current enemy.
 - Enemy turn behavior has not been implemented yet.
@@ -85,15 +88,16 @@ Completed M1 combat tasks:
 - M1-T005: Add M1 Victory Stop.
 - M1-T006: Validate M1 Combat Core.
 
-Completed layout foundation task:
+Completed layout foundation tasks:
 
 - M2-000: Final Battle Layout Foundation.
+- M2-001: Editor Layout Validation.
 
 Current Battle scene result:
 
 - Battle scene lives at `Assets/Scenes/Battle/Battle.unity`.
 - `ProjectSettings/EditorBuildSettings.asset` references the canonical Battle scene path.
-- The Battle scene hierarchy now uses:
+- The Battle scene hierarchy uses:
   - `Canvas`
   - `BattleRoot`
   - `TopHUD`
@@ -109,12 +113,20 @@ Current Battle scene result:
 - Hero and enemy placeholders are sized as future sprite slots instead of oversized debug blocks.
 - `Dice Overlay Root` is centered in the battlefield and hidden by default.
 - HP status areas include name text and HP text positions suitable for final UI replacement.
-- Battle log and Throw button have been moved into final layout regions.
+- Battle log and Throw button are in final layout regions.
 - `Assets/Scripts/Battle/BattleCombatState.cs` stores known player HP, enemy HP, and fixed throw damage values.
 - `Assets/Scripts/Battle/BattleHudPresenter.cs` binds `BattleCombatState` HP values to the Battle scene HP text.
 - `Assets/Scripts/Battle/BattleController.cs` handles the current Throw placeholder interaction, applies fixed damage, refreshes HP display, and locks input after enemy defeat.
 - Battle log shows simple current feedback such as ready, throw damage, and victory.
 - `BattleHudPresenter` remains presentation-only.
+
+## Validation Notes
+
+- Codex confirmed the Unity Editor log loaded `Assets/Scenes/Battle/Battle.unity`.
+- Codex confirmed the scene file preserves required hierarchy and serialized references.
+- Codex confirmed recent editor log lines after the latest Battle scene load do not include target runtime/reference/input errors.
+- A separate Unity batchmode run was attempted, but Unity refused because multiple Unity instances already had the project open.
+- Human visual review in the active Editor Game view remains the final check for exact feel and scale.
 
 ## Architecture Boundaries
 
@@ -125,4 +137,4 @@ Current Battle scene result:
 
 ## Next Human Decision
 
-Review the final Battle layout foundation in Unity Play Mode. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.
+Review the M2 Battle layout foundation visually in Unity Play Mode. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.

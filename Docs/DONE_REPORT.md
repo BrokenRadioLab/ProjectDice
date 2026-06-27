@@ -2,49 +2,55 @@
 
 Date: 2026-06-28
 
-Selected Task: M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION
+Selected Task: M2-001_EDITOR_LAYOUT_VALIDATION
 
-Completed Task: Final Battle Layout Foundation
+Completed Task: Editor Layout Validation
 
 ## Summary
 
-The Battle scene presentation has been rebuilt from a debug-like layout into the permanent gameplay layout foundation. Placeholder graphics remain temporary, but the layout hierarchy and screen regions are now intended as the base structure for future final assets.
+The completed M2-000 Battle layout foundation was validated against the requested layout, reference, input, and error-scope checks. No M2-000 layout/reference/input issue requiring a fix was found.
 
 ## Completed Work
 
-- Re-read `PROJECT_GDD_v1.0.md`, `CURRENT_STATE.md`, and `MILESTONE_PLAN.md`.
-- Rebuilt the Battle scene hierarchy around `Canvas`, `BattleRoot`, `TopHUD`, `BattleField`, `Battle Log Placeholder`, and `BottomHUD`.
-- Converted the current large hero and enemy debug areas into smaller future sprite placeholder slots.
-- Added Player and Enemy status presentation with name text and HP text regions.
-- Added a dedicated `Dice Overlay Root` in the battlefield center.
-- Kept `Dice Overlay Root` hidden by default.
-- Moved the battle log into a final battle UI region.
-- Moved the Throw button into the bottom HUD region.
-- Preserved current Throw interaction, HP updates, and battle log behavior.
-- Kept gameplay systems unchanged.
+- Re-read `TASK_QUEUE.md`, `CURRENT_STATE.md`, and the Battle scene implementation files.
+- Checked `Assets/Scenes/Battle/Battle.unity` for required hierarchy objects.
+- Checked `Dice Overlay Root` existence and default hidden state.
+- Checked `BattleController` serialized references for combat state, HUD presenter, battle log text, and Throw button hit area.
+- Checked `BattleHudPresenter` serialized references for player and enemy HP text.
+- Checked current `BattleController`, `BattleHudPresenter`, and `BattleCombatState` responsibilities.
+- Read the current Unity Editor log.
+- Confirmed the Unity Editor log opened and loaded `Assets/Scenes/Battle/Battle.unity`.
+- Confirmed recent Unity Editor log after Battle scene load did not include `NullReferenceException`, `MissingReferenceException`, old Input/EventSystem errors, or compile errors found by Codex.
+- Attempted Unity batchmode validation.
 - Updated task queue, current state, changelog, and self-review documents.
 
 ## Validation
 
-- Existing Throw behavior remains connected through `BattleController`.
-- Existing HP text references remain connected through `BattleHudPresenter`.
-- Existing battle log reference remains connected through `BattleController`.
-- Existing Throw hit area reference remains connected to the Throw button RectTransform.
-- `Dice Overlay Root` exists in `Assets/Scenes/Battle/Battle.unity`.
-- `Dice Overlay Root` is hidden by default.
-- Hero placeholder is now a smaller future sprite position rather than a large debug rectangle.
-- Enemy placeholder is now a smaller future sprite position rather than a large debug rectangle.
-- Layout hierarchy now matches the intended final battle screen foundation.
-- No dice rolling, overlay animation, skills, enemy turn, rewards, or progression systems were added.
+- `BattleRoot` exists.
+- `TopHUD` exists.
+- `BattleField` exists.
+- `Battle Log Placeholder` exists.
+- `BottomHUD` exists.
+- `Player Status` exists.
+- `Enemy Status` exists.
+- `Hero Sprite Placeholder` exists and is no longer an oversized debug box.
+- `Enemy Sprite Placeholder` exists and is no longer an oversized debug box.
+- `Dice Overlay Root` exists.
+- `Dice Overlay Root` is hidden by default through `m_IsActive: 0`.
+- Throw button remains connected through `throwButtonHitArea`.
+- Fixed damage path remains `BattleController` to `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- HP refresh remains `BattleController` to `BattleHudPresenter.Refresh`.
+- HP UI references remain assigned to player and enemy HP text.
+- Battle Log reference remains assigned.
+- Enemy HP clamp and victory input lock remain in existing code.
 - `PROJECT_GDD_v1.0.md` was not modified.
 
 ## Limitations
 
-- Validation was static/file-based in this pass; Unity Play Mode was not launched by Codex.
-- Placeholder graphics are still UI primitives and remain temporary.
-- The hidden Dice Overlay Root is structural only and contains no dice logic or animation.
-- HP bars are still presentation placeholders and not yet animated fill bars.
+- Unity batchmode validation could not run because Unity reported that another Unity instance already had the project open.
+- Codex validated the active Editor state through Editor log evidence and serialized scene/code references.
+- Physical mouse-click interaction in the Game view could not be directly driven by Codex while the project was open in existing Unity instances.
 
 ## Stop Point
 
-Stopped after completing `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` as requested. No additional gameplay task was started.
+Stopped after M2-001 validation as requested. No new gameplay task or future system was started.

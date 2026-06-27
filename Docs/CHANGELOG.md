@@ -12,6 +12,10 @@
 - Removed legacy EventSystem/InputModule scene dependency and kept input compatible with the active New Input System setup.
 - Added runtime font fallback for scene UI text visibility in the current Unity setup.
 - Updated `TASK_QUEUE.md`, `CURRENT_STATE.md`, `DONE_REPORT.md`, and `SELF_REVIEW_REPORT.md` for `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION`.
+- Validated the M2 Battle layout foundation for `M2-001_EDITOR_LAYOUT_VALIDATION`.
+- Confirmed Unity Editor log loaded `Assets/Scenes/Battle/Battle.unity`.
+- Confirmed serialized scene hierarchy and references for BattleRoot, TopHUD, BattleField, Battle Log, BottomHUD, Throw input, HP text, and hidden Dice Overlay Root.
+- Recorded that Unity batchmode validation was blocked because the project was already open in Unity.
 
 ### Not Changed
 
