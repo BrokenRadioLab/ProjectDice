@@ -23,11 +23,13 @@ The project is in MVP foundation work.
 - `M2-004_CREATE_DICE_CORE_DATA_MODEL` is DONE.
 - `M2-005_ADD_STARTER_DICE_RUNTIME_STATE` is DONE.
 - `M2-006_SELECT_ONE_DICE_FACE_RESULT_PER_THROW` is DONE.
+- `M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION` is DONE.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application remains fixed throw damage against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
 - Enemy turn behavior has not been implemented yet.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.
+- The latest selected Dice slot and face can be seen through a temporary non-final validation display.
 - Dice rolling, dice face reveal, and skill activation have not been implemented.
 - Skills, upgrades, rewards, progression, and future milestone systems have not been implemented.
 - GDD has not been intentionally modified.
@@ -102,6 +104,7 @@ Completed layout and presentation foundation tasks:
 - M2-004: Create Dice Core Data Model.
 - M2-005: Add Starter Dice Runtime State.
 - M2-006: Select One Dice Face Result Per Throw.
+- M2-007: Surface Latest Dice Result For Debug-Free Validation.
 
 Current Battle scene result:
 
@@ -130,6 +133,9 @@ Current Battle scene result:
 - `DiceRoller` selects one result slot from the current six-slot Dice pool.
 - Each accepted Throw moves Dice runtime phase through `Ready` or previous `Revealed` state into `Rolling`, then `Stopped`, then `Revealed`.
 - The selected Dice face is stored in `BattleDiceState` without changing the current fixed-damage combat outcome.
+- `BattleDiceResultPresenter` creates a small runtime-only validation text under `BattleField`.
+- The validation text shows the latest selected slot and face after each accepted Throw.
+- The validation text does not use `DiceAnimationLayer` and is not the final Dice Result Overlay.
 
 ## Validation Notes
 
@@ -146,6 +152,7 @@ Current Battle scene result:
 - Codex confirmed starter Dice begins in `Ready` phase with `lastResultSlotIndex` set to `-1`.
 - Codex confirmed `BattleController` references `BattleDiceState` and calls Dice result selection once per accepted Throw.
 - Codex confirmed `DiceRoller.SelectResultSlot` selects from exactly six Dice face slots.
+- Codex confirmed `BattleController` references `BattleDiceResultPresenter` and updates the validation display after result selection.
 - Codex confirmed fixed damage still uses `BattleCombatState.ApplyFixedThrowDamageToEnemy` after the Throw presentation sequence.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
 - Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
@@ -160,6 +167,7 @@ Current Battle scene result:
 - `StarterDiceFactory` creates starter Dice data only and does not select results.
 - `DiceRoller` selects a Dice slot only and does not resolve damage, skills, rewards, or presentation.
 - `BattleDiceState` owns the current Dice runtime state and latest selected result, and does not own HP/combat state.
+- `BattleDiceResultPresenter` presents the latest selected Dice result for validation only and does not select results or affect combat.
 - Future damage formula and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 
 ## Next Human Decision

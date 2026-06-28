@@ -257,7 +257,7 @@ Done Criteria:
 
 ## M2-007: Surface Latest Dice Result For Debug-Free Validation
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -266,6 +266,7 @@ Expose the latest selected Dice face in a minimal, non-permanent validation-frie
 Files:
 
 - `Assets/Scripts/Battle/BattleDiceResultPresenter.cs`
+- `Assets/Scripts/Battle/BattleDiceResultPresenter.cs.meta`
 - `Assets/Scripts/Battle/BattleController.cs`
 - `Assets/Scenes/Battle/Battle.unity`
 - `Docs/TASK_QUEUE.md`

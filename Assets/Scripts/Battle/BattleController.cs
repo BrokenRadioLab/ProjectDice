@@ -9,6 +9,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleDiceState battleDiceState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
+    [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
     [SerializeField] private bool inputLocked;
@@ -96,6 +97,7 @@ public sealed class BattleController : MonoBehaviour
         int resultSlotIndex = DiceRoller.SelectResultSlot(battleDiceState.CurrentDice);
         battleDiceState.StopAtResultSlot(resultSlotIndex);
         battleDiceState.RevealResult();
+        diceResultPresenter?.ShowResult(battleDiceState);
     }
 
     private void SetBattleLog(string message)

@@ -2,9 +2,9 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-006_SELECT_ONE_DICE_FACE_RESULT_PER_THROW
+Selected Task: M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION
 
-Reviewed Task: Select One Dice Face Result Per Throw
+Reviewed Task: Surface Latest Dice Result For Debug-Free Validation
 
 ## Review Result
 
@@ -13,45 +13,42 @@ PASS
 ## Architecture Review
 
 - `BattleCombatState` responsibilities were not changed.
-- `BattleCombatState` still owns HP, fixed throw damage, and enemy defeat state only.
-- `BattleController` coordinates Throw input, Throw sequence timing, Dice result selection timing, fixed damage, HUD refresh, and input lock.
-- `BattleDiceState` stores the current runtime Dice and latest selected result.
-- `DiceRoller` only selects a result slot from the Dice pool.
-- `ThrowSequencePresenter` remains presentation-only.
-- `BattleHudPresenter` remains presentation-only.
-- Dice face selection does not calculate damage.
-- Dice face selection does not resolve skills.
+- `BattleController` still coordinates input, sequence timing, Dice result selection timing, fixed damage, HUD refresh, and input lock.
+- `BattleDiceState` still stores the selected Dice result.
+- `BattleDiceResultPresenter` only presents the latest selected result for validation.
+- `BattleDiceResultPresenter` does not select Dice results.
+- `BattleDiceResultPresenter` does not calculate damage.
+- `ThrowSequencePresenter` remains presentation-only for the Throw sequence.
+- `BattleHudPresenter` remains presentation-only for HP.
 
 ## Scope Review
 
-- Implemented only M2-006 Dice face result selection.
+- Implemented only M2-007 result validation display.
 - Gameplay was not redesigned.
-- Fixed Throw damage was not replaced.
+- Fixed Throw damage was not changed.
 - Dice selected result was not connected to damage.
 - GDD was not modified.
 - Dice Result Overlay was not implemented.
-- Dice animation art was not implemented.
+- Dice animation overlay was not implemented.
 - Face reveal was not implemented.
 - Face skill activation was not implemented.
 - Enemy turn behavior was not added.
-- Multi-enemy targeting was not added.
-- Rewards, upgrades, progression, inventory, items, and future milestone systems were not added.
+- Rewards, upgrades, progression, multi-enemy logic, inventory, items, and future milestone systems were not added.
 - No ScriptableObjects, prefabs, or scenes were created.
 
 ## Validation Review
 
-- `BattleController` has a serialized `BattleDiceState` reference in the Battle scene.
-- Accepted Throw begins Dice roll state before the presentation sequence.
-- Accepted Throw selects one result slot after the presentation sequence and before fixed damage.
-- `DiceRoller.SelectResultSlot` selects from slot indexes `0` through `5`.
-- `BattleDiceState.StopAtResultSlot` stores the selected slot.
-- `BattleDiceState.RevealResult` advances the Dice to `Revealed`.
-- Duplicate faces remain legal because selection operates on slots, not unique face IDs.
+- `BattleController` references `BattleDiceResultPresenter` in the Battle scene.
+- `BattleDiceResultPresenter` is attached to the existing Battle runtime state object.
+- `BattleDiceResultPresenter` creates a small validation text under `BattleField` at runtime.
+- The result display text uses selected slot and face name.
+- The display is not attached to `DiceAnimationLayer`.
+- The display does not use the final Dice Result Overlay flow.
 - Existing fixed Throw damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
 - HP refresh still calls `BattleHudPresenter.Refresh`.
-- Enemy defeat input lock behavior remains in `BattleController`.
+- Enemy defeat input lock behavior remains unchanged.
 
 ## Residual Risk
 
-- Runtime visual verification in Unity Play Mode is still the best way to confirm selected result state changes during actual Throw input.
-- M2-007 should provide a minimal validation-friendly way to see the latest selected Dice face without implementing the final Dice Result Overlay.
+- Human Play Mode review should confirm the temporary validation text position feels acceptable and does not distract from the current battle layout.
+- M2-008 should continue to keep Dice result selection separate from fixed damage unless explicitly directed otherwise.

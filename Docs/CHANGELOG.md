@@ -4,6 +4,10 @@
 
 ### Changed
 
+- Added `BattleDiceResultPresenter` for temporary no-overlay validation of the latest selected Dice result.
+- Wired `BattleController` to update the validation display after Dice result selection.
+- Added a small runtime-created `BattleField` validation text showing selected slot and face name after each accepted Throw.
+- Marked `M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION` as DONE in project tracking documents.
 - Added `DiceRoller` to select one result slot from the current six-slot runtime Dice.
 - Added minimal Dice runtime phase flow for accepted Throws: `Rolling`, `Stopped`, then `Revealed`.
 - Updated `BattleDiceState` to store the latest selected Dice slot and expose the latest selected face.
@@ -41,7 +45,8 @@
 - No dice rolling animation, face reveal, skill activation, enemy turns, multi-enemy targeting, rewards, progression, inventory, item behavior, or future systems were implemented.
 - No ScriptableObjects were created for the Dice model.
 - Dice face results do not affect damage yet.
-- No Dice Result Overlay, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented for M2-006.
+- The M2-007 result display is temporary validation presentation only and is not the final Dice Result Overlay.
+- No Dice Result Overlay, dice animation overlay, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented for M2-007.
 
 ## 2026-06-28
 
