@@ -2,9 +2,9 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-005_ADD_STARTER_DICE_RUNTIME_STATE
+Selected Task: M2-006_SELECT_ONE_DICE_FACE_RESULT_PER_THROW
 
-Reviewed Task: Add Starter Dice Runtime State
+Reviewed Task: Select One Dice Face Result Per Throw
 
 ## Review Result
 
@@ -14,41 +14,44 @@ PASS
 
 - `BattleCombatState` responsibilities were not changed.
 - `BattleCombatState` still owns HP, fixed throw damage, and enemy defeat state only.
-- `BattleDiceState` owns current Dice runtime state.
-- `StarterDiceFactory` creates deterministic starter Dice data only.
-- `BattleHudPresenter` remains presentation-only.
+- `BattleController` coordinates Throw input, Throw sequence timing, Dice result selection timing, fixed damage, HUD refresh, and input lock.
+- `BattleDiceState` stores the current runtime Dice and latest selected result.
+- `DiceRoller` only selects a result slot from the Dice pool.
 - `ThrowSequencePresenter` remains presentation-only.
-- Dice result selection was not added to `BattleController`.
-- Dice result selection was not added to `BattleDiceState`.
+- `BattleHudPresenter` remains presentation-only.
+- Dice face selection does not calculate damage.
+- Dice face selection does not resolve skills.
 
 ## Scope Review
 
-- Implemented only M2-005 starter Dice runtime state.
+- Implemented only M2-006 Dice face result selection.
 - Gameplay was not redesigned.
-- Combat rules were not changed.
+- Fixed Throw damage was not replaced.
+- Dice selected result was not connected to damage.
 - GDD was not modified.
-- Dice rolling was not implemented.
-- Dice result selection was not added.
-- Dice result-to-damage connection was not added.
-- Face reveal was not added.
-- Face skill activation was not added.
+- Dice Result Overlay was not implemented.
+- Dice animation art was not implemented.
+- Face reveal was not implemented.
+- Face skill activation was not implemented.
 - Enemy turn behavior was not added.
+- Multi-enemy targeting was not added.
 - Rewards, upgrades, progression, inventory, items, and future milestone systems were not added.
 - No ScriptableObjects, prefabs, or scenes were created.
 
 ## Validation Review
 
-- `BattleDiceState` is present in `Battle.unity`.
-- `BattleDiceState` serializes a `DiceModel` current Dice.
-- The serialized Dice has exactly six face slots.
-- Duplicate `starter_attack` and `starter_guard` faces are present.
-- `runtimePhase` is `Ready`.
-- `lastResultSlotIndex` is `-1`.
-- `StarterDiceFactory.CreateStarterDice` returns a `DiceModel`.
-- `StarterDiceFactory.CreateStarterFaces` returns six face entries.
-- Existing fixed Throw behavior remains separate from Dice result selection.
+- `BattleController` has a serialized `BattleDiceState` reference in the Battle scene.
+- Accepted Throw begins Dice roll state before the presentation sequence.
+- Accepted Throw selects one result slot after the presentation sequence and before fixed damage.
+- `DiceRoller.SelectResultSlot` selects from slot indexes `0` through `5`.
+- `BattleDiceState.StopAtResultSlot` stores the selected slot.
+- `BattleDiceState.RevealResult` advances the Dice to `Revealed`.
+- Duplicate faces remain legal because selection operates on slots, not unique face IDs.
+- Existing fixed Throw damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- HP refresh still calls `BattleHudPresenter.Refresh`.
+- Enemy defeat input lock behavior remains in `BattleController`.
 
 ## Residual Risk
 
-- Future M2-006 should decide how `BattleController` accesses `BattleDiceState` for exactly one face result per Throw.
-- Future M2-006 should keep result selection outside presentation classes.
+- Runtime visual verification in Unity Play Mode is still the best way to confirm selected result state changes during actual Throw input.
+- M2-007 should provide a minimal validation-friendly way to see the latest selected Dice face without implementing the final Dice Result Overlay.

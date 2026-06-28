@@ -5,13 +5,45 @@ public sealed class BattleDiceState : MonoBehaviour
     [SerializeField] private DiceModel currentDice = StarterDiceFactory.CreateStarterDice();
 
     public DiceModel CurrentDice => currentDice;
+    public int LastResultSlotIndex => currentDice != null ? currentDice.LastResultSlotIndex : -1;
+
+    public DiceFace LastSelectedFace
+    {
+        get
+        {
+            if (currentDice == null || LastResultSlotIndex < 0)
+            {
+                return null;
+            }
+
+            return currentDice.GetFace(LastResultSlotIndex);
+        }
+    }
 
     public void EnsureStarterDice()
     {
-        if (!HasValidStarterDice(currentDice))
+        if (!HasPlayableDice(currentDice))
         {
             currentDice = StarterDiceFactory.CreateStarterDice();
         }
+    }
+
+    public void BeginThrowRoll()
+    {
+        EnsureStarterDice();
+        currentDice.BeginRoll();
+    }
+
+    public void StopAtResultSlot(int slotIndex)
+    {
+        EnsureStarterDice();
+        currentDice.RecordResultSlot(slotIndex);
+    }
+
+    public void RevealResult()
+    {
+        EnsureStarterDice();
+        currentDice.RevealResult();
     }
 
     private void Awake()
@@ -19,14 +51,9 @@ public sealed class BattleDiceState : MonoBehaviour
         EnsureStarterDice();
     }
 
-    private static bool HasValidStarterDice(DiceModel dice)
+    private static bool HasPlayableDice(DiceModel dice)
     {
         if (dice == null || dice.FaceCount != DiceModel.FaceSlotCount)
-        {
-            return false;
-        }
-
-        if (dice.RuntimePhase != DiceRuntimePhase.Ready || dice.LastResultSlotIndex != -1)
         {
             return false;
         }

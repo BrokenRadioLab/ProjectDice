@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Added `DiceRoller` to select one result slot from the current six-slot runtime Dice.
+- Added minimal Dice runtime phase flow for accepted Throws: `Rolling`, `Stopped`, then `Revealed`.
+- Updated `BattleDiceState` to store the latest selected Dice slot and expose the latest selected face.
+- Updated `BattleController` to coordinate Dice result selection once per accepted Throw while preserving existing fixed damage.
+- Connected `BattleController` to the existing Battle scene `BattleDiceState` component.
+- Marked `M2-006_SELECT_ONE_DICE_FACE_RESULT_PER_THROW` as DONE in project tracking documents.
 - Added `StarterDiceFactory` to create a deterministic six-slot starter Dice runtime instance.
 - Added `BattleDiceState` to store the current battle Dice runtime state separately from HP/combat state.
 - Added the starter Dice runtime component to `Assets/Scenes/Battle/Battle.unity`.
@@ -32,8 +38,10 @@
 ### Not Changed
 
 - `PROJECT_GDD_v1.0.md` was not modified.
-- No dice rolling, dice result selection, face reveal, skill activation, enemy turns, multi-enemy targeting, rewards, progression, inventory, item behavior, or future systems were implemented.
+- No dice rolling animation, face reveal, skill activation, enemy turns, multi-enemy targeting, rewards, progression, inventory, item behavior, or future systems were implemented.
 - No ScriptableObjects were created for the Dice model.
+- Dice face results do not affect damage yet.
+- No Dice Result Overlay, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented for M2-006.
 
 ## 2026-06-28
 

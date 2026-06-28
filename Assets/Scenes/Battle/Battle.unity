@@ -1754,6 +1754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatState: {fileID: 1700000002}
+  battleDiceState: {fileID: 1700000004}
   hudPresenter: {fileID: 1700000003}
   throwSequencePresenter: {fileID: 1500000005}
   battleLogText: {fileID: 1610000003}

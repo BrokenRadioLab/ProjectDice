@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public sealed class BattleController : MonoBehaviour
 {
     [SerializeField] private BattleCombatState combatState;
+    [SerializeField] private BattleDiceState battleDiceState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private Text battleLogText;
@@ -63,11 +64,14 @@ public sealed class BattleController : MonoBehaviour
         }
 
         inputLocked = true;
+        battleDiceState?.BeginThrowRoll();
 
         if (throwSequencePresenter != null)
         {
             yield return throwSequencePresenter.Play();
         }
+
+        SelectDiceResult();
 
         int damage = combatState.ApplyFixedThrowDamageToEnemy();
         hudPresenter?.Refresh();
@@ -80,6 +84,18 @@ public sealed class BattleController : MonoBehaviour
 
         SetBattleLog($"Throw dealt {damage}.");
         inputLocked = false;
+    }
+
+    private void SelectDiceResult()
+    {
+        if (battleDiceState == null)
+        {
+            return;
+        }
+
+        int resultSlotIndex = DiceRoller.SelectResultSlot(battleDiceState.CurrentDice);
+        battleDiceState.StopAtResultSlot(resultSlotIndex);
+        battleDiceState.RevealResult();
     }
 
     private void SetBattleLog(string message)

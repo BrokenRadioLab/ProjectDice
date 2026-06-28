@@ -207,7 +207,7 @@ Done Criteria:
 
 ## M2-006: Select One Dice Face Result Per Throw
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -216,6 +216,8 @@ Add the first Dice result selection behavior so each accepted Throw selects exac
 Files:
 
 - `Assets/Scripts/Dice/DiceRoller.cs`
+- `Assets/Scripts/Dice/DiceRoller.cs.meta`
+- `Assets/Scripts/Dice/DiceModel.cs`
 - `Assets/Scripts/Battle/BattleController.cs`
 - `Assets/Scripts/Battle/BattleDiceState.cs`
 - `Assets/Scenes/Battle/Battle.unity`

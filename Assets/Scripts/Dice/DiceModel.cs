@@ -74,11 +74,27 @@ public sealed class DiceModel
         faces[slotIndex] = face?.Clone();
     }
 
+    public void BeginRoll()
+    {
+        lastResultSlotIndex = -1;
+        runtimePhase = DiceRuntimePhase.Rolling;
+    }
+
     public void RecordResultSlot(int slotIndex)
     {
         ValidateSlotIndex(slotIndex);
         lastResultSlotIndex = slotIndex;
         runtimePhase = DiceRuntimePhase.Stopped;
+    }
+
+    public void RevealResult()
+    {
+        if (lastResultSlotIndex < 0)
+        {
+            throw new InvalidOperationException("A Dice result must be stopped before it can be revealed.");
+        }
+
+        runtimePhase = DiceRuntimePhase.Revealed;
     }
 
     public void SetRuntimePhase(DiceRuntimePhase nextPhase)
