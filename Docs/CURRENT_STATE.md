@@ -1,10 +1,12 @@
 # CURRENT STATE
 
-Last Updated: 2026-06-28
+Last Updated: 2026-06-29
 
 ## Source of Truth
 
-`Docs/PROJECT_GDD_v1.0.md` is the source of truth for Project Dice. Planning documents may organize work, but they must not redefine the game against the GDD.
+`Docs/PROJECT_GDD_v1.0.md` is the source of truth for Project Dice. Planning and presentation documents may organize work, but they must not redefine the game against the GDD.
+
+`PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is the current visual/presentation guide for the Battle scene layout.
 
 ## Current Status
 
@@ -16,13 +18,12 @@ The project is in MVP foundation work.
 - `MILESTONE_PLAN.md` remains the only milestone source.
 - `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` is DONE.
 - `M2-001_EDITOR_LAYOUT_VALIDATION` is DONE.
-- `M2-002_DICE_ROLLING_OVERLAY_PLACEHOLDER` is DONE.
-- The Battle scene now has a permanent gameplay layout foundation for future pixel art replacement.
-- Throw now shows a temporary rolling/unknown Dice Overlay placeholder before fixed damage is applied.
+- `M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE` is DONE.
+- Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application remains fixed throw damage against the current enemy.
 - Enemy turn behavior has not been implemented yet.
 - Dice result selection has not been implemented yet.
-- Dice Overlay currently shows only a placeholder rolling state; it does not select or reveal a face.
+- Dice rolling, dice face reveal, and skill activation have not been implemented.
 - Skills, upgrades, rewards, progression, and future milestone systems have not been implemented.
 - GDD has not been intentionally modified.
 
@@ -87,54 +88,49 @@ Completed M1 combat tasks:
 - M1-T005: Add M1 Victory Stop.
 - M1-T006: Validate M1 Combat Core.
 
-Completed layout and overlay foundation tasks:
+Completed layout and presentation foundation tasks:
 
 - M2-000: Final Battle Layout Foundation.
 - M2-001: Editor Layout Validation.
-- M2-002: Dice Rolling Overlay Placeholder.
+- M2-002: Align Battle Scene To Presentation Guide.
 
 Current Battle scene result:
 
 - Battle scene lives at `Assets/Scenes/Battle/Battle.unity`.
-- The Battle scene hierarchy uses:
-  - `Canvas`
-  - `BattleRoot`
-  - `TopHUD`
-  - `Player Status`
-  - `Enemy Status`
-  - `BattleField`
-  - `Hero Sprite Placeholder`
-  - `Enemy Sprite Placeholder`
-  - `Dice Overlay Root`
-  - `Rolling Dice Placeholder`
-  - `Rolling State Text`
-  - `Battle Log Placeholder`
-  - `BottomHUD`
-  - `Throw Button Placeholder`
-- Hero and enemy placeholders are sized as future sprite slots instead of oversized debug blocks.
-- `Dice Overlay Root` is centered in the battlefield and hidden by default.
-- `DiceOverlayPresenter` shows `Dice Overlay Root`, rotates the temporary dice slot, displays `ROLLING...`, and hides the overlay.
-- `BattleController` coordinates Throw input, locks input, shows the rolling overlay, waits `1.3` seconds using an update-driven timer, applies fixed damage, refreshes HP, updates Battle Log, hides overlay, and unlocks input only if the enemy is still alive.
+- The Battle scene hierarchy uses `Canvas`, `BattleRoot`, `BattleField`, hidden compatibility `TopHUD`, hidden compatibility `Battle Log Placeholder`, and `BottomHUD`.
+- `BattleField` contains `HeroSlot`, `EnemySlotsRoot`, and hidden `DiceAnimationLayer`.
+- `EnemySlotsRoot` contains `EnemySlot_01`, `EnemySlot_02`, and `EnemySlot_03`.
+- `EnemySlot_01` is the only currently active enemy slot.
+- `EnemySlot_02` and `EnemySlot_03` exist as inactive placeholders only.
+- Player HP is positioned above `HeroSlot`.
+- Enemy HP is positioned above `EnemySlot_01`.
+- The center of the battlefield is left empty for future dice presentation, effects, damage numbers, and skills.
+- `DiceAnimationLayer` is hidden by default and reserved only as future dice presentation structure.
+- Permanent visible Battle Log presentation is hidden; the existing text reference remains for compatibility with current `BattleController`.
+- Bottom action area reserves future `Skill | THROW | Item` structure.
+- THROW remains the active primary action.
+- Skill and Item placeholders are inactive and have no behavior.
 - `BattleCombatState` still stores known player HP, enemy HP, and fixed throw damage values.
-- `BattleHudPresenter` still binds `BattleCombatState` HP values to the Battle scene HP text.
+- `BattleController` still coordinates Throw input, fixed damage, battle log compatibility text, and input lock after victory.
+- `BattleHudPresenter` still binds `BattleCombatState` HP values to Battle scene HP text.
 
 ## Validation Notes
 
-- Codex confirmed the scene file preserves required hierarchy and serialized references.
-- Codex confirmed `Dice Overlay Root` remains hidden by default.
-- Codex confirmed `BattleController` references `DiceOverlayPresenter`.
-- Codex confirmed the fixed damage path still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
-- Codex confirmed recent editor log after script reload does not include target compile/reference/input errors.
-- Human Play Mode review remains the final check for visual timing and feel.
+- Codex confirmed the scene file includes `HeroSlot`, `EnemySlotsRoot`, `EnemySlot_01`, `EnemySlot_02`, `EnemySlot_03`, and hidden `DiceAnimationLayer`.
+- Codex confirmed previous `DiceOverlayPresenter` script and scene references were removed.
+- Codex confirmed rolling placeholder text/object references were removed.
+- Codex confirmed `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- Codex confirmed HP refresh still flows through `BattleHudPresenter.Refresh`.
+- Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
+- Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
 
 ## Architecture Boundaries
 
 - `BattleCombatState` stores HP, fixed throw damage, and enemy defeated state, with only simple state mutation allowed.
-- `BattleController` coordinates Throw input, fixed damage calls, Dice Overlay placeholder timing, HP refresh requests, battle log feedback, and input lock.
+- `BattleController` coordinates Throw input, fixed damage calls, HP refresh requests, battle log compatibility text, and input lock.
 - `BattleHudPresenter` only presents state in UI.
-- `DiceOverlayPresenter` only presents the temporary rolling overlay state.
 - Future damage formula, Dice result, and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 
 ## Next Human Decision
 
-Review the rolling overlay placeholder in Unity Play Mode. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.
+Review the Battle scene presentation in Unity Play Mode. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.

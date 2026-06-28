@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## 2026-06-29
+
+### Changed
+
+- Aligned `Assets/Scenes/Battle/Battle.unity` with `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
+- Replaced the prototype-style character presentation with `HeroSlot`, `EnemySlotsRoot`, `EnemySlot_01`, `EnemySlot_02`, and `EnemySlot_03`.
+- Moved Player HP above the Hero slot and Enemy HP above the active Enemy slot.
+- Reserved the center battlefield for future dice presentation, effects, damage numbers, and skill effects.
+- Replaced the previous dice overlay presentation with hidden `DiceAnimationLayer` structure only.
+- Hid the permanent visible Battle Log while preserving the existing compatibility text reference.
+- Added inactive bottom action placeholders for future Skill and Item buttons while keeping THROW as the active primary action.
+- Removed the previous rolling overlay placeholder scene objects and `DiceOverlayPresenter` script because the current presentation guide alignment task does not implement dice rolling.
+- Restored `BattleController` to the current fixed-damage Throw flow while keeping HP refresh through `BattleHudPresenter`.
+- Updated `TASK_QUEUE.md`, `CURRENT_STATE.md`, `DONE_REPORT.md`, and `SELF_REVIEW_REPORT.md` for `M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE`.
+
+### Not Changed
+
+- `PROJECT_GDD_v1.0.md` was not modified.
+- No dice rolling, dice result selection, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented.
+
 ## 2026-06-28
 
 ### Changed

@@ -1,56 +1,60 @@
 # DONE REPORT
 
-Date: 2026-06-28
+Date: 2026-06-29
 
-Selected Task: M2-002_DICE_ROLLING_OVERLAY_PLACEHOLDER
+Selected Task: M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE
 
-Completed Task: Dice Rolling Overlay Placeholder
+Completed Task: Align Battle Scene To Presentation Guide
 
 ## Summary
 
-Throw now opens a temporary rolling/unknown Dice Overlay placeholder before fixed damage is applied. This creates the first production-facing Dice Overlay behavior without implementing dice result selection, random results, skills, enemy turns, rewards, or progression.
+`Assets/Scenes/Battle/Battle.unity` now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0` for the production-facing battle presentation structure. The scene now places Hero left, Enemy right, HP above characters, reserves the center battlefield, uses `DiceAnimationLayer` as hidden future structure, hides the permanent battle log, and reserves future Skill and Item action slots without implementing new gameplay.
 
 ## Completed Work
 
-- Re-read `PROJECT_GDD_v1.0.md`, `CURRENT_STATE.md`, `TASK_QUEUE.md`, and `MILESTONE_PLAN.md`.
-- Added `Assets/Scripts/Battle/DiceOverlayPresenter.cs`.
-- Added `Assets/Scripts/Battle/DiceOverlayPresenter.cs.meta`.
-- Added a presenter component to `Dice Overlay Root`.
-- Added `Rolling Dice Placeholder` under `Dice Overlay Root`.
-- Added `Rolling State Text` under `Dice Overlay Root`.
-- Connected `BattleController` to `DiceOverlayPresenter`.
-- Converted the Throw flow into a short coroutine sequence.
-- Locked Throw input during the overlay sequence.
-- Showed the overlay immediately after accepted Throw input.
-- Delayed existing fixed damage by `1.3` seconds.
-- Preserved fixed damage, HP refresh, Battle Log update, and victory input lock behavior.
+- Re-read the required planning and state documents.
+- Read `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md`.
+- Repositioned the Hero presentation into `HeroSlot`.
+- Added `EnemySlotsRoot`.
+- Repositioned the active enemy into `EnemySlot_01`.
+- Added inactive `EnemySlot_02` and `EnemySlot_03` placeholders.
+- Moved Player HP presentation above `HeroSlot`.
+- Moved Enemy HP presentation above `EnemySlot_01`.
+- Renamed/replaced the previous dice overlay structure with hidden `DiceAnimationLayer`.
+- Removed previous rolling overlay placeholder scene objects.
+- Removed `DiceOverlayPresenter` because this task is structure-only and does not implement dice rolling.
+- Hid `Battle Log Placeholder` while preserving the existing text reference for compatibility.
+- Added inactive `Skill Button Placeholder`.
+- Added inactive `Item Button Placeholder`.
+- Kept THROW as the active primary action.
+- Preserved existing fixed Throw damage flow.
+- Preserved HP refresh through `BattleHudPresenter`.
 - Updated task queue, current state, changelog, and self-review documents.
 
 ## Validation
 
-- `Dice Overlay Root` remains hidden at scene start.
-- `DiceOverlayPresenter` is assigned on `Dice Overlay Root`.
-- `BattleController` references `DiceOverlayPresenter`.
-- Rolling placeholder image exists under `Dice Overlay Root`.
-- `ROLLING...` text exists under `Dice Overlay Root`.
-- Throw sequence calls `ShowRolling` before fixed damage.
-- Throw sequence waits `1.3` seconds before applying fixed damage.
-- Fixed damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
-- HP UI still refreshes through `BattleHudPresenter`.
-- Battle Log still updates through `BattleController`.
-- Throw input remains locked during the overlay sequence.
-- Enemy defeated state still keeps Throw input locked.
-- Recent Unity Editor log after script reload contains no target compile, reference, or input errors found by Codex.
+- `HeroSlot` exists under `BattleField`.
+- `EnemySlotsRoot` exists under `BattleField`.
+- `EnemySlot_01`, `EnemySlot_02`, and `EnemySlot_03` exist.
+- `EnemySlot_01` remains the active enemy placeholder.
+- Player HP is parented to `HeroSlot`.
+- Enemy HP is parented to `EnemySlot_01`.
+- Center battlefield is reserved with no permanent visible dice object.
+- `DiceAnimationLayer` exists under `BattleField`.
+- `DiceAnimationLayer` is hidden by default.
+- Permanent `Battle Log Placeholder` is hidden by default.
+- `Skill Button Placeholder` and `Item Button Placeholder` exist and are inactive.
+- THROW remains active and primary.
+- `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- `BattleHudPresenter` still owns HP UI refresh.
+- No dice result selection, face reveal, skill, enemy turn, reward, progression, inventory, or item behavior was added.
 - `PROJECT_GDD_v1.0.md` was not modified.
 
 ## Limitations
 
-- Unity Play Mode click/timing validation should be observed by the human reviewer in the active Editor.
-- The placeholder does not select a dice face.
-- The placeholder does not reveal a final top face.
-- The placeholder does not activate skills.
-- The placeholder uses UI primitives only and is not final art.
+- Unity Play Mode visual and click validation should still be observed by the human reviewer in the active Editor.
+- Placeholder graphics remain temporary by policy; only the layout structure is intended as production-facing.
 
 ## Stop Point
 
-Stopped after M2-002 implementation and validation as requested. No new gameplay task or future system was started.
+Stopped after M2-002 presentation alignment and validation as requested. No Hero throw animation, projectile trail, enemy hit flash, dice rolling, dice result, face reveal, or face skill activation was started.

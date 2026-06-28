@@ -1,10 +1,10 @@
 # SELF REVIEW REPORT
 
-Date: 2026-06-28
+Date: 2026-06-29
 
-Selected Task: M2-002_DICE_ROLLING_OVERLAY_PLACEHOLDER
+Selected Task: M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE
 
-Reviewed Task: Dice Rolling Overlay Placeholder
+Reviewed Task: Align Battle Scene To Presentation Guide
 
 ## Review Result
 
@@ -14,37 +14,39 @@ PASS
 
 - `BattleCombatState` responsibilities were not changed.
 - `BattleCombatState` still only stores HP, fixed throw damage, and simple enemy damage mutation.
-- `BattleController` coordinates Throw input, sequence timing, fixed damage call, HP refresh, Battle Log feedback, overlay show/hide calls, and input lock.
+- `BattleController` remains responsible for Throw input, fixed damage call, HP refresh request, battle log compatibility text, and victory input lock.
 - `BattleHudPresenter` remains presentation-only.
-- `DiceOverlayPresenter` is presentation-only for the rolling overlay placeholder.
+- Removed `DiceOverlayPresenter` because the selected task explicitly prepares only `DiceAnimationLayer` structure and does not implement dice rolling.
 - `BattleDamageResolver` was not added.
 
 ## Scope Review
 
-- M2-002 implemented only a rolling/unknown Dice Overlay placeholder.
+- Battle presentation hierarchy and layout were updated to follow `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Gameplay was not redesigned.
 - Combat rules were not changed.
 - GDD was not modified.
+- Dice rolling was not implemented.
 - Dice face result selection was not added.
-- Random result selection was not added.
+- Face reveal was not added.
 - Skill activation was not added.
 - Enemy turn behavior was not added.
-- Rewards, upgrades, progression, and future milestone systems were not added.
-- No final art assets or prefabs were created.
+- Rewards, upgrades, progression, inventory, items, and future milestone systems were not added.
+- No final art assets, prefabs, or placeholder asset files were created.
 
 ## Validation Review
 
-- `Dice Overlay Root` remains hidden by default in the scene.
-- `Rolling Dice Placeholder` and `Rolling State Text` exist under the overlay.
-- `BattleController` has a serialized `DiceOverlayPresenter` reference.
-- Throw sequence locks input before showing the overlay.
-- Fixed damage happens after a `1.3` second update-driven unscaled timer delay.
-- HP refresh still flows through `BattleHudPresenter.Refresh`.
-- Battle Log update remains in `BattleController`.
-- Enemy defeated state keeps input locked.
-- Recent Unity Editor log after script reload contains no target compile/reference/input errors found by Codex.
+- `HeroSlot` is present under `BattleField`.
+- `EnemySlotsRoot` is present under `BattleField`.
+- `EnemySlot_01`, `EnemySlot_02`, and `EnemySlot_03` are present.
+- `DiceAnimationLayer` is present under `BattleField` and hidden by default.
+- `Battle Log Placeholder` is hidden by default.
+- `Skill Button Placeholder` and `Item Button Placeholder` are inactive placeholders only.
+- Static scene search found no remaining `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
+- `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- `BattleController` still calls `BattleHudPresenter.Refresh`.
+- Enemy defeated state still locks further Throw input through the existing `inputLocked` flow.
 
 ## Residual Risk
 
-- Human Play Mode review should confirm that the `1.3` second placeholder duration feels right.
-- The temporary rotating square is intentionally not final dice art and should be replaced by the later Dice Result Overlay work.
+- Because this was edited directly in scene YAML, Unity Editor visual inspection is still recommended.
+- Human Play Mode review should confirm that the final-feeling placement matches the guide well enough before starting animation or dice-result tasks.
