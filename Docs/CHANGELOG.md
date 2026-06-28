@@ -4,6 +4,9 @@
 
 ### Changed
 
+- Added runtime-only `DiceFace` data model for minimal Dice face identity, category, and fixed throw damage value reference.
+- Added runtime-only `DiceModel` with exactly six face slots, duplicate face support, runtime phase metadata, and latest result slot storage.
+- Marked `M2-004_CREATE_DICE_CORE_DATA_MODEL` as DONE in the project tracking documents.
 - Added `ThrowSequencePresenter` for the first minimal production-facing Throw presentation sequence.
 - Updated `BattleController` so accepted THROW input locks during the presentation sequence, then applies existing fixed damage and refreshes HP.
 - Added a temporary thin white projectile trail generated under `BattleField` at runtime.
@@ -25,6 +28,7 @@
 
 - `PROJECT_GDD_v1.0.md` was not modified.
 - No dice rolling, dice result selection, face reveal, skill activation, enemy turns, multi-enemy targeting, rewards, progression, inventory, item behavior, or future systems were implemented.
+- No ScriptableObjects were created for the Dice model.
 
 ## 2026-06-28
 

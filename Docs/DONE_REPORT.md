@@ -2,49 +2,44 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-003_THROW_SEQUENCE_PLACEHOLDER
+Selected Task: M2-004_CREATE_DICE_CORE_DATA_MODEL
 
-Completed Task: Throw Sequence Placeholder
+Completed Task: Create Dice Core Data Model
 
 ## Summary
 
-THROW now plays a minimal 16-bit style presentation sequence before fixed damage is applied. The sequence locks input, flashes the Hero placeholder, shows a thin white projectile trail from `HeroSlot` toward `EnemySlot_01`, flashes the Enemy placeholder, then applies the existing fixed damage and refreshes HP.
+Added the first runtime-only Dice Core model. The Dice is now represented as an object with exactly six face slots instead of a single integer result. Duplicate faces are legal because each slot stores its own face data, and the model includes lightweight runtime phase/result metadata so future rolling, stopped, and revealed presentation states can be added without redesigning the core shape.
 
 ## Completed Work
 
-- Re-read `PROJECT_GDD_v1.0.md`, `CURRENT_STATE.md`, `TASK_QUEUE.md`, `MILESTONE_PLAN.md`, and `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md`.
-- Added `Assets/Scripts/Battle/ThrowSequencePresenter.cs`.
-- Added `Assets/Scripts/Battle/ThrowSequencePresenter.cs.meta`.
-- Connected `BattleController` to `ThrowSequencePresenter`.
-- Converted accepted THROW input into a short locked presentation sequence.
-- Added simple Hero throw feedback using the existing Hero placeholder graphic.
-- Added runtime-generated thin white projectile trail under `BattleField`.
-- Added brief Enemy hit flash using the existing Enemy placeholder graphic.
-- Delayed existing fixed damage until after the presentation feedback.
-- Preserved HP refresh through `BattleHudPresenter`.
-- Preserved enemy defeated input lock.
-- Adjusted active Hero and standard Enemy placeholders toward small production-positioned sprite-slot scale.
+- Re-read `TASK_QUEUE.md`, `CURRENT_STATE.md`, `PROJECT_GDD_v1.0.md`, and `MILESTONE_PLAN.md`.
+- Added `Assets/Scripts/Dice/DiceFace.cs`.
+- Added `Assets/Scripts/Dice/DiceFace.cs.meta`.
+- Added `Assets/Scripts/Dice/DiceModel.cs`.
+- Added `Assets/Scripts/Dice/DiceModel.cs.meta`.
+- Implemented `DiceFaceCategory` with minimal Weapon/Skill categories.
+- Implemented `DiceFace` with id, display name, category, and fixed throw damage value reference.
+- Implemented `DiceModel` with exactly six face slots.
+- Added `DiceRuntimePhase` to avoid locking future presentation into a single integer result.
+- Added latest result slot storage without implementing result selection.
 - Updated task queue, current state, changelog, and self-review documents.
 
 ## Validation
 
-- THROW input now starts a locked sequence.
-- Hero throw feedback is handled by `ThrowSequencePresenter`.
-- Projectile trail is a thin white UI primitive generated under `BattleField`.
-- Enemy hit flash is handled by `ThrowSequencePresenter`.
-- Fixed damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
-- HP refresh still calls `BattleHudPresenter.Refresh`.
-- Input unlocks after the sequence only if the enemy is still alive.
-- Enemy defeated state keeps THROW locked.
-- No dice rolling, dice result, face reveal, face skill, enemy turn, multi-enemy targeting, reward, progression, inventory, or item behavior was added.
+- `DiceModel.FaceSlotCount` is exactly 6.
+- `DiceModel.SetFaces` rejects arrays that are not exactly six entries.
+- Duplicate faces are legal because the six slots may contain repeated `DiceFace` values.
+- The model stores face data only and does not resolve skills.
+- The model does not implement rewards, progression, face replacement, dice rolling, dice result selection, face reveal, enemy turns, or UI.
+- No ScriptableObjects were created.
 - `PROJECT_GDD_v1.0.md` was not modified.
 
 ## Limitations
 
-- Unity Play Mode should be used for final timing/feel review.
-- The projectile and flash are placeholder UI primitives, not final pixel art animation.
-- This task intentionally does not show `DiceAnimationLayer` or implement dice rolling/result behavior.
+- `DiceModel` is not yet attached to the Battle scene.
+- Starter Dice construction is deferred to M2-005.
+- Actual Dice result selection is deferred to M2-006.
 
 ## Stop Point
 
-Stopped after M2-003 implementation and validation as requested. No further M2 Dice Core task was started.
+Stopped after M2-004 implementation and validation as requested. M2-005 was not started.

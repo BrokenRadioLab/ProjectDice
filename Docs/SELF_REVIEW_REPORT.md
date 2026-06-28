@@ -2,9 +2,9 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-003_THROW_SEQUENCE_PLACEHOLDER
+Selected Task: M2-004_CREATE_DICE_CORE_DATA_MODEL
 
-Reviewed Task: Throw Sequence Placeholder
+Reviewed Task: Create Dice Core Data Model
 
 ## Review Result
 
@@ -12,16 +12,16 @@ PASS
 
 ## Architecture Review
 
-- `BattleCombatState` responsibilities were not changed.
-- `BattleCombatState` still only stores HP, fixed throw damage, and simple enemy damage mutation.
-- `BattleController` coordinates input, locks the sequence, waits for presentation feedback, applies fixed damage, refreshes HP, and unlocks input when allowed.
-- `BattleHudPresenter` remains presentation-only for HP.
-- `ThrowSequencePresenter` is presentation-only and does not calculate damage or own combat state.
-- `BattleDamageResolver` was not added.
+- `DiceFace` is a runtime data class, not a ScriptableObject.
+- `DiceModel` is a runtime data class, not a MonoBehaviour or ScriptableObject.
+- The Dice is represented as a six-slot object, not as a single integer result.
+- `DiceRuntimePhase` provides a lightweight future expansion point for Ready, Rolling, Stopped, and Revealed presentation concepts.
+- `DiceModel` stores the latest result slot index but does not select results.
+- `BattleCombatState`, `BattleController`, `BattleHudPresenter`, and `ThrowSequencePresenter` responsibilities were not changed.
 
 ## Scope Review
 
-- Implemented only the first minimal Throw presentation placeholder.
+- Implemented only the M2-004 Dice Core data model.
 - Gameplay was not redesigned.
 - Combat rules were not changed.
 - GDD was not modified.
@@ -30,23 +30,21 @@ PASS
 - Face reveal was not added.
 - Face skill activation was not added.
 - Enemy turn behavior was not added.
-- Multi-enemy targeting was not added.
 - Rewards, upgrades, progression, inventory, items, and future milestone systems were not added.
-- No final art assets or prefabs were created.
+- No ScriptableObjects, assets, prefabs, or scenes were created.
 
 ## Validation Review
 
-- Accepted THROW input now locks immediately.
-- `ThrowSequencePresenter.Play` runs before fixed damage.
-- Hero feedback uses the existing Hero placeholder graphic.
-- Projectile trail is a thin white UI primitive generated under `BattleField`.
-- Enemy hit flash uses the existing Enemy placeholder graphic.
-- Fixed damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
-- HP refresh still flows through `BattleHudPresenter.Refresh`.
-- Enemy defeated state keeps input locked.
-- If enemy survives, input unlocks after the presentation sequence.
+- `DiceModel.FaceSlotCount` is fixed at 6.
+- `DiceModel.SetFaces` validates exactly six slots.
+- `DiceModel.GetFace` validates slot bounds.
+- `DiceModel.SetFace` validates slot bounds.
+- Duplicate faces are allowed because no uniqueness restriction exists.
+- `DiceFace` contains only minimal identity, category, and fixed throw damage value reference data.
+- No skill resolution logic exists in `DiceFace` or `DiceModel`.
+- No reward or face replacement logic exists in `DiceFace` or `DiceModel`.
 
 ## Residual Risk
 
-- Human Play Mode review should confirm the placeholder timing feels responsive.
-- Because the projectile trail is generated at runtime, visual placement should be checked in the Unity Editor Game view.
+- Future M2-005 should decide the concrete starter Dice face contents.
+- Future M2-006 should own result selection logic instead of adding selection into `DiceModel` unless the task is explicitly revised.

@@ -20,6 +20,7 @@ The project is in MVP foundation work.
 - `M2-001_EDITOR_LAYOUT_VALIDATION` is DONE.
 - `M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE` is DONE.
 - `M2-003_THROW_SEQUENCE_PLACEHOLDER` is DONE.
+- `M2-004_CREATE_DICE_CORE_DATA_MODEL` is DONE.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application remains fixed throw damage against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
@@ -96,6 +97,7 @@ Completed layout and presentation foundation tasks:
 - M2-001: Editor Layout Validation.
 - M2-002: Align Battle Scene To Presentation Guide.
 - M2-003: Throw Sequence Placeholder.
+- M2-004: Create Dice Core Data Model.
 
 Current Battle scene result:
 
@@ -117,6 +119,8 @@ Current Battle scene result:
 - `BattleController` still coordinates Throw input, fixed damage, battle log compatibility text, and input lock after victory.
 - `ThrowSequencePresenter` presents the temporary Hero feedback, white projectile trail, and Enemy hit flash before fixed damage is applied.
 - `BattleHudPresenter` still binds `BattleCombatState` HP values to Battle scene HP text.
+- `DiceFace` defines minimal runtime face data for result selection and fixed throw damage value reference.
+- `DiceModel` represents exactly six Dice face slots, supports duplicate faces as separate slots, and stores lightweight runtime phase/result metadata for future presentation expansion.
 
 ## Validation Notes
 
@@ -126,6 +130,9 @@ Current Battle scene result:
 - Codex confirmed `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
 - Codex confirmed HP refresh still flows through `BattleHudPresenter.Refresh`.
 - Codex confirmed Throw sequence presentation is isolated in `ThrowSequencePresenter`.
+- Codex confirmed `DiceModel.FaceSlotCount` is exactly 6.
+- Codex confirmed `DiceModel.SetFaces` rejects non-six-face arrays.
+- Codex confirmed duplicate faces are legal because each slot stores its own `DiceFace` data.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
 - Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
 
@@ -135,6 +142,7 @@ Current Battle scene result:
 - `BattleController` coordinates Throw input, Throw presentation sequence timing, fixed damage calls, HP refresh requests, battle log compatibility text, and input lock.
 - `ThrowSequencePresenter` only presents minimal throw feedback and does not calculate damage.
 - `BattleHudPresenter` only presents state in UI.
+- `DiceFace` and `DiceModel` are runtime-only data classes and do not resolve skills, rewards, progression, or UI.
 - Future damage formula, Dice result, and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 
 ## Next Human Decision

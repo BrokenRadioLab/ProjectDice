@@ -116,7 +116,7 @@ Done Criteria:
 
 ## M2-004: Create Dice Core Data Model
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -125,7 +125,9 @@ Create the minimal runtime Dice model needed for MVP throws: one Dice with six f
 Files:
 
 - `Assets/Scripts/Dice/DiceFace.cs`
+- `Assets/Scripts/Dice/DiceFace.cs.meta`
 - `Assets/Scripts/Dice/DiceModel.cs`
+- `Assets/Scripts/Dice/DiceModel.cs.meta`
 - `Docs/TASK_QUEUE.md`
 - `Docs/CURRENT_STATE.md`
 - `Docs/CHANGELOG.md`
