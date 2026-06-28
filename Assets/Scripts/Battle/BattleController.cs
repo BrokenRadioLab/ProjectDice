@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ public sealed class BattleController : MonoBehaviour
 {
     [SerializeField] private BattleCombatState combatState;
     [SerializeField] private BattleHudPresenter hudPresenter;
+    [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
     [SerializeField] private bool inputLocked;
@@ -20,7 +22,7 @@ public sealed class BattleController : MonoBehaviour
     {
         if (WasThrowPressed())
         {
-            ThrowOnce();
+            StartCoroutine(ThrowOnce());
         }
     }
 
@@ -53,11 +55,18 @@ public sealed class BattleController : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(throwButtonHitArea, screenPosition);
     }
 
-    private void ThrowOnce()
+    private IEnumerator ThrowOnce()
     {
         if (inputLocked || combatState == null)
         {
-            return;
+            yield break;
+        }
+
+        inputLocked = true;
+
+        if (throwSequencePresenter != null)
+        {
+            yield return throwSequencePresenter.Play();
         }
 
         int damage = combatState.ApplyFixedThrowDamageToEnemy();
@@ -65,12 +74,12 @@ public sealed class BattleController : MonoBehaviour
 
         if (combatState.IsEnemyDefeated)
         {
-            inputLocked = true;
             SetBattleLog($"Throw dealt {damage}. Victory.");
-            return;
+            yield break;
         }
 
         SetBattleLog($"Throw dealt {damage}.");
+        inputLocked = false;
     }
 
     private void SetBattleLog(string message)

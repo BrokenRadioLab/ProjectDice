@@ -19,8 +19,10 @@ The project is in MVP foundation work.
 - `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` is DONE.
 - `M2-001_EDITOR_LAYOUT_VALIDATION` is DONE.
 - `M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE` is DONE.
+- `M2-003_THROW_SEQUENCE_PLACEHOLDER` is DONE.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application remains fixed throw damage against the current enemy.
+- Throw now has a minimal presentation sequence before fixed damage is applied.
 - Enemy turn behavior has not been implemented yet.
 - Dice result selection has not been implemented yet.
 - Dice rolling, dice face reveal, and skill activation have not been implemented.
@@ -93,6 +95,7 @@ Completed layout and presentation foundation tasks:
 - M2-000: Final Battle Layout Foundation.
 - M2-001: Editor Layout Validation.
 - M2-002: Align Battle Scene To Presentation Guide.
+- M2-003: Throw Sequence Placeholder.
 
 Current Battle scene result:
 
@@ -112,6 +115,7 @@ Current Battle scene result:
 - Skill and Item placeholders are inactive and have no behavior.
 - `BattleCombatState` still stores known player HP, enemy HP, and fixed throw damage values.
 - `BattleController` still coordinates Throw input, fixed damage, battle log compatibility text, and input lock after victory.
+- `ThrowSequencePresenter` presents the temporary Hero feedback, white projectile trail, and Enemy hit flash before fixed damage is applied.
 - `BattleHudPresenter` still binds `BattleCombatState` HP values to Battle scene HP text.
 
 ## Validation Notes
@@ -121,13 +125,15 @@ Current Battle scene result:
 - Codex confirmed rolling placeholder text/object references were removed.
 - Codex confirmed `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
 - Codex confirmed HP refresh still flows through `BattleHudPresenter.Refresh`.
+- Codex confirmed Throw sequence presentation is isolated in `ThrowSequencePresenter`.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
 - Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
 
 ## Architecture Boundaries
 
 - `BattleCombatState` stores HP, fixed throw damage, and enemy defeated state, with only simple state mutation allowed.
-- `BattleController` coordinates Throw input, fixed damage calls, HP refresh requests, battle log compatibility text, and input lock.
+- `BattleController` coordinates Throw input, Throw presentation sequence timing, fixed damage calls, HP refresh requests, battle log compatibility text, and input lock.
+- `ThrowSequencePresenter` only presents minimal throw feedback and does not calculate damage.
 - `BattleHudPresenter` only presents state in UI.
 - Future damage formula, Dice result, and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 

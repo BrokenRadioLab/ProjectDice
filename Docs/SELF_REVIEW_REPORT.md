@@ -2,9 +2,9 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE
+Selected Task: M2-003_THROW_SEQUENCE_PLACEHOLDER
 
-Reviewed Task: Align Battle Scene To Presentation Guide
+Reviewed Task: Throw Sequence Placeholder
 
 ## Review Result
 
@@ -14,39 +14,39 @@ PASS
 
 - `BattleCombatState` responsibilities were not changed.
 - `BattleCombatState` still only stores HP, fixed throw damage, and simple enemy damage mutation.
-- `BattleController` remains responsible for Throw input, fixed damage call, HP refresh request, battle log compatibility text, and victory input lock.
-- `BattleHudPresenter` remains presentation-only.
-- Removed `DiceOverlayPresenter` because the selected task explicitly prepares only `DiceAnimationLayer` structure and does not implement dice rolling.
+- `BattleController` coordinates input, locks the sequence, waits for presentation feedback, applies fixed damage, refreshes HP, and unlocks input when allowed.
+- `BattleHudPresenter` remains presentation-only for HP.
+- `ThrowSequencePresenter` is presentation-only and does not calculate damage or own combat state.
 - `BattleDamageResolver` was not added.
 
 ## Scope Review
 
-- Battle presentation hierarchy and layout were updated to follow `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
+- Implemented only the first minimal Throw presentation placeholder.
 - Gameplay was not redesigned.
 - Combat rules were not changed.
 - GDD was not modified.
 - Dice rolling was not implemented.
-- Dice face result selection was not added.
+- Dice result selection was not added.
 - Face reveal was not added.
-- Skill activation was not added.
+- Face skill activation was not added.
 - Enemy turn behavior was not added.
+- Multi-enemy targeting was not added.
 - Rewards, upgrades, progression, inventory, items, and future milestone systems were not added.
-- No final art assets, prefabs, or placeholder asset files were created.
+- No final art assets or prefabs were created.
 
 ## Validation Review
 
-- `HeroSlot` is present under `BattleField`.
-- `EnemySlotsRoot` is present under `BattleField`.
-- `EnemySlot_01`, `EnemySlot_02`, and `EnemySlot_03` are present.
-- `DiceAnimationLayer` is present under `BattleField` and hidden by default.
-- `Battle Log Placeholder` is hidden by default.
-- `Skill Button Placeholder` and `Item Button Placeholder` are inactive placeholders only.
-- Static scene search found no remaining `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
-- `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
-- `BattleController` still calls `BattleHudPresenter.Refresh`.
-- Enemy defeated state still locks further Throw input through the existing `inputLocked` flow.
+- Accepted THROW input now locks immediately.
+- `ThrowSequencePresenter.Play` runs before fixed damage.
+- Hero feedback uses the existing Hero placeholder graphic.
+- Projectile trail is a thin white UI primitive generated under `BattleField`.
+- Enemy hit flash uses the existing Enemy placeholder graphic.
+- Fixed damage still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- HP refresh still flows through `BattleHudPresenter.Refresh`.
+- Enemy defeated state keeps input locked.
+- If enemy survives, input unlocks after the presentation sequence.
 
 ## Residual Risk
 
-- Because this was edited directly in scene YAML, Unity Editor visual inspection is still recommended.
-- Human Play Mode review should confirm that the final-feeling placement matches the guide well enough before starting animation or dice-result tasks.
+- Human Play Mode review should confirm the placeholder timing feels responsive.
+- Because the projectile trail is generated at runtime, visual placement should be checked in the Unity Editor Game view.

@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Added `ThrowSequencePresenter` for the first minimal production-facing Throw presentation sequence.
+- Updated `BattleController` so accepted THROW input locks during the presentation sequence, then applies existing fixed damage and refreshes HP.
+- Added a temporary thin white projectile trail generated under `BattleField` at runtime.
+- Added brief Hero throw feedback and Enemy hit flash using existing UI placeholder primitives.
+- Reduced active Hero and standard Enemy placeholders toward small 16-bit sprite-slot scale instead of large debug rectangles.
+- Updated `TASK_QUEUE.md`, `CURRENT_STATE.md`, `DONE_REPORT.md`, and `SELF_REVIEW_REPORT.md` for `M2-003_THROW_SEQUENCE_PLACEHOLDER`.
 - Aligned `Assets/Scenes/Battle/Battle.unity` with `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Replaced the prototype-style character presentation with `HeroSlot`, `EnemySlotsRoot`, `EnemySlot_01`, `EnemySlot_02`, and `EnemySlot_03`.
 - Moved Player HP above the Hero slot and Enemy HP above the active Enemy slot.
@@ -18,7 +24,7 @@
 ### Not Changed
 
 - `PROJECT_GDD_v1.0.md` was not modified.
-- No dice rolling, dice result selection, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented.
+- No dice rolling, dice result selection, face reveal, skill activation, enemy turns, multi-enemy targeting, rewards, progression, inventory, item behavior, or future systems were implemented.
 
 ## 2026-06-28
 

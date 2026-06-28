@@ -498,10 +498,10 @@ RectTransform:
   - {fileID: 1110000001}
   m_Father: {fileID: 2200000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.19, y: 0.1}
-  m_AnchorMax: {x: 0.33, y: 0.58}
+  m_AnchorMin: {x: 0.25, y: 0.32}
+  m_AnchorMax: {x: 0.25, y: 0.32}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1100000002
 CanvasRenderer:
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.72, g: 0.86, b: 0.95, a: 0.08}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -654,10 +654,10 @@ RectTransform:
   - {fileID: 1210000001}
   m_Father: {fileID: 2500000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.18, y: 0.32}
-  m_AnchorMax: {x: 0.86, y: 0.9}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1200000002
 CanvasRenderer:
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.95, g: 0.68, b: 0.72, a: 0.08}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -846,10 +846,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2500000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.68}
-  m_AnchorMax: {x: 0.74, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.82}
+  m_AnchorMax: {x: 0.5, y: 0.82}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2520000002
 CanvasRenderer:
@@ -921,10 +921,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2500000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0}
-  m_AnchorMax: {x: 0.74, y: 0.32}
+  m_AnchorMin: {x: 0.5, y: 0.18}
+  m_AnchorMax: {x: 0.5, y: 0.18}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2530000002
 CanvasRenderer:
@@ -998,8 +998,8 @@ RectTransform:
   - {fileID: 1310000001}
   m_Father: {fileID: 1100000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: -0.35, y: 1.04}
-  m_AnchorMax: {x: 1.35, y: 1.34}
+  m_AnchorMin: {x: -0.85, y: 1.08}
+  m_AnchorMax: {x: 1.85, y: 1.75}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1233,8 +1233,8 @@ RectTransform:
   - {fileID: 1410000001}
   m_Father: {fileID: 1200000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: -0.35, y: 1.04}
-  m_AnchorMax: {x: 1.35, y: 1.34}
+  m_AnchorMin: {x: -0.85, y: 1.08}
+  m_AnchorMax: {x: 1.85, y: 1.75}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 1500000002}
   - component: {fileID: 1500000003}
   - component: {fileID: 1500000004}
+  - component: {fileID: 1500000005}
   m_Layer: 5
   m_Name: Throw Button Placeholder
   m_TagString: Untagged
@@ -1754,9 +1755,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatState: {fileID: 1700000002}
   hudPresenter: {fileID: 1700000003}
+  throwSequencePresenter: {fileID: 1500000005}
   battleLogText: {fileID: 1610000003}
   throwButtonHitArea: {fileID: 1500000001}
   inputLocked: 0
+--- !u!114 &1500000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0fb1a1caa04f8292e1f9400f9db203, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  battleField: {fileID: 2200000001}
+  heroSlot: {fileID: 1100000001}
+  enemySlot: {fileID: 1200000001}
+  heroPlaceholder: {fileID: 1100000003}
+  enemyPlaceholder: {fileID: 1200000003}
+  heroFeedbackDuration: 0.08
+  projectileDuration: 0.08
+  enemyFlashDuration: 0.08
+  projectileThickness: 3
+  projectileColor: {r: 1, g: 1, b: 1, a: 1}
+  heroFeedbackColor: {r: 0.95, g: 0.95, b: 1, a: 0.28}
+  enemyFlashColor: {r: 1, g: 0.95, b: 0.88, a: 0.55}
 --- !u!1 &1600000000
 GameObject:
   m_ObjectHideFlags: 0
