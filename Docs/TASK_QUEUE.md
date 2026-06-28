@@ -2,6 +2,8 @@
 
 Selected Milestone: M2_DICE_CORE
 
+Milestone Validation Status: READY_FOR_DIRECTOR_REVIEW
+
 Source Milestone: `MILESTONE_PLAN.md`
 
 GDD References:
@@ -344,7 +346,7 @@ Done Criteria:
 
 ## M2-009: Validate M2 Dice Core
 
-Status: READY
+Status: DONE
 
 Goal:
 

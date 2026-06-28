@@ -25,6 +25,8 @@ The project is in MVP foundation work.
 - `M2-006_SELECT_ONE_DICE_FACE_RESULT_PER_THROW` is DONE.
 - `M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION` is DONE.
 - `M2-008_CONNECT_FIXED_THROW_DAMAGE_SOURCE_TO_DICE_GRADE_MVP_VALUE` is DONE.
+- `M2-009_VALIDATE_M2_DICE_CORE` is DONE.
+- M2_DICE_CORE is READY_FOR_DIRECTOR_REVIEW.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application now uses the selected Dice face's fixed throw damage value against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
@@ -107,6 +109,7 @@ Completed layout and presentation foundation tasks:
 - M2-006: Select One Dice Face Result Per Throw.
 - M2-007: Surface Latest Dice Result For Debug-Free Validation.
 - M2-008: Connect Fixed Throw Damage Source To Dice Grade MVP Value.
+- M2-009: Validate M2 Dice Core.
 
 Current Battle scene result:
 
@@ -159,8 +162,15 @@ Current Battle scene result:
 - Codex confirmed `DiceRoller.SelectResultSlot` selects from exactly six Dice face slots.
 - Codex confirmed `BattleController` references `BattleDiceResultPresenter` and updates the validation display after result selection.
 - Codex confirmed fixed damage now uses `BattleDiceState.LastSelectedFace.FixedThrowDamageValue` after the Throw presentation sequence.
+- Codex confirmed starter Dice has six serialized face slots: Attack, Attack, Guard, Guard, Spark, and Mend.
+- Codex confirmed duplicate face slots are represented as duplicate entries in the selection pool.
+- Codex confirmed Attack faces have `fixedThrowDamageValue` 5.
+- Codex confirmed Guard, Spark, and Mend currently have `fixedThrowDamageValue` 0 because skill effects are not implemented yet.
+- Codex confirmed result validation text displays selected slot and face through `BattleDiceResultPresenter`.
+- Codex confirmed `BattleCombatState` only applies received deterministic damage and does not own Dice logic.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
-- Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
+- Unity batchmode validation for M2-009 was attempted but blocked because the project was already open in another Unity Editor instance.
+- Human Play Mode review remains the final check for live Throw input, visual feel, and clickable behavior inside the active Editor.
 
 ## Architecture Boundaries
 
@@ -177,4 +187,4 @@ Current Battle scene result:
 
 ## Next Human Decision
 
-Review the Battle scene presentation in Unity Play Mode. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.
+Director review M2_DICE_CORE. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.

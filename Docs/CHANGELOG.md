@@ -4,6 +4,14 @@
 
 ### Changed
 
+- Validated M2 Dice Core end-to-end by static scene/script inspection.
+- Confirmed starter Dice exists with six face slots and duplicate slots.
+- Confirmed each accepted Throw selects one Dice result slot and stores it in `BattleDiceState`.
+- Confirmed result validation text displays selected slot and face.
+- Confirmed selected `DiceFace.FixedThrowDamageValue` is the current Throw damage source.
+- Confirmed Attack faces deal 5 damage and Guard, Spark, and Mend currently deal 0 damage until skill effects are implemented later.
+- Confirmed no Dice overlay animation, face skill activation, enemy turn, rewards, progression, or future systems were added during M2.
+- Marked `M2-009_VALIDATE_M2_DICE_CORE` as DONE and `M2_DICE_CORE` as READY_FOR_DIRECTOR_REVIEW in project tracking documents.
 - Connected Throw damage to the selected Dice face's fixed throw damage value.
 - Replaced `BattleCombatState.ApplyFixedThrowDamageToEnemy` with `BattleCombatState.ApplyDamageToEnemy(int damage)`.
 - Removed the scene-level `fixedThrowDamage` source from `BattleCombatState`.
@@ -52,6 +60,7 @@
 - Dice face results now provide the deterministic Throw damage value.
 - The M2-007 result display is temporary validation presentation only and is not the final Dice Result Overlay.
 - No Dice Result Overlay, dice animation overlay, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented for M2-008.
+- Unity batchmode validation for M2-009 was attempted but blocked because the project was already open in another Unity Editor instance.
 
 ## 2026-06-28
 

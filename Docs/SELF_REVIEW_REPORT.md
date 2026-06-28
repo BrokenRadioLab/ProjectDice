@@ -2,49 +2,62 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-008_CONNECT_FIXED_THROW_DAMAGE_SOURCE_TO_DICE_GRADE_MVP_VALUE
+Selected Task: M2-009_VALIDATE_M2_DICE_CORE
 
-Reviewed Task: Connect Throw Damage To Selected Dice Face Value
+Reviewed Task: Validate M2 Dice Core
 
 ## Review Result
 
 PASS
 
-## Architecture Review
-
-- `BattleCombatState` remains focused on HP, enemy defeat state, and simple HP mutation.
-- `BattleCombatState` no longer stores the Throw damage source.
-- `BattleController` still coordinates input, sequence timing, Dice result selection timing, selected face damage, HUD refresh, and input lock.
-- `BattleDiceState` still stores the selected Dice result.
-- `BattleDiceResultPresenter` remains temporary validation display only.
-- `BattleHudPresenter` remains presentation-only.
-- `DiceFace` remains a small runtime data object and was not expanded into a skill system.
-
 ## Scope Review
 
-- Implemented only M2-008 damage source connection.
-- Gameplay was not redesigned.
-- Selected Dice face value is now connected to damage.
+- Performed validation only.
+- No gameplay system was added.
+- No scripts were created.
+- No scenes were created.
 - GDD was not modified.
-- Dice animation overlay was not implemented.
+- M3_DICE_RESULT_OVERLAY was not started.
 - Face skills were not implemented.
 - Enemy turn behavior was not added.
 - Rewards, upgrades, progression, multi-enemy logic, inventory, items, and future milestone systems were not added.
-- No ScriptableObjects, prefabs, or scenes were created.
+
+## Architecture Review
+
+- `BattleCombatState` remains focused on HP, enemy defeat state, and applying received deterministic damage.
+- `BattleCombatState` does not own Dice logic.
+- `BattleController` coordinates Throw input, Throw sequence timing, Dice result selection, selected face damage, HUD refresh, validation display, and input lock.
+- `BattleDiceState` stores current Dice runtime state and latest selected result.
+- `DiceRoller` only selects a result slot.
+- `BattleDiceResultPresenter` remains temporary validation display only.
+- `BattleHudPresenter` remains presentation-only.
+- `ThrowSequencePresenter` remains presentation-only.
 
 ## Validation Review
 
-- `BattleController` still selects one Dice face per accepted Throw.
-- `BattleController` reads `FixedThrowDamageValue` from the selected Dice face.
-- `BattleController` passes the selected face value into `BattleCombatState.ApplyDamageToEnemy`.
-- `BattleCombatState.ApplyDamageToEnemy` clamps incoming damage to 0 or higher.
-- Enemy HP still clamps at 0.
-- HP refresh still calls `BattleHudPresenter.Refresh`.
-- Enemy defeat input lock behavior remains unchanged.
-- Validation text still shows the selected Dice result.
-- No hardcoded scene-level `fixedThrowDamage` field remains in `BattleCombatState`.
+- Starter Dice exists in the Battle scene.
+- Starter Dice has exactly six face slots.
+- Duplicate slots exist for Attack and Guard.
+- Duplicate slots naturally affect probability because selection operates on slot index, not unique face ID.
+- Each accepted Throw selects exactly one result slot.
+- Selected slot and face are stored in `BattleDiceState`.
+- Result validation text can display selected slot and face.
+- Throw damage comes from selected `DiceFace.FixedThrowDamageValue`.
+- Attack currently deals 5 damage.
+- Guard, Spark, and Mend currently deal 0 damage because their skill effects are not implemented yet.
+- Enemy HP clamps at 0.
+- Throw locks after enemy defeat.
+- HP UI refresh still flows through `BattleHudPresenter`.
+- No Dice overlay or animation was implemented.
+- No face skill activation, enemy turn, reward, progression, or future system was found in code search.
+
+## Unity Review
+
+- Unity batchmode validation was attempted.
+- Validation was blocked because another Unity Editor instance already has the project open.
+- Human Play Mode review is still needed for live click/visual confirmation.
 
 ## Residual Risk
 
-- Starter Skill-category faces currently have 0 damage, so those results will visibly deal 0 until skill effects are implemented in a later milestone.
-- M2-009 should validate the end-to-end M2 Dice Core behavior in Play Mode.
+- Codex could not run automated Play Mode validation in this turn due to the open Unity Editor instance.
+- M2 is ready for Director review, with Play Mode feel/click confirmation left to the active Editor session.
