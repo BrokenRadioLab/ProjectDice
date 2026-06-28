@@ -160,7 +160,7 @@ Done Criteria:
 
 ## M2-005: Add Starter Dice Runtime State
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -169,7 +169,10 @@ Add a starter Dice state to the Battle scene so MVP combat has a concrete Dice b
 Files:
 
 - `Assets/Scripts/Dice/StarterDiceFactory.cs`
+- `Assets/Scripts/Dice/StarterDiceFactory.cs.meta`
 - `Assets/Scripts/Battle/BattleDiceState.cs`
+- `Assets/Scripts/Battle/BattleDiceState.cs.meta`
+- `Assets/Scripts/Dice/DiceModel.cs`
 - `Assets/Scenes/Battle/Battle.unity`
 - `Docs/TASK_QUEUE.md`
 - `Docs/CURRENT_STATE.md`

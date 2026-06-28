@@ -21,7 +21,7 @@ public sealed class DiceModel
     public DiceRuntimePhase RuntimePhase => runtimePhase;
     public int LastResultSlotIndex => lastResultSlotIndex;
 
-    public int FaceCount => faces.Length;
+    public int FaceCount => faces != null ? faces.Length : 0;
 
     public DiceModel()
     {

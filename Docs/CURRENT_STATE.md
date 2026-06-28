@@ -21,6 +21,7 @@ The project is in MVP foundation work.
 - `M2-002_ALIGN_BATTLE_SCENE_TO_PRESENTATION_GUIDE` is DONE.
 - `M2-003_THROW_SEQUENCE_PLACEHOLDER` is DONE.
 - `M2-004_CREATE_DICE_CORE_DATA_MODEL` is DONE.
+- `M2-005_ADD_STARTER_DICE_RUNTIME_STATE` is DONE.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application remains fixed throw damage against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
@@ -98,6 +99,7 @@ Completed layout and presentation foundation tasks:
 - M2-002: Align Battle Scene To Presentation Guide.
 - M2-003: Throw Sequence Placeholder.
 - M2-004: Create Dice Core Data Model.
+- M2-005: Add Starter Dice Runtime State.
 
 Current Battle scene result:
 
@@ -121,6 +123,8 @@ Current Battle scene result:
 - `BattleHudPresenter` still binds `BattleCombatState` HP values to Battle scene HP text.
 - `DiceFace` defines minimal runtime face data for result selection and fixed throw damage value reference.
 - `DiceModel` represents exactly six Dice face slots, supports duplicate faces as separate slots, and stores lightweight runtime phase/result metadata for future presentation expansion.
+- `StarterDiceFactory` creates a deterministic six-slot starter Dice with duplicate starter faces.
+- `BattleDiceState` stores the current runtime Dice separately from `BattleCombatState`.
 
 ## Validation Notes
 
@@ -133,6 +137,8 @@ Current Battle scene result:
 - Codex confirmed `DiceModel.FaceSlotCount` is exactly 6.
 - Codex confirmed `DiceModel.SetFaces` rejects non-six-face arrays.
 - Codex confirmed duplicate faces are legal because each slot stores its own `DiceFace` data.
+- Codex confirmed `BattleDiceState` is present in `Battle.unity` with a serialized six-face starter Dice.
+- Codex confirmed starter Dice begins in `Ready` phase with `lastResultSlotIndex` set to `-1`.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
 - Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
 
@@ -143,6 +149,8 @@ Current Battle scene result:
 - `ThrowSequencePresenter` only presents minimal throw feedback and does not calculate damage.
 - `BattleHudPresenter` only presents state in UI.
 - `DiceFace` and `DiceModel` are runtime-only data classes and do not resolve skills, rewards, progression, or UI.
+- `StarterDiceFactory` creates starter Dice data only and does not select results.
+- `BattleDiceState` owns the current Dice runtime state and does not own HP/combat state.
 - Future damage formula, Dice result, and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 
 ## Next Human Decision

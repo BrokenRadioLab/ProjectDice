@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Added `StarterDiceFactory` to create a deterministic six-slot starter Dice runtime instance.
+- Added `BattleDiceState` to store the current battle Dice runtime state separately from HP/combat state.
+- Added the starter Dice runtime component to `Assets/Scenes/Battle/Battle.unity`.
+- Serialized a starter Dice with exactly six face slots, duplicate starter faces, `Ready` phase, and no selected result.
+- Marked `M2-005_ADD_STARTER_DICE_RUNTIME_STATE` as DONE in project tracking documents.
 - Added runtime-only `DiceFace` data model for minimal Dice face identity, category, and fixed throw damage value reference.
 - Added runtime-only `DiceModel` with exactly six face slots, duplicate face support, runtime phase metadata, and latest result slot storage.
 - Marked `M2-004_CREATE_DICE_CORE_DATA_MODEL` as DONE in the project tracking documents.
