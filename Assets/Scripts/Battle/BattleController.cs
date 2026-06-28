@@ -72,9 +72,9 @@ public sealed class BattleController : MonoBehaviour
             yield return throwSequencePresenter.Play();
         }
 
-        SelectDiceResult();
+        DiceFace selectedFace = SelectDiceResult();
 
-        int damage = combatState.ApplyFixedThrowDamageToEnemy();
+        int damage = combatState.ApplyDamageToEnemy(GetThrowDamage(selectedFace));
         hudPresenter?.Refresh();
 
         if (combatState.IsEnemyDefeated)
@@ -87,17 +87,24 @@ public sealed class BattleController : MonoBehaviour
         inputLocked = false;
     }
 
-    private void SelectDiceResult()
+    private DiceFace SelectDiceResult()
     {
         if (battleDiceState == null)
         {
-            return;
+            return null;
         }
 
         int resultSlotIndex = DiceRoller.SelectResultSlot(battleDiceState.CurrentDice);
         battleDiceState.StopAtResultSlot(resultSlotIndex);
         battleDiceState.RevealResult();
         diceResultPresenter?.ShowResult(battleDiceState);
+
+        return battleDiceState.LastSelectedFace;
+    }
+
+    private static int GetThrowDamage(DiceFace selectedFace)
+    {
+        return selectedFace != null ? selectedFace.FixedThrowDamageValue : 0;
     }
 
     private void SetBattleLog(string message)

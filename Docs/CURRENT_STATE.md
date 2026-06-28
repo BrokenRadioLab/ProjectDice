@@ -24,8 +24,9 @@ The project is in MVP foundation work.
 - `M2-005_ADD_STARTER_DICE_RUNTIME_STATE` is DONE.
 - `M2-006_SELECT_ONE_DICE_FACE_RESULT_PER_THROW` is DONE.
 - `M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION` is DONE.
+- `M2-008_CONNECT_FIXED_THROW_DAMAGE_SOURCE_TO_DICE_GRADE_MVP_VALUE` is DONE.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
-- Damage application remains fixed throw damage against the current enemy.
+- Damage application now uses the selected Dice face's fixed throw damage value against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
 - Enemy turn behavior has not been implemented yet.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.
@@ -105,6 +106,7 @@ Completed layout and presentation foundation tasks:
 - M2-005: Add Starter Dice Runtime State.
 - M2-006: Select One Dice Face Result Per Throw.
 - M2-007: Surface Latest Dice Result For Debug-Free Validation.
+- M2-008: Connect Fixed Throw Damage Source To Dice Grade MVP Value.
 
 Current Battle scene result:
 
@@ -122,8 +124,9 @@ Current Battle scene result:
 - Bottom action area reserves future `Skill | THROW | Item` structure.
 - THROW remains the active primary action.
 - Skill and Item placeholders are inactive and have no behavior.
-- `BattleCombatState` still stores known player HP, enemy HP, and fixed throw damage values.
-- `BattleController` still coordinates Throw input, fixed damage, battle log compatibility text, and input lock after victory.
+- `BattleCombatState` still stores known player HP and enemy HP values.
+- `BattleCombatState` applies incoming deterministic damage values to enemy HP and clamps enemy HP at 0.
+- `BattleController` still coordinates Throw input, selected Dice face damage, battle log compatibility text, and input lock after victory.
 - `ThrowSequencePresenter` presents the temporary Hero feedback, white projectile trail, and Enemy hit flash before fixed damage is applied.
 - `BattleHudPresenter` still binds `BattleCombatState` HP values to Battle scene HP text.
 - `DiceFace` defines minimal runtime face data for result selection and fixed throw damage value reference.
@@ -136,13 +139,15 @@ Current Battle scene result:
 - `BattleDiceResultPresenter` creates a small runtime-only validation text under `BattleField`.
 - The validation text shows the latest selected slot and face after each accepted Throw.
 - The validation text does not use `DiceAnimationLayer` and is not the final Dice Result Overlay.
+- Throw damage is now derived from `BattleDiceState.LastSelectedFace.FixedThrowDamageValue`.
+- The previous scene-level `BattleCombatState.fixedThrowDamage` source was removed.
 
 ## Validation Notes
 
 - Codex confirmed the scene file includes `HeroSlot`, `EnemySlotsRoot`, `EnemySlot_01`, `EnemySlot_02`, `EnemySlot_03`, and hidden `DiceAnimationLayer`.
 - Codex confirmed previous `DiceOverlayPresenter` script and scene references were removed.
 - Codex confirmed rolling placeholder text/object references were removed.
-- Codex confirmed `BattleController` still calls `BattleCombatState.ApplyFixedThrowDamageToEnemy`.
+- Codex confirmed `BattleController` calls `BattleCombatState.ApplyDamageToEnemy` with the selected Dice face damage value.
 - Codex confirmed HP refresh still flows through `BattleHudPresenter.Refresh`.
 - Codex confirmed Throw sequence presentation is isolated in `ThrowSequencePresenter`.
 - Codex confirmed `DiceModel.FaceSlotCount` is exactly 6.
@@ -153,14 +158,14 @@ Current Battle scene result:
 - Codex confirmed `BattleController` references `BattleDiceState` and calls Dice result selection once per accepted Throw.
 - Codex confirmed `DiceRoller.SelectResultSlot` selects from exactly six Dice face slots.
 - Codex confirmed `BattleController` references `BattleDiceResultPresenter` and updates the validation display after result selection.
-- Codex confirmed fixed damage still uses `BattleCombatState.ApplyFixedThrowDamageToEnemy` after the Throw presentation sequence.
+- Codex confirmed fixed damage now uses `BattleDiceState.LastSelectedFace.FixedThrowDamageValue` after the Throw presentation sequence.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
 - Human Play Mode review remains the final check for visual feel and clickable Throw behavior inside the active Editor.
 
 ## Architecture Boundaries
 
-- `BattleCombatState` stores HP, fixed throw damage, and enemy defeated state, with only simple state mutation allowed.
-- `BattleController` coordinates Throw input, Throw presentation sequence timing, fixed damage calls, HP refresh requests, battle log compatibility text, and input lock.
+- `BattleCombatState` stores HP and enemy defeated state, with only simple state mutation allowed.
+- `BattleController` coordinates Throw input, Throw presentation sequence timing, selected Dice face damage calls, HP refresh requests, battle log compatibility text, and input lock.
 - `ThrowSequencePresenter` only presents minimal throw feedback and does not calculate damage.
 - `BattleHudPresenter` only presents state in UI.
 - `DiceFace` and `DiceModel` are runtime-only data classes and do not resolve skills, rewards, progression, or UI.

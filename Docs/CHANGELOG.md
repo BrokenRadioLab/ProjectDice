@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Connected Throw damage to the selected Dice face's fixed throw damage value.
+- Replaced `BattleCombatState.ApplyFixedThrowDamageToEnemy` with `BattleCombatState.ApplyDamageToEnemy(int damage)`.
+- Removed the scene-level `fixedThrowDamage` source from `BattleCombatState`.
+- Updated `BattleController` so the selected Dice face is chosen first, then its value is applied as deterministic damage.
+- Marked `M2-008_CONNECT_FIXED_THROW_DAMAGE_SOURCE_TO_DICE_GRADE_MVP_VALUE` as DONE in project tracking documents.
 - Added `BattleDiceResultPresenter` for temporary no-overlay validation of the latest selected Dice result.
 - Wired `BattleController` to update the validation display after Dice result selection.
 - Added a small runtime-created `BattleField` validation text showing selected slot and face name after each accepted Throw.
@@ -44,9 +49,9 @@
 - `PROJECT_GDD_v1.0.md` was not modified.
 - No dice rolling animation, face reveal, skill activation, enemy turns, multi-enemy targeting, rewards, progression, inventory, item behavior, or future systems were implemented.
 - No ScriptableObjects were created for the Dice model.
-- Dice face results do not affect damage yet.
+- Dice face results now provide the deterministic Throw damage value.
 - The M2-007 result display is temporary validation presentation only and is not the final Dice Result Overlay.
-- No Dice Result Overlay, dice animation overlay, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented for M2-007.
+- No Dice Result Overlay, dice animation overlay, face reveal, skill activation, enemy turns, rewards, progression, inventory, item behavior, or future systems were implemented for M2-008.
 
 ## 2026-06-28
 

@@ -301,7 +301,7 @@ Done Criteria:
 
 ## M2-008: Connect Fixed Throw Damage Source To Dice Grade MVP Value
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -309,8 +309,6 @@ Prepare fixed throw damage to come from the current MVP Dice grade/value source 
 
 Files:
 
-- `Assets/Scripts/Dice/DiceGrade.cs`
-- `Assets/Scripts/Dice/DiceThrowDamageTable.cs`
 - `Assets/Scripts/Battle/BattleCombatState.cs`
 - `Assets/Scripts/Battle/BattleController.cs`
 - `Assets/Scenes/Battle/Battle.unity`

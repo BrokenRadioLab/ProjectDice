@@ -2,43 +2,43 @@
 
 Date: 2026-06-29
 
-Selected Task: M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION
+Selected Task: M2-008_CONNECT_FIXED_THROW_DAMAGE_SOURCE_TO_DICE_GRADE_MVP_VALUE
 
-Completed Task: Surface Latest Dice Result For Debug-Free Validation
+Completed Task: Connect Throw Damage To Selected Dice Face Value
 
 ## Summary
 
-Added a temporary no-overlay validation display for the latest selected Dice result. After each accepted Throw, the scene now shows the selected Dice slot and face name through a small runtime-created text under `BattleField`, while fixed damage and HP behavior remain unchanged.
+Throw damage now comes from the selected Dice face's deterministic damage value instead of a scene-level hardcoded fixed throw value. The Battle flow still selects one Dice face, shows the temporary validation result, applies damage, refreshes HP, and locks input after enemy defeat.
 
 ## Completed Work
 
-- Added `Assets/Scripts/Battle/BattleDiceResultPresenter.cs`.
-- Added `Assets/Scripts/Battle/BattleDiceResultPresenter.cs.meta`.
-- Updated `BattleController` to refresh the validation display after Dice result selection.
-- Added `BattleDiceResultPresenter` to `Assets/Scenes/Battle/Battle.unity`.
-- Connected the presenter to `BattleController`.
-- Kept the display runtime-created and temporary so it does not become the final Dice Result Overlay.
+- Updated `BattleCombatState` to apply an incoming damage value with `ApplyDamageToEnemy(int damage)`.
+- Removed the serialized `fixedThrowDamage` field from `BattleCombatState`.
+- Removed the old `fixedThrowDamage` value from `Assets/Scenes/Battle/Battle.unity`.
+- Updated `BattleController` to keep the selected Dice face from result selection.
+- Updated `BattleController` to apply `selectedFace.FixedThrowDamageValue` as deterministic Throw damage.
+- Kept `BattleDiceResultPresenter` as validation-only presentation.
 - Updated task queue, current state, changelog, and self-review documents.
 
 ## Validation
 
-- Throw still selects one Dice face through the existing M2-006 path.
-- Selected slot and face name are exposed as `RESULT S#: FaceName`.
-- Fixed damage still uses `BattleCombatState`.
+- Throw still selects one Dice face through the existing M2 Dice selection flow.
+- Selected slot and face name remain visible through the temporary validation text.
+- Damage is now read from the selected Dice face value.
+- Enemy HP still updates through `BattleCombatState.ApplyDamageToEnemy`.
+- Enemy HP still clamps at 0.
 - HP still refreshes through `BattleHudPresenter`.
 - Enemy defeat input lock remains in `BattleController`.
-- `BattleDiceResultPresenter` does not select results.
-- `BattleDiceResultPresenter` does not calculate damage.
-- `DiceAnimationLayer` remains reserved and unused by this validation display.
 - `PROJECT_GDD_v1.0.md` was not modified.
 
 ## Limitations
 
-- This is temporary validation presentation only.
-- No Dice Result Overlay was implemented.
-- No dice animation overlay, face reveal, face skills, enemy turn, rewards, progression, or multi-enemy logic was added.
-- Selected Dice faces still do not affect damage.
+- This task does not add Dice grade progression tables.
+- This task does not add face skills.
+- This task does not add enemy turns.
+- This task does not add rewards, progression, dice animation overlay, or multi-enemy logic.
+- Non-damaging starter faces currently apply 0 damage because their face value is 0.
 
 ## Stop Point
 
-Stopped after M2-007 implementation and validation as requested. M2-008 was not started.
+Stopped after M2-008 implementation and validation as requested. M2-009 was not started.

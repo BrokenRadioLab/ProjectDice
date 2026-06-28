@@ -2066,7 +2066,6 @@ MonoBehaviour:
   playerCurrentHp: 30
   enemyMaxHp: 20
   enemyCurrentHp: 20
-  fixedThrowDamage: 5
 --- !u!114 &1700000003
 MonoBehaviour:
   m_ObjectHideFlags: 0
