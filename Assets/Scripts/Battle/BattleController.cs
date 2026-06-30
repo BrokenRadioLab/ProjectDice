@@ -44,6 +44,20 @@ public sealed class BattleController : MonoBehaviour
             return IsInsideThrowArea(screenPosition);
         }
 
+        if (UnityEngine.Input.touchCount > 0)
+        {
+            Touch touch = UnityEngine.Input.GetTouch(0);
+            if (touch.phase == UnityEngine.TouchPhase.Began)
+            {
+                return IsInsideThrowArea(touch.position);
+            }
+        }
+
+        if (UnityEngine.Input.GetMouseButtonDown(0))
+        {
+            return IsInsideThrowArea(UnityEngine.Input.mousePosition);
+        }
+
         return false;
     }
 
