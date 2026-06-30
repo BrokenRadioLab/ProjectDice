@@ -66,24 +66,27 @@ public sealed class BattleController : MonoBehaviour
 
         inputLocked = true;
         battleDiceState?.BeginThrowRoll();
+        DiceFace selectedFace = SelectDiceResult();
+        FaceEffectData faceEffect = FaceResolver.Resolve(selectedFace);
+        int pendingDamage = GetPendingDamage(faceEffect);
 
         if (throwSequencePresenter != null)
         {
-            yield return throwSequencePresenter.Play();
+            yield return throwSequencePresenter.Play(selectedFace, faceEffect, pendingDamage);
         }
 
-        DiceFace selectedFace = SelectDiceResult();
+        diceResultPresenter?.ShowResult(battleDiceState);
 
-        int damage = combatState.ApplyDamageToEnemy(GetThrowDamage(selectedFace));
+        int damage = ApplyFaceEffect(faceEffect);
         hudPresenter?.Refresh();
 
         if (combatState.IsEnemyDefeated)
         {
-            SetBattleLog($"Throw dealt {damage}. Victory.");
+            SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} Victory.");
             yield break;
         }
 
-        SetBattleLog($"Throw dealt {damage}.");
+        SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
         inputLocked = false;
     }
 
@@ -97,14 +100,62 @@ public sealed class BattleController : MonoBehaviour
         int resultSlotIndex = DiceRoller.SelectResultSlot(battleDiceState.CurrentDice);
         battleDiceState.StopAtResultSlot(resultSlotIndex);
         battleDiceState.RevealResult();
-        diceResultPresenter?.ShowResult(battleDiceState);
 
         return battleDiceState.LastSelectedFace;
     }
 
-    private static int GetThrowDamage(DiceFace selectedFace)
+    private int ApplyFaceEffect(FaceEffectData faceEffect)
     {
-        return selectedFace != null ? selectedFace.FixedThrowDamageValue : 0;
+        if (combatState == null || faceEffect == null)
+        {
+            return 0;
+        }
+
+        if (faceEffect.EffectType == FaceEffectType.Damage)
+        {
+            return combatState.ApplyDamageToEnemy(faceEffect.DamageAmount);
+        }
+
+        return 0;
+    }
+
+    private int GetPendingDamage(FaceEffectData faceEffect)
+    {
+        if (combatState == null || faceEffect == null)
+        {
+            return 0;
+        }
+
+        if (faceEffect.EffectType != FaceEffectType.Damage)
+        {
+            return 0;
+        }
+
+        return Mathf.Min(combatState.EnemyCurrentHp, faceEffect.DamageAmount);
+    }
+
+    private static string GetFaceEffectLogMessage(FaceEffectData faceEffect, int appliedDamage)
+    {
+        if (faceEffect == null)
+        {
+            return "Unknown Face has no effect yet.";
+        }
+
+        string faceName = string.IsNullOrWhiteSpace(faceEffect.SourceFaceDisplayName)
+            ? "Unknown Face"
+            : $"{faceEffect.SourceFaceDisplayName} Face";
+
+        if (!faceEffect.IsImplemented)
+        {
+            return $"{faceName} has no effect yet.";
+        }
+
+        if (faceEffect.EffectType == FaceEffectType.Damage)
+        {
+            return $"{faceName} dealt {appliedDamage}.";
+        }
+
+        return $"{faceName} resolved.";
     }
 
     private void SetBattleLog(string message)

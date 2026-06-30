@@ -1,10 +1,529 @@
 # TASK QUEUE
 
-Selected Milestone: M2_DICE_CORE
+Selected Milestone: M4_SKILL_RESOLUTION
 
-Milestone Validation Status: READY_FOR_DIRECTOR_REVIEW
+Milestone Status: READY_FOR_DIRECTOR_REVIEW
 
 Source Milestone: `MILESTONE_PLAN.md`
+
+Director Review:
+
+- M2_DICE_CORE is approved and DONE.
+- M3_DICE_PRESENTATION is approved and DONE.
+- Proceed to M4_SKILL_RESOLUTION.
+- The current M3 sequence is the Project Dice Signature Battle Flow.
+
+M4 Locked Principle:
+
+- Face is not a simple skill button.
+- The Face is the stopped Dice result.
+- The revealed Face naturally causes the combat effect.
+- Player understanding should be: "Attack Face appeared, therefore attack happened."
+- M4 should center the Face result, not a generic RPG skill activation.
+
+Presentation Reference:
+
+- `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md`
+
+M3 Locked Flow:
+
+- Throw Button.
+- Hero Throw.
+- White projectile trail.
+- Enemy hit flash.
+- Dice Animation Layer appears.
+- Dice rolls.
+- Dice stops.
+- Face reveal.
+- Face effect.
+- Damage number.
+- Sequence ends.
+
+M3 Timing Priority:
+
+- Timing and rhythm come before animation quality.
+- Keep the sequence short, responsive, and readable.
+- First-pass target rhythm:
+  - Throw input.
+  - Hero Throw beat around 0.05 seconds.
+  - Projectile beat around 0.08 seconds.
+  - Enemy Flash beat around 0.05 seconds.
+  - Dice appearance beat around 0.10 seconds.
+  - Rolling beat around 0.45 seconds.
+  - Reveal beat around 0.20 seconds.
+  - Damage Number beat around 0.15 seconds.
+  - Sequence ends.
+
+M4 Scope Guardrails:
+
+- Implement Face Skill Resolution only when a detailed M4 task is selected.
+- Do not add enemy turns during M4.
+- Do not add rewards, progression, or Dice face replacement during M4.
+- Do not redesign Dice result selection.
+- Preserve the M3 signature battle flow order.
+
+Post-M4 Roadmap:
+
+- M5: Enemy Turn.
+- M6: Battle Complete.
+- M7: Reward.
+- M8: Dice Face Replacement.
+- First complete Run.
+
+## M4 Implementation Tasks
+
+Status: GENERATED
+
+M4 Task Rule:
+
+- One gameplay concept per task.
+- Keep each task independently verifiable.
+- Do not add enemy turns, rewards, progression, Dice face replacement, or new Dice result logic.
+- Do not invent undefined Face effects for `Guard`, `Spark`, or `Mend`.
+- Preserve the current M3 Signature Battle Flow.
+- Maintain architecture order: `DiceFace`, FaceResolver, Gameplay Effect, Presentation, `BattleCombatState`, `BattleHudPresenter`.
+- Presentation code must not decide gameplay.
+- Gameplay code must not own presentation.
+
+## M4-001: Face Effect Data Model
+
+Status: DONE
+
+Goal:
+
+Create the minimal runtime data concept that represents a deterministic Face effect result.
+
+Requirements:
+
+- Use the already selected `DiceFace` from M2.
+- Do not call `DiceRoller`.
+- Do not select another result.
+- Do not apply damage inside the model itself.
+- Do not modify `BattleDiceState` ownership.
+- Keep the result deterministic and data-light.
+- Effect data should be able to express at least:
+  - source Face id or display name.
+  - effect type or equivalent classification.
+  - resolved damage amount.
+  - whether the Face had an implemented MVP effect.
+
+Done Criteria:
+
+- Face effect data can describe what should happen without mutating HP.
+
+Validation:
+
+- The data model does not call Dice selection.
+- The data model does not directly update `BattleCombatState`.
+- The data model does not reference presentation objects.
+- No enemy turn, rewards, progression, Dice face replacement, or new Dice result logic is added.
+
+Completed:
+
+- Added `FaceEffectType` with `None` and `Damage`.
+- Added `FaceEffectData` to describe source Face id/name, effect type, damage amount, and implemented state.
+- Added factory helpers for no-effect and damage effect data.
+- The model stores data only and does not mutate combat state or presentation.
+
+## M4-002: Face Resolver
+
+Status: DONE
+
+Goal:
+
+Determine which gameplay effect should execute from the selected `DiceFace`.
+
+Requirements:
+
+- Consume the already selected `DiceFace` from M2.
+- Do not call `DiceRoller`.
+- Do not select another result.
+- Decide what should happen, but do not apply HP changes.
+- Do not own presentation.
+- Do not modify `BattleDiceState` ownership.
+- Keep the result deterministic and data-light.
+- `Attack` may resolve to a damage effect using its existing `FixedThrowDamageValue`.
+- `Guard`, `Spark`, and `Mend` must resolve to explicit undefined/no-effect data until Director or GDD source text defines them.
+
+Done Criteria:
+
+- A selected `DiceFace` can be resolved into Face effect data without mutating HP or running presentation.
+
+Validation:
+
+- Resolver consumes the existing selected Face only.
+- Resolver does not roll again.
+- Resolver does not directly update `BattleCombatState`.
+- Resolver does not call presentation code.
+- No enemy turn, rewards, progression, Dice face replacement, or new Dice result logic is added.
+
+Completed:
+
+- Added `FaceResolver.Resolve(DiceFace selectedFace)`.
+- `starter_attack` resolves to `FaceEffectData.Damage` using the selected Face's existing `FixedThrowDamageValue`.
+- Null, `Guard`, `Spark`, `Mend`, and any undefined Face resolve to explicit `FaceEffectData.None`.
+- Resolver does not mutate HP, trigger presentation, access UI, or call Dice result selection.
+
+## M4-003: Attack Face
+
+Status: DONE
+
+Goal:
+
+Implement `Attack` Face as the first MVP gameplay effect using the Face Resolver output.
+
+Requirements:
+
+- `Attack` Face resolves to deterministic damage using its current `FixedThrowDamageValue`.
+- Preserve the current 5 damage value for starter `Attack`.
+- Applying damage belongs to this current Attack gameplay task because Attack is the only implemented gameplay effect.
+- Enemy HP damage must come from the resolved Attack Face effect, not from a generic Throw damage path.
+- The player-facing cause must remain: Attack Face appeared, therefore attack happened.
+- Do not add random damage ranges.
+- Do not add critical hits, modifiers, combo logic, or target selection.
+- Do not implement Guard, Spark, or Mend effects in this task.
+- Damage is still applied only after Face Reveal and Face effect presentation timing.
+- `BattleCombatState` receives only the final resolved damage value.
+- `BattleCombatState` must not inspect Dice or Face data.
+- HP refresh still occurs after damage application.
+- Preserve victory input lock behavior.
+
+Done Criteria:
+
+- When `Attack` is the selected Face, the resolved Attack effect applies 5 damage through `BattleCombatState` after presentation timing.
+
+Validation:
+
+- Starter `Attack` Face still resolves to 5 damage.
+- Duplicate `Attack` faces remain separate Dice slots and do not become a unique-face probability table.
+- `BattleCombatState.ApplyDamageToEnemy` is still the only HP mutation path for enemy damage.
+- Damage application still occurs after presentation returns.
+- HP refresh still occurs after damage application.
+- No other starter Face gains new gameplay behavior in this task.
+- No enemy turn, rewards, progression, Dice face replacement, or new Dice result logic is added.
+
+Completed:
+
+- `BattleController` now resolves the selected `DiceFace` through `FaceResolver`.
+- Pending damage presentation now reads from resolved `FaceEffectData`.
+- Enemy HP damage now applies from `FaceEffectData.DamageAmount` only when the resolved effect type is `Damage`.
+- The previous generic selected-Face throw damage helper was removed.
+- Undefined/no-effect Faces produce zero pending damage and do not apply enemy damage.
+
+## M4-004: Explicit Undefined Face Handling
+
+Status: DONE
+
+Goal:
+
+Handle starter Faces without Director-defined MVP effects explicitly and safely.
+
+Requirements:
+
+- `Guard`, `Spark`, and `Mend` must not receive invented effects.
+- Undefined starter Faces should resolve as implemented=false or equivalent no-effect result.
+- Undefined starter Faces should not damage the enemy.
+- Undefined starter Faces should not heal, shield, spark, stun, draw, reroll, or alter future turns.
+- The result should remain visible or understandable enough for validation.
+
+Done Criteria:
+
+- Non-`Attack` starter Faces resolve without causing hidden gameplay changes.
+
+Validation:
+
+- `Guard`, `Spark`, and `Mend` do not change enemy HP.
+- `Guard`, `Spark`, and `Mend` do not change player HP.
+- No shield, enemy turn, reward, progression, Dice face replacement, or future system is added.
+- Documentation or validation output makes clear that their effects are intentionally pending Director/GDD definition.
+
+Completed:
+
+- Undefined/no-effect Face results now produce explicit battle log feedback.
+- Null or unknown Face results are reported as having no effect yet.
+- Guard, Spark, Mend, and other undefined Faces still resolve through `FaceResolver` as `FaceEffectData.None`.
+- Undefined/no-effect Faces still do not apply enemy damage or player healing.
+- No Guard, Spark, Mend, shield, stun, heal, reroll, enemy turn, reward, progression, or Dice face replacement behavior was added.
+
+## M4-005: Face Effect Presentation Beat
+
+Status: DONE
+
+Goal:
+
+Add a short presentation beat that communicates the resolved Face effect after Face Reveal and before Damage Number.
+
+Requirements:
+
+- Keep the Dice as part of the battle animation sequence.
+- The effect beat must follow Face Reveal.
+- Damage Number must still appear after the Face effect beat.
+- Use short, readable, SNES-style presentation.
+- Avoid camera movement, complex particles, long anticipation, or modern VFX.
+- Do not turn the Face effect into a menu, button, or UI overlay.
+- Undefined Faces may show a minimal pending/no-effect validation cue only.
+
+Done Criteria:
+
+- The player can understand that the revealed Face caused the following effect.
+
+Validation:
+
+- Sequence remains: Throw, Hero feedback, projectile, enemy flash, Dice layer, rolling, face reveal, Face effect, damage number, damage apply, HP refresh.
+- The Face effect beat does not select a new result.
+- The Face effect beat does not apply damage directly.
+- No enemy turn, rewards, progression, Dice face replacement, or new Dice result logic is added.
+
+Completed:
+
+- `ThrowSequencePresenter.Play` now receives resolved `FaceEffectData`.
+- Added a short Face Effect Text presentation beat after Face Reveal and before Damage Number.
+- Damage effects show compact `Damage` feedback.
+- Undefined/no-effect results show compact `No Effect` feedback.
+- Face effect presentation does not apply damage, mutate HP, select dice, or execute gameplay.
+
+## M4-006: Validate M4 Face Skill Resolution
+
+Status: DONE
+
+Goal:
+
+Validate the complete M4 Face Skill Resolution flow before moving to enemy turn work.
+
+Requirements:
+
+- Confirm selected Face is resolved exactly once.
+- Confirm `FaceResolver` decides the gameplay effect without presentation or HP mutation.
+- Confirm `Attack` Face causes deterministic damage through the resolved Face effect.
+- Confirm undefined starter Faces do not gain invented gameplay effects.
+- Confirm HP changes only after the Face effect and damage presentation timing.
+- Confirm `BattleCombatState` still owns only HP and damage application.
+- Confirm `BattleDiceState` still owns Dice runtime state only.
+- Confirm M3 Signature Battle Flow remains intact.
+- Confirm no enemy turn, rewards, progression, Dice face replacement, or future systems were added.
+
+Done Criteria:
+
+- M4_SKILL_RESOLUTION is ready for Director review.
+
+Validation:
+
+- Static inspection confirms one selected Face resolution per accepted Throw.
+- Static inspection confirms no reroll or second random result occurs.
+- Static inspection confirms presentation code does not decide gameplay.
+- Static inspection confirms damage source is the resolved Face effect.
+- Unity import/compile validation passes.
+- Director Play Mode review remains required for live causality and readability.
+
+Completed:
+
+- Confirmed `FaceResolver.Resolve` is called once per accepted Throw after Dice result selection.
+- Confirmed no second Dice roll or random result occurs during Face resolution.
+- Confirmed `Attack` resolves to a Damage effect through `FaceResolver`.
+- Confirmed Guard, Spark, Mend, null, and unknown Faces resolve to `FaceEffectData.None`.
+- Confirmed Face Reveal occurs before Face Effect presentation.
+- Confirmed Face Effect presentation occurs before Damage Number presentation.
+- Confirmed damage application occurs only after `ThrowSequencePresenter.Play` returns.
+- Confirmed `BattleCombatState.ApplyDamageToEnemy` is called only for resolved `FaceEffectType.Damage`.
+- Confirmed `ThrowSequencePresenter` does not decide gameplay or mutate HP.
+- Unity batchmode import/compile validation completed successfully with exit code 0.
+- M4_SKILL_RESOLUTION is ready for Director review.
+
+## M3 Implementation Tasks
+
+## M3-001: Dice Animation Layer
+
+Status: DONE
+
+Goal:
+
+Prepare the existing hidden `DiceAnimationLayer` as the temporary battle presentation layer that appears only after enemy impact.
+
+Requirements:
+
+- Keep the dice as battle animation, not UI or menu overlay.
+- Use the existing Battle scene center reservation and `DiceAnimationLayer`.
+- Keep layer hidden outside the throw sequence.
+- Appear only after the current Hero throw, projectile trail, and enemy hit flash.
+- Preserve selected Dice result logic from M2.
+- Do not implement rolling animation, face reveal, face effects, damage number presentation, enemy turn, rewards, progression, or layout redesign.
+
+Done Criteria:
+
+- `DiceAnimationLayer` can be shown and hidden during the Throw sequence at the correct point after enemy impact.
+
+Validation:
+
+- `ThrowSequencePresenter` references the existing scene `DiceAnimationLayer`.
+- `DiceAnimationLayer` remains hidden by default.
+- `DiceAnimationLayer` is shown only after Hero feedback, projectile trail, and enemy hit flash.
+- `DiceAnimationLayer` hides again before damage is applied.
+- Rolling animation, face reveal, face effects, damage number presentation, enemy turn, rewards, progression, and layout redesign were not implemented.
+
+## M3-002: Rolling Presentation
+
+Status: DONE
+
+Goal:
+
+Add a short, readable, SNES-style dice rolling presentation after the Dice Animation Layer appears.
+
+Requirements:
+
+- Keep animation short and responsive.
+- Use simple 4 to 6 frame style or equivalent placeholder presentation.
+- No 3D rotation.
+- No complex physics.
+- No cinematic camera movement.
+- Do not implement final face reveal, face effects, damage number presentation, enemy turn, rewards, or progression.
+
+Done Criteria:
+
+- Each accepted Throw shows a brief dice roll before stopping.
+
+Validation:
+
+- `DiceAnimationLayer` remains visible through the rolling presentation.
+- A runtime `Rolling Dice Placeholder` is created under `DiceAnimationLayer`.
+- Rolling lasts 0.45 seconds with simple frame-like position, color, and 90-degree orientation changes.
+- No visual face reveal was implemented.
+- No damage number presentation was implemented.
+- No face skill activation, enemy turn, rewards, progression, or Dice result logic redesign was implemented.
+
+## M3-003: Face Reveal
+
+Status: DONE
+
+Goal:
+
+Reveal the selected Dice face clearly after the rolling presentation stops.
+
+Requirements:
+
+- Revealed face must match the selected `BattleDiceState` result.
+- Top face must be immediately readable.
+- Result presentation must be short.
+- Reveal must consume the already selected Dice result only.
+- Do not call `DiceRoller` from the presentation layer.
+- Do not generate another random result.
+- Do not modify `BattleDiceState`.
+- Do not resolve face skills yet.
+- Do not implement rewards, progression, or enemy turn.
+
+Done Criteria:
+
+- The dice reveal visibly matches the selected Dice face result.
+
+Validation:
+
+- `BattleController` selects the Dice result once before the presentation reveal.
+- `ThrowSequencePresenter.Play` receives the selected `DiceFace` and displays that face name after rolling.
+- `ThrowSequencePresenter` does not call `DiceRoller`.
+- No additional random result is generated for presentation.
+- No `BattleDiceState` structure or ownership change was made.
+- No damage number presentation, face skill activation, enemy turn, rewards, progression, or Dice result logic redesign was implemented.
+
+## M3-004: Damage Presentation
+
+Status: DONE
+
+Goal:
+
+Show damage number presentation only after the Dice face reveal.
+
+Requirements:
+
+- Damage number must not appear before the dice stops and reveals.
+- Preserve existing deterministic damage source from the selected `DiceFace`.
+- Keep damage presentation short, readable, and classic SNES-style.
+- Do not implement skill effects beyond the existing damage value.
+- Do not implement enemy turn, rewards, or progression.
+
+Done Criteria:
+
+- Damage is visually presented after face reveal and before the sequence ends.
+
+Validation:
+
+- `ThrowSequencePresenter` shows damage number presentation after `PlayFaceReveal`.
+- Damage number lasts 0.15 seconds.
+- `BattleController` applies damage and refreshes HP only after the presentation sequence returns.
+- Damage number uses the selected Dice face's deterministic damage value, clamped to current enemy HP for display.
+- No face skill activation, enemy turn, rewards, progression, new Dice result logic, or multi-enemy logic was implemented.
+
+## M3-005: Validate M3 Dice Presentation
+
+Status: DONE
+
+Goal:
+
+Validate the complete M3 battle presentation sequence before moving to skill resolution.
+
+Requirements:
+
+- Confirm Throw input locks during the sequence.
+- Confirm dice appears only after enemy impact.
+- Confirm rolling presentation occurs.
+- Confirm face reveal matches the selected Dice result.
+- Confirm damage number appears only after face reveal.
+- Confirm sequence remains short, readable, and SNES-style.
+- Evaluate feel, not only functional correctness:
+  - Face reveal is readable.
+  - Damage number appears naturally after reveal.
+  - HP decreases at a satisfying moment.
+  - Full sequence remains responsive rather than slow.
+- Confirm no enemy turn, rewards, progression, or future systems were added.
+
+Done Criteria:
+
+- M3_DICE_PRESENTATION is ready for Director review.
+
+Validation:
+
+- Static inspection confirmed Throw input remains locked during the presentation coroutine.
+- Static inspection confirmed `DiceAnimationLayer` appears after enemy impact.
+- Static inspection confirmed rolling presentation occurs before face reveal.
+- Static inspection confirmed face reveal consumes the already selected `DiceFace`.
+- Static inspection confirmed damage number appears only after face reveal.
+- Static inspection confirmed damage is applied and HP refreshes only after the presentation sequence returns.
+- Unity batchmode import/compile validation completed successfully with exit code 0.
+- No enemy turn, rewards, progression, face skill activation, new Dice result logic, or future systems were added.
+- Director Play Mode review remains the final authority for live feel, timing, readability, and responsiveness.
+
+## Completed Documentation Sync Task
+
+## TASK_DOCS_SYNC_BEFORE_M3
+
+Status: DONE
+
+Goal:
+
+Synchronize project documentation before starting M3 without implementing gameplay, modifying scene layout, or modifying combat code.
+
+Completed:
+
+- Updated `MILESTONE_PLAN.md` so M0 and M1 were DONE, M2_DICE_CORE was ready for Director review, and M3_DICE_PRESENTATION was pending before Director final approval.
+- Recorded that `Docs/PROJECT_GDD_v1.0.md` is not currently present and will be provided by the Director later.
+- Confirmed `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present and locked.
+- Updated `CURRENT_STATE.md` to state that M2 Dice Core implementation was complete and ready for Director approval before final review.
+- Recorded the then-current GDD source text gap before Director final approval allowed M3 to proceed from review feedback and the locked Battle Presentation Guide.
+- Updated `CHANGELOG.md`, `DONE_REPORT.md`, and `SELF_REVIEW_REPORT.md`.
+
+Validation:
+
+- No gameplay files changed.
+- No scene files changed.
+- No GDD redesign occurred.
+- MILESTONE_PLAN.md matches CURRENT_STATE.md for M0, M1, M2, and M3 state.
+- Missing GDD source text is clearly reported.
+
+M3 implementation tasks were not created.
+
+## Completed M2 Status
+
+Selected Milestone: M2_DICE_CORE
+
+Milestone Status: DONE
 
 GDD References:
 
@@ -14,7 +533,7 @@ GDD References:
 - Section 14: Dice Grade Progression
 - Section 15: Dice Faces
 - Section 17: Throw Damage
-- Section 19: Dice Result Overlay
+- Section 19: Dice Presentation
 - Section 21: Battle System
 - Section 32: User Interface
 
@@ -236,7 +755,7 @@ Requirements:
 - Duplicate faces must naturally affect probability.
 - Keep fixed throw damage behavior intact.
 - Store or expose the latest selected face for validation/debug visibility if needed.
-- Do not implement Dice Result Overlay.
+- Do not implement final Dice battle presentation.
 - Do not implement face reveal UI.
 - Do not implement face skills.
 - Do not implement enemy turns.
@@ -263,7 +782,7 @@ Status: DONE
 
 Goal:
 
-Expose the latest selected Dice face in a minimal, non-permanent validation-friendly way without adding the final Dice Result Overlay.
+Expose the latest selected Dice face in a minimal, non-permanent validation-friendly way without adding the final Dice battle presentation.
 
 Files:
 
@@ -280,7 +799,7 @@ Files:
 Requirements:
 
 - Keep this as temporary validation presentation only.
-- Do not create the final Dice Result Overlay.
+- Do not create the final Dice battle presentation.
 - Do not animate rolling.
 - Do not reveal a top face as final overlay presentation.
 - Do not permanently occupy the center battle space.
@@ -299,7 +818,7 @@ Validation Checklist:
 
 Done Criteria:
 
-- Developers can verify Dice result selection without implementing the final Dice Result Overlay milestone.
+- Developers can verify Dice result selection without implementing the final Dice battle presentation milestone.
 
 ## M2-008: Connect Fixed Throw Damage Source To Dice Grade MVP Value
 
@@ -350,7 +869,7 @@ Status: DONE
 
 Goal:
 
-Validate the completed M2 Dice Core end-to-end before moving into the Dice Result Overlay milestone.
+Validate the completed M2 Dice Core end-to-end before moving into the Dice presentation milestone.
 
 Files:
 
@@ -372,7 +891,7 @@ Requirements:
 - Confirm one Dice face result is selected per Throw.
 - Confirm duplicate faces affect result probability by existing as duplicate pool entries.
 - Confirm Dice face selection does not apply skills.
-- Confirm no Dice Result Overlay, enemy turn, reward, progression, inventory, or item behavior has been introduced.
+- Confirm no final Dice presentation, enemy turn, reward, progression, inventory, or item behavior has been introduced.
 - Do not modify `PROJECT_GDD_v1.0.md`.
 
 Validation Checklist:
@@ -390,4 +909,4 @@ Validation Checklist:
 
 Done Criteria:
 
-- M2_DICE_CORE is ready for human review and can hand off cleanly to M3_DICE_RESULT_OVERLAY.
+- M2_DICE_CORE is approved by Director final review and can hand off to M3_DICE_PRESENTATION.

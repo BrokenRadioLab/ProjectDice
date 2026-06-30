@@ -1,5 +1,89 @@
 # CHANGELOG
 
+## 2026-06-30
+
+### Changed
+
+- Started M4_SKILL_RESOLUTION implementation.
+- Implemented M4-002 Face Resolver.
+- Added `FaceResolver.Resolve(DiceFace selectedFace)` as a pure `DiceFace` to `FaceEffectData` transform.
+- Marked M4-002 as DONE and M4-003 Attack Face as NEXT.
+- Implemented M4-003 Attack Face.
+- Updated `BattleController` so Attack damage is applied from resolved `FaceEffectData` instead of generic selected-Face Throw damage.
+- Marked M4-003 as DONE and M4-004 Explicit Undefined Face Handling as NEXT.
+- Confirmed Unity batchmode import/compile validation for M4-003 completed successfully with exit code 0.
+- Implemented M4-004 Explicit Undefined Face Handling.
+- Added explicit no-effect battle log feedback for undefined, null, Guard, Spark, and Mend Face results.
+- Marked M4-004 as DONE and M4-005 Face Effect Presentation Beat as NEXT.
+- Confirmed Unity batchmode import/compile validation for M4-004 completed successfully with exit code 0.
+- Implemented M4-005 Face Effect Presentation Beat.
+- Added compact Face Effect Text under `DiceAnimationLayer` after Face Reveal and before Damage Number.
+- Damage effects show `Damage`; undefined/no-effect results show `No Effect`.
+- Marked M4-005 as DONE and M4-006 Validate M4 Face Skill Resolution as NEXT.
+- Confirmed Unity batchmode import/compile validation for M4-005 completed successfully with exit code 0.
+- Completed M4-006 Validate M4 Face Skill Resolution.
+- Marked M4_SKILL_RESOLUTION as READY_FOR_DIRECTOR_REVIEW.
+- Confirmed Unity batchmode import/compile validation for M4-006 completed successfully with exit code 0.
+- Implemented M4-001 Face Effect Data Model.
+- Added `FaceEffectData` and `FaceEffectType` runtime data for deterministic Face effect results.
+- Marked M4-001 as DONE and M4-002 Face Resolver as NEXT.
+- Started M3_DICE_PRESENTATION.
+- Recorded Director PASS for M3_DICE_PRESENTATION.
+- Marked M3_DICE_PRESENTATION as DONE.
+- Marked M4_SKILL_RESOLUTION as READY.
+- Locked current M3 sequence as Project Dice's Signature Battle Flow.
+- Recorded M4 Face causality principle: the revealed Face causes the combat effect and must not feel like a generic skill button.
+- Started M3-005 Dice Presentation Validation.
+- Completed M3-005 Dice Presentation Validation.
+- Marked M3_DICE_PRESENTATION as READY_FOR_DIRECTOR_REVIEW.
+- Confirmed Unity batchmode import/compile validation completed successfully with exit code 0.
+- Added explicit package dependencies for Unity UI and Input System so the current project scripts compile in batchmode.
+- Added Director M3-005 validation focus: feel, readability, natural damage timing, satisfying HP decrease, and responsiveness.
+- Implemented M3-002 Rolling Presentation.
+- Implemented M3-003 Face Reveal.
+- Implemented M3-004 Damage Presentation.
+- Added runtime `Damage Number Text` under `DiceAnimationLayer`.
+- Added 0.15 second damage number beat after face reveal.
+- Kept HP refresh after the full presentation sequence returns.
+- Marked M3-004 as DONE and M3-005 Validate M3 Dice Presentation as NEXT.
+- Updated `BattleController` to select the Dice result once before battle presentation reveal.
+- Updated `ThrowSequencePresenter` so face reveal consumes the already selected `DiceFace`.
+- Added runtime `Dice Face Reveal Text` under the rolling Dice placeholder.
+- Added 0.20 second face reveal duration.
+- Marked M3-003 as DONE and M3-004 Damage Presentation as NEXT.
+- Added a runtime `Rolling Dice Placeholder` under `DiceAnimationLayer`.
+- Kept `DiceAnimationLayer` visible through the rolling beat before hiding it.
+- Added 0.45 second rolling duration with simple frame-like position, color, and orientation changes.
+- Marked M3-002 as DONE and M3-003 Face Reveal as NEXT.
+- Implemented M3-001 Dice Animation Layer.
+- Connected `ThrowSequencePresenter` to the existing scene `DiceAnimationLayer`.
+- Updated the throw rhythm so Hero feedback is 0.05 seconds, projectile is 0.08 seconds, enemy flash is 0.05 seconds, and Dice Animation Layer appearance is 0.10 seconds.
+- Ensured `DiceAnimationLayer` appears only after enemy hit flash and hides again before damage is applied.
+- Marked M3-001 as DONE and M3-002 Rolling Presentation as NEXT.
+- Recorded Director final review approval for M2_DICE_CORE.
+- Marked M2_DICE_CORE as DONE.
+- Marked M3_DICE_PRESENTATION as READY.
+- Updated M3 direction so it is no longer treated as a Dice Overlay milestone.
+- Recorded that the dice is part of the battle animation sequence, not UI.
+- Added M3 task sequence in `TASK_QUEUE.md`: Dice Animation Layer, Rolling presentation, Face reveal, Damage presentation, and Validation.
+- Recorded the locked M3 presentation flow: Throw Button, Hero Throw, white projectile trail, Enemy hit flash, Dice Animation Layer appears, Dice rolls, Dice stops, Face reveal, Face effect, Damage number, Sequence ends.
+- Confirmed M3 may proceed from Director feedback and `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` while GDD source text remains pending, without inventing GDD content.
+- Synchronized documentation before M3 without changing gameplay code or scene files.
+- Updated `MILESTONE_PLAN.md` so M0_PROJECT_SETUP and M1_COMBAT_CORE are DONE.
+- Earlier synchronized `MILESTONE_PLAN.md` while M2_DICE_CORE was still awaiting Director review.
+- Later updated `MILESTONE_PLAN.md` after Director approval so M2_DICE_CORE is DONE and M3_DICE_PRESENTATION is READY.
+- Recorded that `Docs/PROJECT_GDD_v1.0.md` is not currently present and will be provided by the Director later.
+- Confirmed `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present and locked.
+- Updated `CURRENT_STATE.md` to state that M2 Dice Core implementation was complete and then approved by Director final review.
+- Updated `CURRENT_STATE.md` to state that M3 may proceed from Director feedback and the locked Battle Presentation Guide while GDD source text remains pending.
+- Marked `TASK_DOCS_SYNC_BEFORE_M3` as DONE in `TASK_QUEUE.md`.
+- Updated `DONE_REPORT.md` and `SELF_REVIEW_REPORT.md` for documentation sync validation.
+
+### Documentation Sync Not Changed
+
+- During `TASK_DOCS_SYNC_BEFORE_M3`, no gameplay files, scene files, or combat code were changed.
+- No GDD content was invented, redesigned, or reconstructed.
+
 ## 2026-06-29
 
 ### Changed

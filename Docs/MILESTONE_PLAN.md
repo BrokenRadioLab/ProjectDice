@@ -2,6 +2,12 @@
 
 `PROJECT_GDD_v1.0.md` is the source of truth. This plan is the only milestone source and must not redefine the game against the GDD.
 
+Current source-of-truth status:
+
+- `Docs/PROJECT_GDD_v1.0.md` is not currently present and will be provided by the Director later.
+- `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present and locked.
+- M3 is approved by Director review. Do not invent GDD content while implementing later milestones.
+
 Detailed implementation tasks belong in `TASK_QUEUE.md` only after a milestone is selected for implementation.
 
 ## MVP Direction
@@ -12,7 +18,7 @@ Required MVP pillars:
 
 - Dice throw combat loop.
 - Fixed throw damage.
-- Dice Result Overlay.
+- Dice battle presentation.
 - Dice face skill activation.
 - Enemy turn.
 - Victory and defeat.
@@ -23,10 +29,10 @@ Required MVP pillars:
 ## Milestone Status
 
 1. M0_PROJECT_SETUP - DONE
-2. M1_COMBAT_CORE - IN_PROGRESS
-3. M2_DICE_CORE - PENDING
-4. M3_DICE_RESULT_OVERLAY - PENDING
-5. M4_SKILL_RESOLUTION - PENDING
+2. M1_COMBAT_CORE - DONE
+3. M2_DICE_CORE - DONE
+4. M3_DICE_PRESENTATION - DONE
+5. M4_SKILL_RESOLUTION - READY_FOR_DIRECTOR_REVIEW
 6. M5_ENEMY_TURN_AND_BATTLE_END - PENDING
 7. M6_LINEAR_STAGE_RUN - PENDING
 8. M7_REWARD_AND_FACE_REPLACEMENT - PENDING
@@ -59,7 +65,7 @@ Confirmed complete by human request before starting M1.
 
 ## M1_COMBAT_CORE
 
-Status: IN_PROGRESS
+Status: DONE
 
 Goal:
 
@@ -84,7 +90,7 @@ Confirm the base combat rhythm feels clear before Dice randomness and overlay pr
 
 ## M2_DICE_CORE
 
-Status: PENDING
+Status: DONE
 
 Goal:
 
@@ -107,37 +113,53 @@ Exit Criteria:
 
 Human Review Point:
 
-Confirm the Dice model supports the intended probability-building fantasy before adding face effects.
+Approved by Director final review on 2026-06-30.
 
-## M3_DICE_RESULT_OVERLAY
+## M3_DICE_PRESENTATION
 
-Status: PENDING
+Status: DONE
 
 Goal:
 
-Deliver the signature Dice Result Overlay moment for each player throw.
+Deliver the signature battle presentation for each player throw.
 
 Scope:
 
-- Battle-visible dark overlay.
-- Centered Dice presentation.
-- Rolling or face-cycling anticipation.
-- Clear final result reveal.
-- Input lockout while overlay is active.
+- Dice Animation Layer appears after enemy impact.
+- Dice rolls briefly as part of the battle animation sequence.
+- Dice stops and reveals the selected face.
+- Damage number appears only after the dice result is revealed.
+- Input lockout while the presentation sequence is active.
 
 Exit Criteria:
 
-- Every player throw shows the overlay.
+- Every player throw shows the dice as part of the battle animation sequence.
+- The dice becomes visible only after enemy impact.
 - The revealed face matches the selected Dice result.
-- The result remains visible long enough to read.
+- Damage is presented only after the face reveal.
+- The sequence remains short, responsive, readable, and SNES-style.
 
 Human Review Point:
 
-Confirm the overlay has the intended anticipation and readability before skill resolution is layered in.
+Confirm the Hero throw, impact, dice roll, face reveal, and damage presentation establish the intended visual identity before skill resolution is layered in.
+
+Validation Status:
+
+- M3-001 through M3-005 are complete.
+- Static validation confirms the complete throw presentation order.
+- Unity batchmode import/compile validation completed successfully on 2026-06-30.
+- Director review passed on 2026-06-30.
+- This sequence is now the Project Dice Signature Battle Flow.
+
+Precondition:
+
+- Follow Director M2 final review feedback and `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md`.
+- Do not treat the dice as UI or a menu overlay.
+- Do not invent GDD content while GDD source text is pending.
 
 ## M4_SKILL_RESOLUTION
 
-Status: PENDING
+Status: READY_FOR_DIRECTOR_REVIEW
 
 Goal:
 
@@ -147,8 +169,10 @@ Scope:
 
 - Small MVP face effect set.
 - Fixed, readable effects only.
-- Activation after Dice Result Overlay.
+- Activation after Dice presentation and face reveal.
 - No random damage ranges or unrelated character upgrades.
+- Preserve the cause-and-effect chain: the revealed Face causes the combat effect.
+- Treat Face as the result of the stopped Dice, not as a skill button.
 
 Exit Criteria:
 
@@ -159,6 +183,28 @@ Exit Criteria:
 Human Review Point:
 
 Confirm the initial face effects are enough to validate Dice build decisions.
+
+Director-Locked Principle:
+
+- Face is not a simple skill button.
+- Player understanding should be "Attack Face appeared, therefore attack happened."
+- M4 should center the Face result, not a generic RPG skill activation.
+
+Detailed Task Status:
+
+- M4 detailed implementation tasks have been generated and Director-refined in `Docs/TASK_QUEUE.md`.
+- M4 implementation has started.
+- M4-001 Face Effect Data Model is DONE.
+- M4-002 Face Resolver is DONE.
+- M4-003 Attack Face is DONE.
+- M4-004 Explicit Undefined Face Handling is DONE.
+- M4-005 Face Effect Presentation Beat is DONE.
+- M4-006 Validate M4 Face Skill Resolution is DONE.
+- Unity batchmode import/compile validation completed successfully on 2026-06-30.
+- M4 is ready for Director review.
+- `Attack` is the only currently defined damage Face behavior.
+- `Guard`, `Spark`, and `Mend` must not receive invented effects until Director or GDD source text defines them.
+- M4 task architecture is `DiceFace`, FaceResolver, Gameplay Effect, Presentation, `BattleCombatState`, `BattleHudPresenter`.
 
 ## M5_ENEMY_TURN_AND_BATTLE_END
 

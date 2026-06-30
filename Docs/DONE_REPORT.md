@@ -1,14 +1,14 @@
 # DONE REPORT
 
-Date: 2026-06-29
+Date: 2026-06-30
 
-Selected Task: M2-009_VALIDATE_M2_DICE_CORE
+Selected Milestone: M4_SKILL_RESOLUTION
 
-Completed Task: Validate M2 Dice Core
+Completed Work: M4-006 Validate M4 Face Skill Resolution
 
 ## Summary
 
-Validated the completed M2 Dice Core by inspecting the Battle scene, Dice runtime model, Battle flow scripts, validation presenter, and current Unity Editor log. M2_DICE_CORE is ready for Director review, with one limitation: automated Unity batchmode / Play Mode validation was blocked because the project is already open in another Unity Editor instance.
+Validated the full M4 Face Skill Resolution pipeline. M4 is now READY_FOR_DIRECTOR_REVIEW.
 
 ## Validation Result
 
@@ -16,34 +16,38 @@ PASS
 
 ## Confirmed
 
-- Starter Dice exists in `Assets/Scenes/Battle/Battle.unity` through `BattleDiceState`.
-- Starter Dice has exactly six serialized face slots.
-- Duplicate face slots are allowed and represented as duplicate pool entries.
-- The starter Dice contains `Attack`, `Attack`, `Guard`, `Guard`, `Spark`, and `Mend`.
-- Each accepted Throw calls Dice result selection once through `DiceRoller.SelectResultSlot`.
-- `DiceRoller.SelectResultSlot` selects from slot indexes `0` through `5`.
-- Selected slot is stored in `DiceModel.lastResultSlotIndex` through `BattleDiceState.StopAtResultSlot`.
-- Selected face is exposed through `BattleDiceState.LastSelectedFace`.
-- Result validation text displays selected slot and face through `BattleDiceResultPresenter`.
-- Damage is applied from `DiceFace.FixedThrowDamageValue`.
-- Attack faces deal 5 damage.
-- Guard, Spark, and Mend currently deal 0 damage because skill effects are not implemented yet.
-- Enemy HP clamps at 0 through `BattleCombatState.ApplyDamageToEnemy`.
-- Throw remains locked after enemy defeat through `BattleController`.
-- HP UI updates through `BattleHudPresenter.Refresh`.
-- `BattleCombatState` only applies received damage and does not own Dice logic.
-- No Dice overlay or Dice animation was implemented.
-- No face skill activation was implemented.
-- No enemy turn, reward, progression, multi-enemy, inventory, item, or future system was added.
-- `PROJECT_GDD_v1.0.md` was not modified.
+- M4-001 Face Effect Data Model is DONE and approved.
+- M4-002 Face Resolver is DONE and approved.
+- M4-003 Attack Face is DONE and approved.
+- M4-004 Explicit Undefined Face Handling is DONE and approved.
+- M4-005 Face Effect Presentation Beat is DONE and approved.
+- M4-006 Validate M4 Face Skill Resolution is DONE.
+- M4_SKILL_RESOLUTION is READY_FOR_DIRECTOR_REVIEW.
+- `FaceResolver.Resolve` is called once per accepted Throw.
+- No second Dice roll or random result occurs during Face resolution.
+- `Attack` resolves to a Damage effect.
+- Guard, Spark, Mend, null, and unknown Faces resolve to no-effect data.
+- Face Reveal occurs before Face Effect.
+- Face Effect occurs before Damage Number.
+- Damage applies only after `ThrowSequencePresenter.Play` returns.
+- `BattleCombatState.ApplyDamageToEnemy` is called only for resolved `FaceEffectType.Damage`.
+- Unity batchmode import/compile validation completed successfully with exit code 0.
 
-## Unity Validation
+## Not Added
 
-- Unity batchmode validation was attempted for M2-009.
-- Unity reported that another Unity instance already has `D:/UnitySpace/Dice` open.
-- Automated Play Mode validation was therefore not available from Codex in this turn.
-- Human Play Mode review remains recommended for live click/visual confirmation.
+- No Guard, Spark, or Mend mechanics were added.
+- No enemy turn was added.
+- No rewards or progression were added.
+- No Dice face replacement was added.
+- No new Dice result logic was added.
+
+## Validation Notes
+
+- Unity validation log: `/tmp/projectdice_m4_006_unity.log`.
+- Static inspection confirms presentation code does not decide gameplay.
+- Static inspection confirms presentation code does not mutate HP.
+- Static inspection confirms `BattleCombatState` still owns enemy HP mutation.
 
 ## Stop Point
 
-Stopped after M2-009 validation and documentation as requested. M3_DICE_RESULT_OVERLAY was not started.
+Stopped after M4 validation. M5 has not started.

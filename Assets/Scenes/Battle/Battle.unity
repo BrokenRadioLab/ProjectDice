@@ -1776,15 +1776,25 @@ MonoBehaviour:
   battleField: {fileID: 2200000001}
   heroSlot: {fileID: 1100000001}
   enemySlot: {fileID: 1200000001}
+  diceAnimationLayer: {fileID: 2400000001}
   heroPlaceholder: {fileID: 1100000003}
   enemyPlaceholder: {fileID: 1200000003}
-  heroFeedbackDuration: 0.08
+  heroFeedbackDuration: 0.05
   projectileDuration: 0.08
-  enemyFlashDuration: 0.08
+  enemyFlashDuration: 0.05
+  diceLayerAppearDuration: 0.1
+  diceRollingDuration: 0.45
+  diceRollFrameDuration: 0.08
+  faceRevealDuration: 0.2
+  damageNumberDuration: 0.15
   projectileThickness: 3
+  rollingDiceSize: {x: 48, y: 48}
   projectileColor: {r: 1, g: 1, b: 1, a: 1}
   heroFeedbackColor: {r: 0.95, g: 0.95, b: 1, a: 0.28}
   enemyFlashColor: {r: 1, g: 0.95, b: 0.88, a: 0.55}
+  rollingDiceColor: {r: 0.94, g: 0.91, b: 0.78, a: 1}
+  faceRevealTextColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+  damageNumberTextColor: {r: 1, g: 0.78, b: 0.42, a: 1}
 --- !u!1 &1600000000
 GameObject:
   m_ObjectHideFlags: 0

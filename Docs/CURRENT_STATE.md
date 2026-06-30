@@ -1,12 +1,16 @@
 # CURRENT STATE
 
-Last Updated: 2026-06-29
+Last Updated: 2026-06-30
 
 ## Source of Truth
 
-`Docs/PROJECT_GDD_v1.0.md` is the source of truth for Project Dice. Planning and presentation documents may organize work, but they must not redefine the game against the GDD.
+`Docs/PROJECT_GDD_v1.0.md` is the source of truth for Project Dice. It is not currently present and will be provided by the Director later.
 
-`PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is the current visual/presentation guide for the Battle scene layout.
+`Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present, locked, and is the current visual/presentation guide for the Battle scene layout.
+
+Planning and presentation documents may organize work, but they must not redefine the game against the GDD.
+
+M3 is approved by Director review. GDD content must not be invented while the GDD source file is pending.
 
 ## Current Status
 
@@ -14,7 +18,7 @@ The project is in MVP foundation work.
 
 - M0_PROJECT_SETUP is DONE.
 - M1_COMBAT_CORE implementation tasks M1-T001 through M1-T006 are DONE.
-- M1_COMBAT_CORE remains ready for human review in `MILESTONE_PLAN.md`.
+- M1_COMBAT_CORE is DONE in `MILESTONE_PLAN.md`.
 - `MILESTONE_PLAN.md` remains the only milestone source.
 - `M2-000_FINAL_BATTLE_LAYOUT_FOUNDATION` is DONE.
 - `M2-001_EDITOR_LAYOUT_VALIDATION` is DONE.
@@ -26,16 +30,41 @@ The project is in MVP foundation work.
 - `M2-007_SURFACE_LATEST_DICE_RESULT_FOR_DEBUG_FREE_VALIDATION` is DONE.
 - `M2-008_CONNECT_FIXED_THROW_DAMAGE_SOURCE_TO_DICE_GRADE_MVP_VALUE` is DONE.
 - `M2-009_VALIDATE_M2_DICE_CORE` is DONE.
-- M2_DICE_CORE is READY_FOR_DIRECTOR_REVIEW.
+- M2_DICE_CORE is DONE and approved by Director final review.
+- M3_DICE_PRESENTATION is DONE and approved by Director review.
+- M4_SKILL_RESOLUTION is READY_FOR_DIRECTOR_REVIEW.
+- `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
+- `M4-002_FACE_RESOLVER` is DONE.
+- `M4-003_ATTACK_FACE` is DONE.
+- `M4-004_EXPLICIT_UNDEFINED_FACE_HANDLING` is DONE.
+- `M4-005_FACE_EFFECT_PRESENTATION_BEAT` is DONE.
+- `M4-006_VALIDATE_M4_FACE_SKILL_RESOLUTION` is DONE.
+- `M3-001_DICE_ANIMATION_LAYER` is DONE.
+- `M3-002_ROLLING_PRESENTATION` is DONE.
+- `M3-003_FACE_REVEAL` is DONE.
+- `M3-004_DAMAGE_PRESENTATION` is DONE.
+- `M3-005_VALIDATE_M3_DICE_PRESENTATION` is DONE.
+- M3 must not be treated as a Dice Overlay. The Dice is part of the battle animation sequence, not UI.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application now uses the selected Dice face's fixed throw damage value against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
 - Enemy turn behavior has not been implemented yet.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.
 - The latest selected Dice slot and face can be seen through a temporary non-final validation display.
-- Dice rolling, dice face reveal, and skill activation have not been implemented.
+- Dice rolling presentation has been implemented.
+- Visual dice face reveal has been implemented.
+- Damage number presentation has been implemented.
+- M3 Dice Presentation validation is complete for static sequence order and Unity import/compile.
+- Director review passed M3 and locked the current sequence as Project Dice's Signature Battle Flow.
+- M4 is in progress and currently focused on Face Skill Resolution.
+- Face effect data now exists as a runtime data model only.
+- FaceResolver now maps selected DiceFace data to FaceEffectData without executing gameplay.
+- Attack Face damage now flows through `FaceResolver` and `FaceEffectData` before applying enemy HP damage.
+- Undefined or no-effect Faces now report explicit no-effect feedback without changing HP.
+- Face effect results now receive a short presentation beat after Face Reveal and before Damage Number.
+- M4 Face Skill Resolution validation is complete for static sequence order and Unity import/compile.
 - Skills, upgrades, rewards, progression, and future milestone systems have not been implemented.
-- GDD has not been intentionally modified.
+- GDD content has not been redesigned or invented.
 
 ## Workflow Rule
 
@@ -56,7 +85,7 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 1. M0_PROJECT_SETUP
 2. M1_COMBAT_CORE
 3. M2_DICE_CORE
-4. M3_DICE_RESULT_OVERLAY
+4. M3_DICE_PRESENTATION
 5. M4_SKILL_RESOLUTION
 6. M5_ENEMY_TURN_AND_BATTLE_END
 7. M6_LINEAR_STAGE_RUN
@@ -67,7 +96,7 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 
 - Dice throw combat loop.
 - Fixed throw damage.
-- Dice Result Overlay.
+- Dice battle presentation.
 - Dice face skill activation.
 - Enemy turn.
 - Victory and defeat.
@@ -111,6 +140,44 @@ Completed layout and presentation foundation tasks:
 - M2-008: Connect Fixed Throw Damage Source To Dice Grade MVP Value.
 - M2-009: Validate M2 Dice Core.
 
+Director-approved M3 direction:
+
+- Throw Button.
+- Hero Throw.
+- White projectile trail.
+- Enemy hit flash.
+- Dice Animation Layer appears.
+- Dice rolls.
+- Dice stops.
+- Face reveal.
+- Face effect.
+- Damage number.
+- Sequence ends.
+
+M3 focuses on the signature battle presentation, not final dice gameplay or skill resolution.
+
+Director-locked M3 timing principle:
+
+- Timing and rhythm are higher priority than animation quality.
+- M3 should establish responsive 16-bit JRPG combat feel before adding richer visuals.
+- Initial target rhythm: Throw input, short Hero Throw beat, quick projectile, brief enemy flash, Dice appearance, rolling beat, reveal beat, damage number, sequence end.
+
+Post-M3 roadmap:
+
+- M4: Face Skill Resolution. READY.
+- M5: Enemy Turn.
+- M6: Battle Complete.
+- M7: Reward.
+- M8: Dice Face Replacement.
+- First complete Run.
+
+Director-locked M4 principle:
+
+- Face is not a simple skill button.
+- The Face is the result of the stopped Dice.
+- The Face result should naturally lead into the combat effect.
+- The player should understand "Attack Face appeared, therefore attack happened," not just "a skill activated."
+
 Current Battle scene result:
 
 - Battle scene lives at `Assets/Scenes/Battle/Battle.unity`.
@@ -131,6 +198,8 @@ Current Battle scene result:
 - `BattleCombatState` applies incoming deterministic damage values to enemy HP and clamps enemy HP at 0.
 - `BattleController` still coordinates Throw input, selected Dice face damage, battle log compatibility text, and input lock after victory.
 - `ThrowSequencePresenter` presents the temporary Hero feedback, white projectile trail, and Enemy hit flash before fixed damage is applied.
+- `ThrowSequencePresenter` now shows the existing `DiceAnimationLayer` briefly after enemy hit flash and hides it again before damage is applied.
+- `ThrowSequencePresenter` now keeps `DiceAnimationLayer` visible through a 0.45 second rolling placeholder before hiding it.
 - `BattleHudPresenter` still binds `BattleCombatState` HP values to Battle scene HP text.
 - `DiceFace` defines minimal runtime face data for result selection and fixed throw damage value reference.
 - `DiceModel` represents exactly six Dice face slots, supports duplicate faces as separate slots, and stores lightweight runtime phase/result metadata for result selection and future presentation expansion.
@@ -141,8 +210,14 @@ Current Battle scene result:
 - The selected Dice face is stored in `BattleDiceState` without changing the current fixed-damage combat outcome.
 - `BattleDiceResultPresenter` creates a small runtime-only validation text under `BattleField`.
 - The validation text shows the latest selected slot and face after each accepted Throw.
-- The validation text does not use `DiceAnimationLayer` and is not the final Dice Result Overlay.
-- Throw damage is now derived from `BattleDiceState.LastSelectedFace.FixedThrowDamageValue`.
+- The validation text does not use `DiceAnimationLayer` and is not the final Dice battle presentation.
+- `DiceAnimationLayer` is now connected to the Throw sequence as the M3-001 presentation layer entry point.
+- `DiceAnimationLayer` now contains a runtime-created `Rolling Dice Placeholder` during the M3-002 rolling beat.
+- `DiceAnimationLayer` now reveals the already selected Dice face name after rolling.
+- `BattleController` now selects the Dice result before `ThrowSequencePresenter.Play` so presentation can consume the existing result.
+- `ThrowSequencePresenter` now shows a runtime damage number after face reveal.
+- `BattleController` still applies damage and refreshes HP only after the presentation sequence returns.
+- Attack damage is now derived from resolved `FaceEffectData` produced by `FaceResolver`.
 - The previous scene-level `BattleCombatState.fixedThrowDamage` source was removed.
 
 ## Validation Notes
@@ -150,7 +225,7 @@ Current Battle scene result:
 - Codex confirmed the scene file includes `HeroSlot`, `EnemySlotsRoot`, `EnemySlot_01`, `EnemySlot_02`, `EnemySlot_03`, and hidden `DiceAnimationLayer`.
 - Codex confirmed previous `DiceOverlayPresenter` script and scene references were removed.
 - Codex confirmed rolling placeholder text/object references were removed.
-- Codex confirmed `BattleController` calls `BattleCombatState.ApplyDamageToEnemy` with the selected Dice face damage value.
+- Codex confirmed `BattleController` calls `BattleCombatState.ApplyDamageToEnemy` only for resolved `FaceEffectType.Damage`.
 - Codex confirmed HP refresh still flows through `BattleHudPresenter.Refresh`.
 - Codex confirmed Throw sequence presentation is isolated in `ThrowSequencePresenter`.
 - Codex confirmed `DiceModel.FaceSlotCount` is exactly 6.
@@ -161,14 +236,32 @@ Current Battle scene result:
 - Codex confirmed `BattleController` references `BattleDiceState` and calls Dice result selection once per accepted Throw.
 - Codex confirmed `DiceRoller.SelectResultSlot` selects from exactly six Dice face slots.
 - Codex confirmed `BattleController` references `BattleDiceResultPresenter` and updates the validation display after result selection.
-- Codex confirmed fixed damage now uses `BattleDiceState.LastSelectedFace.FixedThrowDamageValue` after the Throw presentation sequence.
+- Codex confirmed `ThrowSequencePresenter` references the existing scene `DiceAnimationLayer`.
+- Codex confirmed `DiceAnimationLayer` is still inactive by default in `Battle.unity`.
+- Codex confirmed `DiceAnimationLayer` is shown after enemy hit flash and hidden before selected face damage is applied.
+- Codex confirmed the rolling placeholder is presentation-only and does not change Dice result selection.
+- Codex confirmed the complete M3 sequence order: Hero feedback, projectile, enemy flash, Dice layer, rolling, face reveal, damage number, damage apply, HP refresh.
+- Codex confirmed `ThrowSequencePresenter` displays the already selected `DiceFace` and does not call `DiceRoller`.
+- Codex confirmed `BattleController` applies damage and refreshes HP after `ThrowSequencePresenter.Play` returns.
+- Unity batchmode import/compile validation completed successfully with exit code 0 using `/tmp/projectdice_m3_005_unity_display_2.log`.
+- Director review passed M3 and approved the current battle sequence as the signature flow.
+- Codex confirmed no visual face reveal, damage number presentation, face skill activation, enemy turn, reward, progression, or Dice result logic redesign was added for M3-002.
+- Codex confirmed `DiceRoller.SelectResultSlot` is still called only once per accepted Throw through `BattleController.SelectDiceResult`.
+- Codex confirmed `ThrowSequencePresenter` consumes the selected `DiceFace` and does not call `DiceRoller`.
+- Codex confirmed no additional random result is generated for M3-003 presentation.
+- Codex confirmed no damage number presentation, face skill activation, enemy turn, reward, progression, or Dice result logic redesign was added for M3-003.
+- Codex confirmed damage number presentation occurs after face reveal and before HP refresh.
+- Codex confirmed no face skill activation, enemy turn, reward, progression, new Dice result logic, or multi-enemy logic was added for M3-004.
+- Codex confirmed Attack damage now uses resolved `FaceEffectData.DamageAmount` after the Throw presentation sequence.
+- Codex confirmed `BattleController` no longer directly reads `DiceFace.FixedThrowDamageValue` for damage application.
 - Codex confirmed starter Dice has six serialized face slots: Attack, Attack, Guard, Guard, Spark, and Mend.
 - Codex confirmed duplicate face slots are represented as duplicate entries in the selection pool.
 - Codex confirmed Attack faces have `fixedThrowDamageValue` 5.
 - Codex confirmed Guard, Spark, and Mend currently have `fixedThrowDamageValue` 0 because skill effects are not implemented yet.
 - Codex confirmed result validation text displays selected slot and face through `BattleDiceResultPresenter`.
 - Codex confirmed `BattleCombatState` only applies received deterministic damage and does not own Dice logic.
-- Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, `Rolling Dice Placeholder`, or `Rolling State Text` references.
+- Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, or `Rolling State Text` references.
+- Static validation confirms `Rolling Dice Placeholder` now exists only as an M3-002 runtime-created child under `DiceAnimationLayer`.
 - Unity batchmode validation for M2-009 was attempted but blocked because the project was already open in another Unity Editor instance.
 - Human Play Mode review remains the final check for live Throw input, visual feel, and clickable behavior inside the active Editor.
 
@@ -187,4 +280,4 @@ Current Battle scene result:
 
 ## Next Human Decision
 
-Director review M2_DICE_CORE. If accepted, select the next milestone or detailed task from `MILESTONE_PLAN.md`.
+Director review M4_SKILL_RESOLUTION. Automated/static validation confirms sequence order, Face causality, and scope; human Play Mode review remains required for live readability.
