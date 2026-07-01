@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-005_ADVANCE_TO_NEXT_STAGE
+Completed Work: TASK_M6-006_COMPLETE_LINEAR_RUN
 
 ## Summary
 
-Connected non-boss Victory to runtime stage advancement without adding rewards, run completion, presentation, or next battle preparation.
+Connected Boss Victory to completed linear run state without adding rewards, Dice replacement, meta progression, restart flow, or victory presentation.
 
 ## Validation Result
 
@@ -29,6 +29,7 @@ PASS
 - M6-003A Enemy Group Victory Abstraction is DONE.
 - M6-004 Player Defeat Resolution is DONE.
 - M6-005 Advance To Next Stage is DONE.
+- M6-006 Complete Linear Run is DONE.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
@@ -47,6 +48,9 @@ PASS
 - Additional Throw input is not accepted after `BattleOutcomeState` becomes `Defeat`.
 - Non-boss Victory advances `LinearStageRuntimeState` to the next fixed stage.
 - Boss-stage Victory does not advance to a nonexistent stage.
+- Boss-stage Victory marks `LinearRunState` as completed.
+- `LinearRunState` owns only fixed linear run completion status.
+- Further battle input is blocked after run completion.
 - `StageType` exists with `Normal`, `Elite`, and `Boss`.
 - `LinearStageRuntimeState` exists as a runtime state holder.
 - Fixed stage order is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
@@ -78,9 +82,11 @@ PASS
 - No rewards or progression were added.
 - No stage selection UI was added.
 - No next battle preparation was added.
-- No run completion was added.
 - No victory presentation was added.
 - No battle reset was added.
+- No restart flow was added.
+- No new run creation was added.
+- No post-run economy or meta progression was added.
 - No Dice replacement system was added.
 - No inventory, shops, permanent progression, or stage system was added.
 - No new Face types, boss systems, or multi-enemy logic were added.
@@ -91,8 +97,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-005 Advance To Next Stage.
+Stopped after M6-006 Complete Linear Run.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_005_advance_to_next_stage.log`.
+- Unity validation log: `/tmp/projectdice_m6_006_complete_linear_run.log`.

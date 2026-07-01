@@ -11,6 +11,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleOutcomeState battleOutcomeState;
     [SerializeField] private EnemyGroupState enemyGroupState;
     [SerializeField] private LinearStageRuntimeState linearStageRuntimeState;
+    [SerializeField] private LinearRunState linearRunState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
@@ -109,7 +110,7 @@ public sealed class BattleController : MonoBehaviour
         if (IsBattleVictory())
         {
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
-            AdvanceStageAfterVictory();
+            ResolvePostVictoryRunProgression();
             SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
             yield break;
         }
@@ -141,6 +142,11 @@ public sealed class BattleController : MonoBehaviour
 
     private bool CanAcceptPlayerThrow()
     {
+        if (linearRunState != null && linearRunState.IsCompleted)
+        {
+            return false;
+        }
+
         if (battleOutcomeState != null && !battleOutcomeState.IsInProgress)
         {
             return false;
@@ -206,14 +212,20 @@ public sealed class BattleController : MonoBehaviour
         return battleOutcomeState != null && battleOutcomeState.IsVictory;
     }
 
-    private bool AdvanceStageAfterVictory()
+    private void ResolvePostVictoryRunProgression()
     {
         if (!IsBattleVictory() || linearStageRuntimeState == null)
         {
-            return false;
+            return;
         }
 
-        return linearStageRuntimeState.TryAdvanceToNextStage();
+        if (linearStageRuntimeState.IsBossStage)
+        {
+            linearRunState?.MarkCompleted();
+            return;
+        }
+
+        linearStageRuntimeState.TryAdvanceToNextStage();
     }
 
     private void ResolvePlayerDefeatOutcome()

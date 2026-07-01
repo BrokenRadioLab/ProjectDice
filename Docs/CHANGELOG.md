@@ -4,6 +4,14 @@
 
 ### Changed
 
+- Implemented M6-006 Complete Linear Run.
+- Added `LinearRunState` with `InProgress` and `Completed` status.
+- Wired `LinearRunState` into the Battle scene and `BattleController`.
+- Boss-stage Victory now marks the linear run as completed instead of advancing to a nonexistent stage.
+- Non-boss Victory still advances the fixed stage position only.
+- Further battle input is blocked after run completion.
+- Marked M6-006 as DONE and M6-007 Prepare Next Battle as NEXT.
+- No rewards, Dice replacement, meta progression, restart flow, victory presentation, new run creation, battle reset, or post-run economy was added for M6-006.
 - Implemented M6-005 Advance To Next Stage.
 - Added `LinearStageRuntimeState.TryAdvanceToNextStage()`.
 - Wired `LinearStageRuntimeState` into the Battle scene and `BattleController`.

@@ -300,8 +300,8 @@ Detailed Task Status:
 - M6-003A Enemy Group Victory Abstraction is DONE.
 - M6-004 Player Defeat Resolution is DONE.
 - M6-005 Advance To Next Stage is DONE.
-- M6-006 Complete Linear Run is NEXT.
-- M6-007 Prepare Next Battle is PENDING.
+- M6-006 Complete Linear Run is DONE.
+- M6-007 Prepare Next Battle is NEXT.
 - M6-008 Validate Linear Stage Run is PENDING.
 - M6 must preserve the current player/enemy/player battle loop.
 - M6 must not add rewards, Dice replacement, inventory, shops, branching map, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic.

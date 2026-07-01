@@ -270,7 +270,7 @@ Validation:
 
 ## M6-006: Complete Linear Run
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -295,7 +295,7 @@ Validation:
 
 ## M6-007: Prepare Next Battle
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

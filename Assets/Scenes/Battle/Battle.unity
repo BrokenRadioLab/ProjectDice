@@ -1760,6 +1760,7 @@ MonoBehaviour:
   battleOutcomeState: {fileID: 1700000008}
   enemyGroupState: {fileID: 1700000009}
   linearStageRuntimeState: {fileID: 1700000010}
+  linearRunState: {fileID: 1700000011}
   hudPresenter: {fileID: 1700000003}
   throwSequencePresenter: {fileID: 1500000005}
   enemyAttackPresenter: {fileID: 1500000006}
@@ -2104,6 +2105,7 @@ GameObject:
   - component: {fileID: 1700000008}
   - component: {fileID: 1700000009}
   - component: {fileID: 1700000010}
+  - component: {fileID: 1700000011}
   m_Layer: 0
   m_Name: Battle Combat State
   m_TagString: Untagged
@@ -2286,6 +2288,19 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   currentStageIndex: 1
+--- !u!114 &1700000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e6be6cf6564d1b9e7d698c934576b5, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  currentStatus: 0
 --- !u!114 &519420033
 MonoBehaviour:
   m_ObjectHideFlags: 0
