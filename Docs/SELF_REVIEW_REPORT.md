@@ -2,21 +2,22 @@
 
 Date: 2026-07-01
 
-Task: M5-007 Validate M5 Battle Loop
+Task: BUGFIX_M5-006_DICE_DECK_BUTTON_NOT_RESPONDING
 
 ## Review Result
 
 PASS
 
-M5 validation stays within the requested scope.
+The Dice Deck button interaction fix stays within the requested presentation/information UI scope.
 
 ## Scope Check
 
-- Performed validation only.
+- Fixed Dice Deck UI Button event handling only.
 - Did not add gameplay.
 - Did not add battle end or defeat handling.
 - Did not add rewards, progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic.
 - Did not add Dice Deck probability display.
+- Did not change enemy turn flow.
 
 ## Architecture Check
 
@@ -25,23 +26,20 @@ M5 validation stays within the requested scope.
 - Enemy pipeline remains `EnemyAttackResolver -> EnemyAttackIntent -> EnemyAttackPresenter -> BattleCombatState -> BattleHudPresenter`.
 - Dice Deck remains Battle Information UI and reads from `BattleDiceState.CurrentDice`.
 - Battle presentation and Dice Deck information UI remain separated.
+- Dice Deck now ensures an `EventSystem` exists before relying on Button click/tap callbacks.
 
 ## Validation Review
 
-- Player Throw still resolves through Dice result selection and Face resolution.
-- Player presentation still occurs before enemy HP damage application.
-- Enemy attack resolution remains deterministic fixed 5 Damage.
-- Enemy attack presentation occurs before player HP damage application.
-- Player HP refresh occurs after player damage application.
-- Turn ownership returns to `PlayerTurn` after enemy presentation, player damage, HP refresh, and transition.
-- Enemy action is skipped when enemy is defeated by player action.
+- Dice Deck button has a target graphic and onClick listener.
+- Runtime UI event handling is created if the scene does not already provide it.
+- Dice Deck remains collapsed by default and still reads the six runtime Dice faces when expanded.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Residual Risk
 
-- Human Play Mode review is still needed for live turn feel, Dice Deck touch ergonomics, and battle rhythm.
+- Human Play Mode review is still needed to confirm live device tap behavior and touch ergonomics.
 - Player HP can reach 0, but no defeat flow is triggered. This remains intentionally out of scope until a later battle completion milestone.
 
 ## Status
 
-M5_ENEMY_TURN_AND_BATTLE_LOOP is ready for Director review.
+BUGFIX_M5-006_DICE_DECK_BUTTON_NOT_RESPONDING is complete.

@@ -417,6 +417,12 @@ Completed:
 - Dice Deck does not use reward, replacement, inventory, progression, or stage systems.
 - Probability and duplicate-face aggregation were not implemented in M5.
 
+Bugfix Completed:
+
+- Fixed Dice Deck tap/click handling by ensuring a runtime `EventSystem` exists for UI Button events.
+- Preserved collapsed-by-default state, runtime Dice source, expanded six-slot view, and Close Deck collapse behavior.
+- No reward, Dice replacement, inventory, progression, new Face effects, or enemy turn changes were added.
+
 ## M5-007: Validate M5 Battle Loop
 
 Status: DONE

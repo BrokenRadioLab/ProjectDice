@@ -1,4 +1,8 @@
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem.UI;
+#endif
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
@@ -21,6 +25,7 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
     private void Awake()
     {
         EnsureReferences();
+        EnsureEventSystem();
         EnsureView();
         SetExpanded(startsExpanded);
     }
@@ -77,6 +82,7 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
     private void EnsureView()
     {
         EnsureReferences();
+        EnsureEventSystem();
 
         if (displayRoot == null)
         {
@@ -85,6 +91,34 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
 
         EnsureToggle();
         EnsurePanel();
+    }
+
+    private static void EnsureEventSystem()
+    {
+        EventSystem eventSystem = FindFirstObjectByType<EventSystem>();
+        if (eventSystem == null)
+        {
+            GameObject eventSystemObject = new GameObject("EventSystem");
+            eventSystem = eventSystemObject.AddComponent<EventSystem>();
+        }
+
+#if ENABLE_INPUT_SYSTEM
+        InputSystemUIInputModule inputModule = eventSystem.GetComponent<InputSystemUIInputModule>();
+        if (inputModule == null)
+        {
+            inputModule = eventSystem.gameObject.AddComponent<InputSystemUIInputModule>();
+        }
+
+        if (inputModule.actionsAsset == null)
+        {
+            inputModule.AssignDefaultActions();
+        }
+#else
+        if (eventSystem.GetComponent<StandaloneInputModule>() == null)
+        {
+            eventSystem.gameObject.AddComponent<StandaloneInputModule>();
+        }
+#endif
     }
 
     private void EnsureToggle()

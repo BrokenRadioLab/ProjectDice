@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Fixed `BUGFIX_M5-006_DICE_DECK_BUTTON_NOT_RESPONDING`.
+- Updated `CollapsibleDiceDeckPresenter` to ensure a runtime `EventSystem` exists for UI Button click/tap handling.
+- Dice Deck still remains collapsed by default, runtime Dice-driven, and separate from battle presentation.
+- Confirmed Unity batchmode import/compile validation for the Dice Deck button interaction fix completed successfully with exit code 0.
+- No rewards, Dice replacement, inventory, progression, new Face effects, or enemy turn changes were added for this bugfix.
 - Started M5_ENEMY_TURN_AND_BATTLE_LOOP implementation.
 - Implemented M5-001 Enemy Runtime Turn State.
 - Added `BattleTurnOwner` with `PlayerTurn`, `Transition`, and `EnemyTurn`.

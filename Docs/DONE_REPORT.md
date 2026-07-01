@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Completed Work: M5-007 Validate M5 Battle Loop
+Completed Work: BUGFIX_M5-006_DICE_DECK_BUTTON_NOT_RESPONDING
 
 ## Summary
 
-Validated the first complete battle loop from player action through enemy response and back to player ownership. M5 is now READY_FOR_DIRECTOR_REVIEW.
+Fixed Dice Deck button interaction by ensuring runtime UI event handling exists for Dice Deck Button clicks/taps.
 
 ## Validation Result
 
@@ -23,6 +23,8 @@ PASS
 - M5-005 Turn Transition is DONE and approved.
 - M5-006 Collapsible Dice Deck is DONE and approved.
 - M5-007 Validate M5 Battle Loop is DONE.
+- Dice Deck Button has a `Button` component, target graphic, and onClick listener.
+- Runtime UI event handling is now ensured before the Dice Deck view is created.
 - Battle ownership follows `PlayerTurn -> Transition -> EnemyTurn -> Transition -> PlayerTurn`.
 - Player Throw still resolves through Dice selection and Face resolution.
 - Player battle presentation still occurs before enemy HP damage application.
@@ -41,11 +43,12 @@ PASS
 - No inventory, shops, permanent progression, or stage system was added.
 - No new Face types, boss systems, or multi-enemy logic were added.
 - No Dice Deck probability display was added.
+- No enemy turn changes were added.
 
 ## Stop Point
 
-Stopped after M5-007 validation.
+Stopped after the M5-006 Dice Deck button interaction bugfix.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m5_007_validate_battle_loop_unity.log`.
+- Unity validation log: `/tmp/projectdice_m5_006_dice_deck_button_fix_unity.log`.
