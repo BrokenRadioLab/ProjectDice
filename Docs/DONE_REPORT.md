@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-004_PLAYER_DEFEAT_RESOLUTION
+Completed Work: TASK_M6-005_ADVANCE_TO_NEXT_STAGE
 
 ## Summary
 
-Connected player HP reaching zero to battle defeat outcome without adding restart UI, defeat presentation, stage advance, reward, or run completion.
+Connected non-boss Victory to runtime stage advancement without adding rewards, run completion, presentation, or next battle preparation.
 
 ## Validation Result
 
@@ -28,6 +28,7 @@ PASS
 - M6-003 Enemy Defeat Victory Resolution is DONE.
 - M6-003A Enemy Group Victory Abstraction is DONE.
 - M6-004 Player Defeat Resolution is DONE.
+- M6-005 Advance To Next Stage is DONE.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
@@ -44,11 +45,13 @@ PASS
 - Player HP reaching 0 marks `BattleOutcomeState` as `Defeat`.
 - Player turn does not resume after `BattleOutcomeState` becomes `Defeat`.
 - Additional Throw input is not accepted after `BattleOutcomeState` becomes `Defeat`.
+- Non-boss Victory advances `LinearStageRuntimeState` to the next fixed stage.
+- Boss-stage Victory does not advance to a nonexistent stage.
 - `StageType` exists with `Normal`, `Elite`, and `Boss`.
 - `LinearStageRuntimeState` exists as a runtime state holder.
 - Fixed stage order is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
-- `LinearStageRuntimeState` exposes current stage index, current stage type, and boss-stage check.
-- `LinearStageRuntimeState` does not know battle outcome, rewards, next stage transition, or run completion.
+- `LinearStageRuntimeState` exposes current stage index, current stage type, boss-stage check, and fixed-order stage advancement.
+- `LinearStageRuntimeState` does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Dice Deck button is located on the Bottom HUD left edge.
 - Dice Deck remains aligned with the Throw button row.
 - Dice Deck expands horizontally toward the right while attached to the button.
@@ -73,8 +76,8 @@ PASS
 - No multiple enemy HP mutation was added.
 - No multi-enemy UI was added.
 - No rewards or progression were added.
-- No stage progression was added.
-- No stage advance was added.
+- No stage selection UI was added.
+- No next battle preparation was added.
 - No run completion was added.
 - No victory presentation was added.
 - No battle reset was added.
@@ -88,8 +91,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-004 Player Defeat Resolution.
+Stopped after M6-005 Advance To Next Stage.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_004_player_defeat_resolution.log`.
+- Unity validation log: `/tmp/projectdice_m6_005_advance_to_next_stage.log`.

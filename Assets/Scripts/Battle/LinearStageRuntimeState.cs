@@ -24,6 +24,17 @@ public sealed class LinearStageRuntimeState : MonoBehaviour
     public StageType CurrentStageType => StageOrder[CurrentStageIndex - 1];
     public bool IsBossStage => CurrentStageType == StageType.Boss;
 
+    public bool TryAdvanceToNextStage()
+    {
+        if (IsBossStage)
+        {
+            return false;
+        }
+
+        currentStageIndex = Mathf.Min(CurrentStageIndex + 1, StageOrder.Length);
+        return true;
+    }
+
     private void Awake()
     {
         ClampStageIndex();

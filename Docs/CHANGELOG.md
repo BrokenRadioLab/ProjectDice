@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Implemented M6-005 Advance To Next Stage.
+- Added `LinearStageRuntimeState.TryAdvanceToNextStage()`.
+- Wired `LinearStageRuntimeState` into the Battle scene and `BattleController`.
+- `BattleController` now consumes `BattleOutcomeState.Victory` to advance non-boss stages only.
+- Boss-stage Victory does not advance to a nonexistent stage.
+- Marked M6-005 as DONE and M6-006 Complete Linear Run as NEXT.
+- No rewards, Dice replacement, run completion, battle presentation, victory UI, battle reset, stage selection UI, or next battle preparation was added for M6-005.
 - Implemented M6-004 Player Defeat Resolution.
 - Added `BattleCombatState.IsPlayerDefeated`.
 - Connected player HP reaching 0 after enemy damage application to `BattleOutcomeState.MarkDefeat()`.

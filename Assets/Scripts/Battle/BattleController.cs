@@ -10,6 +10,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleTurnState battleTurnState;
     [SerializeField] private BattleOutcomeState battleOutcomeState;
     [SerializeField] private EnemyGroupState enemyGroupState;
+    [SerializeField] private LinearStageRuntimeState linearStageRuntimeState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
@@ -108,6 +109,7 @@ public sealed class BattleController : MonoBehaviour
         if (IsBattleVictory())
         {
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
+            AdvanceStageAfterVictory();
             SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
             yield break;
         }
@@ -202,6 +204,16 @@ public sealed class BattleController : MonoBehaviour
     private bool IsBattleVictory()
     {
         return battleOutcomeState != null && battleOutcomeState.IsVictory;
+    }
+
+    private bool AdvanceStageAfterVictory()
+    {
+        if (!IsBattleVictory() || linearStageRuntimeState == null)
+        {
+            return false;
+        }
+
+        return linearStageRuntimeState.TryAdvanceToNextStage();
     }
 
     private void ResolvePlayerDefeatOutcome()

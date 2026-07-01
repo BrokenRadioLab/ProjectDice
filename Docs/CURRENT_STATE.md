@@ -53,7 +53,8 @@ The project is in MVP foundation work.
 - `M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION` is DONE.
 - `M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION` is DONE.
 - `M6-004_PLAYER_DEFEAT_RESOLUTION` is DONE.
-- `M6-005_ADVANCE_TO_NEXT_STAGE` is NEXT.
+- `M6-005_ADVANCE_TO_NEXT_STAGE` is DONE.
+- `M6-006_COMPLETE_LINEAR_RUN` is NEXT.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -100,8 +101,11 @@ The project is in MVP foundation work.
 - Battle completion flow now consumes `BattleOutcomeState` as the source of truth after victory is set.
 - Player defeat now marks `BattleOutcomeState` as `Defeat` after enemy damage application and HP refresh.
 - After `BattleOutcomeState` is `Defeat`, player turn does not resume and additional Throw input is not accepted.
+- Non-boss Victory now advances `LinearStageRuntimeState` to the next fixed stage.
+- Boss-stage Victory does not advance to a nonexistent stage.
+- M6-005 advances runtime stage position only; rewards, Dice replacement, run completion, battle presentation, victory UI, and next battle preparation remain unimplemented.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
-- `LinearStageRuntimeState` owns only the current stage index, current stage type, and boss-stage check; it does not know battle outcome, rewards, next stage transition, or run completion.
+- `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.
 - Enemy attack resolution now produces a deterministic pending attack intent: fixed 5 Damage when the battle is in pending `EnemyTurn`.
 - The pending enemy attack intent is presented during M5-003 and applied to player HP during M5-004.

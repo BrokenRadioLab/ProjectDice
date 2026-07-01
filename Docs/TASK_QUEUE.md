@@ -243,7 +243,7 @@ Validation:
 
 ## M6-005: Advance To Next Stage
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -253,7 +253,8 @@ Requirements:
 
 - Consume a Victory outcome.
 - Advance only if the current stage is not the final boss stage.
-- Prepare the next battle state after advancing.
+- Advance runtime stage position only.
+- Leave next battle preparation for M6-007.
 - Do not add rewards between stages in M6.
 - Do not add stage selection UI.
 
@@ -269,7 +270,7 @@ Validation:
 
 ## M6-006: Complete Linear Run
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 
