@@ -116,8 +116,12 @@ public sealed class BattleController : MonoBehaviour
             yield return enemyAttackPresenter.Play(pendingEnemyAttackIntent);
         }
 
+        int playerDamage = ApplyEnemyAttackIntent(pendingEnemyAttackIntent);
+        pendingEnemyAttackIntent = EnemyAttackIntent.None();
+        hudPresenter?.Refresh();
+
         battleTurnState?.BeginPlayerTurn();
-        SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
+        SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
         inputLocked = false;
     }
 
@@ -153,6 +157,16 @@ public sealed class BattleController : MonoBehaviour
         }
 
         return 0;
+    }
+
+    private int ApplyEnemyAttackIntent(EnemyAttackIntent attackIntent)
+    {
+        if (combatState == null || attackIntent == null || attackIntent.IntentType != EnemyAttackIntentType.Damage)
+        {
+            return 0;
+        }
+
+        return combatState.ApplyDamageToPlayer(attackIntent.DamageAmount);
     }
 
     private int GetPendingDamage(FaceEffectData faceEffect)
@@ -192,6 +206,11 @@ public sealed class BattleController : MonoBehaviour
         }
 
         return $"{faceName} resolved.";
+    }
+
+    private static string GetEnemyAttackLogMessage(int appliedDamage)
+    {
+        return appliedDamage > 0 ? $"Enemy dealt {appliedDamage}." : "Enemy attack had no effect.";
     }
 
     private void SetBattleLog(string message)

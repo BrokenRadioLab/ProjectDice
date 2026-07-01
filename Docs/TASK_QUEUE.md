@@ -284,7 +284,7 @@ Completed:
 
 ## M5-004: Player Damage Application
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -309,9 +309,18 @@ Validation:
 - `BattleHudPresenter.Refresh()` updates visible HP after damage.
 - Existing enemy HP damage from player Attack still works.
 
+Completed:
+
+- Added `BattleCombatState.ApplyDamageToPlayer(int damage)` as the only player HP mutation path for enemy attack damage.
+- `BattleController` now applies resolved `EnemyAttackIntent` damage only after `EnemyAttackPresenter.Play(...)` completes.
+- `BattleHudPresenter.Refresh()` runs after player damage application.
+- Pending enemy attack intent is consumed and cleared after player damage application.
+- Existing player Attack damage against enemy HP still works through `BattleCombatState.ApplyDamageToEnemy`.
+- No defeat flow, battle end, rewards, progression, enemy AI, random behavior, or new Face effects were added.
+
 ## M5-005: Turn Transition
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 
@@ -337,7 +346,51 @@ Validation:
 - Enemy does not act after being defeated.
 - Repeated player turns work without duplicate enemy responses.
 
-## M5-006: Validate M5 Battle Loop
+## M5-006: Current Dice Panel
+
+Status: PENDING
+
+Goal:
+
+Add a collapsed-by-default Battle Information Panel that lets the player inspect the current runtime Dice build during battle.
+
+Purpose:
+
+- This is a Current Dice information panel.
+- This is not battle presentation.
+- This is not a reward system.
+- This is not a Dice replacement system.
+- This is not inventory, Face editing, progression, or stage flow.
+
+Requirements:
+
+- Panel is collapsed by default.
+- Panel expands when tapped.
+- Panel collapses when tapped again.
+- Panel displays the current six Dice face slots.
+- Panel reads from runtime Dice state.
+- Do not hardcode six static entries.
+- Future Dice replacement should automatically update this panel because it reads from runtime Dice state.
+- Panel must not permanently occupy battle space.
+- Panel must not interfere with Hero, Enemy, Dice Animation Layer, or Throw button.
+- Each slot should eventually display:
+  - Face icon.
+  - Face name.
+  - Short effect description if available.
+
+Done Criteria:
+
+- Player can inspect the current runtime Dice build during battle without disrupting battle presentation or input layout.
+
+Validation:
+
+- Default state is collapsed.
+- Tap toggles expanded/collapsed state.
+- Expanded state shows six runtime Dice slots.
+- The panel reads from `BattleDiceState` or the current runtime Dice model.
+- No reward, Dice replacement, inventory, Face editing, progression, or stage system is added.
+
+## M5-007: Validate M5 Battle Loop
 
 Status: PENDING
 

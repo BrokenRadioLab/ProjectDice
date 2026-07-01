@@ -2,52 +2,50 @@
 
 Date: 2026-07-01
 
-Task: M5-003 Enemy Attack Presentation
+Task: M5-004 Player Damage Application
 
 ## Review Result
 
 PASS
 
-M5-003 stays within the requested scope.
+M5-004 stays within the requested scope.
 
 ## Scope Check
 
-- Added enemy attack presentation only.
-- Presentation consumes the already resolved `EnemyAttackIntent`.
-- Presentation happens after player resolution and HP refresh.
-- Presentation communicates that the enemy is attacking now.
-- Player HP is not modified.
-- Existing player Throw -> Dice -> Face -> Damage -> HP Refresh flow is preserved.
+- Added player HP damage application from resolved enemy attack intent.
+- Damage applies after enemy attack presentation completes.
+- HP presentation refreshes after player damage application.
+- Pending enemy attack intent is consumed and cleared.
+- Existing player Throw -> Dice -> Face -> Enemy Damage -> Enemy HP Refresh flow is preserved.
 
 ## Architecture Check
 
-- `BattleTurnState` still owns turn ownership only.
-- `EnemyAttackResolver` still owns enemy attack intent resolution only.
-- `EnemyAttackPresenter` owns enemy attack presentation only.
-- `EnemyAttackPresenter` does not resolve damage.
-- `EnemyAttackPresenter` does not mutate HP.
-- `EnemyAttackPresenter` does not trigger HUD refresh.
-- `BattleController` coordinates the handoff from resolved intent to presentation.
+- `EnemyAttackResolver` still decides intent only.
+- `EnemyAttackPresenter` still presents intent only.
+- `BattleCombatState` owns player HP mutation.
+- `BattleHudPresenter` owns HP display refresh.
+- `BattleController` coordinates the order.
 
 ## Explicit Non-Changes
 
-- No player damage application was added.
-- No enemy AI was added.
-- No random enemy behavior was added.
-- No battle end, reward, progression, inventory, stage, or dice face replacement system was added.
+- No defeat flow was added.
+- No battle end was added.
+- No rewards, progression, inventory, stage, or Dice replacement system was added.
+- No enemy AI or random enemy behavior was added.
 - No new Face effects were added.
+- No Current Dice Panel implementation was added.
 
 ## Risk Notes
 
-- The pending enemy attack intent is still not consumed for HP damage. This is intentional until M5-004.
-- `BattleController` returns to `PlayerTurn` immediately after enemy attack presentation. M5-004 and M5-005 should replace this with player damage application and final turn transition.
+- `BattleController` still returns to `PlayerTurn` directly after applying player damage. M5-005 should formalize this as the turn transition task.
+- Player HP can reach 0, but no defeat flow is triggered. This is intentional until a later battle completion milestone.
 
 ## Validation
 
 - `git diff --check` passed.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
-- Unity validation log: `/tmp/projectdice_m5_003_enemy_attack_presentation_unity.log`.
+- Unity validation log: `/tmp/projectdice_m5_004_player_damage_application_unity.log`.
 
 ## Status
 
-M5-003 is ready for Director review.
+M5-004 is ready for Director review.

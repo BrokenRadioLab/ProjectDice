@@ -13,6 +13,13 @@ public sealed class BattleCombatState : MonoBehaviour
     public int EnemyCurrentHp => enemyCurrentHp;
     public bool IsEnemyDefeated => enemyCurrentHp <= 0;
 
+    public int ApplyDamageToPlayer(int damage)
+    {
+        int previousHp = playerCurrentHp;
+        playerCurrentHp = Mathf.Max(0, playerCurrentHp - Mathf.Max(0, damage));
+        return previousHp - playerCurrentHp;
+    }
+
     public int ApplyDamageToEnemy(int damage)
     {
         if (IsEnemyDefeated)

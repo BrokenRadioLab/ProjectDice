@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Completed Work: M5-003 Enemy Attack Presentation
+Completed Work: M5-004 Player Damage Application
 
 ## Summary
 
-Added a short enemy attack presentation beat that consumes the already resolved `EnemyAttackIntent` without applying player damage.
+Applied resolved enemy attack intent damage to player HP after enemy attack presentation, without adding battle end or defeat flow.
 
 ## Validation Result
 
@@ -16,29 +16,26 @@ PASS
 
 ## Confirmed
 
-- M5-002 Enemy Attack Resolution is approved.
-- `EnemyAttackPresenter` consumes `EnemyAttackIntent`.
-- Enemy attack presentation occurs after the player's Throw, Face Reveal, Face Effect, Damage Number, enemy HP damage application, and HP refresh.
-- Battle ownership remains in `EnemyTurn` while enemy attack presentation plays.
-- Presentation uses a short enemy windup flash, simple strike trail, and Hero hit flash.
-- `EnemyAttackPresenter` does not decide damage.
-- `EnemyAttackPresenter` does not apply player HP damage.
-- `EnemyAttackPresenter` does not call `EnemyAttackResolver`, `BattleCombatState`, or `BattleHudPresenter`.
+- `BattleCombatState.ApplyDamageToPlayer(int damage)` is the player HP mutation path for enemy attack damage.
+- `BattleController` applies pending `EnemyAttackIntent` damage only after `EnemyAttackPresenter.Play(...)` completes.
+- `BattleHudPresenter.Refresh()` runs after player damage application.
+- Pending enemy attack intent is cleared after being consumed.
+- Existing player Attack damage still flows through `BattleCombatState.ApplyDamageToEnemy`.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Not Added
 
-- No player HP damage was added.
+- No defeat flow was added.
 - No battle end was added.
 - No rewards or progression were added.
 - No enemy AI or random enemy behavior was added.
 - No new Face effects were added.
-- No cinematic camera, particle-heavy effects, knockback system, or long animation was added.
+- No Dice replacement, inventory, stage system, or Current Dice Panel implementation was added.
 
 ## Stop Point
 
-Stopped after M5-003.
+Stopped after M5-004.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m5_003_enemy_attack_presentation_unity.log`.
+- Unity validation log: `/tmp/projectdice_m5_004_player_damage_application_unity.log`.

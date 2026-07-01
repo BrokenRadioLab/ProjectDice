@@ -29,6 +29,14 @@
 - Marked M5-003 as DONE and M5-004 Player Damage Application as NEXT.
 - Confirmed Unity batchmode import/compile validation for M5-003 completed successfully with exit code 0.
 - No player HP reduction, battle end, rewards, progression, enemy AI, random enemy behavior, new Face effects, or complex VFX were added for M5-003.
+- Implemented M5-004 Player Damage Application.
+- Added `BattleCombatState.ApplyDamageToPlayer(int damage)` for enemy attack damage.
+- Updated `BattleController` to apply resolved enemy attack intent damage only after enemy attack presentation completes.
+- Updated `BattleController` to refresh HP after player damage application and clear the pending enemy attack intent.
+- Marked M5-004 as DONE and M5-005 Turn Transition as NEXT.
+- Added M5-006 Current Dice Panel to the M5 task structure and moved validation to M5-007.
+- Confirmed Unity batchmode import/compile validation for M5-004 completed successfully with exit code 0.
+- No defeat flow, battle end, rewards, progression, enemy AI, random behavior, new Face effects, Dice replacement, inventory, or stage system were added for M5-004.
 
 ## 2026-06-30
 

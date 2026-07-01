@@ -43,7 +43,8 @@ The project is in MVP foundation work.
 - `M5-001_ENEMY_RUNTIME_TURN_STATE` is DONE.
 - `M5-002_ENEMY_ATTACK_RESOLUTION` is DONE.
 - `M5-003_ENEMY_ATTACK_PRESENTATION` is DONE.
-- `M5-004_PLAYER_DAMAGE_APPLICATION` is NEXT.
+- `M5-004_PLAYER_DAMAGE_APPLICATION` is DONE.
+- `M5-005_TURN_TRANSITION` is NEXT.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -53,7 +54,7 @@ The project is in MVP foundation work.
 - Battle Scene now follows `PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0`.
 - Damage application now uses the selected Dice face's fixed throw damage value against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
-- Enemy attack intent resolution and enemy attack presentation now exist, but player HP damage and full enemy turn behavior have not been implemented yet.
+- Enemy attack intent resolution, enemy attack presentation, and player HP damage application now exist, but final turn transition behavior has not been implemented yet.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.
 - The latest selected Dice slot and face can be seen through a temporary non-final validation display.
 - Dice rolling presentation has been implemented.
@@ -72,9 +73,9 @@ The project is in MVP foundation work.
 - Temporary selected-slot validation text remains available as small corner `RESULT S#: FaceName` debug text until final Dice face art exists.
 - Generic Hero color feedback has been replaced by the provided Hero idle and throw frame animation from `Assets/Art`.
 - Battle-level turn ownership now exists through `BattleTurnState` with `PlayerTurn`, `Transition`, and `EnemyTurn`.
-- Accepted player Throw now moves turn ownership into `Transition`; current M5 flow can mark the future enemy turn handoff, resolve a pending enemy attack intent, play enemy attack presentation, and then returns to `PlayerTurn` to preserve existing Throw behavior until later M5 tasks implement player damage and final turn transition.
+- Accepted player Throw now moves turn ownership into `Transition`; current M5 flow can mark the future enemy turn handoff, resolve a pending enemy attack intent, play enemy attack presentation, apply player damage, refresh HP, and then returns to `PlayerTurn` until M5-005 formalizes final turn transition.
 - Enemy attack resolution now produces a deterministic pending attack intent: fixed 5 Damage when the battle is in pending `EnemyTurn`.
-- The pending enemy attack intent is presented during M5-003 but is not applied to player HP yet.
+- The pending enemy attack intent is presented during M5-003 and applied to player HP during M5-004.
 - This post-M4 presentation scale fix did not add gameplay, enemy turns, rewards, progression, new Dice faces, new Face effects, or Dice result logic.
 - Skills, upgrades, rewards, progression, and future milestone systems have not been implemented.
 - GDD content has not been redesigned or invented.
@@ -215,6 +216,7 @@ Current Battle scene result:
 - `EnemyAttackResolver` converts pending `EnemyTurn` ownership into a deterministic `EnemyAttackIntent`.
 - `EnemyAttackIntent` currently supports only `None` and fixed `Damage`.
 - `EnemyAttackPresenter` presents resolved enemy attack intent only and does not mutate HP.
+- `BattleCombatState.ApplyDamageToPlayer` is the player HP mutation path for enemy attack damage.
 - `ThrowSequencePresenter` presents the Hero throw animation, white projectile trail, and Enemy hit flash before fixed damage is applied.
 - `ThrowSequencePresenter` now shows the existing `DiceAnimationLayer` briefly after enemy hit flash and hides it again before damage is applied.
 - `ThrowSequencePresenter` now keeps `DiceAnimationLayer` visible through a 0.45 second rolling placeholder before hiding it.
@@ -296,11 +298,11 @@ Current Battle scene result:
 - `DiceRoller` selects a Dice slot only and does not resolve damage, skills, rewards, or presentation.
 - `BattleDiceState` owns the current Dice runtime state and latest selected result, and does not own HP/combat state.
 - `BattleDiceResultPresenter` remains validation-only and does not affect Dice selection, gameplay, or presentation timing.
-- `BattleTurnState` owns `PlayerTurn`, `Transition`, and `EnemyTurn` only; player damage application is intentionally unimplemented until later M5 tasks.
+- `BattleTurnState` owns `PlayerTurn`, `Transition`, and `EnemyTurn` only; final turn transition is intentionally left for M5-005.
 - `EnemyAttackResolver` owns enemy attack intent resolution only and does not mutate HP or trigger presentation.
 - `EnemyAttackPresenter` owns enemy attack presentation only and does not decide damage or mutate HP.
 - Future damage formula and skill calculations should be considered for a separate `BattleDamageResolver` when a later milestone explicitly requires them.
 
 ## Next Human Decision
 
-Director review M5-003 Enemy Attack Presentation. M5-004 Player Damage Application should not begin until M5-003 is approved.
+Director review M5-004 Player Damage Application. M5-005 Turn Transition should not begin until M5-004 is approved.
