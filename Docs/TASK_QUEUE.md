@@ -125,59 +125,7 @@ Validation:
 - Outcome state does not advance stages.
 - Existing battle loop still works while outcome is `InProgress`.
 
-## M6-002: Enemy Defeat Victory Resolution
-
-Status: PENDING
-
-Goal:
-
-Resolve enemy defeat into a battle victory outcome.
-
-Requirements:
-
-- Use existing enemy HP state.
-- Detect victory after player damage application.
-- Stop enemy response when enemy is defeated.
-- Lock or prevent further Throw input once victory is reached.
-- Do not advance to the next stage in this task.
-- Do not add rewards or victory screen.
-
-Done Criteria:
-
-- Reducing enemy HP to zero marks the current battle as Victory.
-
-Validation:
-
-- Enemy does not take a turn after being defeated.
-- Player input does not start another Throw after victory.
-- No reward or stage transition is triggered yet.
-
-## M6-003: Player Defeat Resolution
-
-Status: PENDING
-
-Goal:
-
-Resolve player HP reaching zero into a battle defeat outcome.
-
-Requirements:
-
-- Use existing player HP state.
-- Detect defeat after enemy damage application.
-- Lock or prevent further Throw input once defeat is reached.
-- Do not add restart UI, run summary UI, reward UI, or progression.
-
-Done Criteria:
-
-- Player HP reaching zero marks the current battle as Defeat.
-
-Validation:
-
-- Player cannot continue throwing after defeat.
-- Enemy does not repeatedly attack after defeat.
-- No reward or stage transition is triggered after defeat.
-
-## M6-004: Linear Stage Runtime State
+## M6-002: Linear Stage Runtime State
 
 Status: PENDING
 
@@ -211,6 +159,59 @@ Validation:
 - No branch selection exists.
 - No reward flow exists.
 
+## M6-003: Enemy Defeat Victory Resolution
+
+Status: PENDING
+
+Goal:
+
+Resolve enemy defeat into a battle victory outcome.
+
+Requirements:
+
+- Use existing enemy HP state.
+- Consume the current linear stage runtime state.
+- Detect victory after player damage application.
+- Stop enemy response when enemy is defeated.
+- Lock or prevent further Throw input once victory is reached.
+- Do not advance to the next stage in this task.
+- Do not add rewards or victory screen.
+
+Done Criteria:
+
+- Reducing enemy HP to zero marks the current battle as Victory while preserving current stage context.
+
+Validation:
+
+- Enemy does not take a turn after being defeated.
+- Player input does not start another Throw after victory.
+- No reward or stage transition is triggered yet.
+
+## M6-004: Player Defeat Resolution
+
+Status: PENDING
+
+Goal:
+
+Resolve player HP reaching zero into a battle defeat outcome.
+
+Requirements:
+
+- Use existing player HP state.
+- Detect defeat after enemy damage application.
+- Lock or prevent further Throw input once defeat is reached.
+- Do not add restart UI, run summary UI, reward UI, or progression.
+
+Done Criteria:
+
+- Player HP reaching zero marks the current battle as Defeat.
+
+Validation:
+
+- Player cannot continue throwing after defeat.
+- Enemy does not repeatedly attack after defeat.
+- No reward or stage transition is triggered after defeat.
+
 ## M6-005: Advance To Next Stage
 
 Status: PENDING
@@ -237,13 +238,13 @@ Validation:
 - Defeat does not advance the stage.
 - Boss victory does not advance to a nonexistent stage.
 
-## M6-006: Boss Victory Run Complete
+## M6-006: Complete Linear Run
 
 Status: PENDING
 
 Goal:
 
-Resolve victory on Stage 5 Boss as completed MVP run state.
+Resolve victory on the final stage as completed MVP run state.
 
 Requirements:
 
@@ -254,7 +255,7 @@ Requirements:
 
 Done Criteria:
 
-- Winning Stage 5 Boss completes the run.
+- Winning the final fixed stage completes the linear run.
 
 Validation:
 
@@ -262,13 +263,13 @@ Validation:
 - Non-boss victory does not complete the run.
 - Defeat does not complete the run.
 
-## M6-007: Reset Battle For Next Stage
+## M6-007: Prepare Next Battle
 
 Status: PENDING
 
 Goal:
 
-Reset battle runtime state when advancing to the next stage.
+Prepare the next battle runtime state when advancing to the next stage.
 
 Requirements:
 
