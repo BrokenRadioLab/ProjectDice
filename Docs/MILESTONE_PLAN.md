@@ -33,7 +33,7 @@ Required MVP pillars:
 3. M2_DICE_CORE - DONE
 4. M3_DICE_PRESENTATION - DONE
 5. M4_SKILL_RESOLUTION - DONE
-6. M5_ENEMY_TURN_AND_BATTLE_LOOP - IN_PROGRESS
+6. M5_ENEMY_TURN_AND_BATTLE_LOOP - READY_FOR_DIRECTOR_REVIEW
 7. M6_LINEAR_STAGE_RUN - PENDING
 8. M7_REWARD_AND_FACE_REPLACEMENT - PENDING
 9. M8_MVP_PLAYTEST_POLISH - PENDING
@@ -249,8 +249,9 @@ Detailed Task Status:
 - M5-003 Enemy Attack Presentation is DONE.
 - M5-004 Player Damage Application is DONE and approved.
 - M5-005 Turn Transition is DONE and approved.
-- M5-006 Collapsible Dice Deck is DONE.
-- M5-007 Validate M5 Battle Loop is NEXT.
+- M5-006 Collapsible Dice Deck is DONE and approved.
+- M5-007 Validate M5 Battle Loop is DONE.
+- M5 is ready for Director review.
 - M5 must preserve the existing player Throw, Face Resolution, Dice presentation, damage apply, and HP refresh flow before adding the enemy response.
 - M5 includes battle-level turn ownership with `PlayerTurn`, `Transition`, and `EnemyTurn`.
 - Enemy attack resolution currently produces a deterministic pending fixed 5 Damage intent.

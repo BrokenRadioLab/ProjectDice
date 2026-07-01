@@ -2,52 +2,46 @@
 
 Date: 2026-07-01
 
-Task: M5-006 Collapsible Dice Deck
+Task: M5-007 Validate M5 Battle Loop
 
 ## Review Result
 
 PASS
 
-M5-006 stays within the requested scope.
+M5 validation stays within the requested scope.
 
 ## Scope Check
 
-- Added Dice Deck as Battle Information UI.
-- Dice Deck is collapsed by default.
-- Dice Deck expands and collapses on tap.
-- Dice Deck displays the current runtime six-face Dice build.
-- Dice Deck reads from `BattleDiceState.CurrentDice`.
-- Dice Deck is not hardcoded to Starter Dice.
-- Probability display is not implemented in M5.
+- Performed validation only.
+- Did not add gameplay.
+- Did not add battle end or defeat handling.
+- Did not add rewards, progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic.
+- Did not add Dice Deck probability display.
 
 ## Architecture Check
 
-- `CollapsibleDiceDeckPresenter` owns information UI only.
-- Dice Deck does not select Dice results.
-- Dice Deck does not modify Dice faces.
-- Dice Deck does not trigger battle presentation.
-- Dice Deck does not interact with rewards, inventory, progression, or stage systems.
+- `BattleTurnState` owns turn ownership only.
+- Player pipeline remains `DiceFace -> FaceResolver -> FaceEffectData -> BattleController -> ThrowSequencePresenter -> BattleCombatState -> BattleHudPresenter`.
+- Enemy pipeline remains `EnemyAttackResolver -> EnemyAttackIntent -> EnemyAttackPresenter -> BattleCombatState -> BattleHudPresenter`.
+- Dice Deck remains Battle Information UI and reads from `BattleDiceState.CurrentDice`.
+- Battle presentation and Dice Deck information UI remain separated.
 
-## Explicit Non-Changes
+## Validation Review
 
-- No reward system was added.
-- No Dice replacement system was added.
-- No inventory or Face editing was added.
-- No progression or stage system was added.
-- No battle presentation changes were added.
-- No probability or duplicate-face aggregation display was added.
-
-## Risk Notes
-
-- The M5 Dice Deck displays face names only. Face icons, short effect descriptions, and probability summaries remain future scope.
-- Probability display is intentionally reserved for a later milestone, likely around Dice replacement.
-
-## Validation
-
-- `git diff --check` passed.
+- Player Throw still resolves through Dice result selection and Face resolution.
+- Player presentation still occurs before enemy HP damage application.
+- Enemy attack resolution remains deterministic fixed 5 Damage.
+- Enemy attack presentation occurs before player HP damage application.
+- Player HP refresh occurs after player damage application.
+- Turn ownership returns to `PlayerTurn` after enemy presentation, player damage, HP refresh, and transition.
+- Enemy action is skipped when enemy is defeated by player action.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
-- Unity validation log: `/tmp/projectdice_m5_006_collapsible_dice_deck_unity.log`.
+
+## Residual Risk
+
+- Human Play Mode review is still needed for live turn feel, Dice Deck touch ergonomics, and battle rhythm.
+- Player HP can reach 0, but no defeat flow is triggered. This remains intentionally out of scope until a later battle completion milestone.
 
 ## Status
 
-M5-006 is ready for Director review.
+M5_ENEMY_TURN_AND_BATTLE_LOOP is ready for Director review.

@@ -33,7 +33,7 @@ The project is in MVP foundation work.
 - M2_DICE_CORE is DONE and approved by Director final review.
 - M3_DICE_PRESENTATION is DONE and approved by Director review.
 - M4_SKILL_RESOLUTION is DONE and approved by Director review.
-- M5_ENEMY_TURN_AND_BATTLE_LOOP is IN_PROGRESS.
+- M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -46,7 +46,7 @@ The project is in MVP foundation work.
 - `M5-004_PLAYER_DAMAGE_APPLICATION` is DONE.
 - `M5-005_TURN_TRANSITION` is DONE.
 - `M5-006_COLLAPSIBLE_DICE_DECK` is DONE.
-- `M5-007_VALIDATE_M5_BATTLE_LOOP` is NEXT.
+- `M5-007_VALIDATE_M5_BATTLE_LOOP` is DONE.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -60,6 +60,7 @@ The project is in MVP foundation work.
 - Collapsible Dice Deck now exists as a collapsed-by-default Battle Information UI.
 - Dice Deck reads from current runtime Dice state and is not hardcoded to Starter Dice.
 - Dice Deck probability display is intentionally not implemented in M5.
+- M5 battle loop validation is complete for static sequence order and Unity import/compile.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.
 - The latest selected Dice slot and face can be seen through a temporary non-final validation display.
 - Dice rolling presentation has been implemented.
@@ -313,4 +314,4 @@ Current Battle scene result:
 
 ## Next Human Decision
 
-Director review M5-006 Collapsible Dice Deck. M5-007 Validate M5 Battle Loop should not begin until M5-006 is approved.
+Director review M5_ENEMY_TURN_AND_BATTLE_LOOP. Automated/static validation confirms battle loop order, Dice Deck runtime source, and scope; human Play Mode review remains required for live feel.

@@ -2,7 +2,7 @@
 
 Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Milestone Status: IN_PROGRESS
+Milestone Status: READY_FOR_DIRECTOR_REVIEW
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -11,7 +11,7 @@ Director Review:
 - M2_DICE_CORE is approved and DONE.
 - M3_DICE_PRESENTATION is approved and DONE.
 - M4_SKILL_RESOLUTION is approved and DONE.
-- M5_ENEMY_TURN_AND_BATTLE_LOOP is IN_PROGRESS.
+- M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 
 M4 Locked Principle:
@@ -359,7 +359,7 @@ Completed:
 
 ## M5-006: Collapsible Dice Deck
 
-Status: DONE
+Status: DONE - APPROVED
 
 Goal:
 
@@ -419,7 +419,7 @@ Completed:
 
 ## M5-007: Validate M5 Battle Loop
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -448,6 +448,18 @@ Validation:
 - Player can Throw again after enemy turn.
 - Damage and HP still work for both sides.
 - Enemy turn does not occur after enemy defeat.
+
+Completed:
+
+- Confirmed player Throw still resolves through Dice result selection and Face resolution.
+- Confirmed player battle presentation still runs before enemy HP damage application.
+- Confirmed enemy attack resolution remains deterministic fixed 5 Damage.
+- Confirmed enemy attack presentation runs before player HP damage application.
+- Confirmed player HP updates after enemy attack presentation.
+- Confirmed turn ownership returns to `PlayerTurn` after enemy presentation, player damage, HP refresh, and transition.
+- Confirmed Dice Deck remains separate Battle Information UI and reads from `BattleDiceState.CurrentDice`.
+- Confirmed no rewards, stage progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic were added.
+- Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## M4 Implementation Tasks
 

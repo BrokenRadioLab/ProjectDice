@@ -53,6 +53,14 @@
 - Marked M5-006 as DONE and M5-007 Validate M5 Battle Loop as NEXT.
 - Confirmed Unity batchmode import/compile validation for M5-006 completed successfully with exit code 0.
 - No rewards, Dice replacement, inventory, Face editing, progression, stage system, battle presentation changes, or probability display were added for M5-006.
+- Recorded Director PASS for M5-006.
+- Completed M5-007 Validate M5 Battle Loop.
+- Confirmed the battle loop order: PlayerTurn, Transition, EnemyTurn, Transition, PlayerTurn.
+- Confirmed enemy attack presentation still occurs before player HP damage application.
+- Confirmed Dice Deck reads from runtime `BattleDiceState.CurrentDice` and remains separate from battle presentation.
+- Marked M5_ENEMY_TURN_AND_BATTLE_LOOP as READY_FOR_DIRECTOR_REVIEW.
+- Confirmed Unity batchmode import/compile validation for M5-007 completed successfully with exit code 0.
+- No rewards, stage progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic were added for M5-007.
 
 ## 2026-06-30
 
