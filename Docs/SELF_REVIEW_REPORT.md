@@ -2,29 +2,29 @@
 
 Date: 2026-07-01
 
-Task: TASK_M6-006_COMPLETE_LINEAR_RUN
+Task: TASK_M6-007_PREPARE_NEXT_BATTLE
 
 ## Review Result
 
 PASS
 
-Complete Linear Run stays within the requested run-completion-only scope.
+Prepare Next Battle stays within the requested runtime-preparation-only scope.
 
 ## Scope Check
 
-- Added `LinearRunState`.
-- Connected Boss Victory to fixed run completion.
+- Added `BattleCombatState.PrepareNextEnemy()`.
+- Connected successful non-boss stage advancement to next battle preparation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
-- Did not add battle end presentation or battle reset.
+- Did not add battle end presentation or full battle reset flow.
 - Did not add stage selection UI.
-- Did not add next battle preparation.
 - Did not add restart flow or new run creation.
+- Did not add healing rules.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
-- Did not add victory presentation, battle reset, transition UI, rewards, or post-run systems.
+- Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
 - Did not change Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
-- Changed only post-outcome runtime flow: Victory can advance the fixed stage position, Victory prevents EnemyTurn, and Defeat prevents PlayerTurn from resuming.
+- Changed only post-outcome runtime flow: non-boss Victory can advance the fixed stage position and prepare the next battle, Boss Victory completes the run, and Defeat prevents PlayerTurn from resuming.
 
 ## Architecture Check
 
@@ -57,6 +57,11 @@ Complete Linear Run stays within the requested run-completion-only scope.
 - Boss-stage Victory does not advance to a nonexistent stage.
 - Boss-stage Victory marks the fixed linear run complete.
 - Further battle input is blocked after run completion.
+- Non-boss stage advance resets enemy HP for the next battle.
+- Non-boss stage advance resets battle outcome to `InProgress`.
+- Non-boss stage advance restores turn ownership to `PlayerTurn`.
+- Current runtime Dice persists across next battle preparation.
+- Player HP persists across next battle preparation.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
 - Reward flow is not triggered by defeat.
@@ -65,9 +70,9 @@ Complete Linear Run stays within the requested run-completion-only scope.
 ## Residual Risk
 
 - Human Play Mode review is still needed to confirm the existing battle loop still feels unchanged in-device.
-- Human Play Mode review is still needed to confirm the exact completion feel once completion presentation is added later.
-- Next battle preparation is intentionally deferred to M6-007.
+- Human Play Mode review is still needed to confirm the exact next battle transition feel once presentation is added later.
+- Full linear run validation remains intentionally deferred to M6-008.
 
 ## Status
 
-TASK_M6-006_COMPLETE_LINEAR_RUN is complete.
+TASK_M6-007_PREPARE_NEXT_BATTLE is complete.

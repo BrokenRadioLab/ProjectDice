@@ -295,7 +295,7 @@ Validation:
 
 ## M6-007: Prepare Next Battle
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -323,7 +323,7 @@ Validation:
 
 ## M6-008: Validate Linear Stage Run
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

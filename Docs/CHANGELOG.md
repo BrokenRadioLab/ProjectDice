@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Implemented M6-007 Prepare Next Battle.
+- Added `BattleCombatState.PrepareNextEnemy()` to reset enemy HP for the next battle while preserving player HP.
+- After successful non-boss stage advancement, `BattleController` now resets `BattleOutcomeState` to `InProgress`, restores `BattleTurnState` to `PlayerTurn`, refreshes HP, and unlocks player input.
+- Current runtime Dice and Dice Deck state are preserved across stage preparation.
+- Marked M6-007 as DONE and M6-008 Validate Linear Stage Run as NEXT.
+- No rewards, Dice replacement, inventory, meta progression, battle presentation, new run creation, or healing rules were added for M6-007.
 - Implemented M6-006 Complete Linear Run.
 - Added `LinearRunState` with `InProgress` and `Completed` status.
 - Wired `LinearRunState` into the Battle scene and `BattleController`.

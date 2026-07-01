@@ -110,8 +110,9 @@ public sealed class BattleController : MonoBehaviour
         if (IsBattleVictory())
         {
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
-            ResolvePostVictoryRunProgression();
+            bool preparedNextBattle = ResolvePostVictoryRunProgression();
             SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
+            inputLocked = !preparedNextBattle;
             yield break;
         }
 
@@ -212,20 +213,35 @@ public sealed class BattleController : MonoBehaviour
         return battleOutcomeState != null && battleOutcomeState.IsVictory;
     }
 
-    private void ResolvePostVictoryRunProgression()
+    private bool ResolvePostVictoryRunProgression()
     {
         if (!IsBattleVictory() || linearStageRuntimeState == null)
         {
-            return;
+            return false;
         }
 
         if (linearStageRuntimeState.IsBossStage)
         {
             linearRunState?.MarkCompleted();
-            return;
+            return false;
         }
 
-        linearStageRuntimeState.TryAdvanceToNextStage();
+        if (!linearStageRuntimeState.TryAdvanceToNextStage())
+        {
+            return false;
+        }
+
+        PrepareNextBattleRuntime();
+        return true;
+    }
+
+    private void PrepareNextBattleRuntime()
+    {
+        combatState?.PrepareNextEnemy();
+        battleOutcomeState?.ResetOutcome();
+        battleTurnState?.BeginPlayerTurn();
+        pendingEnemyAttackIntent = EnemyAttackIntent.None();
+        hudPresenter?.Refresh();
     }
 
     private void ResolvePlayerDefeatOutcome()

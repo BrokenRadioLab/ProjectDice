@@ -33,6 +33,11 @@ public sealed class BattleCombatState : MonoBehaviour
         return previousHp - enemyCurrentHp;
     }
 
+    public void PrepareNextEnemy()
+    {
+        enemyCurrentHp = enemyMaxHp;
+    }
+
     private void OnValidate()
     {
         playerCurrentHp = Mathf.Clamp(playerCurrentHp, 0, playerMaxHp);
