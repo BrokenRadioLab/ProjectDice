@@ -265,7 +265,7 @@ Detailed Task Status:
 
 ## M6_LINEAR_STAGE_RUN
 
-Status: PENDING
+Status: READY
 
 Goal:
 
@@ -289,6 +289,21 @@ Exit Criteria:
 Human Review Point:
 
 Confirm the five-stage run length and pacing before adding rewards.
+
+Detailed Task Status:
+
+- M6 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
+- M6 implementation has not started.
+- M6-001 Battle Outcome State is PENDING.
+- M6-002 Enemy Defeat Victory Resolution is PENDING.
+- M6-003 Player Defeat Resolution is PENDING.
+- M6-004 Linear Stage Runtime State is PENDING.
+- M6-005 Advance To Next Stage is PENDING.
+- M6-006 Boss Victory Run Complete is PENDING.
+- M6-007 Reset Battle For Next Stage is PENDING.
+- M6-008 Validate Linear Stage Run is PENDING.
+- M6 must preserve the current player/enemy/player battle loop.
+- M6 must not add rewards, Dice replacement, inventory, shops, branching map, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic.
 
 ## M7_REWARD_AND_FACE_REPLACEMENT
 

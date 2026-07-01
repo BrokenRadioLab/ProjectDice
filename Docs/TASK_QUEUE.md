@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
+Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Milestone Status: READY_FOR_DIRECTOR_REVIEW
+Milestone Status: READY
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -12,6 +12,7 @@ Director Review:
 - M3_DICE_PRESENTATION is approved and DONE.
 - M4_SKILL_RESOLUTION is approved and DONE.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
+- M6_LINEAR_STAGE_RUN task structure is generated and READY.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 
 M4 Locked Principle:
@@ -70,6 +71,254 @@ Post-M4 Roadmap:
 - M7: Reward.
 - M8: Dice Face Replacement.
 - First complete Run.
+
+## M6 Implementation Tasks
+
+Status: GENERATED
+
+M6 Goal:
+
+Connect individual battles into the fixed five-stage MVP run.
+
+Desired Run Shape:
+
+- Stage 1 normal battle.
+- Stage 2 normal battle.
+- Stage 3 normal battle.
+- Stage 4 elite battle.
+- Stage 5 boss battle.
+- Defeat ends the run.
+- Boss victory completes the run.
+
+M6 Task Rule:
+
+- One gameplay concept per task.
+- Keep every task independently verifiable.
+- Preserve the existing player Throw, Face Resolution, Dice presentation, enemy turn, HP refresh, and return-to-player loop.
+- Do not add rewards, Dice replacement, inventory, shops, branching map, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic.
+- M6 may introduce battle/run completion state, but it must not implement reward flow.
+
+## M6-001: Battle Outcome State
+
+Status: PENDING
+
+Goal:
+
+Add the minimal runtime state needed to represent battle outcome separately from turn ownership.
+
+Requirements:
+
+- Define battle outcome states such as `InProgress`, `Victory`, and `Defeat`.
+- Keep outcome state separate from `BattleTurnState`.
+- Do not advance stages in this task.
+- Do not show victory/defeat presentation in this task.
+- Do not add rewards, Dice replacement, progression UI, boss mechanics, or enemy AI.
+
+Done Criteria:
+
+- Battle code can explicitly know whether the current battle is still running, won, or lost.
+
+Validation:
+
+- Outcome state does not calculate damage.
+- Outcome state does not trigger presentation.
+- Outcome state does not advance stages.
+- Existing battle loop still works while outcome is `InProgress`.
+
+## M6-002: Enemy Defeat Victory Resolution
+
+Status: PENDING
+
+Goal:
+
+Resolve enemy defeat into a battle victory outcome.
+
+Requirements:
+
+- Use existing enemy HP state.
+- Detect victory after player damage application.
+- Stop enemy response when enemy is defeated.
+- Lock or prevent further Throw input once victory is reached.
+- Do not advance to the next stage in this task.
+- Do not add rewards or victory screen.
+
+Done Criteria:
+
+- Reducing enemy HP to zero marks the current battle as Victory.
+
+Validation:
+
+- Enemy does not take a turn after being defeated.
+- Player input does not start another Throw after victory.
+- No reward or stage transition is triggered yet.
+
+## M6-003: Player Defeat Resolution
+
+Status: PENDING
+
+Goal:
+
+Resolve player HP reaching zero into a battle defeat outcome.
+
+Requirements:
+
+- Use existing player HP state.
+- Detect defeat after enemy damage application.
+- Lock or prevent further Throw input once defeat is reached.
+- Do not add restart UI, run summary UI, reward UI, or progression.
+
+Done Criteria:
+
+- Player HP reaching zero marks the current battle as Defeat.
+
+Validation:
+
+- Player cannot continue throwing after defeat.
+- Enemy does not repeatedly attack after defeat.
+- No reward or stage transition is triggered after defeat.
+
+## M6-004: Linear Stage Runtime State
+
+Status: PENDING
+
+Goal:
+
+Add the runtime state for the fixed five-stage MVP run.
+
+Requirements:
+
+- Represent current stage number.
+- Represent stage type:
+  - Normal.
+  - Elite.
+  - Boss.
+- Use the fixed order:
+  - Stage 1 Normal.
+  - Stage 2 Normal.
+  - Stage 3 Normal.
+  - Stage 4 Elite.
+  - Stage 5 Boss.
+- Do not create a branching map.
+- Do not add rewards or Dice replacement.
+
+Done Criteria:
+
+- Runtime state can report the current stage and whether it is the final boss stage.
+
+Validation:
+
+- Stage order is deterministic.
+- No branch selection exists.
+- No reward flow exists.
+
+## M6-005: Advance To Next Stage
+
+Status: PENDING
+
+Goal:
+
+Advance from a won non-boss battle to the next fixed stage.
+
+Requirements:
+
+- Consume a Victory outcome.
+- Advance only if the current stage is not the final boss stage.
+- Prepare the next battle state after advancing.
+- Do not add rewards between stages in M6.
+- Do not add stage selection UI.
+
+Done Criteria:
+
+- Winning Stage 1, 2, 3, or 4 advances to the next stage.
+
+Validation:
+
+- Stage number increments exactly once per victory.
+- Defeat does not advance the stage.
+- Boss victory does not advance to a nonexistent stage.
+
+## M6-006: Boss Victory Run Complete
+
+Status: PENDING
+
+Goal:
+
+Resolve victory on Stage 5 Boss as completed MVP run state.
+
+Requirements:
+
+- Detect victory on the final boss stage.
+- Mark the run as complete.
+- Prevent further battle input after run completion.
+- Do not add reward, post-run economy, meta progression, or new run setup.
+
+Done Criteria:
+
+- Winning Stage 5 Boss completes the run.
+
+Validation:
+
+- Run complete occurs only after boss victory.
+- Non-boss victory does not complete the run.
+- Defeat does not complete the run.
+
+## M6-007: Reset Battle For Next Stage
+
+Status: PENDING
+
+Goal:
+
+Reset battle runtime state when advancing to the next stage.
+
+Requirements:
+
+- Reset enemy HP for the new stage.
+- Reset battle outcome to `InProgress`.
+- Restore turn ownership to `PlayerTurn`.
+- Preserve current runtime Dice build.
+- Preserve player HP unless Director later specifies stage healing.
+- Do not add rewards or Dice replacement.
+
+Done Criteria:
+
+- After a non-boss victory advances the stage, the next battle can start cleanly.
+
+Validation:
+
+- Current Dice build persists across stages.
+- Enemy HP is ready for the new battle.
+- Player can Throw in the next stage.
+- No reward flow is inserted.
+
+## M6-008: Validate Linear Stage Run
+
+Status: PENDING
+
+Goal:
+
+Validate the fixed five-stage run from Stage 1 through run completion or defeat.
+
+Requirements:
+
+- Confirm existing player Throw flow still works.
+- Confirm existing enemy turn flow still works.
+- Confirm victory stops the enemy response.
+- Confirm defeat stops player input.
+- Confirm non-boss victory advances stages.
+- Confirm boss victory completes the run.
+- Confirm runtime Dice build persists across stages.
+- Confirm no rewards, Dice replacement, branching map, inventory, shops, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic were added.
+
+Done Criteria:
+
+- M6 can be submitted for Director review as the first fixed linear run structure.
+
+Validation:
+
+- No compile errors.
+- No `NullReferenceException`.
+- Full fixed run path is deterministic.
+- Defeat path is deterministic.
 
 ## Post-M4 Dice Presentation Scale Fix
 
