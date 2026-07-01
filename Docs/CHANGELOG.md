@@ -1,9 +1,45 @@
 # CHANGELOG
 
+## 2026-07-01
+
+### Changed
+
+- Started M5_ENEMY_TURN_AND_BATTLE_LOOP implementation.
+- Implemented M5-001 Enemy Runtime Turn State.
+- Added `BattleTurnOwner` with `PlayerTurn`, `Transition`, and `EnemyTurn`.
+- Added `BattleTurnState` as the battle-level turn ownership runtime holder.
+- Updated `BattleController` so Throw is accepted only while battle turn ownership allows player action.
+- Accepted Throw now enters `Transition`; M5-001 can mark a future `EnemyTurn` handoff and then returns immediately to `PlayerTurn` to preserve the existing player Throw loop until later M5 tasks add enemy resolution, presentation, and player damage.
+- Marked M5-001 as DONE and M5-002 Enemy Attack Resolution as NEXT.
+- Confirmed Unity batchmode import/compile validation for M5-001 completed successfully with exit code 0.
+- No enemy AI, enemy attack resolution, player damage, enemy presentation, rewards, progression, battle end, new Dice faces, or Guard/Spark/Mend effects were added.
+- Recorded Director PASS for M5-001.
+- Implemented M5-002 Enemy Attack Resolution.
+- Added `EnemyAttackIntent` and `EnemyAttackIntentType` for pending enemy attack data.
+- Added `EnemyAttackResolver.Resolve(BattleTurnState battleTurnState)` to produce deterministic fixed 5 Damage only from pending `EnemyTurn` ownership.
+- Updated `BattleController` to store the pending enemy attack intent after the player action reaches the future enemy handoff point.
+- Marked M5-002 as DONE and M5-003 Enemy Attack Presentation as NEXT.
+- Confirmed Unity batchmode import/compile validation for M5-002 completed successfully with exit code 0.
+- No enemy animation, player HP reduction, enemy presentation, battle end, rewards, progression, enemy AI, random action logic, or new Face effects were added for M5-002.
+
 ## 2026-06-30
 
 ### Changed
 
+- Completed `TASK_POST_M4_DICE_PRESENTATION_SCALE_FIX_REVISED`.
+- Completed `TASK_POST_M4_DICE_PRESENTATION_POLISH`.
+- Increased the Dice placeholder to 288x288 and moved the result moment slightly below center.
+- Kept the primary Face Reveal text final-facing as the selected face name only, such as `Spark`.
+- Kept Face Effect text as the smaller secondary result label, such as `Damage` or `No Effect`.
+- Kept temporary selected-slot validation text as small corner `RESULT S#: FaceName` debug text.
+- Increased the runtime Dice placeholder from 48x48 to 112x112 for mobile landscape readability.
+- Added a simple runtime Dice result frame/backing behind the Dice placeholder.
+- Enlarged Face Reveal, Face Effect, and Damage Number text placement around the Dice result moment.
+- Kept temporary selected-face validation text, restyled it from `RESULT S#: FaceName` to `Face S#: FaceName`, and moved it closer to the Dice result area.
+- Replaced generic Hero color feedback with provided Hero idle and throw frame animation from `Assets/Art`.
+- Spawned the existing projectile trail during the forward Hero throw frames, then returned the Hero to idle animation.
+- Preserved the existing Throw, Dice presentation, Face Effect, Damage Number, damage apply, and HP refresh flow without adding gameplay.
+- Confirmed Unity batchmode import/compile validation for the post-M4 Dice presentation scale fix completed successfully with exit code 0.
 - Started M4_SKILL_RESOLUTION implementation.
 - Implemented M4-002 Face Resolver.
 - Added `FaceResolver.Resolve(DiceFace selectedFace)` as a pure `DiceFace` to `FaceEffectData` transform.

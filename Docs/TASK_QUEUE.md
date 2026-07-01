@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M4_SKILL_RESOLUTION
+Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Milestone Status: READY_FOR_DIRECTOR_REVIEW
+Milestone Status: IN_PROGRESS
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -10,7 +10,8 @@ Director Review:
 
 - M2_DICE_CORE is approved and DONE.
 - M3_DICE_PRESENTATION is approved and DONE.
-- Proceed to M4_SKILL_RESOLUTION.
+- M4_SKILL_RESOLUTION is approved and DONE.
+- M5_ENEMY_TURN_AND_BATTLE_LOOP is IN_PROGRESS.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 
 M4 Locked Principle:
@@ -69,6 +70,290 @@ Post-M4 Roadmap:
 - M7: Reward.
 - M8: Dice Face Replacement.
 - First complete Run.
+
+## Post-M4 Dice Presentation Scale Fix
+
+Status: DONE
+
+Goal:
+
+Improve Dice Animation Layer readability after APK playtest without adding gameplay.
+
+Completed:
+
+- Increased the Dice placeholder to a readable mobile landscape scale.
+- Added a simple runtime backing frame so the Dice result moment feels intentional.
+- Enlarged Face Reveal, Face Effect, and Damage Number presentation around the Dice result.
+- Kept selected-face validation text and restyled it as `Face S#: FaceName`.
+- Replaced generic Hero feedback with provided Hero idle and throw frame animation.
+- Spawned the projectile during the forward throw frames and returned the Hero to idle.
+- Preserved the current battle flow: Throw, Hero throw animation, projectile, enemy flash, Dice layer, rolling, Face Reveal, Face Effect, Damage Number, damage apply, HP refresh.
+
+Not Added:
+
+- No enemy turn.
+- No rewards or progression.
+- No new Dice faces.
+- No new Face effects.
+- No final pixel art assets.
+- No multi-enemy logic.
+
+## Post-M4 Dice Presentation Polish
+
+Status: DONE
+
+Goal:
+
+Improve battle presentation readability before starting M5 without adding gameplay.
+
+Completed:
+
+- Increased the Dice result placeholder to 288x288.
+- Moved the Dice result slightly below center so it reads like a landed result after enemy impact.
+- Kept the primary reveal text as only the selected Face name, such as `Spark`.
+- Kept Face Effect as smaller secondary text, such as `Damage` or `No Effect`.
+- Kept selected-slot validation text as small corner `RESULT S#: FaceName` debug text.
+- Preserved Hero idle and throw animation assets from `Assets/Art`.
+- Preserved projectile timing after the fifth throw frame.
+- Preserved current battle flow: Throw, Hero throw animation, projectile, enemy flash, Dice layer, rolling, Face Reveal, Face Effect, Damage Number, damage apply, HP refresh.
+
+Not Added:
+
+- No enemy turn.
+- No rewards or progression.
+- No new Dice faces.
+- No Guard, Spark, or Mend real effects.
+- No multi-enemy logic.
+- No inventory or stage system.
+
+## M5 Implementation Tasks
+
+Status: IN_PROGRESS
+
+M5 Goal:
+
+Complete the first full battle turn cycle.
+
+Desired Loop:
+
+- Player Throw.
+- Face Resolution.
+- Battle Presentation.
+- Damage.
+- Enemy Turn.
+- Player HP Update.
+- Return to Idle.
+- Player can Throw again.
+
+M5 Task Rule:
+
+- One gameplay concept per task.
+- Keep every task independently verifiable.
+- Preserve the existing player Throw, Dice result, Face resolution, Dice presentation, damage apply, and HP refresh flow.
+- Enemy behavior should be fixed and deterministic for MVP.
+- Do not add enemy AI complexity.
+- Do not add battle completion systems during M5.
+- Do not add rewards, stage progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic.
+
+## M5-001: Enemy Runtime Turn State
+
+Status: DONE - APPROVED
+
+Goal:
+
+Add the minimum runtime state needed for battle-level turn ownership after player resolution.
+
+Requirements:
+
+- Define battle-level turn ownership, not enemy-local state only.
+- Include clear ownership states:
+  - `PlayerTurn`
+  - `Transition`
+  - `EnemyTurn`
+- Represent whether an enemy turn should occur after the player Throw resolves.
+- Keep enemy turn state separate from Dice result selection and Face resolution.
+- Do not apply player HP damage in this task.
+- Do not trigger enemy presentation in this task.
+- Do not add enemy AI, target selection, random actions, rewards, progression, or battle completion.
+- Keep existing player Throw, Dice presentation, Face Effect, damage apply, and HP refresh behavior working.
+
+Done Criteria:
+
+- Battle flow can determine that player input belongs to `PlayerTurn`.
+- Battle flow can enter `Transition` during accepted player action.
+- Battle flow can mark `EnemyTurn`/pending enemy response as a future handoff point without resolving enemy damage yet.
+
+Validation:
+
+- Enemy turn state does not call `DiceRoller`.
+- Enemy turn state does not resolve Face effects.
+- Enemy turn state does not mutate player HP.
+- Enemy turn state does not trigger presentation.
+- Existing player Throw flow remains unchanged.
+
+Completed:
+
+- Added `BattleTurnOwner` with `PlayerTurn`, `Transition`, and `EnemyTurn`.
+- Added `BattleTurnState` as the battle-level turn ownership runtime holder.
+- `BattleTurnState` starts in `PlayerTurn`.
+- `BattleController` checks `BattleTurnState.CanAcceptPlayerAction` before accepting Throw.
+- Accepted Throw moves turn ownership into `Transition`.
+- After the current player resolution finishes, the system can mark `EnemyTurn` as pending and currently returns to `PlayerTurn` immediately to preserve existing Throw behavior until later M5 tasks implement enemy resolution/presentation/damage.
+- No enemy AI, enemy damage, player damage, enemy presentation, rewards, progression, battle end, new Dice faces, or Guard/Spark/Mend effects were added.
+
+## M5-002: Enemy Attack Resolution
+
+Status: DONE
+
+Goal:
+
+Resolve the enemy's fixed MVP attack into pending player damage.
+
+Requirements:
+
+- Consume enemy runtime turn state from M5-001.
+- Produce a deterministic pending enemy damage value.
+- Use a fixed damage amount for MVP.
+- Do not apply player HP damage in this task.
+- Do not own presentation.
+- Do not add random damage ranges, enemy AI, action lists, buffs, debuffs, or multiple enemy actions.
+
+Done Criteria:
+
+- Enemy turn can produce one deterministic pending damage result without mutating HP.
+
+Validation:
+
+- Pending enemy damage is deterministic.
+- No player HP mutation occurs during resolution.
+- No presentation code decides the damage amount.
+- No new Face effects or Dice logic are added.
+
+Completed:
+
+- Added `EnemyAttackIntent` as the deterministic pending enemy attack data.
+- Added `EnemyAttackIntentType` with `None` and `Damage`.
+- Added `EnemyAttackResolver.Resolve(BattleTurnState battleTurnState)`.
+- Enemy attack resolution returns fixed MVP damage 5 only while battle ownership is `EnemyTurn` and enemy turn is pending.
+- `BattleController` stores the resolved pending enemy attack intent after player resolution reaches the enemy handoff point.
+- Existing M5-001 temporary return to `PlayerTurn` is preserved until later tasks implement enemy presentation, player damage, and turn transition.
+- No enemy animation, player HP reduction, enemy presentation, battle end, rewards, progression, enemy AI, random action logic, or new Face effects were added.
+
+## M5-003: Enemy Attack Presentation
+
+Status: NEXT
+
+Goal:
+
+Show a short, readable enemy attack beat after player damage resolution.
+
+Requirements:
+
+- Presentation occurs only after the player's Throw, Face Reveal, Face Effect, Damage Number, damage apply, and HP refresh flow.
+- Use simple SNES-style feedback only.
+- Keep the beat short and readable.
+- Presentation may use a simple enemy flash, movement nudge, white trail, or Hero hit flash if needed.
+- Do not apply player HP damage in this task.
+- Do not decide gameplay damage in presentation.
+- Do not add cinematic camera, particle-heavy effects, knockback systems, or long animations.
+
+Done Criteria:
+
+- Enemy response is visually understandable before player HP changes.
+
+Validation:
+
+- Enemy attack presentation happens after player resolution.
+- Presentation does not mutate HP.
+- Presentation does not call enemy attack resolution logic.
+- Presentation does not change Dice or Face state.
+
+## M5-004: Player Damage Application
+
+Status: PENDING
+
+Goal:
+
+Apply resolved enemy attack damage to player HP after enemy attack presentation.
+
+Requirements:
+
+- Consume the pending enemy damage value from M5-002.
+- Apply damage only after M5-003 enemy attack presentation completes.
+- Keep `BattleCombatState` as the player HP mutation owner.
+- Refresh HP presentation after damage application.
+- Do not add defeat flow, run end, rewards, progression, or battle completion.
+
+Done Criteria:
+
+- Player HP decreases from the fixed enemy attack after the enemy presentation beat.
+
+Validation:
+
+- Player HP does not change before enemy attack presentation.
+- Player HP clamps according to existing combat state rules.
+- `BattleHudPresenter.Refresh()` updates visible HP after damage.
+- Existing enemy HP damage from player Attack still works.
+
+## M5-005: Turn Transition
+
+Status: PENDING
+
+Goal:
+
+Return the battle to player-ready idle state after enemy turn resolution.
+
+Requirements:
+
+- Keep player input locked through player Throw, player presentation, enemy presentation, and player HP update.
+- Unlock player input only after the enemy turn completes.
+- Return Hero presentation to idle.
+- Allow the player to Throw again after the loop completes.
+- Skip enemy action if the enemy is already defeated by the player action.
+- Do not implement victory UI, defeat UI, rewards, progression, or stage transitions.
+
+Done Criteria:
+
+- A player can perform Throw, receive enemy response, and then Throw again.
+
+Validation:
+
+- Input remains locked during the full turn sequence.
+- Input unlocks after the enemy turn completes.
+- Enemy does not act after being defeated.
+- Repeated player turns work without duplicate enemy responses.
+
+## M5-006: Validate M5 Battle Loop
+
+Status: PENDING
+
+Goal:
+
+Validate the first complete battle turn loop before moving to battle completion work.
+
+Requirements:
+
+- Confirm player Throw still works.
+- Confirm Face resolution still drives player effect meaning.
+- Confirm player presentation order is preserved.
+- Confirm enemy attack resolution is deterministic.
+- Confirm enemy attack presentation happens before player HP damage.
+- Confirm player HP updates after enemy attack presentation.
+- Confirm input returns to player after the enemy turn.
+- Confirm repeated loops work.
+- Confirm no rewards, stage progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic were added.
+
+Done Criteria:
+
+- M5 can be submitted for Director review as the first complete battle turn cycle.
+
+Validation:
+
+- No compile errors.
+- No `NullReferenceException`.
+- Player can Throw again after enemy turn.
+- Damage and HP still work for both sides.
+- Enemy turn does not occur after enemy defeat.
 
 ## M4 Implementation Tasks
 
@@ -304,7 +589,7 @@ Requirements:
 
 Done Criteria:
 
-- M4_SKILL_RESOLUTION is ready for Director review.
+- M4_SKILL_RESOLUTION is DONE and approved by Director review.
 
 Validation:
 
@@ -327,7 +612,7 @@ Completed:
 - Confirmed `BattleCombatState.ApplyDamageToEnemy` is called only for resolved `FaceEffectType.Damage`.
 - Confirmed `ThrowSequencePresenter` does not decide gameplay or mutate HP.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
-- M4_SKILL_RESOLUTION is ready for Director review.
+- M4_SKILL_RESOLUTION is DONE and approved by Director review.
 
 ## M3 Implementation Tasks
 

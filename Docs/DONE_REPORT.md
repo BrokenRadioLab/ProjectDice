@@ -1,14 +1,14 @@
 # DONE REPORT
 
-Date: 2026-06-30
+Date: 2026-07-01
 
-Selected Milestone: M4_SKILL_RESOLUTION
+Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Completed Work: M4-006 Validate M4 Face Skill Resolution
+Completed Work: M5-002 Enemy Attack Resolution
 
 ## Summary
 
-Validated the full M4 Face Skill Resolution pipeline. M4 is now READY_FOR_DIRECTOR_REVIEW.
+Added deterministic enemy attack intent resolution without applying player damage or triggering enemy presentation.
 
 ## Validation Result
 
@@ -16,38 +16,27 @@ PASS
 
 ## Confirmed
 
-- M4-001 Face Effect Data Model is DONE and approved.
-- M4-002 Face Resolver is DONE and approved.
-- M4-003 Attack Face is DONE and approved.
-- M4-004 Explicit Undefined Face Handling is DONE and approved.
-- M4-005 Face Effect Presentation Beat is DONE and approved.
-- M4-006 Validate M4 Face Skill Resolution is DONE.
-- M4_SKILL_RESOLUTION is READY_FOR_DIRECTOR_REVIEW.
-- `FaceResolver.Resolve` is called once per accepted Throw.
-- No second Dice roll or random result occurs during Face resolution.
-- `Attack` resolves to a Damage effect.
-- Guard, Spark, Mend, null, and unknown Faces resolve to no-effect data.
-- Face Reveal occurs before Face Effect.
-- Face Effect occurs before Damage Number.
-- Damage applies only after `ThrowSequencePresenter.Play` returns.
-- `BattleCombatState.ApplyDamageToEnemy` is called only for resolved `FaceEffectType.Damage`.
+- M5-001 Enemy Runtime Turn State is approved.
+- `EnemyAttackIntent` stores pending enemy attack data.
+- `EnemyAttackIntentType` currently supports `None` and `Damage`.
+- `EnemyAttackResolver.Resolve` consumes `BattleTurnState`.
+- Enemy attack resolution produces fixed MVP damage 5 only when battle ownership is pending `EnemyTurn`.
+- `BattleController` stores the pending enemy attack intent after the player action reaches the future enemy handoff point.
+- Existing player Throw, Dice presentation, Face Effect, enemy HP damage application, and HP refresh flow is preserved.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Not Added
 
-- No Guard, Spark, or Mend mechanics were added.
-- No enemy turn was added.
-- No rewards or progression were added.
-- No Dice face replacement was added.
-- No new Dice result logic was added.
-
-## Validation Notes
-
-- Unity validation log: `/tmp/projectdice_m4_006_unity.log`.
-- Static inspection confirms presentation code does not decide gameplay.
-- Static inspection confirms presentation code does not mutate HP.
-- Static inspection confirms `BattleCombatState` still owns enemy HP mutation.
+- No enemy AI was added.
+- No enemy animation was added.
+- No enemy attack presentation was added.
+- No player HP damage was added.
+- No battle end, rewards, progression, inventory, shops, stage system, new Dice faces, or Guard/Spark/Mend effects were added.
 
 ## Stop Point
 
-Stopped after M4 validation. M5 has not started.
+Stopped after M5-002.
+
+## Validation Notes
+
+- Unity validation log: `/tmp/projectdice_m5_002_enemy_attack_resolution_unity.log`.

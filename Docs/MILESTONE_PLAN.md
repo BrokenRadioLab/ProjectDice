@@ -32,8 +32,8 @@ Required MVP pillars:
 2. M1_COMBAT_CORE - DONE
 3. M2_DICE_CORE - DONE
 4. M3_DICE_PRESENTATION - DONE
-5. M4_SKILL_RESOLUTION - READY_FOR_DIRECTOR_REVIEW
-6. M5_ENEMY_TURN_AND_BATTLE_END - PENDING
+5. M4_SKILL_RESOLUTION - DONE
+6. M5_ENEMY_TURN_AND_BATTLE_LOOP - IN_PROGRESS
 7. M6_LINEAR_STAGE_RUN - PENDING
 8. M7_REWARD_AND_FACE_REPLACEMENT - PENDING
 9. M8_MVP_PLAYTEST_POLISH - PENDING
@@ -159,7 +159,7 @@ Precondition:
 
 ## M4_SKILL_RESOLUTION
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 Goal:
 
@@ -201,37 +201,56 @@ Detailed Task Status:
 - M4-005 Face Effect Presentation Beat is DONE.
 - M4-006 Validate M4 Face Skill Resolution is DONE.
 - Unity batchmode import/compile validation completed successfully on 2026-06-30.
-- M4 is ready for Director review.
+- M4 is DONE and approved by Director review.
+- Post-M4 Dice presentation scale/readability fix is complete and did not change M4 gameplay scope.
+- Post-M4 Hero feedback replacement is complete: provided Hero idle/throw frames now carry the throw feedback.
+- Post-M4 Dice presentation polish is complete and keeps validation text secondary.
 - `Attack` is the only currently defined damage Face behavior.
 - `Guard`, `Spark`, and `Mend` must not receive invented effects until Director or GDD source text defines them.
 - M4 task architecture is `DiceFace`, FaceResolver, Gameplay Effect, Presentation, `BattleCombatState`, `BattleHudPresenter`.
 
-## M5_ENEMY_TURN_AND_BATTLE_END
+## M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Status: PENDING
+Status: IN_PROGRESS
 
 Goal:
 
-Complete the battle loop with enemy turns, victory, and defeat.
+Complete the first full battle turn loop: player action, enemy response, and return to player input.
 
 Scope:
 
 - Enemy action after player resolution.
 - Fixed enemy behavior for MVP.
-- Victory when enemy HP reaches zero.
-- Defeat when player HP reaches zero.
-- Clean input blocking after battle end.
+- Player HP update after enemy action.
+- Turn transition back to idle/player input.
+- Clean input blocking while enemy turn is resolving.
+- No enemy AI complexity.
+- No battle completion, rewards, progression, or stage flow.
 
 Exit Criteria:
 
-- Battles can end in victory.
-- Battles can end in defeat.
-- Enemy does not act after it is defeated.
-- Run-ending defeat is clearly communicated.
+- Player Throw resolves through the existing Face and presentation flow.
+- Enemy performs one fixed response after player resolution if still able to act.
+- Player HP updates after enemy presentation.
+- Control returns to the player after the enemy turn.
+- The player can Throw again after the loop returns to idle.
+- Enemy does not act after it has already been defeated.
 
 Human Review Point:
 
-Confirm battle outcomes and turn pacing before connecting multiple stages.
+Confirm the first full turn cycle feels natural before adding battle completion and stage systems.
+
+Detailed Task Status:
+
+- M5 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
+- M5 implementation has started.
+- M5-001 Enemy Runtime Turn State is DONE and approved.
+- M5-002 Enemy Attack Resolution is DONE.
+- M5-003 Enemy Attack Presentation is NEXT.
+- M5 must preserve the existing player Throw, Face Resolution, Dice presentation, damage apply, and HP refresh flow before adding the enemy response.
+- M5 includes battle-level turn ownership with `PlayerTurn`, `Transition`, and `EnemyTurn`.
+- Enemy attack resolution currently produces a deterministic pending fixed 5 Damage intent only; it does not apply player HP damage or trigger presentation.
+- Victory, defeat, rewards, stage progression, inventory, shops, permanent progression, new Face types, boss systems, and multi-enemy logic are out of scope for M5.
 
 ## M6_LINEAR_STAGE_RUN
 

@@ -59,14 +59,17 @@ public sealed class BattleDiceResultPresenter : MonoBehaviour
         rectTransform.anchorMin = new Vector2(0f, 0f);
         rectTransform.anchorMax = new Vector2(0f, 0f);
         rectTransform.pivot = new Vector2(0f, 0f);
-        rectTransform.anchoredPosition = new Vector2(24f, 24f);
-        rectTransform.sizeDelta = new Vector2(360f, 40f);
+        rectTransform.anchoredPosition = new Vector2(16f, 14f);
+        rectTransform.sizeDelta = new Vector2(220f, 24f);
 
         resultText = textObject.AddComponent<Text>();
         resultText.raycastTarget = false;
         resultText.alignment = TextAnchor.MiddleLeft;
-        resultText.fontSize = 24;
-        resultText.color = new Color(0.95f, 0.91f, 0.72f, 1f);
+        resultText.fontSize = 13;
+        resultText.resizeTextForBestFit = true;
+        resultText.resizeTextMinSize = 8;
+        resultText.resizeTextMaxSize = 13;
+        resultText.color = new Color(0.72f, 0.68f, 0.52f, 0.85f);
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
         resultText.font = fallbackFont;

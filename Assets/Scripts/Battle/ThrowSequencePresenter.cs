@@ -9,8 +9,13 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     [SerializeField] private RectTransform enemySlot;
     [SerializeField] private RectTransform diceAnimationLayer;
     [SerializeField] private Graphic heroPlaceholder;
+    [SerializeField] private Image heroSpriteImage;
     [SerializeField] private Graphic enemyPlaceholder;
-    [SerializeField, Min(0.01f)] private float heroFeedbackDuration = 0.05f;
+    [SerializeField] private Texture2D[] heroIdleTextures;
+    [SerializeField] private Texture2D[] heroThrowTextures;
+    [SerializeField, Min(0.01f)] private float heroIdleFrameDuration = 0.18f;
+    [SerializeField, Min(0.01f)] private float heroThrowFrameDuration = 0.05f;
+    [SerializeField, Min(0)] private int projectileSpawnThrowFrame = 5;
     [SerializeField, Min(0.01f)] private float projectileDuration = 0.08f;
     [SerializeField, Min(0.01f)] private float enemyFlashDuration = 0.05f;
     [SerializeField, Min(0.01f)] private float diceLayerAppearDuration = 0.1f;
@@ -20,37 +25,49 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     [SerializeField, Min(0.01f)] private float faceEffectDuration = 0.15f;
     [SerializeField, Min(0.01f)] private float damageNumberDuration = 0.15f;
     [SerializeField, Min(1f)] private float projectileThickness = 3f;
-    [SerializeField] private Vector2 rollingDiceSize = new Vector2(48f, 48f);
+    [SerializeField] private Vector2 rollingDiceSize = new Vector2(288f, 288f);
+    [SerializeField] private Vector2 diceResultPosition = new Vector2(0f, -56f);
     [SerializeField] private Color projectileColor = Color.white;
-    [SerializeField] private Color heroFeedbackColor = new Color(0.95f, 0.95f, 1f, 0.28f);
     [SerializeField] private Color enemyFlashColor = new Color(1f, 0.95f, 0.88f, 0.55f);
+    [SerializeField] private Color diceFrameColor = new Color(0.16f, 0.13f, 0.12f, 0.96f);
+    [SerializeField] private Color diceBackingColor = new Color(0.42f, 0.35f, 0.27f, 0.94f);
     [SerializeField] private Color rollingDiceColor = new Color(0.94f, 0.91f, 0.78f, 1f);
     [SerializeField] private Color faceRevealTextColor = new Color(0.12f, 0.1f, 0.08f, 1f);
     [SerializeField] private Color faceEffectTextColor = new Color(0.86f, 0.93f, 1f, 1f);
     [SerializeField] private Color damageNumberTextColor = new Color(1f, 0.78f, 0.42f, 1f);
 
     private Image projectileTrail;
+    private Image diceFrame;
+    private Image diceBacking;
     private Image rollingDiceVisual;
     private Text faceRevealText;
     private Text faceEffectText;
     private Text damageNumberText;
-    private Color originalHeroColor;
     private Color originalEnemyColor;
+    private Sprite[] heroIdleFrames;
+    private Sprite[] heroThrowFrames;
+    private float idleFrameTimer;
+    private int idleFrameIndex;
+    private bool isPlayingHeroThrow;
     private static Font fallbackFont;
+    private static readonly Vector2 MinimumReadableDiceSize = new Vector2(288f, 288f);
     private static readonly Vector2[] RollingFrameOffsets =
     {
-        new Vector2(-10f, 2f),
-        new Vector2(-3f, -4f),
-        new Vector2(5f, 3f),
-        new Vector2(10f, -2f),
-        new Vector2(4f, 0f),
-        Vector2.zero
+        new Vector2(-26f, -50f),
+        new Vector2(-9f, -66f),
+        new Vector2(16f, -48f),
+        new Vector2(27f, -60f),
+        new Vector2(10f, -56f),
+        new Vector2(0f, -56f)
     };
 
     private void Awake()
     {
-        originalHeroColor = heroPlaceholder != null ? heroPlaceholder.color : Color.white;
+        heroSpriteImage = heroSpriteImage != null ? heroSpriteImage : heroPlaceholder as Image;
         originalEnemyColor = enemyPlaceholder != null ? enemyPlaceholder.color : Color.white;
+        BuildHeroAnimationSprites();
+        ConfigureHeroSpriteImage();
+        ShowHeroIdleFrame(0);
         EnsureProjectileTrail();
         HideProjectileTrail();
         EnsureRollingDiceVisual();
@@ -64,25 +81,15 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         HideDiceAnimationLayer();
     }
 
+    private void Update()
+    {
+        PlayIdleLoop();
+    }
+
     public IEnumerator Play(DiceFace selectedFace, FaceEffectData faceEffect, int damageAmount)
     {
         CacheOriginalColors();
-
-        if (heroPlaceholder != null)
-        {
-            heroPlaceholder.color = heroFeedbackColor;
-        }
-
-        yield return new WaitForSeconds(heroFeedbackDuration);
-
-        if (heroPlaceholder != null)
-        {
-            heroPlaceholder.color = originalHeroColor;
-        }
-
-        ShowProjectileTrail();
-        yield return new WaitForSeconds(projectileDuration);
-        HideProjectileTrail();
+        yield return PlayHeroThrowAnimation();
 
         if (enemyPlaceholder != null)
         {
@@ -107,14 +114,154 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
     private void CacheOriginalColors()
     {
-        if (heroPlaceholder != null)
-        {
-            originalHeroColor = heroPlaceholder.color;
-        }
-
         if (enemyPlaceholder != null)
         {
             originalEnemyColor = enemyPlaceholder.color;
+        }
+    }
+
+    private void BuildHeroAnimationSprites()
+    {
+        heroIdleFrames = BuildSprites(heroIdleTextures);
+        heroThrowFrames = BuildSprites(heroThrowTextures);
+    }
+
+    private static Sprite[] BuildSprites(Texture2D[] textures)
+    {
+        if (textures == null || textures.Length == 0)
+        {
+            return System.Array.Empty<Sprite>();
+        }
+
+        Sprite[] sprites = new Sprite[textures.Length];
+
+        for (int i = 0; i < textures.Length; i++)
+        {
+            Texture2D texture = textures[i];
+            if (texture == null)
+            {
+                continue;
+            }
+
+            sprites[i] = Sprite.Create(
+                texture,
+                new Rect(0f, 0f, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f),
+                100f,
+                0,
+                SpriteMeshType.FullRect);
+        }
+
+        return sprites;
+    }
+
+    private void ConfigureHeroSpriteImage()
+    {
+        if (heroSpriteImage == null)
+        {
+            return;
+        }
+
+        heroSpriteImage.raycastTarget = false;
+        heroSpriteImage.preserveAspect = true;
+        heroSpriteImage.color = Color.white;
+    }
+
+    private void PlayIdleLoop()
+    {
+        if (isPlayingHeroThrow || heroSpriteImage == null || heroIdleFrames == null || heroIdleFrames.Length == 0)
+        {
+            return;
+        }
+
+        idleFrameTimer += Time.deltaTime;
+
+        if (idleFrameTimer < heroIdleFrameDuration)
+        {
+            return;
+        }
+
+        idleFrameTimer = 0f;
+        idleFrameIndex = (idleFrameIndex + 1) % heroIdleFrames.Length;
+        ShowHeroIdleFrame(idleFrameIndex);
+    }
+
+    private IEnumerator PlayHeroThrowAnimation()
+    {
+        isPlayingHeroThrow = true;
+
+        if (heroSpriteImage == null || heroThrowFrames == null || heroThrowFrames.Length == 0)
+        {
+            ShowProjectileTrail();
+            yield return new WaitForSeconds(projectileDuration);
+            HideProjectileTrail();
+            isPlayingHeroThrow = false;
+            ShowHeroIdleFrame(idleFrameIndex);
+            yield break;
+        }
+
+        int spawnFrame = Mathf.Clamp(projectileSpawnThrowFrame, 0, heroThrowFrames.Length - 1);
+        float projectileElapsed = -1f;
+
+        for (int i = 0; i < heroThrowFrames.Length; i++)
+        {
+            if (heroThrowFrames[i] != null)
+            {
+                heroSpriteImage.sprite = heroThrowFrames[i];
+            }
+
+            if (i == spawnFrame)
+            {
+                ShowProjectileTrail();
+                projectileElapsed = 0f;
+            }
+
+            float elapsed = 0f;
+            while (elapsed < heroThrowFrameDuration)
+            {
+                float deltaTime = Mathf.Min(Time.deltaTime, heroThrowFrameDuration - elapsed);
+                elapsed += deltaTime;
+
+                if (projectileElapsed >= 0f)
+                {
+                    projectileElapsed += deltaTime;
+                    if (projectileElapsed >= projectileDuration)
+                    {
+                        HideProjectileTrail();
+                        projectileElapsed = -1f;
+                    }
+                }
+
+                yield return null;
+            }
+        }
+
+        if (projectileElapsed >= 0f)
+        {
+            float remainingProjectileTime = Mathf.Max(0f, projectileDuration - projectileElapsed);
+            if (remainingProjectileTime > 0f)
+            {
+                yield return new WaitForSeconds(remainingProjectileTime);
+            }
+
+            HideProjectileTrail();
+        }
+
+        isPlayingHeroThrow = false;
+        ShowHeroIdleFrame(idleFrameIndex);
+    }
+
+    private void ShowHeroIdleFrame(int frameIndex)
+    {
+        if (heroSpriteImage == null || heroIdleFrames == null || heroIdleFrames.Length == 0)
+        {
+            return;
+        }
+
+        int safeIndex = Mathf.Clamp(frameIndex, 0, heroIdleFrames.Length - 1);
+        if (heroIdleFrames[safeIndex] != null)
+        {
+            heroSpriteImage.sprite = heroIdleFrames[safeIndex];
         }
     }
 
@@ -195,6 +342,8 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             diceAnimationLayer.gameObject.SetActive(true);
         }
 
+        EnsureDiceFrame();
+        ShowDiceFrame();
         EnsureRollingDiceVisual();
     }
 
@@ -207,6 +356,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             diceAnimationLayer.gameObject.SetActive(false);
         }
 
+        HideDiceFrame();
         HideRollingDiceVisual();
         HideFaceRevealText();
         HideFaceEffectText();
@@ -253,8 +403,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         while (elapsed < diceRollingDuration)
         {
-            Vector2 offset = RollingFrameOffsets[frameIndex % RollingFrameOffsets.Length];
-            diceTransform.anchoredPosition = offset;
+            diceTransform.anchoredPosition = RollingFrameOffsets[frameIndex % RollingFrameOffsets.Length];
             diceTransform.localEulerAngles = new Vector3(0f, 0f, (frameIndex % 4) * 90f);
             rollingDiceVisual.color = frameIndex % 2 == 0
                 ? rollingDiceColor
@@ -267,7 +416,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             frameIndex++;
         }
 
-        diceTransform.anchoredPosition = Vector2.zero;
+        diceTransform.anchoredPosition = diceResultPosition;
         diceTransform.localEulerAngles = Vector3.zero;
         rollingDiceVisual.color = rollingDiceColor;
         HideFaceRevealText();
@@ -277,6 +426,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     {
         if (rollingDiceVisual != null)
         {
+            rollingDiceVisual.rectTransform.sizeDelta = GetReadableDiceSize();
             return;
         }
 
@@ -287,6 +437,8 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return;
         }
 
+        EnsureDiceFrame();
+
         GameObject diceObject = new GameObject("Rolling Dice Placeholder");
         diceObject.layer = diceAnimationLayer.gameObject.layer;
         diceObject.transform.SetParent(diceAnimationLayer, false);
@@ -295,12 +447,114 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         diceTransform.anchorMin = new Vector2(0.5f, 0.5f);
         diceTransform.anchorMax = new Vector2(0.5f, 0.5f);
         diceTransform.pivot = new Vector2(0.5f, 0.5f);
-        diceTransform.anchoredPosition = Vector2.zero;
-        diceTransform.sizeDelta = rollingDiceSize;
+        diceTransform.anchoredPosition = diceResultPosition;
+        diceTransform.sizeDelta = GetReadableDiceSize();
 
         rollingDiceVisual = diceObject.AddComponent<Image>();
         rollingDiceVisual.raycastTarget = false;
         rollingDiceVisual.color = rollingDiceColor;
+    }
+
+    private void EnsureDiceFrame()
+    {
+        if (diceFrame != null && diceBacking != null)
+        {
+            UpdateDiceFrameSize();
+            return;
+        }
+
+        EnsureDiceAnimationLayer();
+
+        if (diceAnimationLayer == null)
+        {
+            return;
+        }
+
+        if (diceFrame == null)
+        {
+            GameObject frameObject = new GameObject("Dice Result Frame");
+            frameObject.layer = diceAnimationLayer.gameObject.layer;
+            frameObject.transform.SetParent(diceAnimationLayer, false);
+
+            RectTransform frameTransform = frameObject.AddComponent<RectTransform>();
+            frameTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            frameTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            frameTransform.pivot = new Vector2(0.5f, 0.5f);
+            frameTransform.anchoredPosition = diceResultPosition;
+
+            diceFrame = frameObject.AddComponent<Image>();
+            diceFrame.raycastTarget = false;
+            diceFrame.color = diceFrameColor;
+        }
+
+        if (diceBacking == null)
+        {
+            GameObject backingObject = new GameObject("Dice Result Backing");
+            backingObject.layer = diceAnimationLayer.gameObject.layer;
+            backingObject.transform.SetParent(diceAnimationLayer, false);
+
+            RectTransform backingTransform = backingObject.AddComponent<RectTransform>();
+            backingTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            backingTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            backingTransform.pivot = new Vector2(0.5f, 0.5f);
+            backingTransform.anchoredPosition = diceResultPosition;
+
+            diceBacking = backingObject.AddComponent<Image>();
+            diceBacking.raycastTarget = false;
+            diceBacking.color = diceBackingColor;
+        }
+
+        UpdateDiceFrameSize();
+    }
+
+    private void UpdateDiceFrameSize()
+    {
+        Vector2 diceSize = GetReadableDiceSize();
+
+        if (diceFrame != null)
+        {
+            diceFrame.rectTransform.sizeDelta = diceSize + new Vector2(32f, 32f);
+            diceFrame.rectTransform.anchoredPosition = diceResultPosition;
+        }
+
+        if (diceBacking != null)
+        {
+            diceBacking.rectTransform.sizeDelta = diceSize + new Vector2(20f, 20f);
+            diceBacking.rectTransform.anchoredPosition = diceResultPosition;
+        }
+    }
+
+    private Vector2 GetReadableDiceSize()
+    {
+        return new Vector2(
+            Mathf.Max(rollingDiceSize.x, MinimumReadableDiceSize.x),
+            Mathf.Max(rollingDiceSize.y, MinimumReadableDiceSize.y));
+    }
+
+    private void HideDiceFrame()
+    {
+        if (diceFrame != null)
+        {
+            diceFrame.gameObject.SetActive(false);
+        }
+
+        if (diceBacking != null)
+        {
+            diceBacking.gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowDiceFrame()
+    {
+        if (diceFrame != null)
+        {
+            diceFrame.gameObject.SetActive(true);
+        }
+
+        if (diceBacking != null)
+        {
+            diceBacking.gameObject.SetActive(true);
+        }
     }
 
     private void HideRollingDiceVisual()
@@ -322,7 +576,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
 
         RectTransform diceTransform = rollingDiceVisual.rectTransform;
-        diceTransform.anchoredPosition = Vector2.zero;
+        diceTransform.anchoredPosition = diceResultPosition;
         diceTransform.localEulerAngles = Vector3.zero;
         rollingDiceVisual.color = rollingDiceColor;
         rollingDiceVisual.gameObject.SetActive(true);
@@ -343,7 +597,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
 
         RectTransform damageTransform = damageNumberText.rectTransform;
-        damageTransform.anchoredPosition = new Vector2(0f, 42f);
+        damageTransform.anchoredPosition = diceResultPosition + new Vector2(0f, 168f);
         damageNumberText.text = damageAmount.ToString();
         damageNumberText.gameObject.SetActive(true);
 
@@ -360,7 +614,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
 
         RectTransform effectTransform = faceEffectText.rectTransform;
-        effectTransform.anchoredPosition = new Vector2(0f, -42f);
+        effectTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
         faceEffectText.text = GetFaceEffectText(faceEffect);
         faceEffectText.gameObject.SetActive(true);
 
@@ -395,10 +649,10 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         faceRevealText = textObject.AddComponent<Text>();
         faceRevealText.raycastTarget = false;
         faceRevealText.alignment = TextAnchor.MiddleCenter;
-        faceRevealText.fontSize = 14;
+        faceRevealText.fontSize = 44;
         faceRevealText.resizeTextForBestFit = true;
-        faceRevealText.resizeTextMinSize = 8;
-        faceRevealText.resizeTextMaxSize = 14;
+        faceRevealText.resizeTextMinSize = 18;
+        faceRevealText.resizeTextMaxSize = 44;
         faceRevealText.color = faceRevealTextColor;
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
@@ -435,16 +689,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         textTransform.anchorMin = new Vector2(0.5f, 0.5f);
         textTransform.anchorMax = new Vector2(0.5f, 0.5f);
         textTransform.pivot = new Vector2(0.5f, 0.5f);
-        textTransform.anchoredPosition = new Vector2(0f, -42f);
-        textTransform.sizeDelta = new Vector2(112f, 28f);
+        textTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
+        textTransform.sizeDelta = new Vector2(220f, 36f);
 
         faceEffectText = textObject.AddComponent<Text>();
         faceEffectText.raycastTarget = false;
         faceEffectText.alignment = TextAnchor.MiddleCenter;
-        faceEffectText.fontSize = 16;
+        faceEffectText.fontSize = 20;
         faceEffectText.resizeTextForBestFit = true;
         faceEffectText.resizeTextMinSize = 10;
-        faceEffectText.resizeTextMaxSize = 16;
+        faceEffectText.resizeTextMaxSize = 20;
         faceEffectText.color = faceEffectTextColor;
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
@@ -496,16 +750,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         textTransform.anchorMin = new Vector2(0.5f, 0.5f);
         textTransform.anchorMax = new Vector2(0.5f, 0.5f);
         textTransform.pivot = new Vector2(0.5f, 0.5f);
-        textTransform.anchoredPosition = new Vector2(0f, 42f);
-        textTransform.sizeDelta = new Vector2(96f, 32f);
+        textTransform.anchoredPosition = diceResultPosition + new Vector2(0f, 168f);
+        textTransform.sizeDelta = new Vector2(160f, 52f);
 
         damageNumberText = textObject.AddComponent<Text>();
         damageNumberText.raycastTarget = false;
         damageNumberText.alignment = TextAnchor.MiddleCenter;
-        damageNumberText.fontSize = 24;
+        damageNumberText.fontSize = 42;
         damageNumberText.resizeTextForBestFit = true;
         damageNumberText.resizeTextMinSize = 12;
-        damageNumberText.resizeTextMaxSize = 24;
+        damageNumberText.resizeTextMaxSize = 42;
         damageNumberText.color = damageNumberTextColor;
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");

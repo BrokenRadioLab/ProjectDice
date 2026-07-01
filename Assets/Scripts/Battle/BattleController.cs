@@ -7,12 +7,17 @@ public sealed class BattleController : MonoBehaviour
 {
     [SerializeField] private BattleCombatState combatState;
     [SerializeField] private BattleDiceState battleDiceState;
+    [SerializeField] private BattleTurnState battleTurnState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
     [SerializeField] private bool inputLocked;
+
+    private EnemyAttackIntent pendingEnemyAttackIntent = EnemyAttackIntent.None();
+
+    public EnemyAttackIntent PendingEnemyAttackIntent => pendingEnemyAttackIntent;
 
     private void Start()
     {
@@ -73,12 +78,13 @@ public sealed class BattleController : MonoBehaviour
 
     private IEnumerator ThrowOnce()
     {
-        if (inputLocked || combatState == null)
+        if (inputLocked || combatState == null || !CanAcceptPlayerThrow())
         {
             yield break;
         }
 
         inputLocked = true;
+        battleTurnState?.BeginPlayerAction();
         battleDiceState?.BeginThrowRoll();
         DiceFace selectedFace = SelectDiceResult();
         FaceEffectData faceEffect = FaceResolver.Resolve(selectedFace);
@@ -96,12 +102,22 @@ public sealed class BattleController : MonoBehaviour
 
         if (combatState.IsEnemyDefeated)
         {
+            pendingEnemyAttackIntent = EnemyAttackIntent.None();
+            battleTurnState?.BeginPlayerTurn();
             SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} Victory.");
             yield break;
         }
 
+        battleTurnState?.PrepareEnemyTurn();
+        pendingEnemyAttackIntent = EnemyAttackResolver.Resolve(battleTurnState);
+        battleTurnState?.BeginPlayerTurn();
         SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
         inputLocked = false;
+    }
+
+    private bool CanAcceptPlayerThrow()
+    {
+        return battleTurnState == null || battleTurnState.CanAcceptPlayerAction;
     }
 
     private DiceFace SelectDiceResult()
