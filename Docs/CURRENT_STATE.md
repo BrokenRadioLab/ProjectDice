@@ -79,6 +79,8 @@ The project is in MVP foundation work.
 - Post-M4 presentation polish has increased the Dice result to 288x288, moved it slightly below center, and kept the selected Face name as the primary result text.
 - Temporary selected-slot validation text remains available as small corner `RESULT S#: FaceName` debug text until final Dice face art exists.
 - Generic Hero color feedback has been replaced by the provided Hero idle and throw frame animation from `Assets/Art`.
+- Hero Hit 2-frame animation now plays as the primary feedback during enemy attack presentation.
+- Red Goblin Idle 4-frame animation now loops in the existing enemy slot.
 - Battle-level turn ownership now exists through `BattleTurnState` with `PlayerTurn`, `Transition`, and `EnemyTurn`.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.
 - Enemy attack resolution now produces a deterministic pending attack intent: fixed 5 Damage when the battle is in pending `EnemyTurn`.

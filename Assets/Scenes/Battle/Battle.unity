@@ -1783,6 +1783,7 @@ MonoBehaviour:
   heroPlaceholder: {fileID: 1100000003}
   heroSpriteImage: {fileID: 1100000003}
   enemyPlaceholder: {fileID: 1200000003}
+  enemySpriteImage: {fileID: 1200000003}
   heroIdleTextures:
   - {fileID: 2800000, guid: e527586e00369c2b5a542aa4d6183a38, type: 3}
   - {fileID: 2800000, guid: 5c4097e496fb157bb8d408feff117b07, type: 3}
@@ -1795,8 +1796,18 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 6bf49d7c1b867e6eb810a81437f25334, type: 3}
   - {fileID: 2800000, guid: c5c7c9e4ed733e390baf4728af310d86, type: 3}
   - {fileID: 2800000, guid: 02cf305c99e74df49aaa65a6a1b21f28, type: 3}
+  heroHitTextures:
+  - {fileID: 2800000, guid: 2879a3b6dd3248882b360e8f22bf1e2d, type: 3}
+  - {fileID: 2800000, guid: b70e8dd66dcbbe4ca88afef3e7c7a02e, type: 3}
+  enemyIdleTextures:
+  - {fileID: 2800000, guid: c738b7849ab8fe1d6a4c00394b3b8522, type: 3}
+  - {fileID: 2800000, guid: 0e4bca6bf53d3bb1bb5070e8c92c5296, type: 3}
+  - {fileID: 2800000, guid: ce07dfab7c5615f3b879fc98c8599bec, type: 3}
+  - {fileID: 2800000, guid: 7a6e29f9fc7d95b20aa6bded2c19cccd, type: 3}
   heroIdleFrameDuration: 0.18
   heroThrowFrameDuration: 0.05
+  heroHitFrameDuration: 0.06
+  enemyIdleFrameDuration: 0.18
   projectileSpawnThrowFrame: 5
   projectileDuration: 0.08
   enemyFlashDuration: 0.05
@@ -1834,6 +1845,7 @@ MonoBehaviour:
   enemySlot: {fileID: 1200000001}
   heroPlaceholder: {fileID: 1100000003}
   enemyPlaceholder: {fileID: 1200000003}
+  throwSequencePresenter: {fileID: 1500000005}
   enemyWindupDuration: 0.08
   enemyStrikeDuration: 0.1
   heroHitFlashDuration: 0.08

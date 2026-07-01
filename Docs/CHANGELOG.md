@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Completed Battle Art Integration.
+- Added Hero Hit 2-frame animation as the primary feedback during enemy attack presentation.
+- Added Red Goblin Idle 4-frame animation in the existing enemy slot.
+- Kept Hero idle and Hero throw animation flow intact.
+- Enemy attack presentation still completes before player HP damage application and HP refresh.
+- Confirmed Unity batchmode import/compile validation for Battle Art Integration completed successfully with exit code 0.
+- No Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, Dice Deck, rewards, progression, battle end, defeat handling, enemy AI, new Face effects, inventory, or stage progression changes were added.
 - Fixed `BUGFIX_M5-006_DICE_DECK_BUTTON_NOT_RESPONDING`.
 - Updated `CollapsibleDiceDeckPresenter` to ensure a runtime `EventSystem` exists for UI Button click/tap handling.
 - Dice Deck still remains collapsed by default, runtime Dice-driven, and separate from battle presentation.

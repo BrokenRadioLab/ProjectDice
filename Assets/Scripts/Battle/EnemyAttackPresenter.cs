@@ -9,6 +9,7 @@ public sealed class EnemyAttackPresenter : MonoBehaviour
     [SerializeField] private RectTransform enemySlot;
     [SerializeField] private Graphic heroPlaceholder;
     [SerializeField] private Graphic enemyPlaceholder;
+    [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField, Min(0.01f)] private float enemyWindupDuration = 0.08f;
     [SerializeField, Min(0.01f)] private float enemyStrikeDuration = 0.10f;
     [SerializeField, Min(0.01f)] private float heroHitFlashDuration = 0.08f;
@@ -25,6 +26,9 @@ public sealed class EnemyAttackPresenter : MonoBehaviour
     {
         originalHeroColor = heroPlaceholder != null ? heroPlaceholder.color : Color.white;
         originalEnemyColor = enemyPlaceholder != null ? enemyPlaceholder.color : Color.white;
+        throwSequencePresenter = throwSequencePresenter != null
+            ? throwSequencePresenter
+            : FindAnyObjectByType<ThrowSequencePresenter>();
         EnsureStrikeTrail();
         HideStrikeTrail();
     }
@@ -54,15 +58,16 @@ public sealed class EnemyAttackPresenter : MonoBehaviour
             enemyPlaceholder.color = originalEnemyColor;
         }
 
-        if (heroPlaceholder != null)
+        if (throwSequencePresenter != null)
+        {
+            yield return throwSequencePresenter.PlayHeroHitAnimation();
+        }
+        else if (heroPlaceholder != null)
         {
             heroPlaceholder.color = heroHitFlashColor;
-        }
 
-        yield return new WaitForSeconds(heroHitFlashDuration);
+            yield return new WaitForSeconds(heroHitFlashDuration);
 
-        if (heroPlaceholder != null)
-        {
             heroPlaceholder.color = originalHeroColor;
         }
     }

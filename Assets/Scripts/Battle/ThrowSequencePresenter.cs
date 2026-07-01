@@ -11,10 +11,15 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     [SerializeField] private Graphic heroPlaceholder;
     [SerializeField] private Image heroSpriteImage;
     [SerializeField] private Graphic enemyPlaceholder;
+    [SerializeField] private Image enemySpriteImage;
     [SerializeField] private Texture2D[] heroIdleTextures;
     [SerializeField] private Texture2D[] heroThrowTextures;
+    [SerializeField] private Texture2D[] heroHitTextures;
+    [SerializeField] private Texture2D[] enemyIdleTextures;
     [SerializeField, Min(0.01f)] private float heroIdleFrameDuration = 0.18f;
     [SerializeField, Min(0.01f)] private float heroThrowFrameDuration = 0.05f;
+    [SerializeField, Min(0.01f)] private float heroHitFrameDuration = 0.06f;
+    [SerializeField, Min(0.01f)] private float enemyIdleFrameDuration = 0.18f;
     [SerializeField, Min(0)] private int projectileSpawnThrowFrame = 5;
     [SerializeField, Min(0.01f)] private float projectileDuration = 0.08f;
     [SerializeField, Min(0.01f)] private float enemyFlashDuration = 0.05f;
@@ -46,9 +51,14 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     private Color originalEnemyColor;
     private Sprite[] heroIdleFrames;
     private Sprite[] heroThrowFrames;
+    private Sprite[] heroHitFrames;
+    private Sprite[] enemyIdleFrames;
     private float idleFrameTimer;
+    private float enemyIdleFrameTimer;
     private int idleFrameIndex;
+    private int enemyIdleFrameIndex;
     private bool isPlayingHeroThrow;
+    private bool isPlayingHeroHit;
     private static Font fallbackFont;
     private static readonly Vector2 MinimumReadableDiceSize = new Vector2(288f, 288f);
     private static readonly Vector2[] RollingFrameOffsets =
@@ -64,10 +74,13 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     private void Awake()
     {
         heroSpriteImage = heroSpriteImage != null ? heroSpriteImage : heroPlaceholder as Image;
+        enemySpriteImage = enemySpriteImage != null ? enemySpriteImage : enemyPlaceholder as Image;
         originalEnemyColor = enemyPlaceholder != null ? enemyPlaceholder.color : Color.white;
-        BuildHeroAnimationSprites();
+        BuildAnimationSprites();
         ConfigureHeroSpriteImage();
+        ConfigureEnemySpriteImage();
         ShowHeroIdleFrame(0);
+        ShowEnemyIdleFrame(0);
         EnsureProjectileTrail();
         HideProjectileTrail();
         EnsureRollingDiceVisual();
@@ -84,6 +97,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     private void Update()
     {
         PlayIdleLoop();
+        PlayEnemyIdleLoop();
     }
 
     public IEnumerator Play(DiceFace selectedFace, FaceEffectData faceEffect, int damageAmount)
@@ -120,10 +134,36 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
     }
 
-    private void BuildHeroAnimationSprites()
+    public IEnumerator PlayHeroHitAnimation()
+    {
+        isPlayingHeroHit = true;
+
+        if (heroSpriteImage == null || heroHitFrames == null || heroHitFrames.Length == 0)
+        {
+            isPlayingHeroHit = false;
+            yield break;
+        }
+
+        for (int i = 0; i < heroHitFrames.Length; i++)
+        {
+            if (heroHitFrames[i] != null)
+            {
+                heroSpriteImage.sprite = heroHitFrames[i];
+            }
+
+            yield return new WaitForSeconds(heroHitFrameDuration);
+        }
+
+        isPlayingHeroHit = false;
+        ShowHeroIdleFrame(idleFrameIndex);
+    }
+
+    private void BuildAnimationSprites()
     {
         heroIdleFrames = BuildSprites(heroIdleTextures);
         heroThrowFrames = BuildSprites(heroThrowTextures);
+        heroHitFrames = BuildSprites(heroHitTextures);
+        enemyIdleFrames = BuildSprites(enemyIdleTextures);
     }
 
     private static Sprite[] BuildSprites(Texture2D[] textures)
@@ -167,9 +207,21 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         heroSpriteImage.color = Color.white;
     }
 
+    private void ConfigureEnemySpriteImage()
+    {
+        if (enemySpriteImage == null)
+        {
+            return;
+        }
+
+        enemySpriteImage.raycastTarget = false;
+        enemySpriteImage.preserveAspect = true;
+        enemySpriteImage.color = Color.white;
+    }
+
     private void PlayIdleLoop()
     {
-        if (isPlayingHeroThrow || heroSpriteImage == null || heroIdleFrames == null || heroIdleFrames.Length == 0)
+        if (isPlayingHeroThrow || isPlayingHeroHit || heroSpriteImage == null || heroIdleFrames == null || heroIdleFrames.Length == 0)
         {
             return;
         }
@@ -184,6 +236,25 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         idleFrameTimer = 0f;
         idleFrameIndex = (idleFrameIndex + 1) % heroIdleFrames.Length;
         ShowHeroIdleFrame(idleFrameIndex);
+    }
+
+    private void PlayEnemyIdleLoop()
+    {
+        if (enemySpriteImage == null || enemyIdleFrames == null || enemyIdleFrames.Length == 0)
+        {
+            return;
+        }
+
+        enemyIdleFrameTimer += Time.deltaTime;
+
+        if (enemyIdleFrameTimer < enemyIdleFrameDuration)
+        {
+            return;
+        }
+
+        enemyIdleFrameTimer = 0f;
+        enemyIdleFrameIndex = (enemyIdleFrameIndex + 1) % enemyIdleFrames.Length;
+        ShowEnemyIdleFrame(enemyIdleFrameIndex);
     }
 
     private IEnumerator PlayHeroThrowAnimation()
@@ -262,6 +333,20 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         if (heroIdleFrames[safeIndex] != null)
         {
             heroSpriteImage.sprite = heroIdleFrames[safeIndex];
+        }
+    }
+
+    private void ShowEnemyIdleFrame(int frameIndex)
+    {
+        if (enemySpriteImage == null || enemyIdleFrames == null || enemyIdleFrames.Length == 0)
+        {
+            return;
+        }
+
+        int safeIndex = Mathf.Clamp(frameIndex, 0, enemyIdleFrames.Length - 1);
+        if (enemyIdleFrames[safeIndex] != null)
+        {
+            enemySpriteImage.sprite = enemyIdleFrames[safeIndex];
         }
     }
 
