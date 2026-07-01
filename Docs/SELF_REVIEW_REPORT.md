@@ -2,28 +2,29 @@
 
 Date: 2026-07-01
 
-Task: TASK_DICE_DECK_LAYOUT_REFINEMENT
+Task: TASK_M6-001_BATTLE_OUTCOME_STATE
 
 ## Review Result
 
 PASS
 
-Dice Deck layout refinement stays within the requested UI-only scope.
+Battle Outcome State stays within the requested runtime-state-only scope.
 
 ## Scope Check
 
-- Refined Dice Deck layout only.
-- Did not add gameplay.
+- Added only `BattleOutcome` and `BattleOutcomeState`.
+- Did not add victory gameplay.
+- Did not add defeat gameplay.
 - Did not add battle end or defeat handling.
-- Did not add rewards, progression, Dice replacement, inventory, shops, permanent progression, new Face types, boss systems, or multi-enemy logic.
-- Did not add Dice Deck probability display.
-- Did not change enemy turn flow.
-- Did not change Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, or Dice Deck logic.
-- Did not change Throw sequence, Dice Animation Layer, battle presentation, rewards, progression, or Face replacement.
+- Did not add stage progression.
+- Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
+- Did not change enemy turn flow, Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
 
 ## Architecture Check
 
 - `BattleTurnState` owns turn ownership only.
+- `BattleOutcomeState` owns battle outcome only.
+- Battle outcome remains separate from turn ownership and combat HP state.
 - Player pipeline remains `DiceFace -> FaceResolver -> FaceEffectData -> BattleController -> ThrowSequencePresenter -> BattleCombatState -> BattleHudPresenter`.
 - Enemy pipeline remains `EnemyAttackResolver -> EnemyAttackIntent -> EnemyAttackPresenter -> BattleCombatState -> BattleHudPresenter`.
 - Dice Deck remains Battle Information UI and reads from `BattleDiceState.CurrentDice`.
@@ -32,17 +33,19 @@ Dice Deck layout refinement stays within the requested UI-only scope.
 
 ## Validation Review
 
-- Dice Deck button is anchored to the Bottom HUD left edge.
-- Expanded Dice Deck opens horizontally toward the right.
-- Six runtime face slots are displayed as square slots in one horizontal row.
-- Runtime data still comes from `BattleDiceState.CurrentDice`.
+- `BattleOutcomeState` initializes to `InProgress`.
+- Outcome state does not calculate damage.
+- Outcome state does not inspect HP.
+- Outcome state does not trigger presentation.
+- Outcome state does not advance stages.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Residual Risk
 
-- Human Play Mode review is still needed to confirm live tap ergonomics and mobile landscape readability.
+- Human Play Mode review is still needed to confirm the existing battle loop still feels unchanged in-device.
 - Player HP can reach 0, but no defeat flow is triggered. This remains intentionally out of scope until a later battle completion milestone.
+- Enemy HP can reach 0, but M6 victory outcome detection is intentionally deferred to M6-003.
 
 ## Status
 
-TASK_DICE_DECK_LAYOUT_REFINEMENT is complete.
+TASK_M6-001_BATTLE_OUTCOME_STATE is complete.

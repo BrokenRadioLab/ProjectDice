@@ -100,7 +100,7 @@ M6 Task Rule:
 
 ## M6-001: Battle Outcome State
 
-Status: PENDING
+Status: DONE
 
 Goal:
 
@@ -127,7 +127,7 @@ Validation:
 
 ## M6-002: Linear Stage Runtime State
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

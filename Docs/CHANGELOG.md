@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Implemented M6-001 Battle Outcome State.
+- Added `BattleOutcome` with `InProgress`, `Victory`, and `Defeat`.
+- Added `BattleOutcomeState` as a minimal runtime holder for battle outcome.
+- `BattleOutcomeState` initializes to `InProgress` and remains independent from `BattleTurnState` and `BattleCombatState`.
+- Marked M6-001 as DONE and M6-002 Linear Stage Runtime State as NEXT.
+- No victory detection, defeat detection, battle end, rewards, stage progression, Dice replacement, inventory, boss logic, multi-enemy logic, presentation, damage calculation, HP inspection, or battle flow ownership was added for M6-001.
 - Completed `TASK_DICE_DECK_LAYOUT_REFINEMENT`.
 - Moved Dice Deck to the Bottom HUD left edge, aligned with the Throw button row.
 - Dice Deck now expands horizontally toward the right while staying attached to the Dice Deck button.

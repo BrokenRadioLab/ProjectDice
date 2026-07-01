@@ -34,6 +34,7 @@ The project is in MVP foundation work.
 - M3_DICE_PRESENTATION is DONE and approved by Director review.
 - M4_SKILL_RESOLUTION is DONE and approved by Director review.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
+- M6_LINEAR_STAGE_RUN implementation has started.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -47,6 +48,8 @@ The project is in MVP foundation work.
 - `M5-005_TURN_TRANSITION` is DONE.
 - `M5-006_COLLAPSIBLE_DICE_DECK` is DONE.
 - `M5-007_VALIDATE_M5_BATTLE_LOOP` is DONE.
+- `M6-001_BATTLE_OUTCOME_STATE` is DONE.
+- `M6-002_LINEAR_STAGE_RUNTIME_STATE` is NEXT.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -84,6 +87,8 @@ The project is in MVP foundation work.
 - Hero Hit 2-frame animation now plays as the primary feedback during enemy attack presentation.
 - Red Goblin Idle 4-frame animation now loops in the existing enemy slot.
 - Battle-level turn ownership now exists through `BattleTurnState` with `PlayerTurn`, `Transition`, and `EnemyTurn`.
+- Battle outcome runtime state now exists through `BattleOutcomeState` with `InProgress`, `Victory`, and `Defeat`.
+- `BattleOutcomeState` is independent from `BattleTurnState` and `BattleCombatState` and does not calculate damage, inspect HP, trigger presentation, advance stages, unlock rewards, restart battles, or own battle flow.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.
 - Enemy attack resolution now produces a deterministic pending attack intent: fixed 5 Damage when the battle is in pending `EnemyTurn`.
 - The pending enemy attack intent is presented during M5-003 and applied to player HP during M5-004.

@@ -2,13 +2,13 @@
 
 Date: 2026-07-01
 
-Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
+Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_DICE_DECK_LAYOUT_REFINEMENT
+Completed Work: TASK_M6-001_BATTLE_OUTCOME_STATE
 
 ## Summary
 
-Refined the Dice Deck layout as a Bottom HUD runtime build viewer without changing gameplay.
+Added the minimal battle outcome runtime state without adding victory, defeat, battle end, or stage progression logic.
 
 ## Validation Result
 
@@ -23,6 +23,12 @@ PASS
 - M5-005 Turn Transition is DONE and approved.
 - M5-006 Collapsible Dice Deck is DONE and approved.
 - M5-007 Validate M5 Battle Loop is DONE.
+- M6-001 Battle Outcome State is DONE.
+- `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
+- `BattleOutcomeState` exists as a runtime state holder.
+- Initial battle outcome is `InProgress`.
+- `BattleOutcomeState` remains independent from `BattleTurnState` and `BattleCombatState`.
+- `BattleOutcomeState` does not calculate damage, inspect HP, trigger presentation, advance stages, unlock rewards, restart battles, or own battle flow.
 - Dice Deck button is located on the Bottom HUD left edge.
 - Dice Deck remains aligned with the Throw button row.
 - Dice Deck expands horizontally toward the right while attached to the button.
@@ -41,7 +47,9 @@ PASS
 
 - No battle end was added.
 - No defeat handling was added.
+- No victory detection was added.
 - No rewards or progression were added.
+- No stage progression was added.
 - No Dice replacement system was added.
 - No inventory, shops, permanent progression, or stage system was added.
 - No new Face types, boss systems, or multi-enemy logic were added.
@@ -52,8 +60,8 @@ PASS
 
 ## Stop Point
 
-Stopped after Dice Deck layout refinement.
+Stopped after M6-001 Battle Outcome State.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_dice_deck_layout_refinement.log`.
+- Unity validation log: `/tmp/projectdice_m6_001_battle_outcome_state.log`.
