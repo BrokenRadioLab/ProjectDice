@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Implemented M6-002 Linear Stage Runtime State.
+- Added `StageType` with `Normal`, `Elite`, and `Boss`.
+- Added `LinearStageRuntimeState` as a pure runtime holder for the current fixed five-stage run position.
+- The fixed stage order is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
+- `LinearStageRuntimeState` exposes only current stage index, current stage type, and boss-stage check.
+- Marked M6-002 as DONE and M6-003 Enemy Defeat Victory Resolution as NEXT.
+- No stage advance, battle outcome inspection, victory resolution, defeat resolution, rewards, Dice replacement, boss mechanics, run completion, or transition UI was added for M6-002.
 - Implemented M6-001 Battle Outcome State.
 - Added `BattleOutcome` with `InProgress`, `Victory`, and `Defeat`.
 - Added `BattleOutcomeState` as a minimal runtime holder for battle outcome.

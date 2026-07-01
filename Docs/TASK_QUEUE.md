@@ -127,7 +127,7 @@ Validation:
 
 ## M6-002: Linear Stage Runtime State
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -161,7 +161,7 @@ Validation:
 
 ## M6-003: Enemy Defeat Victory Resolution
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-001_BATTLE_OUTCOME_STATE
+Completed Work: TASK_M6-002_LINEAR_STAGE_RUNTIME_STATE
 
 ## Summary
 
-Added the minimal battle outcome runtime state without adding victory, defeat, battle end, or stage progression logic.
+Added the minimal linear stage runtime state without adding stage advance, victory, defeat, rewards, or run completion logic.
 
 ## Validation Result
 
@@ -24,11 +24,17 @@ PASS
 - M5-006 Collapsible Dice Deck is DONE and approved.
 - M5-007 Validate M5 Battle Loop is DONE.
 - M6-001 Battle Outcome State is DONE.
+- M6-002 Linear Stage Runtime State is DONE.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
 - `BattleOutcomeState` remains independent from `BattleTurnState` and `BattleCombatState`.
 - `BattleOutcomeState` does not calculate damage, inspect HP, trigger presentation, advance stages, unlock rewards, restart battles, or own battle flow.
+- `StageType` exists with `Normal`, `Elite`, and `Boss`.
+- `LinearStageRuntimeState` exists as a runtime state holder.
+- Fixed stage order is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
+- `LinearStageRuntimeState` exposes current stage index, current stage type, and boss-stage check.
+- `LinearStageRuntimeState` does not know battle outcome, rewards, next stage transition, or run completion.
 - Dice Deck button is located on the Bottom HUD left edge.
 - Dice Deck remains aligned with the Throw button row.
 - Dice Deck expands horizontally toward the right while attached to the button.
@@ -50,6 +56,8 @@ PASS
 - No victory detection was added.
 - No rewards or progression were added.
 - No stage progression was added.
+- No stage advance was added.
+- No run completion was added.
 - No Dice replacement system was added.
 - No inventory, shops, permanent progression, or stage system was added.
 - No new Face types, boss systems, or multi-enemy logic were added.
@@ -60,8 +68,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-001 Battle Outcome State.
+Stopped after M6-002 Linear Stage Runtime State.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_001_battle_outcome_state.log`.
+- Unity validation log: `/tmp/projectdice_m6_002_linear_stage_runtime_state.log`.
