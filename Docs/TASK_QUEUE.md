@@ -2,7 +2,7 @@
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Milestone Status: READY
+Milestone Status: READY_FOR_DIRECTOR_REVIEW
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -12,7 +12,7 @@ Director Review:
 - M3_DICE_PRESENTATION is approved and DONE.
 - M4_SKILL_RESOLUTION is approved and DONE.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
-- M6_LINEAR_STAGE_RUN task structure is generated and READY.
+- M6_LINEAR_STAGE_RUN task structure is generated and READY_FOR_DIRECTOR_REVIEW.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 
 M4 Locked Principle:
@@ -74,7 +74,7 @@ Post-M4 Roadmap:
 
 ## M6 Implementation Tasks
 
-Status: GENERATED
+Status: READY_FOR_DIRECTOR_REVIEW
 
 M6 Goal:
 
@@ -323,7 +323,7 @@ Validation:
 
 ## M6-008: Validate Linear Stage Run
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -350,6 +350,11 @@ Validation:
 - No `NullReferenceException`.
 - Full fixed run path is deterministic.
 - Defeat path is deterministic.
+- Static validation confirmed Stage 1 through Stage 5 fixed progression.
+- Static validation confirmed boss Victory marks the linear run completed.
+- Static validation confirmed player HP, current runtime Dice, and Dice Deck runtime data persist across next battle preparation.
+- Static validation confirmed rewards, Dice replacement, inventory, meta progression, branching map, enemy AI, boss mechanics, and multi-enemy gameplay remain unimplemented.
+- Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Post-M4 Dice Presentation Scale Fix
 

@@ -34,7 +34,7 @@ Required MVP pillars:
 4. M3_DICE_PRESENTATION - DONE
 5. M4_SKILL_RESOLUTION - DONE
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP - READY_FOR_DIRECTOR_REVIEW
-7. M6_LINEAR_STAGE_RUN - PENDING
+7. M6_LINEAR_STAGE_RUN - READY_FOR_DIRECTOR_REVIEW
 8. M7_REWARD_AND_FACE_REPLACEMENT - PENDING
 9. M8_MVP_PLAYTEST_POLISH - PENDING
 
@@ -265,7 +265,7 @@ Detailed Task Status:
 
 ## M6_LINEAR_STAGE_RUN
 
-Status: READY
+Status: READY_FOR_DIRECTOR_REVIEW
 
 Goal:
 
@@ -302,7 +302,8 @@ Detailed Task Status:
 - M6-005 Advance To Next Stage is DONE.
 - M6-006 Complete Linear Run is DONE.
 - M6-007 Prepare Next Battle is DONE.
-- M6-008 Validate Linear Stage Run is NEXT.
+- M6-008 Validate Linear Stage Run is DONE.
+- M6 is ready for Director review as the first fixed five-stage linear run structure.
 - M6 must preserve the current player/enemy/player battle loop.
 - M6 must not add rewards, Dice replacement, inventory, shops, branching map, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic.
 

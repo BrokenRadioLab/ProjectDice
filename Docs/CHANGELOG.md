@@ -4,6 +4,15 @@
 
 ### Changed
 
+- Completed M6-008 Validate Linear Stage Run.
+- Confirmed static runtime flow for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
+- Confirmed non-boss Victory advances the fixed stage and prepares the next battle.
+- Confirmed Boss Victory marks `LinearRunState` as completed and blocks further Throw input.
+- Confirmed Defeat blocks player input without stage advance, run completion, reward flow, or restart flow.
+- Confirmed player HP, current runtime Dice, and Dice Deck runtime data persist across next battle preparation.
+- Marked M6_LINEAR_STAGE_RUN as READY_FOR_DIRECTOR_REVIEW.
+- Confirmed Unity batchmode import/compile validation for M6-008 completed successfully with exit code 0.
+- No rewards, Dice replacement, inventory, meta progression, branching map, new Face effects, enemy AI, boss mechanics, or multi-enemy gameplay were added for M6-008.
 - Implemented M6-007 Prepare Next Battle.
 - Added `BattleCombatState.PrepareNextEnemy()` to reset enemy HP for the next battle while preserving player HP.
 - After successful non-boss stage advancement, `BattleController` now resets `BattleOutcomeState` to `InProgress`, restores `BattleTurnState` to `PlayerTurn`, refreshes HP, and unlocks player input.

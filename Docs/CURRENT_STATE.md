@@ -34,7 +34,7 @@ The project is in MVP foundation work.
 - M3_DICE_PRESENTATION is DONE and approved by Director review.
 - M4_SKILL_RESOLUTION is DONE and approved by Director review.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
-- M6_LINEAR_STAGE_RUN implementation has started.
+- M6_LINEAR_STAGE_RUN is READY_FOR_DIRECTOR_REVIEW.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -56,7 +56,7 @@ The project is in MVP foundation work.
 - `M6-005_ADVANCE_TO_NEXT_STAGE` is DONE.
 - `M6-006_COMPLETE_LINEAR_RUN` is DONE.
 - `M6-007_PREPARE_NEXT_BATTLE` is DONE.
-- `M6-008_VALIDATE_LINEAR_STAGE_RUN` is NEXT.
+- `M6-008_VALIDATE_LINEAR_STAGE_RUN` is DONE.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -112,6 +112,12 @@ The project is in MVP foundation work.
 - Non-boss stage advance now prepares the next battle runtime by resetting enemy HP, resetting `BattleOutcomeState` to `InProgress`, restoring `BattleTurnState` to `PlayerTurn`, and refreshing HP.
 - Prepare Next Battle preserves current runtime Dice and player HP.
 - Prepare Next Battle does not add rewards, Dice replacement, inventory, meta progression, battle presentation, new run creation, or healing rules.
+- M6 Linear Stage Run validation is complete for static runtime flow and Unity import/compile.
+- The fixed runtime path now supports Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss progression.
+- Non-boss Victory advances and prepares the next battle; Boss Victory marks `LinearRunState` as completed.
+- Defeat stops player input and does not advance stages, complete the run, or trigger rewards.
+- Player HP, current runtime Dice, and Dice Deck runtime data persist across next battle preparation.
+- M6 remains free of rewards, Dice replacement, inventory, meta progression, branching map, enemy AI, boss mechanics, and multi-enemy gameplay.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.

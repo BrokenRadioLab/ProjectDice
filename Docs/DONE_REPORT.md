@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-007_PREPARE_NEXT_BATTLE
+Completed Work: TASK_M6-008_VALIDATE_LINEAR_STAGE_RUN
 
 ## Summary
 
-Prepared the next battle runtime after non-boss stage advancement without adding rewards, Dice replacement, inventory, presentation, or healing rules.
+Validated the fixed five-stage linear run structure after M6-007 without adding gameplay, rewards, Dice replacement, inventory, presentation, or progression systems.
 
 ## Validation Result
 
@@ -31,6 +31,8 @@ PASS
 - M6-005 Advance To Next Stage is DONE.
 - M6-006 Complete Linear Run is DONE.
 - M6-007 Prepare Next Battle is DONE.
+- M6-008 Validate Linear Stage Run is DONE.
+- M6_LINEAR_STAGE_RUN is READY_FOR_DIRECTOR_REVIEW.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
@@ -58,6 +60,9 @@ PASS
 - Turn ownership is restored to `PlayerTurn` for the next battle.
 - Current runtime Dice and Dice Deck state persist across the prepared next battle.
 - Player HP is preserved across the prepared next battle.
+- Stage 1 Normal through Stage 5 Boss fixed progression is deterministic.
+- Boss-stage Victory marks `LinearRunState` as completed.
+- Defeat blocks player input without advancing the stage or completing the run.
 - `StageType` exists with `Normal`, `Elite`, and `Boss`.
 - `LinearStageRuntimeState` exists as a runtime state holder.
 - Fixed stage order is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
@@ -104,8 +109,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-007 Prepare Next Battle.
+Stopped after M6-008 Validate Linear Stage Run.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_007_prepare_next_battle.log`.
+- Unity validation log: `/tmp/projectdice_m6_008_validate_linear_stage_run.log`.

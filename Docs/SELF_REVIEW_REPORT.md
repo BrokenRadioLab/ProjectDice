@@ -2,18 +2,18 @@
 
 Date: 2026-07-01
 
-Task: TASK_M6-007_PREPARE_NEXT_BATTLE
+Task: TASK_M6-008_VALIDATE_LINEAR_STAGE_RUN
 
 ## Review Result
 
 PASS
 
-Prepare Next Battle stays within the requested runtime-preparation-only scope.
+Validate Linear Stage Run stays within the requested validation-only scope.
 
 ## Scope Check
 
-- Added `BattleCombatState.PrepareNextEnemy()`.
-- Connected successful non-boss stage advancement to next battle preparation.
+- Did not change gameplay code.
+- Completed M6-008 through static flow validation, scope checks, and Unity import/compile validation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
 - Did not add battle end presentation or full battle reset flow.
@@ -24,7 +24,7 @@ Prepare Next Battle stays within the requested runtime-preparation-only scope.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
 - Did not change Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
-- Changed only post-outcome runtime flow: non-boss Victory can advance the fixed stage position and prepare the next battle, Boss Victory completes the run, and Defeat prevents PlayerTurn from resuming.
+- Did not change post-outcome runtime flow: non-boss Victory can advance the fixed stage position and prepare the next battle, Boss Victory completes the run, and Defeat prevents PlayerTurn from resuming.
 
 ## Architecture Check
 
@@ -62,6 +62,8 @@ Prepare Next Battle stays within the requested runtime-preparation-only scope.
 - Non-boss stage advance restores turn ownership to `PlayerTurn`.
 - Current runtime Dice persists across next battle preparation.
 - Player HP persists across next battle preparation.
+- Dice Deck runtime data continues to read from current runtime Dice.
+- Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
 - Reward flow is not triggered by defeat.
@@ -71,8 +73,8 @@ Prepare Next Battle stays within the requested runtime-preparation-only scope.
 
 - Human Play Mode review is still needed to confirm the existing battle loop still feels unchanged in-device.
 - Human Play Mode review is still needed to confirm the exact next battle transition feel once presentation is added later.
-- Full linear run validation remains intentionally deferred to M6-008.
+- Human Play Mode review is still needed to confirm the full five-stage run pacing and in-device feel.
 
 ## Status
 
-TASK_M6-007_PREPARE_NEXT_BATTLE is complete.
+TASK_M6-008_VALIDATE_LINEAR_STAGE_RUN is complete.
