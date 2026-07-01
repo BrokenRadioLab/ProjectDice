@@ -8,6 +8,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleCombatState combatState;
     [SerializeField] private BattleDiceState battleDiceState;
     [SerializeField] private BattleTurnState battleTurnState;
+    [SerializeField] private BattleOutcomeState battleOutcomeState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
@@ -101,11 +102,12 @@ public sealed class BattleController : MonoBehaviour
         int damage = ApplyFaceEffect(faceEffect);
         hudPresenter?.Refresh();
 
-        if (combatState.IsEnemyDefeated)
+        ResolveEnemyDefeatOutcome();
+
+        if (IsBattleVictory())
         {
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
-            battleTurnState?.BeginPlayerTurn();
-            SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} Victory.");
+            SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
             yield break;
         }
 
@@ -128,6 +130,11 @@ public sealed class BattleController : MonoBehaviour
 
     private bool CanAcceptPlayerThrow()
     {
+        if (battleOutcomeState != null && !battleOutcomeState.IsInProgress)
+        {
+            return false;
+        }
+
         return battleTurnState == null || battleTurnState.CanAcceptPlayerAction;
     }
 
@@ -168,6 +175,24 @@ public sealed class BattleController : MonoBehaviour
         }
 
         return combatState.ApplyDamageToPlayer(attackIntent.DamageAmount);
+    }
+
+    private void ResolveEnemyDefeatOutcome()
+    {
+        if (battleOutcomeState == null || !battleOutcomeState.IsInProgress || combatState == null)
+        {
+            return;
+        }
+
+        if (combatState.IsEnemyDefeated)
+        {
+            battleOutcomeState.MarkVictory();
+        }
+    }
+
+    private bool IsBattleVictory()
+    {
+        return battleOutcomeState != null && battleOutcomeState.IsVictory;
     }
 
     private int GetPendingDamage(FaceEffectData faceEffect)

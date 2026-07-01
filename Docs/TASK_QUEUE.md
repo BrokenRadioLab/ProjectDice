@@ -161,7 +161,7 @@ Validation:
 
 ## M6-003: Enemy Defeat Victory Resolution
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -170,8 +170,9 @@ Resolve enemy defeat into a battle victory outcome.
 Requirements:
 
 - Use existing enemy HP state.
-- Consume the current linear stage runtime state.
 - Detect victory after player damage application.
+- Mark `BattleOutcomeState` as `Victory`.
+- Use `BattleOutcomeState` as the source of truth after victory is set.
 - Stop enemy response when enemy is defeated.
 - Lock or prevent further Throw input once victory is reached.
 - Do not advance to the next stage in this task.
@@ -179,7 +180,7 @@ Requirements:
 
 Done Criteria:
 
-- Reducing enemy HP to zero marks the current battle as Victory while preserving current stage context.
+- Reducing enemy HP to zero marks the current battle as Victory without advancing stages.
 
 Validation:
 
@@ -189,7 +190,7 @@ Validation:
 
 ## M6-004: Player Defeat Resolution
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

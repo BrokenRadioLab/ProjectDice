@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Implemented M6-003 Enemy Defeat Victory Resolution.
+- Connected enemy defeat resolution to `BattleOutcomeState.MarkVictory()`.
+- Added `BattleOutcomeState` to the Battle scene runtime state object and wired it into `BattleController`.
+- `BattleController` now blocks additional Throw input when `BattleOutcomeState` is no longer `InProgress`.
+- Enemy turn now skips after victory by consuming `BattleOutcomeState` instead of scattering enemy HP checks through the battle flow.
+- Marked M6-003 as DONE and M6-004 Player Defeat Resolution as NEXT.
+- No stage advance, reward, run completion, victory presentation, battle reset, defeat resolution, Dice replacement, boss mechanic, or transition UI was added for M6-003.
 - Implemented M6-002 Linear Stage Runtime State.
 - Added `StageType` with `Normal`, `Elite`, and `Boss`.
 - Added `LinearStageRuntimeState` as a pure runtime holder for the current fixed five-stage run position.

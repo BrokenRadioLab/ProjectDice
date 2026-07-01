@@ -2,25 +2,27 @@
 
 Date: 2026-07-01
 
-Task: TASK_M6-002_LINEAR_STAGE_RUNTIME_STATE
+Task: TASK_M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION
 
 ## Review Result
 
 PASS
 
-Linear Stage Runtime State stays within the requested runtime-state-only scope.
+Enemy Defeat Victory Resolution stays within the requested battle-outcome-only scope.
 
 ## Scope Check
 
-- Added only `StageType` and `LinearStageRuntimeState`.
+- Connected enemy defeat to `BattleOutcomeState.MarkVictory()`.
 - Did not add victory gameplay.
 - Did not add defeat gameplay.
-- Did not add battle end or defeat handling.
+- Did not add battle end presentation, battle reset, or defeat handling.
 - Did not add stage progression.
 - Did not add stage advance.
 - Did not add run completion.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
-- Did not change enemy turn flow, Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
+- Did not add victory presentation, battle reset, transition UI, or run completion.
+- Did not change Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
+- Changed only the post-victory battle flow so `BattleOutcomeState.Victory` prevents EnemyTurn from beginning.
 
 ## Architecture Check
 
@@ -29,6 +31,7 @@ Linear Stage Runtime State stays within the requested runtime-state-only scope.
 - `LinearStageRuntimeState` owns current stage position only.
 - Battle outcome remains separate from turn ownership and combat HP state.
 - Stage runtime remains separate from battle outcome, rewards, next stage transition, and run completion.
+- After victory is set, battle completion checks consume `BattleOutcomeState`.
 - Player pipeline remains `DiceFace -> FaceResolver -> FaceEffectData -> BattleController -> ThrowSequencePresenter -> BattleCombatState -> BattleHudPresenter`.
 - Enemy pipeline remains `EnemyAttackResolver -> EnemyAttackIntent -> EnemyAttackPresenter -> BattleCombatState -> BattleHudPresenter`.
 - Dice Deck remains Battle Information UI and reads from `BattleDiceState.CurrentDice`.
@@ -37,20 +40,20 @@ Linear Stage Runtime State stays within the requested runtime-state-only scope.
 
 ## Validation Review
 
-- `LinearStageRuntimeState` starts at Stage 1.
-- Stage 1, 2, and 3 resolve to `Normal`.
-- Stage 4 resolves to `Elite`.
-- Stage 5 resolves to `Boss`.
-- Boss-stage check is available without advancing stages.
+- Enemy defeat marks `BattleOutcomeState` as `Victory`.
+- Enemy turn does not begin after victory is set.
+- Additional Throw input is not accepted after victory is set.
+- Stage advance is not triggered by victory.
+- Reward flow is not triggered by victory.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Residual Risk
 
 - Human Play Mode review is still needed to confirm the existing battle loop still feels unchanged in-device.
 - Player HP can reach 0, but no defeat flow is triggered. This remains intentionally out of scope until a later battle completion milestone.
-- Enemy HP can reach 0, but M6 victory outcome detection is intentionally deferred to M6-003.
+- Player defeat outcome detection is intentionally deferred to M6-004.
 - Stage advance is intentionally deferred to M6-005.
 
 ## Status
 
-TASK_M6-002_LINEAR_STAGE_RUNTIME_STATE is complete.
+TASK_M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION is complete.
