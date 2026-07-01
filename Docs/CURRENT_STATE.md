@@ -60,6 +60,8 @@ The project is in MVP foundation work.
 - Collapsible Dice Deck now exists as a collapsed-by-default Battle Information UI.
 - Dice Deck reads from current runtime Dice state and is not hardcoded to Starter Dice.
 - Dice Deck button interaction has been fixed by ensuring runtime UI event handling exists for its Button clicks/taps.
+- Dice Deck is positioned on the Bottom HUD left edge, aligned with the Throw button row.
+- Dice Deck expands horizontally into six square runtime face slots.
 - Dice Deck probability display is intentionally not implemented in M5.
 - M5 battle loop validation is complete for static sequence order and Unity import/compile.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.

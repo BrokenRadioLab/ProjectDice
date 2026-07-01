@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Completed `TASK_DICE_DECK_LAYOUT_REFINEMENT`.
+- Moved Dice Deck to the Bottom HUD left edge, aligned with the Throw button row.
+- Dice Deck now expands horizontally toward the right while staying attached to the Dice Deck button.
+- Expanded Dice Deck now shows six square runtime Dice face slots in one horizontal row.
+- Dice Deck still reads from `BattleDiceState.CurrentDice` and does not display probability, rarity, replacement preview, or selected result highlighting.
+- Confirmed Unity batchmode import/compile validation for Dice Deck layout refinement completed successfully with exit code 0.
+- No Throw sequence, Dice Animation Layer, battle presentation, enemy turn, rewards, progression, or Face replacement changes were added.
 - Completed Battle Art Integration.
 - Added Hero Hit 2-frame animation as the primary feedback during enemy attack presentation.
 - Added Red Goblin Idle 4-frame animation in the existing enemy slot.

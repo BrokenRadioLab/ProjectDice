@@ -2232,7 +2232,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   battleDiceState: {fileID: 1700000004}
-  displayRoot: {fileID: 2200000001}
+  displayRoot: {fileID: 2300000001}
   startsExpanded: 0
   collapsedButtonColor: {r: 0.18, g: 0.17, b: 0.15, a: 0.86}
   expandedPanelColor: {r: 0.12, g: 0.11, b: 0.1, a: 0.92}
