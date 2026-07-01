@@ -37,6 +37,14 @@
 - Added M5-006 Current Dice Panel to the M5 task structure and moved validation to M5-007.
 - Confirmed Unity batchmode import/compile validation for M5-004 completed successfully with exit code 0.
 - No defeat flow, battle end, rewards, progression, enemy AI, random behavior, new Face effects, Dice replacement, inventory, or stage system were added for M5-004.
+- Recorded Director PASS for M5-004.
+- Implemented M5-005 Turn Transition.
+- Added explicit `BattleTurnState.BeginTransition()` and `BattleTurnState.BeginEnemyTurn()` handoffs.
+- Updated battle flow to visibly follow `PlayerTurn`, `Transition`, `EnemyTurn`, `Transition`, `PlayerTurn`.
+- Kept input locked through the full player action, enemy presentation, player damage application, HP refresh, and turn transition.
+- Marked M5-005 as DONE and M5-006 Current Dice Panel as NEXT.
+- Confirmed Unity batchmode import/compile validation for M5-005 completed successfully with exit code 0.
+- No battle end, defeat handling, rewards, progression, enemy AI improvements, or Current Dice Panel implementation was added for M5-005.
 
 ## 2026-06-30
 

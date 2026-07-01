@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Completed Work: M5-004 Player Damage Application
+Completed Work: M5-005 Turn Transition
 
 ## Summary
 
-Applied resolved enemy attack intent damage to player HP after enemy attack presentation, without adding battle end or defeat flow.
+Made the battle ownership flow explicit from player action through enemy response and back to player input.
 
 ## Validation Result
 
@@ -16,26 +16,28 @@ PASS
 
 ## Confirmed
 
-- `BattleCombatState.ApplyDamageToPlayer(int damage)` is the player HP mutation path for enemy attack damage.
-- `BattleController` applies pending `EnemyAttackIntent` damage only after `EnemyAttackPresenter.Play(...)` completes.
-- `BattleHudPresenter.Refresh()` runs after player damage application.
-- Pending enemy attack intent is cleared after being consumed.
-- Existing player Attack damage still flows through `BattleCombatState.ApplyDamageToEnemy`.
+- M5-004 Player Damage Application is approved.
+- `BattleTurnState.BeginTransition()` explicitly enters `Transition`.
+- `BattleTurnState.BeginEnemyTurn()` explicitly enters `EnemyTurn`.
+- `BattleController` follows `PlayerTurn -> Transition -> EnemyTurn -> Transition -> PlayerTurn`.
+- Input remains locked through player Throw, player presentation, enemy presentation, player damage application, HP refresh, and turn transition.
+- Player input unlocks only after ownership returns to `PlayerTurn`.
+- Enemy action is skipped if the enemy is defeated by the player action.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Not Added
 
-- No defeat flow was added.
 - No battle end was added.
+- No defeat handling was added.
 - No rewards or progression were added.
-- No enemy AI or random enemy behavior was added.
-- No new Face effects were added.
-- No Dice replacement, inventory, stage system, or Current Dice Panel implementation was added.
+- No enemy AI improvements were added.
+- No Current Dice Panel implementation was added.
+- No Dice replacement, inventory, or stage system was added.
 
 ## Stop Point
 
-Stopped after M5-004.
+Stopped after M5-005.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m5_004_player_damage_application_unity.log`.
+- Unity validation log: `/tmp/projectdice_m5_005_turn_transition_unity.log`.

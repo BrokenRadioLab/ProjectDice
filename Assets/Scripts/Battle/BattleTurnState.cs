@@ -23,11 +23,21 @@ public sealed class BattleTurnState : MonoBehaviour
 
     public void BeginPlayerAction()
     {
+        BeginTransition();
+    }
+
+    public void BeginTransition()
+    {
         currentTurnOwner = BattleTurnOwner.Transition;
         enemyTurnPending = false;
     }
 
     public void PrepareEnemyTurn()
+    {
+        BeginEnemyTurn();
+    }
+
+    public void BeginEnemyTurn()
     {
         currentTurnOwner = BattleTurnOwner.EnemyTurn;
         enemyTurnPending = true;

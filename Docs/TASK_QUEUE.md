@@ -284,7 +284,7 @@ Completed:
 
 ## M5-004: Player Damage Application
 
-Status: DONE
+Status: DONE - APPROVED
 
 Goal:
 
@@ -320,7 +320,7 @@ Completed:
 
 ## M5-005: Turn Transition
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -346,9 +346,20 @@ Validation:
 - Enemy does not act after being defeated.
 - Repeated player turns work without duplicate enemy responses.
 
+Completed:
+
+- Added an explicit `BattleTurnState.BeginTransition()` state handoff.
+- Added explicit `BattleTurnState.BeginEnemyTurn()` ownership entry point.
+- Existing `PrepareEnemyTurn()` now routes through `BeginEnemyTurn()` for compatibility.
+- Battle flow now visibly follows `PlayerTurn -> Transition -> EnemyTurn -> Transition -> PlayerTurn`.
+- `BattleController` keeps input locked through player Throw, player presentation, enemy attack presentation, player damage application, HP refresh, and turn transition.
+- Player input unlocks only after ownership returns to `PlayerTurn`.
+- Enemy action is skipped if the enemy is defeated by the player action.
+- No battle end, defeat handling, rewards, progression, enemy AI improvements, or Current Dice Panel implementation was added.
+
 ## M5-006: Current Dice Panel
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

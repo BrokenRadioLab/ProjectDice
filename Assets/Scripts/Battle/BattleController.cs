@@ -109,7 +109,7 @@ public sealed class BattleController : MonoBehaviour
             yield break;
         }
 
-        battleTurnState?.PrepareEnemyTurn();
+        battleTurnState?.BeginEnemyTurn();
         pendingEnemyAttackIntent = EnemyAttackResolver.Resolve(battleTurnState);
         if (enemyAttackPresenter != null)
         {
@@ -120,6 +120,7 @@ public sealed class BattleController : MonoBehaviour
         pendingEnemyAttackIntent = EnemyAttackIntent.None();
         hudPresenter?.Refresh();
 
+        battleTurnState?.BeginTransition();
         battleTurnState?.BeginPlayerTurn();
         SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
         inputLocked = false;

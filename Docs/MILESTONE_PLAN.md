@@ -247,15 +247,16 @@ Detailed Task Status:
 - M5-001 Enemy Runtime Turn State is DONE and approved.
 - M5-002 Enemy Attack Resolution is DONE and approved.
 - M5-003 Enemy Attack Presentation is DONE.
-- M5-004 Player Damage Application is DONE.
-- M5-005 Turn Transition is NEXT.
-- M5-006 Current Dice Panel is PENDING.
+- M5-004 Player Damage Application is DONE and approved.
+- M5-005 Turn Transition is DONE.
+- M5-006 Current Dice Panel is NEXT.
 - M5-007 Validate M5 Battle Loop is PENDING.
 - M5 must preserve the existing player Throw, Face Resolution, Dice presentation, damage apply, and HP refresh flow before adding the enemy response.
 - M5 includes battle-level turn ownership with `PlayerTurn`, `Transition`, and `EnemyTurn`.
 - Enemy attack resolution currently produces a deterministic pending fixed 5 Damage intent.
 - Enemy attack presentation now presents that intent with a short enemy attack beat.
 - Player damage application now consumes the resolved enemy attack intent after presentation and refreshes HP.
+- Turn transition now explicitly follows `PlayerTurn`, `Transition`, `EnemyTurn`, `Transition`, `PlayerTurn`.
 - Current Dice Panel is a collapsed-by-default Battle Information Panel for inspecting the current runtime Dice build; it is not battle presentation, rewards, Dice replacement, inventory, progression, or stage flow.
 - Victory, defeat, rewards, stage progression, inventory, shops, permanent progression, new Face types, boss systems, and multi-enemy logic are out of scope for M5.
 
