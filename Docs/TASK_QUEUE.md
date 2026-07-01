@@ -203,6 +203,7 @@ Requirements:
 - Adapt the existing single enemy HP state into `EnemyGroupState.AreAllEnemiesDefeated`.
 - Resolve victory from `EnemyGroupState.AreAllEnemiesDefeated`.
 - Keep `BattleOutcomeState` as the source of truth after victory is set.
+- Keep enemy slot 2 and slot 3 inactive until real HP state is added for those slots.
 - Do not implement targeting, multiple enemy HP bars, multi-enemy attacks, rewards, stage advance, run completion, victory presentation, or battle reset.
 
 Done Criteria:
@@ -217,7 +218,7 @@ Validation:
 
 ## M6-004: Player Defeat Resolution
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -242,7 +243,7 @@ Validation:
 
 ## M6-005: Advance To Next Stage
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

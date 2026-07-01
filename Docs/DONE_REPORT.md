@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION
+Completed Work: TASK_M6-004_PLAYER_DEFEAT_RESOLUTION
 
 ## Summary
 
-Refactored victory resolution to use an enemy group defeated query without adding multi-enemy gameplay.
+Connected player HP reaching zero to battle defeat outcome without adding restart UI, defeat presentation, stage advance, reward, or run completion.
 
 ## Validation Result
 
@@ -27,6 +27,7 @@ PASS
 - M6-002 Linear Stage Runtime State is DONE.
 - M6-003 Enemy Defeat Victory Resolution is DONE.
 - M6-003A Enemy Group Victory Abstraction is DONE.
+- M6-004 Player Defeat Resolution is DONE.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
@@ -36,9 +37,13 @@ PASS
 - Enemy defeat victory resolution now uses `EnemyGroupState.AreAllEnemiesDefeated`.
 - `EnemyGroupState` tracks the current active enemy slots.
 - The current battle still adapts only the existing single enemy HP state.
+- Enemy slot 2 and slot 3 must remain inactive until real HP state is added for those slots.
 - Enemy turn does not begin after `BattleOutcomeState` becomes `Victory`.
 - Additional Throw input is not accepted after `BattleOutcomeState` becomes `Victory`.
 - Battle completion flow consumes `BattleOutcomeState` as the source of truth after victory is set.
+- Player HP reaching 0 marks `BattleOutcomeState` as `Defeat`.
+- Player turn does not resume after `BattleOutcomeState` becomes `Defeat`.
+- Additional Throw input is not accepted after `BattleOutcomeState` becomes `Defeat`.
 - `StageType` exists with `Normal`, `Elite`, and `Boss`.
 - `LinearStageRuntimeState` exists as a runtime state holder.
 - Fixed stage order is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
@@ -61,8 +66,8 @@ PASS
 ## Not Added
 
 - No battle end presentation or reset flow was added.
-- No defeat handling was added.
-- No defeat detection was added.
+- No defeat presentation was added.
+- No restart UI was added.
 - No multi-enemy gameplay was added.
 - No multi-enemy targeting was added.
 - No multiple enemy HP mutation was added.
@@ -83,8 +88,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-003A Enemy Group Victory Abstraction.
+Stopped after M6-004 Player Defeat Resolution.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_003a_enemy_group_victory_abstraction.log`.
+- Unity validation log: `/tmp/projectdice_m6_004_player_defeat_resolution.log`.

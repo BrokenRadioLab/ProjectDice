@@ -4,11 +4,19 @@
 
 ### Changed
 
+- Implemented M6-004 Player Defeat Resolution.
+- Added `BattleCombatState.IsPlayerDefeated`.
+- Connected player HP reaching 0 after enemy damage application to `BattleOutcomeState.MarkDefeat()`.
+- Player turn no longer resumes after `BattleOutcomeState` becomes `Defeat`.
+- Additional Throw input remains blocked after Defeat because `BattleController` consumes `BattleOutcomeState`.
+- Marked M6-004 as DONE and M6-005 Advance To Next Stage as NEXT.
+- No restart UI, defeat presentation, stage advance, reward, run completion, battle reset, Dice replacement, inventory, or progression was added for M6-004.
 - Completed `TASK_M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION`.
 - Added `EnemyGroupState` as a minimal runtime holder for active enemy slots.
 - `EnemyGroupState.AreAllEnemiesDefeated` currently adapts the existing single enemy HP state into a group-level victory query.
 - Updated victory resolution to consume `EnemyGroupState.AreAllEnemiesDefeated` instead of directly checking `BattleCombatState.IsEnemyDefeated`.
 - Kept `BattleOutcomeState` as the source of truth after victory is set.
+- Documented that enemy slot 2 and slot 3 should remain inactive until real HP state is added for those slots.
 - No multi-enemy targeting, multiple enemy HP mutation, multi-enemy UI, rewards, stage advance, run completion, victory presentation, or battle reset was added.
 - Implemented M6-003 Enemy Defeat Victory Resolution.
 - Connected enemy defeat resolution to `BattleOutcomeState.MarkVictory()`.

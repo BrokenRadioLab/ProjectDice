@@ -52,7 +52,8 @@ The project is in MVP foundation work.
 - `M6-002_LINEAR_STAGE_RUNTIME_STATE` is DONE.
 - `M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION` is DONE.
 - `M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION` is DONE.
-- `M6-004_PLAYER_DEFEAT_RESOLUTION` is NEXT.
+- `M6-004_PLAYER_DEFEAT_RESOLUTION` is DONE.
+- `M6-005_ADVANCE_TO_NEXT_STAGE` is NEXT.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -94,8 +95,11 @@ The project is in MVP foundation work.
 - `BattleOutcomeState` is independent from `BattleTurnState` and `BattleCombatState` and does not calculate damage, inspect HP, trigger presentation, advance stages, unlock rewards, restart battles, or own battle flow.
 - Enemy defeat now marks `BattleOutcomeState` as `Victory`.
 - Enemy defeat victory resolution now goes through `EnemyGroupState.AreAllEnemiesDefeated` so future 1-3 enemy battles can share the same group-level query.
+- `EnemyGroupState` slot 2 and slot 3 must remain inactive until real HP state exists for those slots; if they are enabled early, the group intentionally does not report all enemies defeated.
 - After `BattleOutcomeState` is `Victory`, enemy turn does not begin and additional Throw input is not accepted.
 - Battle completion flow now consumes `BattleOutcomeState` as the source of truth after victory is set.
+- Player defeat now marks `BattleOutcomeState` as `Defeat` after enemy damage application and HP refresh.
+- After `BattleOutcomeState` is `Defeat`, player turn does not resume and additional Throw input is not accepted.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns only the current stage index, current stage type, and boss-stage check; it does not know battle outcome, rewards, next stage transition, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.

@@ -11,6 +11,7 @@ public sealed class BattleCombatState : MonoBehaviour
     public int PlayerCurrentHp => playerCurrentHp;
     public int EnemyMaxHp => enemyMaxHp;
     public int EnemyCurrentHp => enemyCurrentHp;
+    public bool IsPlayerDefeated => playerCurrentHp <= 0;
     public bool IsEnemyDefeated => enemyCurrentHp <= 0;
 
     public int ApplyDamageToPlayer(int damage)

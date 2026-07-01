@@ -123,6 +123,14 @@ public sealed class BattleController : MonoBehaviour
         pendingEnemyAttackIntent = EnemyAttackIntent.None();
         hudPresenter?.Refresh();
 
+        ResolvePlayerDefeatOutcome();
+
+        if (IsBattleDefeat())
+        {
+            SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
+            yield break;
+        }
+
         battleTurnState?.BeginTransition();
         battleTurnState?.BeginPlayerTurn();
         SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
@@ -194,6 +202,24 @@ public sealed class BattleController : MonoBehaviour
     private bool IsBattleVictory()
     {
         return battleOutcomeState != null && battleOutcomeState.IsVictory;
+    }
+
+    private void ResolvePlayerDefeatOutcome()
+    {
+        if (battleOutcomeState == null || !battleOutcomeState.IsInProgress || combatState == null)
+        {
+            return;
+        }
+
+        if (combatState.IsPlayerDefeated)
+        {
+            battleOutcomeState.MarkDefeat();
+        }
+    }
+
+    private bool IsBattleDefeat()
+    {
+        return battleOutcomeState != null && battleOutcomeState.IsDefeat;
     }
 
     private int GetPendingDamage(FaceEffectData faceEffect)

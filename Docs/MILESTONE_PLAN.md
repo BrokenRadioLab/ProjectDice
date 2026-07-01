@@ -297,8 +297,8 @@ Detailed Task Status:
 - M6-001 Battle Outcome State is DONE.
 - M6-002 Linear Stage Runtime State is DONE.
 - M6-003 Enemy Defeat Victory Resolution is DONE.
-- M6-004 Player Defeat Resolution is NEXT.
-- M6-005 Advance To Next Stage is PENDING.
+- M6-004 Player Defeat Resolution is DONE.
+- M6-005 Advance To Next Stage is NEXT.
 - M6-006 Complete Linear Run is PENDING.
 - M6-007 Prepare Next Battle is PENDING.
 - M6-008 Validate Linear Stage Run is PENDING.
