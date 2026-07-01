@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Completed `TASK_M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION`.
+- Added `EnemyGroupState` as a minimal runtime holder for active enemy slots.
+- `EnemyGroupState.AreAllEnemiesDefeated` currently adapts the existing single enemy HP state into a group-level victory query.
+- Updated victory resolution to consume `EnemyGroupState.AreAllEnemiesDefeated` instead of directly checking `BattleCombatState.IsEnemyDefeated`.
+- Kept `BattleOutcomeState` as the source of truth after victory is set.
+- No multi-enemy targeting, multiple enemy HP mutation, multi-enemy UI, rewards, stage advance, run completion, victory presentation, or battle reset was added.
 - Implemented M6-003 Enemy Defeat Victory Resolution.
 - Connected enemy defeat resolution to `BattleOutcomeState.MarkVictory()`.
 - Added `BattleOutcomeState` to the Battle scene runtime state object and wired it into `BattleController`.

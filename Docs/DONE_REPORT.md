@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION
+Completed Work: TASK_M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION
 
 ## Summary
 
-Connected enemy defeat to battle victory outcome without adding stage advance, reward, run completion, victory presentation, or battle reset logic.
+Refactored victory resolution to use an enemy group defeated query without adding multi-enemy gameplay.
 
 ## Validation Result
 
@@ -26,12 +26,16 @@ PASS
 - M6-001 Battle Outcome State is DONE.
 - M6-002 Linear Stage Runtime State is DONE.
 - M6-003 Enemy Defeat Victory Resolution is DONE.
+- M6-003A Enemy Group Victory Abstraction is DONE.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
 - `BattleOutcomeState` remains independent from `BattleTurnState` and `BattleCombatState`.
 - `BattleOutcomeState` does not calculate damage, inspect HP, trigger presentation, advance stages, unlock rewards, restart battles, or own battle flow.
 - Enemy defeat marks `BattleOutcomeState` as `Victory`.
+- Enemy defeat victory resolution now uses `EnemyGroupState.AreAllEnemiesDefeated`.
+- `EnemyGroupState` tracks the current active enemy slots.
+- The current battle still adapts only the existing single enemy HP state.
 - Enemy turn does not begin after `BattleOutcomeState` becomes `Victory`.
 - Additional Throw input is not accepted after `BattleOutcomeState` becomes `Victory`.
 - Battle completion flow consumes `BattleOutcomeState` as the source of truth after victory is set.
@@ -59,6 +63,10 @@ PASS
 - No battle end presentation or reset flow was added.
 - No defeat handling was added.
 - No defeat detection was added.
+- No multi-enemy gameplay was added.
+- No multi-enemy targeting was added.
+- No multiple enemy HP mutation was added.
+- No multi-enemy UI was added.
 - No rewards or progression were added.
 - No stage progression was added.
 - No stage advance was added.
@@ -75,8 +83,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-003 Enemy Defeat Victory Resolution.
+Stopped after M6-003A Enemy Group Victory Abstraction.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_003_enemy_defeat_victory_resolution.log`.
+- Unity validation log: `/tmp/projectdice_m6_003a_enemy_group_victory_abstraction.log`.

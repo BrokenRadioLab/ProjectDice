@@ -9,6 +9,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleDiceState battleDiceState;
     [SerializeField] private BattleTurnState battleTurnState;
     [SerializeField] private BattleOutcomeState battleOutcomeState;
+    [SerializeField] private EnemyGroupState enemyGroupState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
@@ -179,12 +180,12 @@ public sealed class BattleController : MonoBehaviour
 
     private void ResolveEnemyDefeatOutcome()
     {
-        if (battleOutcomeState == null || !battleOutcomeState.IsInProgress || combatState == null)
+        if (battleOutcomeState == null || !battleOutcomeState.IsInProgress || enemyGroupState == null)
         {
             return;
         }
 
-        if (combatState.IsEnemyDefeated)
+        if (enemyGroupState.AreAllEnemiesDefeated)
         {
             battleOutcomeState.MarkVictory();
         }

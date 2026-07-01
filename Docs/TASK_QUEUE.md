@@ -188,6 +188,33 @@ Validation:
 - Player input does not start another Throw after victory.
 - No reward or stage transition is triggered yet.
 
+## M6-003A: Enemy Group Victory Abstraction
+
+Status: DONE
+
+Goal:
+
+Refactor victory resolution so future 1-3 enemy battles can use a group-level defeated query.
+
+Requirements:
+
+- Add a minimal `EnemyGroupState`.
+- Track active enemy slots for the current battle.
+- Adapt the existing single enemy HP state into `EnemyGroupState.AreAllEnemiesDefeated`.
+- Resolve victory from `EnemyGroupState.AreAllEnemiesDefeated`.
+- Keep `BattleOutcomeState` as the source of truth after victory is set.
+- Do not implement targeting, multiple enemy HP bars, multi-enemy attacks, rewards, stage advance, run completion, victory presentation, or battle reset.
+
+Done Criteria:
+
+- Current single-enemy battle still reaches Victory through the enemy group query.
+
+Validation:
+
+- Victory uses `EnemyGroupState.AreAllEnemiesDefeated`.
+- BattleOutcomeState still owns battle completion.
+- No multi-enemy gameplay was added.
+
 ## M6-004: Player Defeat Resolution
 
 Status: NEXT

@@ -2,17 +2,18 @@
 
 Date: 2026-07-01
 
-Task: TASK_M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION
+Task: TASK_M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION
 
 ## Review Result
 
 PASS
 
-Enemy Defeat Victory Resolution stays within the requested battle-outcome-only scope.
+Enemy Group Victory Abstraction stays within the requested abstraction-only scope.
 
 ## Scope Check
 
-- Connected enemy defeat to `BattleOutcomeState.MarkVictory()`.
+- Added `EnemyGroupState`.
+- Routed victory resolution through `EnemyGroupState.AreAllEnemiesDefeated`.
 - Did not add victory gameplay.
 - Did not add defeat gameplay.
 - Did not add battle end presentation, battle reset, or defeat handling.
@@ -20,6 +21,7 @@ Enemy Defeat Victory Resolution stays within the requested battle-outcome-only s
 - Did not add stage advance.
 - Did not add run completion.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
+- Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, battle reset, transition UI, or run completion.
 - Did not change Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
 - Changed only the post-victory battle flow so `BattleOutcomeState.Victory` prevents EnemyTurn from beginning.
@@ -29,6 +31,7 @@ Enemy Defeat Victory Resolution stays within the requested battle-outcome-only s
 - `BattleTurnState` owns turn ownership only.
 - `BattleOutcomeState` owns battle outcome only.
 - `LinearStageRuntimeState` owns current stage position only.
+- `EnemyGroupState` owns the group-level defeated query for current active enemy slots.
 - Battle outcome remains separate from turn ownership and combat HP state.
 - Stage runtime remains separate from battle outcome, rewards, next stage transition, and run completion.
 - After victory is set, battle completion checks consume `BattleOutcomeState`.
@@ -41,6 +44,7 @@ Enemy Defeat Victory Resolution stays within the requested battle-outcome-only s
 ## Validation Review
 
 - Enemy defeat marks `BattleOutcomeState` as `Victory`.
+- Victory resolution consumes `EnemyGroupState.AreAllEnemiesDefeated`.
 - Enemy turn does not begin after victory is set.
 - Additional Throw input is not accepted after victory is set.
 - Stage advance is not triggered by victory.
@@ -56,4 +60,4 @@ Enemy Defeat Victory Resolution stays within the requested battle-outcome-only s
 
 ## Status
 
-TASK_M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION is complete.
+TASK_M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION is complete.

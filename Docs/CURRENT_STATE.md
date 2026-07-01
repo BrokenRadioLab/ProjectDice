@@ -51,6 +51,7 @@ The project is in MVP foundation work.
 - `M6-001_BATTLE_OUTCOME_STATE` is DONE.
 - `M6-002_LINEAR_STAGE_RUNTIME_STATE` is DONE.
 - `M6-003_ENEMY_DEFEAT_VICTORY_RESOLUTION` is DONE.
+- `M6-003A_ENEMY_GROUP_VICTORY_ABSTRACTION` is DONE.
 - `M6-004_PLAYER_DEFEAT_RESOLUTION` is NEXT.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
@@ -92,6 +93,7 @@ The project is in MVP foundation work.
 - Battle outcome runtime state now exists through `BattleOutcomeState` with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` is independent from `BattleTurnState` and `BattleCombatState` and does not calculate damage, inspect HP, trigger presentation, advance stages, unlock rewards, restart battles, or own battle flow.
 - Enemy defeat now marks `BattleOutcomeState` as `Victory`.
+- Enemy defeat victory resolution now goes through `EnemyGroupState.AreAllEnemiesDefeated` so future 1-3 enemy battles can share the same group-level query.
 - After `BattleOutcomeState` is `Victory`, enemy turn does not begin and additional Throw input is not accepted.
 - Battle completion flow now consumes `BattleOutcomeState` as the source of truth after victory is set.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
