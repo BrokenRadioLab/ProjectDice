@@ -10,6 +10,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleTurnState battleTurnState;
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
+    [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -110,6 +111,11 @@ public sealed class BattleController : MonoBehaviour
 
         battleTurnState?.PrepareEnemyTurn();
         pendingEnemyAttackIntent = EnemyAttackResolver.Resolve(battleTurnState);
+        if (enemyAttackPresenter != null)
+        {
+            yield return enemyAttackPresenter.Play(pendingEnemyAttackIntent);
+        }
+
         battleTurnState?.BeginPlayerTurn();
         SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
         inputLocked = false;

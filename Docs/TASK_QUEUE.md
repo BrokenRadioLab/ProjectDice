@@ -203,7 +203,7 @@ Completed:
 
 ## M5-002: Enemy Attack Resolution
 
-Status: DONE
+Status: DONE - APPROVED
 
 Goal:
 
@@ -241,7 +241,7 @@ Completed:
 
 ## M5-003: Enemy Attack Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -268,9 +268,23 @@ Validation:
 - Presentation does not call enemy attack resolution logic.
 - Presentation does not change Dice or Face state.
 
+Completed:
+
+- Added `EnemyAttackPresenter` as a presentation-only consumer of `EnemyAttackIntent`.
+- Enemy attack presentation runs after player Throw, Face Reveal, Face Effect, Damage Number, enemy HP damage application, and HP refresh.
+- Presentation uses short SNES-style feedback:
+  - enemy windup flash
+  - simple white strike trail from enemy to Hero
+  - brief Hero hit flash
+- `BattleController` keeps battle ownership in `EnemyTurn` while enemy attack presentation plays, then returns to `PlayerTurn`.
+- `EnemyAttackPresenter` does not apply player HP damage.
+- `EnemyAttackPresenter` does not decide damage.
+- `EnemyAttackPresenter` does not call `EnemyAttackResolver`, `BattleCombatState`, or `BattleHudPresenter`.
+- No enemy AI, player HP reduction, battle end, rewards, progression, random enemy behavior, new Face effects, or complex VFX were added.
+
 ## M5-004: Player Damage Application
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

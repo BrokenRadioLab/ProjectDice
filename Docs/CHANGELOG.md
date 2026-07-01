@@ -21,6 +21,14 @@
 - Marked M5-002 as DONE and M5-003 Enemy Attack Presentation as NEXT.
 - Confirmed Unity batchmode import/compile validation for M5-002 completed successfully with exit code 0.
 - No enemy animation, player HP reduction, enemy presentation, battle end, rewards, progression, enemy AI, random action logic, or new Face effects were added for M5-002.
+- Recorded Director PASS for M5-002.
+- Implemented M5-003 Enemy Attack Presentation.
+- Added `EnemyAttackPresenter` as a presentation-only consumer of resolved `EnemyAttackIntent`.
+- Enemy attack presentation now plays after player resolution and HP refresh, while battle ownership is `EnemyTurn`.
+- Added a short enemy windup flash, white strike trail toward the Hero, and brief Hero hit flash.
+- Marked M5-003 as DONE and M5-004 Player Damage Application as NEXT.
+- Confirmed Unity batchmode import/compile validation for M5-003 completed successfully with exit code 0.
+- No player HP reduction, battle end, rewards, progression, enemy AI, random enemy behavior, new Face effects, or complex VFX were added for M5-003.
 
 ## 2026-06-30
 

@@ -1447,6 +1447,7 @@ GameObject:
   - component: {fileID: 1500000003}
   - component: {fileID: 1500000004}
   - component: {fileID: 1500000005}
+  - component: {fileID: 1500000006}
   m_Layer: 5
   m_Name: Throw Button Placeholder
   m_TagString: Untagged
@@ -1758,6 +1759,7 @@ MonoBehaviour:
   battleTurnState: {fileID: 1700000006}
   hudPresenter: {fileID: 1700000003}
   throwSequencePresenter: {fileID: 1500000005}
+  enemyAttackPresenter: {fileID: 1500000006}
   diceResultPresenter: {fileID: 1700000005}
   battleLogText: {fileID: 1610000003}
   throwButtonHitArea: {fileID: 1500000001}
@@ -1815,6 +1817,30 @@ MonoBehaviour:
   faceRevealTextColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   faceEffectTextColor: {r: 0.86, g: 0.93, b: 1, a: 1}
   damageNumberTextColor: {r: 1, g: 0.78, b: 0.42, a: 1}
+--- !u!114 &1500000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0058dca34e040148045dc7e0233b40f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  battleField: {fileID: 2200000001}
+  heroSlot: {fileID: 1100000001}
+  enemySlot: {fileID: 1200000001}
+  heroPlaceholder: {fileID: 1100000003}
+  enemyPlaceholder: {fileID: 1200000003}
+  enemyWindupDuration: 0.08
+  enemyStrikeDuration: 0.1
+  heroHitFlashDuration: 0.08
+  strikeTrailThickness: 4
+  enemyWindupColor: {r: 1, g: 0.78, b: 0.64, a: 0.72}
+  heroHitFlashColor: {r: 1, g: 0.92, b: 0.82, a: 0.55}
+  strikeTrailColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &1600000000
 GameObject:
   m_ObjectHideFlags: 0

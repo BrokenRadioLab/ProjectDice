@@ -245,11 +245,13 @@ Detailed Task Status:
 - M5 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
 - M5 implementation has started.
 - M5-001 Enemy Runtime Turn State is DONE and approved.
-- M5-002 Enemy Attack Resolution is DONE.
-- M5-003 Enemy Attack Presentation is NEXT.
+- M5-002 Enemy Attack Resolution is DONE and approved.
+- M5-003 Enemy Attack Presentation is DONE.
+- M5-004 Player Damage Application is NEXT.
 - M5 must preserve the existing player Throw, Face Resolution, Dice presentation, damage apply, and HP refresh flow before adding the enemy response.
 - M5 includes battle-level turn ownership with `PlayerTurn`, `Transition`, and `EnemyTurn`.
-- Enemy attack resolution currently produces a deterministic pending fixed 5 Damage intent only; it does not apply player HP damage or trigger presentation.
+- Enemy attack resolution currently produces a deterministic pending fixed 5 Damage intent.
+- Enemy attack presentation now presents that intent with a short enemy attack beat only; it does not apply player HP damage.
 - Victory, defeat, rewards, stage progression, inventory, shops, permanent progression, new Face types, boss systems, and multi-enemy logic are out of scope for M5.
 
 ## M6_LINEAR_STAGE_RUN
