@@ -320,7 +320,7 @@ Completed:
 
 ## M5-005: Turn Transition
 
-Status: DONE
+Status: DONE - APPROVED
 
 Goal:
 
@@ -355,19 +355,21 @@ Completed:
 - `BattleController` keeps input locked through player Throw, player presentation, enemy attack presentation, player damage application, HP refresh, and turn transition.
 - Player input unlocks only after ownership returns to `PlayerTurn`.
 - Enemy action is skipped if the enemy is defeated by the player action.
-- No battle end, defeat handling, rewards, progression, enemy AI improvements, or Current Dice Panel implementation was added.
+- No battle end, defeat handling, rewards, progression, enemy AI improvements, or Dice Deck implementation was added.
 
-## M5-006: Current Dice Panel
+## M5-006: Collapsible Dice Deck
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
-Add a collapsed-by-default Battle Information Panel that lets the player inspect the current runtime Dice build during battle.
+Add a collapsed-by-default Dice Deck battle information UI that lets the player inspect the current runtime six-face Dice build during battle.
 
 Purpose:
 
-- This is a Current Dice information panel.
+- This is the Dice Deck.
+- This is a Battle Information UI.
+- This is the Current Runtime Dice Viewer.
 - This is not battle presentation.
 - This is not a reward system.
 - This is not a Dice replacement system.
@@ -375,19 +377,21 @@ Purpose:
 
 Requirements:
 
-- Panel is collapsed by default.
-- Panel expands when tapped.
-- Panel collapses when tapped again.
-- Panel displays the current six Dice face slots.
-- Panel reads from runtime Dice state.
+- Dice Deck is collapsed by default.
+- Dice Deck expands when tapped.
+- Dice Deck collapses when tapped again.
+- Dice Deck displays the current six Dice face slots.
+- Dice Deck reads from current runtime Dice state.
 - Do not hardcode six static entries.
-- Future Dice replacement should automatically update this panel because it reads from runtime Dice state.
-- Panel must not permanently occupy battle space.
-- Panel must not interfere with Hero, Enemy, Dice Animation Layer, or Throw button.
+- Do not show Starter Dice as a static UI source.
+- Future Dice replacement should automatically update Dice Deck because it reads from runtime Dice state.
+- Dice Deck must not permanently occupy battle space.
+- Dice Deck must not interfere with Hero, Enemy, Dice Animation Layer, or Throw button.
 - Each slot should eventually display:
   - Face icon.
   - Face name.
   - Short effect description if available.
+- Probability display is a future M8-or-later addition and is not part of M5.
 
 Done Criteria:
 
@@ -398,12 +402,24 @@ Validation:
 - Default state is collapsed.
 - Tap toggles expanded/collapsed state.
 - Expanded state shows six runtime Dice slots.
-- The panel reads from `BattleDiceState` or the current runtime Dice model.
+- Dice Deck reads from `BattleDiceState.CurrentDice`.
 - No reward, Dice replacement, inventory, Face editing, progression, or stage system is added.
+- No probability display is added during M5.
+
+Completed:
+
+- Added `CollapsibleDiceDeckPresenter` as the Dice Deck battle information UI.
+- Dice Deck is collapsed by default.
+- Tapping `Dice Deck` expands the viewer; tapping `Close Deck` collapses it again.
+- Expanded Dice Deck displays six runtime Dice slots.
+- Dice Deck reads from `BattleDiceState.CurrentDice` and refreshes from runtime data while expanded.
+- Dice Deck is not hardcoded to Starter Dice.
+- Dice Deck does not use reward, replacement, inventory, progression, or stage systems.
+- Probability and duplicate-face aggregation were not implemented in M5.
 
 ## M5-007: Validate M5 Battle Loop
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

@@ -4,11 +4,11 @@ Date: 2026-07-01
 
 Selected Milestone: M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Completed Work: M5-005 Turn Transition
+Completed Work: M5-006 Collapsible Dice Deck
 
 ## Summary
 
-Made the battle ownership flow explicit from player action through enemy response and back to player input.
+Added Dice Deck as a collapsed-by-default Battle Information UI that displays the current runtime six-face Dice build.
 
 ## Validation Result
 
@@ -16,28 +16,28 @@ PASS
 
 ## Confirmed
 
-- M5-004 Player Damage Application is approved.
-- `BattleTurnState.BeginTransition()` explicitly enters `Transition`.
-- `BattleTurnState.BeginEnemyTurn()` explicitly enters `EnemyTurn`.
-- `BattleController` follows `PlayerTurn -> Transition -> EnemyTurn -> Transition -> PlayerTurn`.
-- Input remains locked through player Throw, player presentation, enemy presentation, player damage application, HP refresh, and turn transition.
-- Player input unlocks only after ownership returns to `PlayerTurn`.
-- Enemy action is skipped if the enemy is defeated by the player action.
+- M5-005 Turn Transition is approved.
+- `CollapsibleDiceDeckPresenter` owns Dice Deck information UI only.
+- Dice Deck is collapsed by default.
+- Dice Deck expands and collapses on tap.
+- Expanded Dice Deck displays six face slots.
+- Dice Deck reads from `BattleDiceState.CurrentDice`.
+- Dice Deck is not hardcoded to Starter Dice.
+- Dice Deck refreshes from runtime Dice state while expanded.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
 
 ## Not Added
 
-- No battle end was added.
-- No defeat handling was added.
-- No rewards or progression were added.
-- No enemy AI improvements were added.
-- No Current Dice Panel implementation was added.
-- No Dice replacement, inventory, or stage system was added.
+- No reward system was added.
+- No Dice replacement system was added.
+- No inventory, Face editing, progression, or stage system was added.
+- No battle presentation changes were added.
+- No probability or duplicate-face aggregation display was added.
 
 ## Stop Point
 
-Stopped after M5-005.
+Stopped after M5-006.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m5_005_turn_transition_unity.log`.
+- Unity validation log: `/tmp/projectdice_m5_006_collapsible_dice_deck_unity.log`.

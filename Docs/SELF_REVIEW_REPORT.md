@@ -2,49 +2,52 @@
 
 Date: 2026-07-01
 
-Task: M5-005 Turn Transition
+Task: M5-006 Collapsible Dice Deck
 
 ## Review Result
 
 PASS
 
-M5-005 stays within the requested scope.
+M5-006 stays within the requested scope.
 
 ## Scope Check
 
-- Added explicit turn transition ownership handoffs.
-- Completed the visible ownership flow: `PlayerTurn -> Transition -> EnemyTurn -> Transition -> PlayerTurn`.
-- Player input remains locked until the full enemy sequence finishes.
-- Enemy action remains skipped when the enemy is defeated by player action.
-- Existing player Throw, Dice, Face, enemy damage, enemy presentation, player damage, and HP refresh flow is preserved.
+- Added Dice Deck as Battle Information UI.
+- Dice Deck is collapsed by default.
+- Dice Deck expands and collapses on tap.
+- Dice Deck displays the current runtime six-face Dice build.
+- Dice Deck reads from `BattleDiceState.CurrentDice`.
+- Dice Deck is not hardcoded to Starter Dice.
+- Probability display is not implemented in M5.
 
 ## Architecture Check
 
-- `BattleTurnState` owns turn ownership only.
-- `BattleTurnState` does not resolve attacks.
-- `BattleTurnState` does not apply HP damage.
-- `BattleTurnState` does not trigger presentation.
-- `BattleController` coordinates flow order.
+- `CollapsibleDiceDeckPresenter` owns information UI only.
+- Dice Deck does not select Dice results.
+- Dice Deck does not modify Dice faces.
+- Dice Deck does not trigger battle presentation.
+- Dice Deck does not interact with rewards, inventory, progression, or stage systems.
 
 ## Explicit Non-Changes
 
-- No battle end was added.
-- No defeat handling was added.
-- No rewards, progression, inventory, stage, or Dice replacement system was added.
-- No enemy AI improvements were added.
-- No Current Dice Panel implementation was added.
+- No reward system was added.
+- No Dice replacement system was added.
+- No inventory or Face editing was added.
+- No progression or stage system was added.
+- No battle presentation changes were added.
+- No probability or duplicate-face aggregation display was added.
 
 ## Risk Notes
 
-- The `Transition` state is currently a short explicit handoff, not a long-running presentation phase.
-- Player HP can reach 0, but no defeat flow is triggered. This remains intentional until a later battle completion milestone.
+- The M5 Dice Deck displays face names only. Face icons, short effect descriptions, and probability summaries remain future scope.
+- Probability display is intentionally reserved for a later milestone, likely around Dice replacement.
 
 ## Validation
 
 - `git diff --check` passed.
 - Unity batchmode import/compile validation completed successfully with exit code 0.
-- Unity validation log: `/tmp/projectdice_m5_005_turn_transition_unity.log`.
+- Unity validation log: `/tmp/projectdice_m5_006_collapsible_dice_deck_unity.log`.
 
 ## Status
 
-M5-005 is ready for Director review.
+M5-006 is ready for Director review.

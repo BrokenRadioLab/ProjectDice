@@ -2085,6 +2085,7 @@ GameObject:
   - component: {fileID: 1700000004}
   - component: {fileID: 1700000005}
   - component: {fileID: 1700000006}
+  - component: {fileID: 1700000007}
   m_Layer: 0
   m_Name: Battle Combat State
   m_TagString: Untagged
@@ -2206,6 +2207,25 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   currentTurnOwner: 0
   enemyTurnPending: 0
+--- !u!114 &1700000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d6a52c59394d4998ec1a2368d50f25, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  battleDiceState: {fileID: 1700000004}
+  displayRoot: {fileID: 2200000001}
+  startsExpanded: 0
+  collapsedButtonColor: {r: 0.18, g: 0.17, b: 0.15, a: 0.86}
+  expandedPanelColor: {r: 0.12, g: 0.11, b: 0.1, a: 0.92}
+  rowColor: {r: 0.25, g: 0.22, b: 0.18, a: 0.86}
+  textColor: {r: 0.94, g: 0.9, b: 0.78, a: 1}
 --- !u!114 &519420033
 MonoBehaviour:
   m_ObjectHideFlags: 0

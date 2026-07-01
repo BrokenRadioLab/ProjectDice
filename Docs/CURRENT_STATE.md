@@ -45,7 +45,8 @@ The project is in MVP foundation work.
 - `M5-003_ENEMY_ATTACK_PRESENTATION` is DONE.
 - `M5-004_PLAYER_DAMAGE_APPLICATION` is DONE.
 - `M5-005_TURN_TRANSITION` is DONE.
-- `M5-006_CURRENT_DICE_PANEL` is NEXT.
+- `M5-006_COLLAPSIBLE_DICE_DECK` is DONE.
+- `M5-007_VALIDATE_M5_BATTLE_LOOP` is NEXT.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -56,6 +57,9 @@ The project is in MVP foundation work.
 - Damage application now uses the selected Dice face's fixed throw damage value against the current enemy.
 - Throw now has a minimal presentation sequence before fixed damage is applied.
 - Enemy attack intent resolution, enemy attack presentation, player HP damage application, and explicit turn transition now exist.
+- Collapsible Dice Deck now exists as a collapsed-by-default Battle Information UI.
+- Dice Deck reads from current runtime Dice state and is not hardcoded to Starter Dice.
+- Dice Deck probability display is intentionally not implemented in M5.
 - Dice result selection now records exactly one selected Dice face slot per accepted Throw.
 - The latest selected Dice slot and face can be seen through a temporary non-final validation display.
 - Dice rolling presentation has been implemented.
@@ -214,6 +218,8 @@ Current Battle scene result:
 - `BattleController` still coordinates Throw input, selected Dice face damage, battle log compatibility text, and input lock after victory.
 - `BattleTurnState` owns battle-level turn ownership and starts in `PlayerTurn`.
 - `BattleTurnState` exposes explicit `BeginTransition()`, `BeginEnemyTurn()`, and `BeginPlayerTurn()` ownership handoffs.
+- `CollapsibleDiceDeckPresenter` owns Dice Deck information UI only.
+- Dice Deck reads from `BattleDiceState.CurrentDice` and displays the current runtime six-face build.
 - `BattleController` accepts Throw only while turn ownership allows player action.
 - `EnemyAttackResolver` converts pending `EnemyTurn` ownership into a deterministic `EnemyAttackIntent`.
 - `EnemyAttackIntent` currently supports only `None` and fixed `Damage`.
@@ -307,4 +313,4 @@ Current Battle scene result:
 
 ## Next Human Decision
 
-Director review M5-005 Turn Transition. M5-006 Current Dice Panel should not begin until M5-005 is approved.
+Director review M5-006 Collapsible Dice Deck. M5-007 Validate M5 Battle Loop should not begin until M5-006 is approved.

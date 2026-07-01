@@ -34,7 +34,7 @@
 - Updated `BattleController` to apply resolved enemy attack intent damage only after enemy attack presentation completes.
 - Updated `BattleController` to refresh HP after player damage application and clear the pending enemy attack intent.
 - Marked M5-004 as DONE and M5-005 Turn Transition as NEXT.
-- Added M5-006 Current Dice Panel to the M5 task structure and moved validation to M5-007.
+- Added M5-006 Collapsible Dice Deck to the M5 task structure and moved validation to M5-007.
 - Confirmed Unity batchmode import/compile validation for M5-004 completed successfully with exit code 0.
 - No defeat flow, battle end, rewards, progression, enemy AI, random behavior, new Face effects, Dice replacement, inventory, or stage system were added for M5-004.
 - Recorded Director PASS for M5-004.
@@ -42,9 +42,17 @@
 - Added explicit `BattleTurnState.BeginTransition()` and `BattleTurnState.BeginEnemyTurn()` handoffs.
 - Updated battle flow to visibly follow `PlayerTurn`, `Transition`, `EnemyTurn`, `Transition`, `PlayerTurn`.
 - Kept input locked through the full player action, enemy presentation, player damage application, HP refresh, and turn transition.
-- Marked M5-005 as DONE and M5-006 Current Dice Panel as NEXT.
+- Marked M5-005 as DONE and M5-006 Collapsible Dice Deck as NEXT.
 - Confirmed Unity batchmode import/compile validation for M5-005 completed successfully with exit code 0.
-- No battle end, defeat handling, rewards, progression, enemy AI improvements, or Current Dice Panel implementation was added for M5-005.
+- No battle end, defeat handling, rewards, progression, enemy AI improvements, or Dice Deck implementation was added for M5-005.
+- Recorded Director PASS for M5-005.
+- Implemented M5-006 Collapsible Dice Deck.
+- Added `CollapsibleDiceDeckPresenter` as a collapsed-by-default Battle Information UI.
+- Dice Deck expands and collapses on tap.
+- Dice Deck reads from `BattleDiceState.CurrentDice` and displays the current runtime six-face build.
+- Marked M5-006 as DONE and M5-007 Validate M5 Battle Loop as NEXT.
+- Confirmed Unity batchmode import/compile validation for M5-006 completed successfully with exit code 0.
+- No rewards, Dice replacement, inventory, Face editing, progression, stage system, battle presentation changes, or probability display were added for M5-006.
 
 ## 2026-06-30
 
