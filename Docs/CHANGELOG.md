@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Implemented M8-002 Guard Gameplay.
+- Guard now modifies the Throw with a deterministic defensive effect.
+- Guard Throw still deals Dice Base Throw Damage.
+- Guard reduces the next incoming enemy attack damage by 3 during the same battle exchange.
+- Guard presentation now shows `Guard` as the Face Effect beat.
+- Marked M8-002 as DONE and M8-003 Spark Gameplay as NEXT.
+- No block stacks, shield duration system, status system, enemy AI change, Reward Selection, Dice Face Replacement, inventory, shops, meta progression, branching map, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay were added for M8-002.
 - Implemented M8-001 Base Throw Damage Framework.
 - Added Dice-owned Base Throw Damage to `DiceModel`.
 - Starter Dice now has Base Throw Damage 5.

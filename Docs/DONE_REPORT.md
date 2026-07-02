@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Completed Work: M8-001_BASE_THROW_DAMAGE_FRAMEWORK
+Completed Work: M8-002_GUARD_GAMEPLAY
 
 ## Summary
 
-Implemented Dice-owned Base Throw Damage so every starter Throw can deal base damage before Face-specific modifiers are applied.
+Implemented Guard as the first non-damage utility Face: it preserves Dice Base Throw Damage and reduces the next incoming enemy attack damage.
 
 ## Validation Result
 
@@ -47,8 +47,8 @@ PASS
 - M11_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - M8-001 Base Throw Damage Framework is DONE.
-- M8-002 Guard Gameplay is NEXT.
-- M8-003 Spark Gameplay is PENDING.
+- M8-002 Guard Gameplay is DONE.
+- M8-003 Spark Gameplay is NEXT.
 - M8-004 Mend Gameplay is PENDING.
 - M8-005 Face Presentation Polish is PENDING.
 - M8-006 Validate Starter Face Gameplay is PENDING.
@@ -58,6 +58,9 @@ PASS
 - Guard, Spark, and Mend can deal Base Throw Damage through the Throw.
 - BattleController applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
 - No Hunter permanent Attack stat was introduced.
+- Guard applies a deterministic defensive modifier.
+- Guard reduces the next incoming enemy attack damage by 3.
+- Guard still deals Dice Base Throw Damage through the Throw.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.

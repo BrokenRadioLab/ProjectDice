@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M8-001_BASE_THROW_DAMAGE_FRAMEWORK
+Task: M8-002_GUARD_GAMEPLAY
 
 ## Review Result
 
 PASS
 
-Base Throw Damage Framework follows the locked Dice Combat Philosophy and keeps Face-specific starter gameplay for later M8 tasks.
+Guard Gameplay follows the locked starter Face philosophy and keeps Guard as a defensive modifier rather than a skipped attack.
 
 ## Scope Check
 
@@ -16,11 +16,12 @@ Base Throw Damage Framework follows the locked Dice Combat Philosophy and keeps 
 - Moved `PROJECT_CORE_PHILOSOPHY.md` under `Docs/Design/`.
 - Added Dice Combat Philosophy to the core philosophy document.
 - Regenerated M8 task breakdown.
-- Implemented M8-001 Base Throw Damage Framework.
+- M8-001 Base Throw Damage Framework remains implemented.
+- Implemented M8-002 Guard Gameplay.
 - Starter Dice now owns Base Throw Damage 5.
 - Starter Attack is a 5 damage Face modifier, preserving 10 total starter Attack Throw damage.
-- Guard, Spark, and Mend can deal Base Throw Damage before their dedicated Face effects are implemented.
-- Did not implement Guard, Spark, or Mend gameplay.
+- Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
+- Did not implement Spark or Mend gameplay.
 - Did not add victory gameplay.
 - Did not add restart UI.
 - Did not add run summary.
@@ -54,6 +55,7 @@ Base Throw Damage Framework follows the locked Dice Combat Philosophy and keeps 
 - `RunFlowPresenter` consumes runtime state but does not own outcome, stage progression, run completion, HP, turn ownership, rewards, or Dice data.
 - `DiceModel` owns Base Throw Damage.
 - BattleController consumes Dice-owned Base Throw Damage and FaceEffectData to calculate total Throw damage.
+- Guard reduction is consumed by BattleController when applying the following enemy attack intent.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
@@ -84,7 +86,8 @@ Base Throw Damage Framework follows the locked Dice Combat Philosophy and keeps 
 - Starter Dice Base Throw Damage is 5.
 - Attack Face currently adds 5 damage as a Face modifier.
 - Starter Attack Throw total damage is 10 before enemy HP clamping.
-- Guard, Spark, and Mend currently add no Face effect but still deal Base Throw Damage.
+- Guard currently reduces the next incoming enemy attack damage by 3 after dealing Base Throw Damage.
+- Spark and Mend currently add no Face effect but still deal Base Throw Damage.
 - Run-flow presentation hook does not mutate HP.
 - Run-flow presentation hook does not mutate turn ownership.
 - Run-flow presentation hook does not mutate stage runtime or run state.
@@ -121,4 +124,4 @@ Base Throw Damage Framework follows the locked Dice Combat Philosophy and keeps 
 
 ## Status
 
-M8-001_BASE_THROW_DAMAGE_FRAMEWORK is complete.
+M8-002_GUARD_GAMEPLAY is complete.

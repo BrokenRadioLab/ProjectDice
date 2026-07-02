@@ -129,7 +129,7 @@ public sealed class BattleController : MonoBehaviour
             yield return enemyAttackPresenter.Play(pendingEnemyAttackIntent);
         }
 
-        int playerDamage = ApplyEnemyAttackIntent(pendingEnemyAttackIntent);
+        int playerDamage = ApplyEnemyAttackIntent(pendingEnemyAttackIntent, faceEffect);
         pendingEnemyAttackIntent = EnemyAttackIntent.None();
         hudPresenter?.Refresh();
 
@@ -217,14 +217,15 @@ public sealed class BattleController : MonoBehaviour
         return combatState.ApplyDamageToEnemy(totalThrowDamage);
     }
 
-    private int ApplyEnemyAttackIntent(EnemyAttackIntent attackIntent)
+    private int ApplyEnemyAttackIntent(EnemyAttackIntent attackIntent, FaceEffectData playerFaceEffect)
     {
         if (combatState == null || attackIntent == null || attackIntent.IntentType != EnemyAttackIntentType.Damage)
         {
             return 0;
         }
 
-        return combatState.ApplyDamageToPlayer(attackIntent.DamageAmount);
+        int reducedDamage = Mathf.Max(0, attackIntent.DamageAmount - GetIncomingDamageReduction(playerFaceEffect));
+        return combatState.ApplyDamageToPlayer(reducedDamage);
     }
 
     private void ResolveEnemyDefeatOutcome()
@@ -315,6 +316,16 @@ public sealed class BattleController : MonoBehaviour
         return faceEffect.DamageAmount;
     }
 
+    private static int GetIncomingDamageReduction(FaceEffectData faceEffect)
+    {
+        if (faceEffect == null || faceEffect.EffectType != FaceEffectType.Guard)
+        {
+            return 0;
+        }
+
+        return faceEffect.IncomingDamageReductionAmount;
+    }
+
     private int GetPendingDamage(int totalThrowDamage)
     {
         if (combatState == null || totalThrowDamage <= 0)
@@ -344,6 +355,11 @@ public sealed class BattleController : MonoBehaviour
         if (faceEffect.EffectType == FaceEffectType.Damage)
         {
             return $"{faceName} modified the Throw for {appliedDamage} damage from base {baseThrowDamage}.";
+        }
+
+        if (faceEffect.EffectType == FaceEffectType.Guard)
+        {
+            return $"{faceName} guarded after a {appliedDamage} damage Throw.";
         }
 
         return $"{faceName} modified the Throw for {appliedDamage} damage from base {baseThrowDamage}.";

@@ -390,7 +390,8 @@ Detailed Task Status:
 - M8 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
 - M8 implementation has started.
 - M8-001 Base Throw Damage Framework is DONE.
-- M8-002 Guard Gameplay is NEXT.
+- M8-002 Guard Gameplay is DONE.
+- M8-003 Spark Gameplay is NEXT.
 - M8 must follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
 
 ## M9_REWARD_SELECTION

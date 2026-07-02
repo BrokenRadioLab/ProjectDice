@@ -43,7 +43,8 @@ The project is in MVP foundation work.
 - M10_DICE_FACE_REPLACEMENT is PENDING.
 - M11_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
-- `M8-002_GUARD_GAMEPLAY` is NEXT.
+- `M8-002_GUARD_GAMEPLAY` is DONE.
+- `M8-003_SPARK_GAMEPLAY` is NEXT.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -155,6 +156,9 @@ The project is in MVP foundation work.
 - Guard, Spark, and Mend currently deal Base Throw Damage through the Throw but still have no dedicated Face effects until their M8 tasks.
 - BattleController now applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
 - No Hunter permanent Attack stat was introduced for M8-001.
+- Guard now has a deterministic defensive Face effect.
+- Guard Throw still deals Base Throw Damage, then reduces the next incoming enemy attack damage by 3.
+- Spark and Mend remain pending M8 Face gameplay tasks.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.

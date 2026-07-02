@@ -438,7 +438,7 @@ Completed:
 
 ## M8-002: Guard Gameplay
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -464,9 +464,17 @@ Validation:
 - Guard applies its defensive modifier.
 - Guard does not trigger rewards, Dice replacement, inventory, or progression.
 
+Completed:
+
+- Guard now modifies the Throw with a deterministic defensive effect.
+- Guard Throw still deals Dice Base Throw Damage.
+- Guard reduces the next incoming enemy attack damage by 3 during the same battle exchange.
+- Guard presentation now shows `Guard` as the Face Effect beat.
+- No block stacks, shield duration system, status system, enemy AI change, Reward Selection, or Dice Face Replacement was added.
+
 ## M8-003: Spark Gameplay
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

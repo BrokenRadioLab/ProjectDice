@@ -810,6 +810,11 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return "Damage";
         }
 
+        if (faceEffect.EffectType == FaceEffectType.Guard)
+        {
+            return "Guard";
+        }
+
         return "Effect";
     }
 
