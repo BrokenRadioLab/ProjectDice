@@ -33,6 +33,13 @@ public sealed class BattleCombatState : MonoBehaviour
         return previousHp - enemyCurrentHp;
     }
 
+    public int HealPlayer(int healing)
+    {
+        int previousHp = playerCurrentHp;
+        playerCurrentHp = Mathf.Min(playerMaxHp, playerCurrentHp + Mathf.Max(0, healing));
+        return playerCurrentHp - previousHp;
+    }
+
     public void PrepareNextEnemy()
     {
         enemyCurrentHp = enemyMaxHp;

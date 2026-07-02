@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M8-003_LIGHTNING_GAMEPLAY
+Task: M8-004_MEND_GAMEPLAY
 
 ## Review Result
 
 PASS
 
-Lightning Gameplay follows the locked starter Face philosophy and keeps Lightning as a simple secondary offense modifier for the current single-enemy MVP flow.
+Mend Gameplay follows the locked starter Face philosophy and keeps Mend as a recovery modifier rather than a skipped attack.
 
 ## Scope Check
 
@@ -19,11 +19,12 @@ Lightning Gameplay follows the locked starter Face philosophy and keeps Lightnin
 - M8-001 Base Throw Damage Framework remains implemented.
 - Implemented M8-002 Guard Gameplay.
 - Implemented M8-003 Lightning Gameplay.
+- Implemented M8-004 Mend Gameplay.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
 - Lightning can deal Base Throw Damage and add a deterministic 3 damage Lightning modifier.
-- Did not implement Mend gameplay.
+- Mend can deal Base Throw Damage and heal the player for up to 5 HP.
 - Did not add victory gameplay.
 - Did not add restart UI.
 - Did not add run summary.
@@ -31,7 +32,7 @@ Lightning Gameplay follows the locked starter Face philosophy and keeps Lightnin
 - Did not add stage selection UI.
 - Did not add restart flow or new run creation.
 - Did not add post-run economy.
-- Did not add healing rules.
+- Did not add long-term healing economy.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
 - Did not add new Faces beyond renaming starter Spark to Lightning.
 - Did not add enemy AI or boss mechanics.
@@ -59,6 +60,8 @@ Lightning Gameplay follows the locked starter Face philosophy and keeps Lightnin
 - `DiceModel` owns Base Throw Damage.
 - BattleController consumes Dice-owned Base Throw Damage and FaceEffectData to calculate total Throw damage.
 - Guard reduction is consumed by BattleController when applying the following enemy attack intent.
+- Mend recovery is consumed by BattleController after the Throw damage application.
+- `BattleCombatState.HealPlayer(int healing)` owns player HP recovery and clamps healing at Player Max HP.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
@@ -91,7 +94,7 @@ Lightning Gameplay follows the locked starter Face philosophy and keeps Lightnin
 - Starter Attack Throw total damage is 8 before enemy HP clamping.
 - Guard currently reduces the next incoming enemy attack damage by 3 after dealing Base Throw Damage.
 - Lightning currently adds a 3 damage Face modifier after Base Throw Damage.
-- Mend currently adds no Face effect but still deals Base Throw Damage.
+- Mend currently heals up to 5 HP after Base Throw Damage.
 - Run-flow presentation hook does not mutate HP.
 - Run-flow presentation hook does not mutate turn ownership.
 - Run-flow presentation hook does not mutate stage runtime or run state.

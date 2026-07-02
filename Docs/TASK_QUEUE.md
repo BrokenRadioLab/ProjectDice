@@ -514,7 +514,7 @@ Completed:
 
 ## M8-004: Mend Gameplay
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -527,6 +527,8 @@ Requirements:
 - Mend still allows Base Throw Damage to occur.
 - Keep the effect simple and MVP-readable.
 - Do not add long-term healing economy, meta progression, reward systems, or inventory.
+- Current MVP Mend heals the player for 5 HP after the Throw.
+- Healing must not exceed Player Max HP.
 
 Done Criteria:
 
@@ -540,9 +542,19 @@ Validation:
 - Mend applies its recovery modifier.
 - Mend does not trigger rewards, Dice replacement, inventory, or progression.
 
+Completed:
+
+- Added `Mend` as a implemented `FaceEffectType`.
+- Starter `Mend` now resolves through `FaceResolver` to a deterministic 5 HP recovery effect.
+- Added `BattleCombatState.HealPlayer(int healing)` as the single player HP recovery mutation path.
+- Mend Throw still deals Dice Base Throw Damage before applying recovery.
+- Mend healing is clamped by Player Max HP.
+- Mend presentation currently shows `Mend` as the Face Effect beat.
+- No long-term healing economy, reward selection, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
+
 ## M8-005: Face Presentation Polish
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

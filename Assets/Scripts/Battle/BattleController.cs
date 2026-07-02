@@ -107,6 +107,7 @@ public sealed class BattleController : MonoBehaviour
         diceResultPresenter?.ShowResult(battleDiceState);
 
         int damage = ApplyThrowDamage(totalThrowDamage);
+        int healing = ApplyFaceHealing(faceEffect);
         hudPresenter?.Refresh();
 
         ResolveEnemyDefeatOutcome();
@@ -117,7 +118,7 @@ public sealed class BattleController : MonoBehaviour
             yield return PlayRunFlowPresentation();
             bool preparedNextBattle = ResolvePostVictoryRunProgression();
             yield return PlayRunFlowPresentation();
-            SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, damage));
+            SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, damage, healing));
             inputLocked = !preparedNextBattle;
             yield break;
         }
@@ -138,13 +139,13 @@ public sealed class BattleController : MonoBehaviour
         if (IsBattleDefeat())
         {
             yield return PlayRunFlowPresentation();
-            SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
+            SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, damage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
             yield break;
         }
 
         battleTurnState?.BeginTransition();
         battleTurnState?.BeginPlayerTurn();
-        SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
+        SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, damage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
         inputLocked = false;
     }
 
@@ -215,6 +216,16 @@ public sealed class BattleController : MonoBehaviour
         }
 
         return combatState.ApplyDamageToEnemy(totalThrowDamage);
+    }
+
+    private int ApplyFaceHealing(FaceEffectData faceEffect)
+    {
+        if (combatState == null || faceEffect == null || faceEffect.EffectType != FaceEffectType.Mend)
+        {
+            return 0;
+        }
+
+        return combatState.HealPlayer(faceEffect.HealAmount);
     }
 
     private int ApplyEnemyAttackIntent(EnemyAttackIntent attackIntent, FaceEffectData playerFaceEffect)
@@ -336,7 +347,7 @@ public sealed class BattleController : MonoBehaviour
         return Mathf.Min(combatState.EnemyCurrentHp, totalThrowDamage);
     }
 
-    private static string GetThrowLogMessage(FaceEffectData faceEffect, int baseThrowDamage, int appliedDamage)
+    private static string GetThrowLogMessage(FaceEffectData faceEffect, int baseThrowDamage, int appliedDamage, int appliedHealing)
     {
         if (faceEffect == null)
         {
@@ -360,6 +371,11 @@ public sealed class BattleController : MonoBehaviour
         if (faceEffect.EffectType == FaceEffectType.Guard)
         {
             return $"{faceName} guarded after a {appliedDamage} damage Throw.";
+        }
+
+        if (faceEffect.EffectType == FaceEffectType.Mend)
+        {
+            return $"{faceName} healed {appliedHealing} after a {appliedDamage} damage Throw.";
         }
 
         return $"{faceName} modified the Throw for {appliedDamage} damage from base {baseThrowDamage}.";

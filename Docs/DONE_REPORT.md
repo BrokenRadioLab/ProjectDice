@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Completed Work: M8-003_LIGHTNING_GAMEPLAY
+Completed Work: M8-004_MEND_GAMEPLAY
 
 ## Summary
 
-Implemented Lightning as the starter secondary offense Face and applied the Director's starter damage tuning.
+Implemented Mend as the starter recovery Face while preserving Dice Base Throw Damage.
 
 ## Validation Result
 
@@ -49,8 +49,8 @@ PASS
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.
-- M8-004 Mend Gameplay is NEXT.
-- M8-005 Face Presentation Polish is PENDING.
+- M8-004 Mend Gameplay is DONE.
+- M8-005 Face Presentation Polish is NEXT.
 - M8-006 Validate Starter Face Gameplay is PENDING.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
 - Starter Dice has Base Throw Damage 3.
@@ -64,6 +64,10 @@ PASS
 - Starter `Spark` has been renamed to `Lightning`.
 - Lightning resolves as a deterministic 3 damage Face modifier.
 - Lightning currently deals Base Throw Damage 3 plus Lightning modifier damage 3, for 6 total damage before enemy HP clamping.
+- Mend resolves as a deterministic 5 HP recovery Face effect.
+- Mend still deals Base Throw Damage 3 before applying recovery.
+- Mend healing is clamped by Player Max HP.
+- `BattleCombatState.HealPlayer(int healing)` is the single player HP recovery mutation path.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.
@@ -96,7 +100,7 @@ PASS
 - Starter Dice Base Throw Damage is 3.
 - Starter Attack Face modifier damage is 5.
 - Starter Attack Throw total damage is 8 before enemy HP clamping.
-- Guard and Lightning now resolve to dedicated Face effects, while Mend still deals Base Throw Damage and awaits its M8 recovery effect.
+- Guard, Lightning, and Mend now resolve to dedicated Face effects.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.

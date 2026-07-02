@@ -45,7 +45,8 @@ The project is in MVP foundation work.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
 - `M8-002_GUARD_GAMEPLAY` is DONE.
 - `M8-003_LIGHTNING_GAMEPLAY` is DONE.
-- `M8-004_MEND_GAMEPLAY` is NEXT.
+- `M8-004_MEND_GAMEPLAY` is DONE.
+- `M8-005_FACE_PRESENTATION_POLISH` is NEXT.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -162,7 +163,9 @@ The project is in MVP foundation work.
 - Lightning now has a deterministic single-target MVP damage modifier.
 - Lightning currently deals Base Throw Damage 3 plus Lightning modifier damage 3, for 6 total damage before enemy HP clamping.
 - Lightning remains the future chaining / area-damage Face direction, but no chaining, area targeting, enemy selection, or multi-enemy gameplay has been implemented.
-- Mend remains the next pending M8 Face gameplay task.
+- Mend now has a deterministic recovery Face effect.
+- Mend Throw still deals Base Throw Damage 3, then heals the player for up to 5 HP without exceeding Max HP.
+- Mend does not add long-term healing economy, rewards, progression, inventory, or Dice replacement.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.

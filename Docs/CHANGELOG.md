@@ -4,6 +4,14 @@
 
 ### Changed
 
+- Implemented M8-004 Mend Gameplay.
+- Mend now resolves as a deterministic recovery Face effect.
+- Mend Throw still deals Dice Base Throw Damage 3 before applying recovery.
+- Mend heals the player for up to 5 HP and clamps at Player Max HP.
+- Added `BattleCombatState.HealPlayer(int healing)` as the single player HP recovery mutation path.
+- Mend presentation currently shows `Mend` as the Face Effect beat.
+- Marked M8-004 as DONE and M8-005 Face Presentation Polish as NEXT.
+- No long-term healing economy, Reward Selection, Dice Face Replacement, inventory, meta progression, enemy AI, boss mechanics, or multi-enemy gameplay was added for M8-004.
 - Implemented M8-003 Lightning Gameplay and starter combat tuning.
 - Starter Dice Base Throw Damage is now 3.
 - Starter Attack remains a 5 damage Face modifier, making starter Attack Throw total damage 8.
