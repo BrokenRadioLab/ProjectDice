@@ -35,7 +35,7 @@ The project is in MVP foundation work.
 - M4_SKILL_RESOLUTION is DONE and approved by Director review.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
-- M7_RUN_FLOW_PRESENTATION is IN_PROGRESS.
+- M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M8_REWARD_SELECTION is PENDING.
 - M9_DICE_FACE_REPLACEMENT is PENDING.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
@@ -66,7 +66,7 @@ The project is in MVP foundation work.
 - `M7-004_BATTLE_RESUME_PRESENTATION` is DONE.
 - `M7-005_RUN_COMPLETE_PRESENTATION` is DONE.
 - `M7-006_DEFEAT_PRESENTATION` is DONE.
-- `M7-007_VALIDATE_RUN_FLOW_PRESENTATION` is NEXT.
+- `M7-007_VALIDATE_RUN_FLOW_PRESENTATION` is DONE.
 - `M3-001_DICE_ANIMATION_LAYER` is DONE.
 - `M3-002_ROLLING_PRESENTATION` is DONE.
 - `M3-003_FACE_REVEAL` is DONE.
@@ -140,6 +140,8 @@ The project is in MVP foundation work.
 - Run Complete presentation does not add rewards, Dice replacement, meta progression, restart flow, new run creation, post-run economy, or runtime mutation.
 - Defeat presentation now shows a short `Defeat` beat when `BattleOutcomeState` reaches Defeat.
 - Defeat presentation does not add restart UI, run summary, meta progression, rewards, Dice replacement, inventory, or runtime mutation.
+- M7 Run Flow Presentation validation is complete for static presentation sequence, runtime ownership, scope guardrails, and Unity import/compile.
+- M7 is ready for Director review.
 - M7 has not added rewards, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, or new Face effects yet.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.

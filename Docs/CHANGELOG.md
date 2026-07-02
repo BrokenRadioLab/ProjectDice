@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Completed M7-007 Validate Run Flow Presentation.
+- Confirmed non-boss Victory presentation can show Stage Clear, Next Stage, and Battle Start.
+- Confirmed Boss Victory presentation can show Run Complete.
+- Confirmed Defeat presentation can show Defeat.
+- Marked M7_RUN_FLOW_PRESENTATION as READY_FOR_DIRECTOR_REVIEW.
+- Confirmed Unity batchmode import/compile validation for M7-007 completed successfully with exit code 0.
+- No rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-007.
 - Implemented M7-006 Defeat Presentation.
 - `RunFlowPresenter` now shows a short `Defeat` beat when `BattleOutcomeState` reaches Defeat.
 - Defeat presentation consumes existing battle outcome state and does not mutate runtime state.

@@ -2,7 +2,7 @@
 
 Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Milestone Status: IN_PROGRESS
+Milestone Status: READY_FOR_DIRECTOR_REVIEW
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -13,7 +13,7 @@ Director Review:
 - M4_SKILL_RESOLUTION is approved and DONE.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
-- M7_RUN_FLOW_PRESENTATION task structure is generated and implementation has started.
+- M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 
 M4 Locked Principle:
@@ -317,7 +317,7 @@ Completed:
 
 ## M7-007: Validate Run Flow Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -339,16 +339,19 @@ Done Criteria:
 
 Validation:
 
-- No compile errors.
-- No `NullReferenceException`.
-- Player Throw flow still works.
-- Enemy turn still works.
-- Battle outcome still works.
-- Stage runtime still works.
-- Player HP persists across stages.
-- Current runtime Dice persists across stages.
-- Dice Deck persists and remains separate from run-flow presentation.
-- No rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay are added.
+- PASS: Static validation confirms non-boss Victory can show Stage Clear, Next Stage, and Battle Start through `RunFlowPresenter`.
+- PASS: Static validation confirms Boss Victory can show Run Complete by consuming `LinearRunState.Completed`.
+- PASS: Static validation confirms Defeat can show Defeat by consuming `BattleOutcomeState.Defeat`.
+- PASS: `RunFlowPresenter` does not call stage advance, battle reset, HP mutation, Dice mutation, reward, Dice replacement, restart, run summary, new run, or meta progression code.
+- PASS: Unity batchmode compile completed successfully.
+- PASS: No compile errors, `NullReferenceException`, or `MissingReferenceException` were found in the validation log.
+- PASS: M7 remains presentation-only over M6 runtime ownership.
+- PASS: No rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added.
+
+Completed:
+
+- Validated the full M7 run-flow presentation scope.
+- Marked M7_RUN_FLOW_PRESENTATION as ready for Director review.
 
 ## M6 Implementation Tasks
 

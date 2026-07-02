@@ -35,7 +35,7 @@ Required MVP pillars:
 5. M4_SKILL_RESOLUTION - DONE
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP - DONE
 7. M6_LINEAR_STAGE_RUN - DONE
-8. M7_RUN_FLOW_PRESENTATION - IN_PROGRESS
+8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
 9. M8_REWARD_SELECTION - PENDING
 10. M9_DICE_FACE_REPLACEMENT - PENDING
 11. M10_MVP_PLAYTEST_POLISH - PENDING
@@ -311,7 +311,7 @@ Detailed Task Status:
 
 ## M7_RUN_FLOW_PRESENTATION
 
-Status: IN_PROGRESS
+Status: READY_FOR_DIRECTOR_REVIEW
 
 Goal:
 
@@ -347,7 +347,8 @@ Detailed Task Status:
 - M7-004 Battle Resume Presentation is DONE.
 - M7-005 Run Complete Presentation is DONE.
 - M7-006 Defeat Presentation is DONE.
-- M7-007 Validate Run Flow Presentation is NEXT.
+- M7-007 Validate Run Flow Presentation is DONE.
+- M7 is ready for Director review as the visible run-flow layer over M6 runtime progression.
 - M7 must consume existing M6 runtime state and must not decide gameplay.
 - M7 must not add rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay.
 

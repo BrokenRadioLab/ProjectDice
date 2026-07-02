@@ -2,18 +2,18 @@
 
 Date: 2026-07-02
 
-Task: M7-006_DEFEAT_PRESENTATION
+Task: M7-007_VALIDATE_RUN_FLOW_PRESENTATION
 
 ## Review Result
 
 PASS
 
-Defeat Presentation stays within the requested battle outcome feedback scope.
+Run Flow Presentation validation confirms M7 remains a presentation-only layer over M6 runtime progression.
 
 ## Scope Check
 
-- Added a short Defeat presentation beat to `RunFlowPresenter`.
-- Defeat displays only after existing `BattleOutcomeState.Defeat`.
+- Validated Stage Clear, Next Stage, Battle Start, Run Complete, and Defeat presentation paths.
+- Did not add new presentation concepts beyond the existing M7 scope.
 - Did not add victory gameplay.
 - Did not add restart UI.
 - Did not add run summary.
@@ -93,6 +93,8 @@ Defeat Presentation stays within the requested battle outcome feedback scope.
 - Defeat presentation consumes `BattleOutcomeState.Defeat`.
 - Defeat presentation does not mutate HP, turn ownership, battle outcome, stage runtime, run state, or Dice data.
 - Defeat presentation does not add restart UI, run summary, meta progression, rewards, Dice replacement, or inventory.
+- M7 static validation confirms `RunFlowPresenter` does not call stage advance, battle reset, HP mutation, Dice mutation, reward, Dice replacement, restart, run summary, new run, or meta progression code.
+- Unity batchmode import/compile validation completed successfully with exit code 0.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -107,4 +109,4 @@ Defeat Presentation stays within the requested battle outcome feedback scope.
 
 ## Status
 
-M7-006_DEFEAT_PRESENTATION is complete.
+M7-007_VALIDATE_RUN_FLOW_PRESENTATION is complete.

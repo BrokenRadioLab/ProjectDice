@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Completed Work: M7-006_DEFEAT_PRESENTATION
+Completed Work: M7-007_VALIDATE_RUN_FLOW_PRESENTATION
 
 ## Summary
 
-Added a short Defeat presentation beat after `BattleOutcomeState` reaches Defeat without adding restart UI, run summary, meta progression, rewards, Dice replacement, inventory, or runtime mutation.
+Validated the full M7 run-flow presentation sequence over M6 runtime progression without adding rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay.
 
 ## Validation Result
 
@@ -33,14 +33,14 @@ PASS
 - M6-007 Prepare Next Battle is DONE.
 - M6-008 Validate Linear Stage Run is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
-- M7_RUN_FLOW_PRESENTATION is IN_PROGRESS.
+- M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M7-001 Run Flow Presentation Entry Point is DONE.
 - M7-002 Stage Clear Presentation is DONE.
 - M7-003 Next Stage Presentation is DONE.
 - M7-004 Battle Resume Presentation is DONE.
 - M7-005 Run Complete Presentation is DONE.
 - M7-006 Defeat Presentation is DONE.
-- M7-007 Validate Run Flow Presentation is NEXT.
+- M7-007 Validate Run Flow Presentation is DONE.
 - M8_REWARD_SELECTION is PENDING and not implemented.
 - M9_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - `RunFlowPresenter` exists as a presentation-only component.
@@ -65,6 +65,12 @@ PASS
 - Stage does not advance after Defeat.
 - Run does not complete after Defeat.
 - Defeat presentation does not add restart UI, run summary, meta progression, rewards, Dice replacement, inventory, or runtime mutation.
+- M7 validation confirms non-boss Victory can show Stage Clear, Next Stage, and Battle Start.
+- M7 validation confirms Boss Victory can show Run Complete.
+- M7 validation confirms Defeat can show Defeat.
+- M7 validation confirms runtime ownership remains in M6 systems.
+- M7 validation confirms no rewards or Dice replacement were added.
+- Unity batchmode import/compile validation completed successfully for M7-007.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
 - Starter Attack Face damage is now 10.
 - Guard, Spark, and Mend still resolve to No Effect.
