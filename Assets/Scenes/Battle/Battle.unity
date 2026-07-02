@@ -2176,11 +2176,11 @@ MonoBehaviour:
     - id: starter_attack
       displayName: Attack
       category: 0
-      fixedThrowDamageValue: 10
+      fixedThrowDamageValue: 5
     - id: starter_attack
       displayName: Attack
       category: 0
-      fixedThrowDamageValue: 10
+      fixedThrowDamageValue: 5
     - id: starter_guard
       displayName: Guard
       category: 1
@@ -2189,14 +2189,15 @@ MonoBehaviour:
       displayName: Guard
       category: 1
       fixedThrowDamageValue: 0
-    - id: starter_spark
-      displayName: Spark
+    - id: starter_lightning
+      displayName: Lightning
       category: 1
-      fixedThrowDamageValue: 0
+      fixedThrowDamageValue: 3
     - id: starter_mend
       displayName: Mend
       category: 1
       fixedThrowDamageValue: 0
+    baseThrowDamage: 3
     runtimePhase: 0
     lastResultSlotIndex: -1
 --- !u!114 &1700000005

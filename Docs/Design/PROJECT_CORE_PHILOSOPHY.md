@@ -82,7 +82,7 @@ Base Throw Damage from Dice Tier
 Face Effect
 
 When the Hero throws the Dice and it hits the enemy, some damage must
-always occur. Even if the resulting Face is Guard, Mend, Spark, or any
+always occur. Even if the resulting Face is Guard, Mend, Lightning, or any
 non-damage utility Face, the enemy still receives Base Throw Damage.
 
 The Face then adds its own effect.
@@ -97,17 +97,17 @@ Example:
 Wood Dice:
 
 -   4 Active Faces
--   Base Throw Damage 5
+-   Base Throw Damage 3
 
 Iron Dice:
 
 -   5 Active Faces
--   Base Throw Damage 7
+-   Base Throw Damage 5
 
 Hunter Dice:
 
 -   6 Active Faces
--   Base Throw Damage 10
+-   Base Throw Damage 8
 
 These numbers are examples unless already locked elsewhere.
 
@@ -165,7 +165,7 @@ Guard should never completely replace attacking.
 
 The Throw still deals Base Throw Damage.
 
-## Spark
+## Lightning
 
 Purpose:
 
@@ -175,11 +175,13 @@ Identity:
 
 Utility / secondary offense.
 
-Spark should not become another Attack.
+Lightning should not become another Attack.
 
 It should modify combat differently from pure damage.
 
-Its exact implementation will remain intentionally simple during MVP.
+Current MVP single-enemy Lightning uses a deterministic damage modifier.
+
+Future multi-enemy Lightning direction is chaining / area damage.
 
 ## Mend
 
@@ -211,7 +213,7 @@ Guard
 
 Take less damage.
 
-Spark
+Lightning
 
 ↓
 

@@ -1,7 +1,8 @@
 public static class StarterDiceFactory
 {
-    private const int StarterBaseThrowDamage = 5;
+    private const int StarterBaseThrowDamage = 3;
     private const int StarterAttackModifierDamage = 5;
+    private const int StarterLightningModifierDamage = 3;
 
     public static DiceModel CreateStarterDice()
     {
@@ -16,7 +17,7 @@ public static class StarterDiceFactory
             new DiceFace("starter_attack", "Attack", DiceFaceCategory.Weapon, StarterAttackModifierDamage),
             new DiceFace("starter_guard", "Guard", DiceFaceCategory.Skill, 0),
             new DiceFace("starter_guard", "Guard", DiceFaceCategory.Skill, 0),
-            new DiceFace("starter_spark", "Spark", DiceFaceCategory.Skill, 0),
+            new DiceFace("starter_lightning", "Lightning", DiceFaceCategory.Skill, StarterLightningModifierDamage),
             new DiceFace("starter_mend", "Mend", DiceFaceCategory.Skill, 0)
         };
     }

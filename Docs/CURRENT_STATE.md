@@ -44,7 +44,8 @@ The project is in MVP foundation work.
 - M11_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
 - `M8-002_GUARD_GAMEPLAY` is DONE.
-- `M8-003_SPARK_GAMEPLAY` is NEXT.
+- `M8-003_LIGHTNING_GAMEPLAY` is DONE.
+- `M8-004_MEND_GAMEPLAY` is NEXT.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -151,14 +152,17 @@ The project is in MVP foundation work.
 - M7 is ready for Director review.
 - M7 has not added rewards, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, or new Face effects yet.
 - Dice-owned Base Throw Damage now exists on `DiceModel`.
-- Starter Dice currently has Base Throw Damage 5.
-- Starter Attack currently modifies the Throw by 5 damage, producing 10 total starter Attack Throw damage.
-- Guard, Spark, and Mend currently deal Base Throw Damage through the Throw but still have no dedicated Face effects until their M8 tasks.
+- Starter Dice currently has Base Throw Damage 3.
+- Starter Attack currently modifies the Throw by 5 damage, producing 8 total starter Attack Throw damage.
+- Guard, Lightning, and Mend currently deal Base Throw Damage through the Throw.
 - BattleController now applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
 - No Hunter permanent Attack stat was introduced for M8-001.
 - Guard now has a deterministic defensive Face effect.
 - Guard Throw still deals Base Throw Damage, then reduces the next incoming enemy attack damage by 3.
-- Spark and Mend remain pending M8 Face gameplay tasks.
+- Lightning now has a deterministic single-target MVP damage modifier.
+- Lightning currently deals Base Throw Damage 3 plus Lightning modifier damage 3, for 6 total damage before enemy HP clamping.
+- Lightning remains the future chaining / area-damage Face direction, but no chaining, area targeting, enemy selection, or multi-enemy gameplay has been implemented.
+- Mend remains the next pending M8 Face gameplay task.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.
@@ -384,10 +388,11 @@ Current Battle scene result:
 - Codex confirmed no face skill activation, enemy turn, reward, progression, new Dice result logic, or multi-enemy logic was added for M3-004.
 - Codex confirmed Attack damage now uses resolved `FaceEffectData.DamageAmount` after the Throw presentation sequence.
 - Codex confirmed `BattleController` no longer directly reads `DiceFace.FixedThrowDamageValue` for damage application.
-- Codex confirmed starter Dice has six serialized face slots: Attack, Attack, Guard, Guard, Spark, and Mend.
+- Codex confirmed starter Dice has six serialized face slots: Attack, Attack, Guard, Guard, Lightning, and Mend.
 - Codex confirmed duplicate face slots are represented as duplicate entries in the selection pool.
-- Codex confirmed Attack faces have `fixedThrowDamageValue` 10.
-- Codex confirmed Guard, Spark, and Mend currently have `fixedThrowDamageValue` 0 because skill effects are not implemented yet.
+- Codex confirmed Attack faces have `fixedThrowDamageValue` 5.
+- Codex confirmed Lightning has `fixedThrowDamageValue` 3.
+- Codex confirmed Guard and Mend currently have `fixedThrowDamageValue` 0 because their remaining skill effects are not implemented yet.
 - Codex confirmed selected-slot validation text displays as small corner `RESULT S#: FaceName` through `BattleDiceResultPresenter`.
 - Codex confirmed `BattleCombatState` only applies received deterministic damage and does not own Dice logic.
 - Static validation found no `DiceOverlayPresenter`, `diceOverlayPresenter`, `rollingOverlayDuration`, or `Rolling State Text` references.

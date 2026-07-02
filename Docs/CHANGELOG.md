@@ -4,19 +4,27 @@
 
 ### Changed
 
+- Implemented M8-003 Lightning Gameplay and starter combat tuning.
+- Starter Dice Base Throw Damage is now 3.
+- Starter Attack remains a 5 damage Face modifier, making starter Attack Throw total damage 8.
+- Renamed starter `Spark` to `Lightning` in runtime Dice data, scene serialization, and documentation references.
+- Lightning now resolves as a deterministic 3 damage Face modifier for the current single-enemy MVP flow.
+- Current MVP Lightning Throw deals Base Throw Damage 3 plus Lightning modifier damage 3, for 6 total damage before enemy HP clamping.
+- Marked M8-003 as DONE and M8-004 Mend Gameplay as NEXT.
+- No multi-enemy chaining, area targeting, enemy selection, new enemy slots, Reward Selection, Dice Face Replacement, inventory, meta progression, or Dice Tier UI was added for M8-003.
 - Implemented M8-002 Guard Gameplay.
 - Guard now modifies the Throw with a deterministic defensive effect.
 - Guard Throw still deals Dice Base Throw Damage.
 - Guard reduces the next incoming enemy attack damage by 3 during the same battle exchange.
 - Guard presentation now shows `Guard` as the Face Effect beat.
-- Marked M8-002 as DONE and M8-003 Spark Gameplay as NEXT.
+- Marked M8-002 as DONE and M8-003 Lightning Gameplay as NEXT.
 - No block stacks, shield duration system, status system, enemy AI change, Reward Selection, Dice Face Replacement, inventory, shops, meta progression, branching map, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay were added for M8-002.
 - Implemented M8-001 Base Throw Damage Framework.
 - Added Dice-owned Base Throw Damage to `DiceModel`.
-- Starter Dice now has Base Throw Damage 5.
-- Starter Attack now acts as a 5 damage Face modifier, preserving 10 total starter Attack Throw damage.
+- Starter Dice now has Base Throw Damage 3.
+- Starter Attack now acts as a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - `BattleController` now resolves total Throw damage as Dice Base Throw Damage plus Face damage modifier.
-- Guard, Spark, and Mend can now deal Base Throw Damage before their dedicated Face effects are implemented.
+- Guard, Lightning, and Mend can now deal Base Throw Damage before their dedicated Face effects are implemented.
 - Marked M8-001 as DONE and M8-002 Guard Gameplay as NEXT.
 - No Hunter permanent Attack stat, Reward Selection, Dice Face Replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay were added for M8-001.
 - Updated `PROJECT_CORE_PHILOSOPHY` and moved it under `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
@@ -65,9 +73,9 @@
 - Updated the post-M6 roadmap to insert M7_RUN_FLOW_PRESENTATION before reward and Dice replacement milestones.
 - Split the future reward/build roadmap into M8_REWARD_SELECTION and M9_DICE_FACE_REPLACEMENT.
 - Moved MVP playtest polish behind the reward and Dice replacement flow as M10_MVP_PLAYTEST_POLISH.
-- Tuned starter `Attack` Face damage from 5 to 10 in both `StarterDiceFactory` and the Battle scene's serialized runtime Dice.
-- Guard, Spark, and Mend remain no-effect starter Faces.
-- No Run Flow Presentation, rewards, Dice replacement, new Faces, Guard/Spark/Mend effects, enemy AI, boss mechanics, inventory, or meta progression were added.
+- Tuned starter Dice Base Throw Damage from 5 to 3 and starter `Attack` total damage to 8 in both `StarterDiceFactory` and the Battle scene's serialized runtime Dice.
+- At that roadmap tuning point, Guard, Lightning, and Mend gameplay effects remained unimplemented.
+- No Run Flow Presentation, rewards, Dice replacement, new Faces, Guard/Lightning/Mend effects, enemy AI, boss mechanics, inventory, or meta progression were added.
 
 ## 2026-07-01
 
@@ -164,7 +172,7 @@
 - Accepted Throw now enters `Transition`; M5-001 can mark a future `EnemyTurn` handoff and then returns immediately to `PlayerTurn` to preserve the existing player Throw loop until later M5 tasks add enemy resolution, presentation, and player damage.
 - Marked M5-001 as DONE and M5-002 Enemy Attack Resolution as NEXT.
 - Confirmed Unity batchmode import/compile validation for M5-001 completed successfully with exit code 0.
-- No enemy AI, enemy attack resolution, player damage, enemy presentation, rewards, progression, battle end, new Dice faces, or Guard/Spark/Mend effects were added.
+- No enemy AI, enemy attack resolution, player damage, enemy presentation, rewards, progression, battle end, new Dice faces, or Guard/Lightning/Mend effects were added.
 - Recorded Director PASS for M5-001.
 - Implemented M5-002 Enemy Attack Resolution.
 - Added `EnemyAttackIntent` and `EnemyAttackIntentType` for pending enemy attack data.
@@ -221,7 +229,7 @@
 - Completed `TASK_POST_M4_DICE_PRESENTATION_SCALE_FIX_REVISED`.
 - Completed `TASK_POST_M4_DICE_PRESENTATION_POLISH`.
 - Increased the Dice placeholder to 288x288 and moved the result moment slightly below center.
-- Kept the primary Face Reveal text final-facing as the selected face name only, such as `Spark`.
+- Kept the primary Face Reveal text final-facing as the selected face name only, such as `Lightning`.
 - Kept Face Effect text as the smaller secondary result label, such as `Damage` or `No Effect`.
 - Kept temporary selected-slot validation text as small corner `RESULT S#: FaceName` debug text.
 - Increased the runtime Dice placeholder from 48x48 to 112x112 for mobile landscape readability.
@@ -241,7 +249,7 @@
 - Marked M4-003 as DONE and M4-004 Explicit Undefined Face Handling as NEXT.
 - Confirmed Unity batchmode import/compile validation for M4-003 completed successfully with exit code 0.
 - Implemented M4-004 Explicit Undefined Face Handling.
-- Added explicit no-effect battle log feedback for undefined, null, Guard, Spark, and Mend Face results.
+- Added explicit no-effect battle log feedback for undefined, null, Guard, Lightning, and Mend Face results.
 - Marked M4-004 as DONE and M4-005 Face Effect Presentation Beat as NEXT.
 - Confirmed Unity batchmode import/compile validation for M4-004 completed successfully with exit code 0.
 - Implemented M4-005 Face Effect Presentation Beat.
@@ -321,7 +329,7 @@
 - Confirmed each accepted Throw selects one Dice result slot and stores it in `BattleDiceState`.
 - Confirmed result validation text displays selected slot and face.
 - Confirmed selected `DiceFace.FixedThrowDamageValue` is the current Throw damage source.
-- Confirmed Attack faces now deal 10 damage and Guard, Spark, and Mend currently deal 0 damage until skill effects are implemented later.
+- Confirmed the original M2 dice-core result storage and damage-source wiring before later M8 Face gameplay was added.
 - Confirmed no Dice overlay animation, face skill activation, enemy turn, rewards, progression, or future systems were added during M2.
 - Marked `M2-009_VALIDATE_M2_DICE_CORE` as DONE and `M2_DICE_CORE` as READY_FOR_DIRECTOR_REVIEW in project tracking documents.
 - Connected Throw damage to the selected Dice face's fixed throw damage value.

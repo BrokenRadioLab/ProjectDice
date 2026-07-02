@@ -210,7 +210,7 @@ Detailed Task Status:
 - Post-M4 Hero feedback replacement is complete: provided Hero idle/throw frames now carry the throw feedback.
 - Post-M4 Dice presentation polish is complete and keeps validation text secondary.
 - `Attack` is the only currently defined damage Face behavior.
-- `Guard`, `Spark`, and `Mend` must not receive invented effects until Director or GDD source text defines them.
+- `Guard`, `Lightning`, and `Mend` must not receive invented effects until Director or GDD source text defines them.
 - M4 task architecture is `DiceFace`, FaceResolver, Gameplay Effect, Presentation, `BattleCombatState`, `BattleHudPresenter`.
 
 ## M5_ENEMY_TURN_AND_BATTLE_LOOP
@@ -369,7 +369,7 @@ Scope:
 - Face effects modify the Throw and do not replace the Throw.
 - Attack remains the primary damage Face.
 - Guard becomes a simple defensive Face.
-- Spark becomes a simple secondary damage or utility Face.
+- Lightning becomes a simple secondary damage or utility Face.
 - Mend becomes a simple recovery Face.
 - Keep effects deterministic, readable, and minimal.
 - Do not add reward selection, Dice face replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, or complex status systems.
@@ -391,7 +391,8 @@ Detailed Task Status:
 - M8 implementation has started.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
-- M8-003 Spark Gameplay is NEXT.
+- M8-003 Lightning Gameplay is DONE.
+- M8-004 Mend Gameplay is NEXT.
 - M8 must follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
 
 ## M9_REWARD_SELECTION

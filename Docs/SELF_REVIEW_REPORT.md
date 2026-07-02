@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M8-002_GUARD_GAMEPLAY
+Task: M8-003_LIGHTNING_GAMEPLAY
 
 ## Review Result
 
 PASS
 
-Guard Gameplay follows the locked starter Face philosophy and keeps Guard as a defensive modifier rather than a skipped attack.
+Lightning Gameplay follows the locked starter Face philosophy and keeps Lightning as a simple secondary offense modifier for the current single-enemy MVP flow.
 
 ## Scope Check
 
@@ -18,10 +18,12 @@ Guard Gameplay follows the locked starter Face philosophy and keeps Guard as a d
 - Regenerated M8 task breakdown.
 - M8-001 Base Throw Damage Framework remains implemented.
 - Implemented M8-002 Guard Gameplay.
-- Starter Dice now owns Base Throw Damage 5.
-- Starter Attack is a 5 damage Face modifier, preserving 10 total starter Attack Throw damage.
+- Implemented M8-003 Lightning Gameplay.
+- Starter Dice now owns Base Throw Damage 3.
+- Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
-- Did not implement Spark or Mend gameplay.
+- Lightning can deal Base Throw Damage and add a deterministic 3 damage Lightning modifier.
+- Did not implement Mend gameplay.
 - Did not add victory gameplay.
 - Did not add restart UI.
 - Did not add run summary.
@@ -31,7 +33,8 @@ Guard Gameplay follows the locked starter Face philosophy and keeps Guard as a d
 - Did not add post-run economy.
 - Did not add healing rules.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
-- Did not add new Faces, Guard/Spark/Mend gameplay effects, enemy AI, or boss mechanics.
+- Did not add new Faces beyond renaming starter Spark to Lightning.
+- Did not add enemy AI or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
 - Did not change Dice result selection, FaceResolver logic, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
@@ -82,12 +85,13 @@ Guard Gameplay follows the locked starter Face philosophy and keeps Guard as a d
 - Current runtime Dice persists across next battle preparation.
 - Player HP persists across next battle preparation.
 - Dice Deck runtime data continues to read from current runtime Dice.
-- Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
-- Starter Dice Base Throw Damage is 5.
+- Starter Dice still contains Attack, Attack, Guard, Guard, Lightning, and Mend.
+- Starter Dice Base Throw Damage is 3.
 - Attack Face currently adds 5 damage as a Face modifier.
-- Starter Attack Throw total damage is 10 before enemy HP clamping.
+- Starter Attack Throw total damage is 8 before enemy HP clamping.
 - Guard currently reduces the next incoming enemy attack damage by 3 after dealing Base Throw Damage.
-- Spark and Mend currently add no Face effect but still deal Base Throw Damage.
+- Lightning currently adds a 3 damage Face modifier after Base Throw Damage.
+- Mend currently adds no Face effect but still deals Base Throw Damage.
 - Run-flow presentation hook does not mutate HP.
 - Run-flow presentation hook does not mutate turn ownership.
 - Run-flow presentation hook does not mutate stage runtime or run state.

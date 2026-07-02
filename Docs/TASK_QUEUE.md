@@ -410,8 +410,8 @@ Requirements:
 - Preserve current runtime Dice Face selection.
 - Preserve current battle presentation order.
 - Attack should no longer be the only source of all damage meaning.
-- Guard, Spark, and Mend should still be allowed to produce base damage through the Throw even before their own effects are implemented.
-- Do not implement Guard, Spark, or Mend effects in this task.
+- Guard, Lightning, and Mend should still be allowed to produce base damage through the Throw even before their own effects are implemented.
+- Do not implement Guard, Lightning, or Mend effects in this task.
 - Do not implement Dice Tier progression UI or active slot progression in this task.
 
 Done Criteria:
@@ -423,17 +423,17 @@ Done Criteria:
 Validation:
 
 - Attack Throw deals Base Throw Damage plus its Face effect if currently implemented.
-- Guard, Spark, and Mend Throws still deal Base Throw Damage.
+- Guard, Lightning, and Mend Throws still deal Base Throw Damage.
 - No Hunter permanent Attack stat is introduced.
 - No Reward Selection or Dice Face Replacement is added.
 
 Completed:
 
 - Added Dice-owned Base Throw Damage to the runtime Dice model.
-- Starter Dice now owns Base Throw Damage 5.
-- Starter Attack now acts as a 5 damage Face modifier, making starter Attack Throw total damage 10.
+- Starter Dice now owns Base Throw Damage 3.
+- Starter Attack now acts as a 5 damage Face modifier, making starter Attack Throw total damage 8.
 - BattleController now resolves total Throw damage as Dice Base Throw Damage plus Face damage modifier.
-- Guard, Spark, and Mend can now deal Base Throw Damage even before their own Face effects are implemented.
+- Guard, Lightning, and Mend can now deal Base Throw Damage even before their own Face effects are implemented.
 - No Hunter permanent Attack stat, Reward Selection, or Dice Face Replacement was added.
 
 ## M8-002: Guard Gameplay
@@ -472,37 +472,49 @@ Completed:
 - Guard presentation now shows `Guard` as the Face Effect beat.
 - No block stacks, shield duration system, status system, enemy AI change, Reward Selection, or Dice Face Replacement was added.
 
-## M8-003: Spark Gameplay
+## M8-003: Lightning Gameplay
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
-Give Spark a simple secondary damage or utility identity while preserving Base Throw Damage.
+Give Lightning a simple secondary damage or utility identity while preserving Base Throw Damage.
 
 Requirements:
 
-- Spark modifies the Throw with a deterministic secondary damage or utility effect.
-- Spark does not replace the Throw.
-- Spark still allows Base Throw Damage to occur.
+- Lightning modifies the Throw with a deterministic secondary damage or utility effect.
+- Lightning does not replace the Throw.
+- Lightning still allows Base Throw Damage to occur.
 - Keep the effect simple and MVP-readable.
 - Do not add complicated status systems, random chains, multi-enemy targeting, or reward systems.
+- Future Lightning direction is chaining / area damage.
+- Current MVP single-enemy Lightning deals Base Throw Damage plus 3 Lightning modifier damage.
 
 Done Criteria:
 
-- Spark has meaningful gameplay value.
-- Spark is no longer a No Effect Face.
-- Spark remains compatible with the existing single-enemy MVP battle flow.
+- Lightning has meaningful gameplay value.
+- Lightning is no longer a No Effect Face.
+- Lightning remains compatible with the existing single-enemy MVP battle flow.
 
 Validation:
 
-- Spark deals Base Throw Damage.
-- Spark applies its simple modifier.
-- Spark does not trigger rewards, Dice replacement, inventory, or progression.
+- Lightning deals Base Throw Damage.
+- Lightning applies its simple modifier.
+- Lightning does not trigger rewards, Dice replacement, inventory, or progression.
+
+Completed:
+
+- Renamed the starter `Spark` Face identity to `Lightning`.
+- Starter Dice now uses `starter_lightning` / `Lightning` as the runtime Face identity.
+- Starter Dice Base Throw Damage was tuned from 5 to 3.
+- Starter Attack remains a 5 damage Face modifier, making starter Attack Throw total damage 8.
+- Lightning now resolves through `FaceResolver` as a deterministic 3 damage Face modifier.
+- Current MVP Lightning Throw deals Base Throw Damage 3 plus Lightning modifier damage 3, for 6 total damage before enemy HP clamping.
+- No multi-enemy chaining, area targeting, enemy selection, new enemy slots, reward selection, Dice replacement, inventory, meta progression, or Dice Tier UI was added.
 
 ## M8-004: Mend Gameplay
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 
@@ -562,7 +574,7 @@ Done Criteria:
 
 Validation:
 
-- Attack, Guard, Spark, and Mend presentation remains readable.
+- Attack, Guard, Lightning, and Mend presentation remains readable.
 - Damage number and HP update still happen after presentation.
 - No gameplay is triggered directly from presentation code.
 
@@ -579,7 +591,7 @@ Requirements:
 - Confirm every Throw deals Dice-owned Base Throw Damage.
 - Confirm Attack remains the primary damage Face.
 - Confirm Guard has defensive value.
-- Confirm Spark has secondary damage or utility value.
+- Confirm Lightning has secondary damage or utility value.
 - Confirm Mend has recovery value.
 - Confirm no starter Face remains No Effect.
 - Confirm Reward Selection has not been implemented.
@@ -924,7 +936,7 @@ Completed:
 
 - Increased the Dice result placeholder to 288x288.
 - Moved the Dice result slightly below center so it reads like a landed result after enemy impact.
-- Kept the primary reveal text as only the selected Face name, such as `Spark`.
+- Kept the primary reveal text as only the selected Face name, such as `Lightning`.
 - Kept Face Effect as smaller secondary text, such as `Damage` or `No Effect`.
 - Kept selected-slot validation text as small corner `RESULT S#: FaceName` debug text.
 - Preserved Hero idle and throw animation assets from `Assets/Art`.
@@ -936,7 +948,7 @@ Not Added:
 - No enemy turn.
 - No rewards or progression.
 - No new Dice faces.
-- No Guard, Spark, or Mend real effects.
+- No Guard, Lightning, or Mend real effects.
 - No multi-enemy logic.
 - No inventory or stage system.
 
@@ -1013,7 +1025,7 @@ Completed:
 - `BattleController` checks `BattleTurnState.CanAcceptPlayerAction` before accepting Throw.
 - Accepted Throw moves turn ownership into `Transition`.
 - After the current player resolution finishes, the system can mark `EnemyTurn` as pending and currently returns to `PlayerTurn` immediately to preserve existing Throw behavior until later M5 tasks implement enemy resolution/presentation/damage.
-- No enemy AI, enemy damage, player damage, enemy presentation, rewards, progression, battle end, new Dice faces, or Guard/Spark/Mend effects were added.
+- No enemy AI, enemy damage, player damage, enemy presentation, rewards, progression, battle end, new Dice faces, or Guard/Lightning/Mend effects were added.
 
 ## M5-002: Enemy Attack Resolution
 
@@ -1290,7 +1302,7 @@ M4 Task Rule:
 - One gameplay concept per task.
 - Keep each task independently verifiable.
 - Do not add enemy turns, rewards, progression, Dice face replacement, or new Dice result logic.
-- Do not invent undefined Face effects for `Guard`, `Spark`, or `Mend`.
+- Do not invent undefined Face effects for `Guard`, `Lightning`, or `Mend`.
 - Preserve the current M3 Signature Battle Flow.
 - Maintain architecture order: `DiceFace`, FaceResolver, Gameplay Effect, Presentation, `BattleCombatState`, `BattleHudPresenter`.
 - Presentation code must not decide gameplay.
@@ -1354,7 +1366,7 @@ Requirements:
 - Do not modify `BattleDiceState` ownership.
 - Keep the result deterministic and data-light.
 - `Attack` may resolve to a damage effect using its existing `FixedThrowDamageValue`.
-- `Guard`, `Spark`, and `Mend` must resolve to explicit undefined/no-effect data until Director or GDD source text defines them.
+- `Guard`, `Lightning`, and `Mend` must resolve to explicit undefined/no-effect data until Director or GDD source text defines them.
 
 Done Criteria:
 
@@ -1372,7 +1384,7 @@ Completed:
 
 - Added `FaceResolver.Resolve(DiceFace selectedFace)`.
 - `starter_attack` resolves to `FaceEffectData.Damage` using the selected Face's existing `FixedThrowDamageValue`.
-- Null, `Guard`, `Spark`, `Mend`, and any undefined Face resolve to explicit `FaceEffectData.None`.
+- Null, `Guard`, `Lightning`, `Mend`, and any undefined Face resolve to explicit `FaceEffectData.None`.
 - Resolver does not mutate HP, trigger presentation, access UI, or call Dice result selection.
 
 ## M4-003: Attack Face
@@ -1386,13 +1398,13 @@ Implement `Attack` Face as the first MVP gameplay effect using the Face Resolver
 Requirements:
 
 - `Attack` Face resolves to deterministic damage using its current `FixedThrowDamageValue`.
-- Starter `Attack` damage has been tuned to 10 after M6 validation.
+- Starter `Attack` total damage has been tuned to 8 after M6 validation.
 - Applying damage belongs to this current Attack gameplay task because Attack is the only implemented gameplay effect.
 - Enemy HP damage must come from the resolved Attack Face effect, not from a generic Throw damage path.
 - The player-facing cause must remain: Attack Face appeared, therefore attack happened.
 - Do not add random damage ranges.
 - Do not add critical hits, modifiers, combo logic, or target selection.
-- Do not implement Guard, Spark, or Mend effects in this task.
+- Do not implement Guard, Lightning, or Mend effects in this task.
 - Damage is still applied only after Face Reveal and Face effect presentation timing.
 - `BattleCombatState` receives only the final resolved damage value.
 - `BattleCombatState` must not inspect Dice or Face data.
@@ -1401,11 +1413,11 @@ Requirements:
 
 Done Criteria:
 
-- When `Attack` is the selected Face, the resolved Attack effect applies 10 damage through `BattleCombatState` after presentation timing.
+- When `Attack` is the selected Face, the resolved Attack effect applies 8 total damage through `BattleCombatState` after presentation timing.
 
 Validation:
 
-- Starter `Attack` Face now resolves to 10 damage.
+- Starter `Attack` Face now resolves to 8 total damage.
 - Duplicate `Attack` faces remain separate Dice slots and do not become a unique-face probability table.
 - `BattleCombatState.ApplyDamageToEnemy` is still the only HP mutation path for enemy damage.
 - Damage application still occurs after presentation returns.
@@ -1431,10 +1443,10 @@ Handle starter Faces without Director-defined MVP effects explicitly and safely.
 
 Requirements:
 
-- `Guard`, `Spark`, and `Mend` must not receive invented effects.
+- `Guard`, `Lightning`, and `Mend` must not receive invented effects.
 - Undefined starter Faces should resolve as implemented=false or equivalent no-effect result.
 - Undefined starter Faces should not damage the enemy.
-- Undefined starter Faces should not heal, shield, spark, stun, draw, reroll, or alter future turns.
+- Undefined starter Faces should not heal, shield, lightning, stun, draw, reroll, or alter future turns.
 - The result should remain visible or understandable enough for validation.
 
 Done Criteria:
@@ -1443,8 +1455,8 @@ Done Criteria:
 
 Validation:
 
-- `Guard`, `Spark`, and `Mend` do not change enemy HP.
-- `Guard`, `Spark`, and `Mend` do not change player HP.
+- `Guard`, `Lightning`, and `Mend` do not change enemy HP.
+- `Guard`, `Lightning`, and `Mend` do not change player HP.
 - No shield, enemy turn, reward, progression, Dice face replacement, or future system is added.
 - Documentation or validation output makes clear that their effects are intentionally pending Director/GDD definition.
 
@@ -1452,9 +1464,9 @@ Completed:
 
 - Undefined/no-effect Face results now produce explicit battle log feedback.
 - Null or unknown Face results are reported as having no effect yet.
-- Guard, Spark, Mend, and other undefined Faces still resolve through `FaceResolver` as `FaceEffectData.None`.
+- Guard, Lightning, Mend, and other undefined Faces still resolve through `FaceResolver` as `FaceEffectData.None`.
 - Undefined/no-effect Faces still do not apply enemy damage or player healing.
-- No Guard, Spark, Mend, shield, stun, heal, reroll, enemy turn, reward, progression, or Dice face replacement behavior was added.
+- No Guard, Lightning, Mend, shield, stun, heal, reroll, enemy turn, reward, progression, or Dice face replacement behavior was added.
 
 ## M4-005: Face Effect Presentation Beat
 
@@ -1531,7 +1543,7 @@ Completed:
 - Confirmed `FaceResolver.Resolve` is called once per accepted Throw after Dice result selection.
 - Confirmed no second Dice roll or random result occurs during Face resolution.
 - Confirmed `Attack` resolves to a Damage effect through `FaceResolver`.
-- Confirmed Guard, Spark, Mend, null, and unknown Faces resolve to `FaceEffectData.None`.
+- Confirmed Guard, Lightning, Mend, null, and unknown Faces resolve to `FaceEffectData.None`.
 - Confirmed Face Reveal occurs before Face Effect presentation.
 - Confirmed Face Effect presentation occurs before Damage Number presentation.
 - Confirmed damage application occurs only after `ThrowSequencePresenter.Play` returns.

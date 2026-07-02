@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Completed Work: M8-002_GUARD_GAMEPLAY
+Completed Work: M8-003_LIGHTNING_GAMEPLAY
 
 ## Summary
 
-Implemented Guard as the first non-damage utility Face: it preserves Dice Base Throw Damage and reduces the next incoming enemy attack damage.
+Implemented Lightning as the starter secondary offense Face and applied the Director's starter damage tuning.
 
 ## Validation Result
 
@@ -48,19 +48,22 @@ PASS
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
-- M8-003 Spark Gameplay is NEXT.
-- M8-004 Mend Gameplay is PENDING.
+- M8-003 Lightning Gameplay is DONE.
+- M8-004 Mend Gameplay is NEXT.
 - M8-005 Face Presentation Polish is PENDING.
 - M8-006 Validate Starter Face Gameplay is PENDING.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
-- Starter Dice has Base Throw Damage 5.
-- Starter Attack is a 5 damage Face modifier, preserving 10 total starter Attack Throw damage.
-- Guard, Spark, and Mend can deal Base Throw Damage through the Throw.
+- Starter Dice has Base Throw Damage 3.
+- Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
+- Guard, Lightning, and Mend can deal Base Throw Damage through the Throw.
 - BattleController applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
 - No Hunter permanent Attack stat was introduced.
 - Guard applies a deterministic defensive modifier.
 - Guard reduces the next incoming enemy attack damage by 3.
 - Guard still deals Dice Base Throw Damage through the Throw.
+- Starter `Spark` has been renamed to `Lightning`.
+- Lightning resolves as a deterministic 3 damage Face modifier.
+- Lightning currently deals Base Throw Damage 3 plus Lightning modifier damage 3, for 6 total damage before enemy HP clamping.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.
@@ -89,11 +92,11 @@ PASS
 - M7 validation confirms runtime ownership remains in M6 systems.
 - M7 validation confirms no rewards or Dice replacement were added.
 - Unity batchmode import/compile validation completed successfully for M7-007.
-- Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
-- Starter Dice Base Throw Damage is 5.
+- Starter Dice still contains Attack, Attack, Guard, Guard, Lightning, and Mend.
+- Starter Dice Base Throw Damage is 3.
 - Starter Attack Face modifier damage is 5.
-- Starter Attack Throw total damage is 10 before enemy HP clamping.
-- Guard, Spark, and Mend still resolve to no dedicated Face effect, but their Throws now deal Base Throw Damage.
+- Starter Attack Throw total damage is 8 before enemy HP clamping.
+- Guard and Lightning now resolve to dedicated Face effects, while Mend still deals Base Throw Damage and awaits its M8 recovery effect.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
