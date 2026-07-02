@@ -10,6 +10,8 @@ Last Updated: 2026-07-02
 
 `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present, locked, and defines Dice progression, active slots, Base Throw Damage, and Dice combat philosophy.
 
+`Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present, locked, and defines long-term Reward Selection and progression direction before M10.
+
 Planning and presentation documents may organize work, but they must not redefine the game against the GDD.
 
 M3 is approved by Director review. GDD content must not be invented while the GDD source file is pending.
@@ -39,8 +41,8 @@ The project is in MVP foundation work.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
-- M9_STARTER_DICE_BUILD is READY_FOR_DIRECTOR_REVIEW.
-- M10_REWARD_SELECTION is PENDING.
+- M9_STARTER_DICE_BUILD is DONE.
+- M10_REWARD_SELECTION is READY.
 - M11_DICE_FACE_REPLACEMENT is PENDING.
 - M12_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
@@ -320,7 +322,7 @@ M8 locked design:
 - Only active Faces enter the roll pool.
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
-- M9 is awaiting Director review.
+- M9 is approved by Director review.
 - Battle now begins with a Run Start / Starter Dice Build UI in the existing Battle scene.
 - Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
 - Player chooses 4 active Faces before battle input unlocks.
@@ -330,6 +332,14 @@ M8 locked design:
 - Existing Battle scene consumes the generated runtime Dice through `BattleDiceState`.
 - Locked Slots are preserved as inactive runtime slots and never enter the roll pool.
 - Dice Deck displays the current active Faces and locked slots from runtime Dice state.
+
+M10 locked design direction:
+
+- Reward Selection improves the Dice the player already built.
+- Reward Selection does not create the Dice.
+- Reward categories may include New Face, Recover HP, Run-only Max HP increase, and future Relic.
+- New Face selection and Dice Face Replacement remain separate responsibilities.
+- Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock conditions are documented in `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
 
 Director-locked M4 principle:
 

@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Added `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+- Documented long-term Reward Selection and progression direction before M10 implementation.
+- Documented reward categories: New Face, Recover HP, Run-only Max HP increase, and future Relic.
+- Documented Face rarity, Face unlock progression, Starter Face Pool progression, Dice Tier unlock progression, and meta unlock condition direction.
+- Marked M9_STARTER_DICE_BUILD as DONE after Director approval.
+- Marked M10_REWARD_SELECTION as READY.
 - Completed M9-002 Validate Starter Dice Build.
 - Verified Starter Dice Build creates a runtime Wood Dice with 4 Active Face Slots and 2 Locked Slots.
 - Verified Locked Slots do not enter the Dice roll pool.

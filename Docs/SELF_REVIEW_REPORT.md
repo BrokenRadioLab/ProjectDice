@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M9-002_VALIDATE_STARTER_DICE_BUILD
+Task: LONG_TERM_PROGRESSION_DESIGN_LOCK_BEFORE_M10
 
 ## Review Result
 
 PASS
 
-Starter Dice Build validation confirms the first pre-run Dice composition choice feeds the runtime battle Dice without implementing rewards or face replacement.
+Long-term progression design is documented before M10 Reward Selection implementation.
 
 ## Scope Check
 
@@ -32,6 +32,9 @@ Starter Dice Build validation confirms the first pre-run Dice composition choice
 - Enlarged expanded Dice Deck UI for readability.
 - Implemented M9-001 Starter Dice Build UI.
 - Completed M9-002 Validate Starter Dice Build.
+- Added `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+- Marked M9_STARTER_DICE_BUILD as DONE after Director approval.
+- Marked M10_REWARD_SELECTION as READY.
 - Added active slot runtime support for Wood Dice.
 - Added probability display for selected active Faces.
 - Starter Dice now owns Base Throw Damage 3.
@@ -56,6 +59,7 @@ Starter Dice Build validation confirms the first pre-run Dice composition choice
 - Did not make presentation code decide gameplay values.
 - Did not change Base Throw Damage, Attack modifier, Guard reduction, Lightning damage, Mend heal amount, enemy damage, HP mutation order, FaceResolver gameplay logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI.
 - Did not implement Reward Selection, Dice Face Replacement, inventory, shop, branching map, new Face effects, boss mechanics, or multi-enemy gameplay.
+- Did not implement inventory, shops, meta progression UI, permanent unlock economy, Dice Tier progression, or new run creation.
 - Did not add enemy AI or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
@@ -85,6 +89,8 @@ Starter Dice Build validation confirms the first pre-run Dice composition choice
 - `BattleCombatState.HealPlayer(int healing)` owns player HP recovery and clamps healing at Player Max HP.
 - `ThrowSequencePresenter` consumes selected Face, FaceEffectData, applied damage, and Base Throw Damage for presentation only.
 - M8 remains separate from Reward Selection and Dice Face Replacement.
+- M10 Reward Selection remains separate from M11 Dice Face Replacement.
+- Long-term progression design defines reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction without implementing them.
 - `ThrowSequencePresenter` now uses already calculated pending enemy HP damage for the enemy-local damage number.
 - Enemy-local damage popup remains presentation-only and does not mutate HP.
 - Hit spark and enemy shake remain presentation-only feedback.

@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M9_STARTER_DICE_BUILD
+Selected Milestone: M10_REWARD_SELECTION
 
-Milestone Status: IN_PROGRESS
+Milestone Status: READY
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -15,9 +15,11 @@ Director Review:
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
 - M8_STARTER_FACE_GAMEPLAY is approved and DONE.
-- M9_STARTER_DICE_BUILD is READY_FOR_DIRECTOR_REVIEW.
+- M9_STARTER_DICE_BUILD is approved and DONE.
+- M10_REWARD_SELECTION is READY after long-term progression design lock.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
+- `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` locks reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction before M10 implementation.
 
 M4 Locked Principle:
 
@@ -107,9 +109,18 @@ M9 Starter Dice Build Locked Design:
 - Duplicate Faces are allowed only if the pool contains duplicates.
 - Dice Deck must remain compatible with active and locked slots.
 
+M10 Reward Selection Locked Direction:
+
+- Reward Selection improves an already-existing Dice build.
+- Reward Selection must never be the first place where the player creates a Dice.
+- Reward categories may include New Face, Recover HP, Run-only Max HP increase, and future Relic.
+- New Face rewards should be selected in M10 and inserted into the Dice later in M11.
+- Dice Face Replacement remains separate from Reward Selection.
+- Meta progression unlocks choices, not raw Hunter power.
+
 ## M9 Implementation Tasks
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 M9 Goal:
 
@@ -191,6 +202,31 @@ Completed:
 - Verified probability text is generated from the selected active Faces.
 - Unity batchmode import/compile validation completed successfully.
 - Verified no Reward Selection, Dice Face Replacement, inventory, shops, meta progression, new Face gameplay, enemy AI, boss mechanics, or multi-enemy gameplay was added.
+
+M9 Director Result:
+
+- M9_STARTER_DICE_BUILD is approved and DONE.
+- Starter Dice Build is a permanent core gameplay loop step.
+- The player's first meaningful run choice is which Dice to bring into the run.
+
+## M10 Implementation Tasks
+
+Status: DESIGN_READY
+
+M10 Goal:
+
+Introduce Reward Selection after eligible battle/run-flow points.
+
+M10 Pre-Implementation Requirement:
+
+- Long-term progression design is documented in `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+
+M10 Scope Guardrails:
+
+- Implement Reward Selection only after detailed M10 tasks are generated.
+- Do not implement Dice Face Replacement during M10 unless explicitly instructed.
+- Do not add inventory, shops, meta progression UI, permanent unlock economy, Dice Tier progression, new run creation, boss mechanics, or multi-enemy gameplay.
+- Reward Selection must improve an existing runtime Dice build, not create the Dice.
 
 ## M7 Implementation Tasks
 

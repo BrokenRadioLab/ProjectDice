@@ -7,6 +7,7 @@ Current source-of-truth status:
 - `Docs/PROJECT_GDD_v1.0.md` is not currently present and will be provided by the Director later.
 - `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present and locked.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice progression and Dice combat philosophy.
+- `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward and progression direction before M10.
 - M3 is approved by Director review. Do not invent GDD content while implementing later milestones.
 
 Detailed implementation tasks belong in `TASK_QUEUE.md` only after a milestone is selected for implementation.
@@ -39,8 +40,8 @@ Required MVP pillars:
 7. M6_LINEAR_STAGE_RUN - DONE
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
 9. M8_STARTER_FACE_GAMEPLAY - DONE
-10. M9_STARTER_DICE_BUILD - READY_FOR_DIRECTOR_REVIEW
-11. M10_REWARD_SELECTION - PENDING
+10. M9_STARTER_DICE_BUILD - DONE
+11. M10_REWARD_SELECTION - READY
 12. M11_DICE_FACE_REPLACEMENT - PENDING
 13. M12_MVP_PLAYTEST_POLISH - PENDING
 
@@ -358,7 +359,7 @@ Detailed Task Status:
 
 ## M8_STARTER_FACE_GAMEPLAY
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 Goal:
 
@@ -402,7 +403,7 @@ Detailed Task Status:
 
 ## M9_STARTER_DICE_BUILD
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 Goal:
 
@@ -437,11 +438,11 @@ Detailed Task Status:
 
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
-- M9 is awaiting Director review.
+- M9 is approved by Director review.
 
 ## M10_REWARD_SELECTION
 
-Status: PENDING
+Status: READY
 
 Goal:
 
@@ -454,6 +455,9 @@ Scope:
 - Reward options may include New Face, Recover HP, Run-only Max HP increase, or future Relic.
 - Keep all growth temporary within the Run unless explicitly defined as permanent meta progression.
 - Choose exactly one reward.
+- Follow `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+- Reward Selection improves an already-existing runtime Dice build.
+- Reward Selection must not create the player's Dice.
 - No Dice face replacement implementation in this milestone unless explicitly promoted by Director.
 - No inventory, shops, meta progression, branching map, enemy AI, or boss mechanics.
 

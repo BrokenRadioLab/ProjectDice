@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Selected Milestone: M9_STARTER_DICE_BUILD
+Selected Milestone: M10_REWARD_SELECTION
 
-Completed Work: M9-002_VALIDATE_STARTER_DICE_BUILD
+Completed Work: LONG_TERM_PROGRESSION_DESIGN_LOCK
 
 ## Summary
 
-Validated that Starter Dice Build creates the runtime Wood Dice and that battle systems consume the generated active-slot Dice.
+Documented long-term Reward Selection and progression direction before M10 implementation.
 
 ## Validation Result
 
@@ -43,13 +43,14 @@ PASS
 - M7-006 Defeat Presentation is DONE.
 - M7-007 Validate Run Flow Presentation is DONE.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
-- M9_STARTER_DICE_BUILD is READY_FOR_DIRECTOR_REVIEW.
+- M9_STARTER_DICE_BUILD is DONE.
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
-- M10_REWARD_SELECTION is PENDING and not implemented.
+- M10_REWARD_SELECTION is READY and not implemented.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
+- `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.
@@ -106,7 +107,10 @@ PASS
 - `DiceRoller` rolls only active Face slots.
 - Dice Deck displays the selected active Faces and inactive locked slots from runtime Dice state.
 - Unity batchmode import/compile validation completed successfully for M9-002.
-- M9 is awaiting Director review.
+- M9 is approved by Director review.
+- Reward Selection should improve an already-existing Dice build.
+- Reward Selection should not create the player's Dice.
+- M10 must keep Reward Selection separate from M11 Dice Face Replacement.
 - No Reward Selection, Dice Face Replacement, inventory, shops, meta progression, new Face gameplay, Dice Tier progression, Hunter progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
