@@ -7,6 +7,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
     private const float StageClearDurationSeconds = 0.55f;
     private const float NextStageDurationSeconds = 0.65f;
     private const float BattleResumeDurationSeconds = 0.45f;
+    private const float RunCompleteDurationSeconds = 0.95f;
     private static Font fallbackFont;
 
     [SerializeField] private RectTransform displayRoot;
@@ -20,7 +21,10 @@ public sealed class RunFlowPresenter : MonoBehaviour
     private Text nextStageTypeText;
     private RectTransform battleResumeRoot;
     private Text battleResumeText;
+    private RectTransform runCompleteRoot;
+    private Text runCompleteText;
     private bool nextStagePresentationPending;
+    private bool runCompletePresentationShown;
 
     public BattleOutcome LastObservedOutcome { get; private set; } = BattleOutcome.InProgress;
     public int LastObservedStageIndex { get; private set; }
@@ -29,6 +33,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
     public bool LastStageClearShown { get; private set; }
     public bool LastNextStageShown { get; private set; }
     public bool LastBattleResumeShown { get; private set; }
+    public bool LastRunCompleteShown { get; private set; }
 
     public IEnumerator PlayBattleOutcome(
         BattleOutcomeState outcomeState,
@@ -56,6 +61,12 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         LastObservedRunCompleted = runState != null && runState.IsCompleted;
 
+        if (ShouldShowRunComplete(outcomeState, runState))
+        {
+            yield return PlayRunComplete();
+            yield break;
+        }
+
         if (ShouldShowStageClear(outcomeState, stageRuntimeState))
         {
             yield return PlayStageClear();
@@ -71,6 +82,15 @@ public sealed class RunFlowPresenter : MonoBehaviour
             outcomeState.IsVictory &&
             stageRuntimeState != null &&
             !stageRuntimeState.IsBossStage;
+    }
+
+    private bool ShouldShowRunComplete(BattleOutcomeState outcomeState, LinearRunState runState)
+    {
+        return outcomeState != null &&
+            outcomeState.IsVictory &&
+            runState != null &&
+            runState.IsCompleted &&
+            !runCompletePresentationShown;
     }
 
     private IEnumerator PlayStageClear()
@@ -156,6 +176,32 @@ public sealed class RunFlowPresenter : MonoBehaviour
         if (battleResumeRoot != null)
         {
             battleResumeRoot.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator PlayRunComplete()
+    {
+        EnsureRunCompleteView();
+
+        if (runCompleteRoot == null)
+        {
+            yield break;
+        }
+
+        LastRunCompleteShown = true;
+        runCompletePresentationShown = true;
+        runCompleteRoot.gameObject.SetActive(true);
+
+        if (runCompleteText != null)
+        {
+            runCompleteText.text = "Run Complete";
+        }
+
+        yield return new WaitForSeconds(RunCompleteDurationSeconds);
+
+        if (runCompleteRoot != null)
+        {
+            runCompleteRoot.gameObject.SetActive(false);
         }
     }
 
@@ -250,6 +296,34 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         battleResumeText = CreateText("Battle Resume Text", battleResumeRoot, 25, TextAnchor.MiddleCenter);
         battleResumeRoot.gameObject.SetActive(false);
+    }
+
+    private void EnsureRunCompleteView()
+    {
+        EnsureDisplayRoot();
+
+        if (displayRoot == null || runCompleteRoot != null)
+        {
+            return;
+        }
+
+        GameObject rootObject = new GameObject("Run Flow Run Complete");
+        rootObject.layer = displayRoot.gameObject.layer;
+        rootObject.transform.SetParent(displayRoot, false);
+
+        runCompleteRoot = rootObject.AddComponent<RectTransform>();
+        runCompleteRoot.anchorMin = new Vector2(0.5f, 0.5f);
+        runCompleteRoot.anchorMax = new Vector2(0.5f, 0.5f);
+        runCompleteRoot.pivot = new Vector2(0.5f, 0.5f);
+        runCompleteRoot.anchoredPosition = new Vector2(0f, 58f);
+        runCompleteRoot.sizeDelta = new Vector2(380f, 82f);
+
+        Image panelImage = rootObject.AddComponent<Image>();
+        panelImage.raycastTarget = false;
+        panelImage.color = panelColor;
+
+        runCompleteText = CreateText("Run Complete Text", runCompleteRoot, 28, TextAnchor.MiddleCenter);
+        runCompleteRoot.gameObject.SetActive(false);
     }
 
     private void EnsureDisplayRoot()

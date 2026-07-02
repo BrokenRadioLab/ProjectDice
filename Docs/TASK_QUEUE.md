@@ -247,7 +247,7 @@ Completed:
 
 ## M7-005: Run Complete Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -273,9 +273,16 @@ Validation:
 - Further Throw input remains blocked after run completion.
 - No reward, Dice replacement, meta progression, restart, or new run system is added.
 
+Completed:
+
+- Added a short `Run Complete` beat when `LinearRunState` is completed after Boss Victory.
+- Run Complete is presented by `RunFlowPresenter` and does not mutate runtime state.
+- Further battle input remains blocked by existing run completion ownership.
+- No reward, Dice replacement, meta progression, restart flow, or new run creation was added.
+
 ## M7-006: Defeat Presentation
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

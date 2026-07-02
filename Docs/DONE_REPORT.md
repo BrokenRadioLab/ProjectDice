@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Completed Work: M7-004_BATTLE_RESUME_PRESENTATION
+Completed Work: M7-005_RUN_COMPLETE_PRESENTATION
 
 ## Summary
 
-Added a short Battle Resume presentation beat after Next Stage without changing M6 next battle preparation, player HP persistence, runtime Dice persistence, or battle input ownership.
+Added a short Run Complete presentation beat after Boss Victory completes the fixed linear run without adding rewards, Dice replacement, restart flow, new run creation, post-run economy, or runtime mutation.
 
 ## Validation Result
 
@@ -38,7 +38,8 @@ PASS
 - M7-002 Stage Clear Presentation is DONE.
 - M7-003 Next Stage Presentation is DONE.
 - M7-004 Battle Resume Presentation is DONE.
-- M7-005 Run Complete Presentation is NEXT.
+- M7-005 Run Complete Presentation is DONE.
+- M7-006 Defeat Presentation is NEXT.
 - M8_REWARD_SELECTION is PENDING and not implemented.
 - M9_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - `RunFlowPresenter` exists as a presentation-only component.
@@ -54,6 +55,10 @@ PASS
 - Battle Resume presentation shows a short `Battle Start` beat after Next Stage.
 - Battle Resume presentation keeps input locked until the run-flow presentation sequence completes.
 - Battle Resume presentation does not advance stages, prepare battles, heal the player, modify HP, modify Dice, reset battle state, or mutate runtime state.
+- Run Complete presentation shows a short `Run Complete` beat after Boss Victory completes `LinearRunState`.
+- Run Complete presentation does not appear after non-boss Victory or Defeat.
+- Further Throw input remains blocked after run completion through existing run completion ownership.
+- Run Complete presentation does not add rewards, Dice replacement, meta progression, restart flow, new run creation, post-run economy, or runtime mutation.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
 - Starter Attack Face damage is now 10.
 - Guard, Spark, and Mend still resolve to No Effect.

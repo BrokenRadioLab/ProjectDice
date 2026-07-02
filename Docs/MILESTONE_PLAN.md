@@ -345,8 +345,8 @@ Detailed Task Status:
 - M7-002 Stage Clear Presentation is DONE.
 - M7-003 Next Stage Presentation is DONE.
 - M7-004 Battle Resume Presentation is DONE.
-- M7-005 Run Complete Presentation is NEXT.
-- M7-006 Defeat Presentation is PENDING.
+- M7-005 Run Complete Presentation is DONE.
+- M7-006 Defeat Presentation is NEXT.
 - M7-007 Validate Run Flow Presentation is PENDING.
 - M7 must consume existing M6 runtime state and must not decide gameplay.
 - M7 must not add rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay.

@@ -2,24 +2,25 @@
 
 Date: 2026-07-02
 
-Task: M7-004_BATTLE_RESUME_PRESENTATION
+Task: M7-005_RUN_COMPLETE_PRESENTATION
 
 ## Review Result
 
 PASS
 
-Battle Resume Presentation stays within the requested return-to-battle readability scope.
+Run Complete Presentation stays within the requested Boss Victory completion feedback scope.
 
 ## Scope Check
 
-- Added a short Battle Resume presentation beat to `RunFlowPresenter`.
-- Battle Resume displays after Next Stage and before input resumes.
-- Did not implement Run Complete or Defeat presentation.
+- Added a short Run Complete presentation beat to `RunFlowPresenter`.
+- Run Complete displays only after existing `LinearRunState` completion.
+- Did not implement Defeat presentation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
 - Did not add battle end presentation or full battle reset flow.
 - Did not add stage selection UI.
 - Did not add restart flow or new run creation.
+- Did not add post-run economy.
 - Did not add healing rules.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
 - Did not add new Faces, Guard/Spark/Mend gameplay effects, enemy AI, or boss mechanics.
@@ -45,6 +46,7 @@ Battle Resume Presentation stays within the requested return-to-battle readabili
 - Dice Deck remains a runtime build viewer, not battle presentation, reward UI, inventory, or Dice replacement UI.
 - `RunFlowPresenter` consumes runtime state but does not own outcome, stage progression, run completion, HP, turn ownership, rewards, or Dice data.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
+- Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
 
 ## Validation Review
 
@@ -84,6 +86,9 @@ Battle Resume Presentation stays within the requested return-to-battle readabili
 - Battle Resume presentation appears after Next Stage.
 - Battle Resume presentation does not mutate HP, turn ownership, battle outcome, stage runtime, run state, or Dice data.
 - Battle Resume presentation does not prepare battles, heal the player, add new enemy setup rules, or unlock rewards.
+- Run Complete presentation consumes `LinearRunState.Completed`.
+- Run Complete presentation does not mutate HP, turn ownership, battle outcome, stage runtime, run state, or Dice data.
+- Run Complete presentation does not add rewards, Dice replacement, meta progression, restart flow, new run creation, or post-run economy.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -98,4 +103,4 @@ Battle Resume Presentation stays within the requested return-to-battle readabili
 
 ## Status
 
-M7-004_BATTLE_RESUME_PRESENTATION is complete.
+M7-005_RUN_COMPLETE_PRESENTATION is complete.

@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Implemented M7-005 Run Complete Presentation.
+- `RunFlowPresenter` now shows a short `Run Complete` beat when `LinearRunState` is completed after Boss Victory.
+- Run Complete presentation consumes existing run completion state and does not mutate runtime state.
+- Marked M7-005 as DONE and M7-006 Defeat Presentation as NEXT.
+- No rewards, Dice replacement, meta progression, restart flow, new run creation, post-run economy, inventory, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-005.
 - Implemented M7-004 Battle Resume Presentation.
 - `RunFlowPresenter` now shows a short `Battle Start` beat after the Next Stage presentation.
 - Battle Resume keeps input locked until the run-flow presentation sequence completes.
