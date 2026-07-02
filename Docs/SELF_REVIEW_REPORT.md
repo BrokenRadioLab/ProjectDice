@@ -2,21 +2,21 @@
 
 Date: 2026-07-02
 
-Task: M7-005_RUN_COMPLETE_PRESENTATION
+Task: M7-006_DEFEAT_PRESENTATION
 
 ## Review Result
 
 PASS
 
-Run Complete Presentation stays within the requested Boss Victory completion feedback scope.
+Defeat Presentation stays within the requested battle outcome feedback scope.
 
 ## Scope Check
 
-- Added a short Run Complete presentation beat to `RunFlowPresenter`.
-- Run Complete displays only after existing `LinearRunState` completion.
-- Did not implement Defeat presentation.
+- Added a short Defeat presentation beat to `RunFlowPresenter`.
+- Defeat displays only after existing `BattleOutcomeState.Defeat`.
 - Did not add victory gameplay.
-- Did not add defeat presentation or restart UI.
+- Did not add restart UI.
+- Did not add run summary.
 - Did not add battle end presentation or full battle reset flow.
 - Did not add stage selection UI.
 - Did not add restart flow or new run creation.
@@ -47,6 +47,7 @@ Run Complete Presentation stays within the requested Boss Victory completion fee
 - `RunFlowPresenter` consumes runtime state but does not own outcome, stage progression, run completion, HP, turn ownership, rewards, or Dice data.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
+- Defeat is a presentation consumer of `BattleOutcomeState.Defeat` and remains separate from defeat ownership.
 
 ## Validation Review
 
@@ -89,6 +90,9 @@ Run Complete Presentation stays within the requested Boss Victory completion fee
 - Run Complete presentation consumes `LinearRunState.Completed`.
 - Run Complete presentation does not mutate HP, turn ownership, battle outcome, stage runtime, run state, or Dice data.
 - Run Complete presentation does not add rewards, Dice replacement, meta progression, restart flow, new run creation, or post-run economy.
+- Defeat presentation consumes `BattleOutcomeState.Defeat`.
+- Defeat presentation does not mutate HP, turn ownership, battle outcome, stage runtime, run state, or Dice data.
+- Defeat presentation does not add restart UI, run summary, meta progression, rewards, Dice replacement, or inventory.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -103,4 +107,4 @@ Run Complete Presentation stays within the requested Boss Victory completion fee
 
 ## Status
 
-M7-005_RUN_COMPLETE_PRESENTATION is complete.
+M7-006_DEFEAT_PRESENTATION is complete.

@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Implemented M7-006 Defeat Presentation.
+- `RunFlowPresenter` now shows a short `Defeat` beat when `BattleOutcomeState` reaches Defeat.
+- Defeat presentation consumes existing battle outcome state and does not mutate runtime state.
+- Marked M7-006 as DONE and M7-007 Validate Run Flow Presentation as NEXT.
+- No restart UI, run summary, meta progression, rewards, Dice replacement, inventory, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-006.
 - Implemented M7-005 Run Complete Presentation.
 - `RunFlowPresenter` now shows a short `Run Complete` beat when `LinearRunState` is completed after Boss Victory.
 - Run Complete presentation consumes existing run completion state and does not mutate runtime state.

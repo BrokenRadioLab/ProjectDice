@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Completed Work: M7-005_RUN_COMPLETE_PRESENTATION
+Completed Work: M7-006_DEFEAT_PRESENTATION
 
 ## Summary
 
-Added a short Run Complete presentation beat after Boss Victory completes the fixed linear run without adding rewards, Dice replacement, restart flow, new run creation, post-run economy, or runtime mutation.
+Added a short Defeat presentation beat after `BattleOutcomeState` reaches Defeat without adding restart UI, run summary, meta progression, rewards, Dice replacement, inventory, or runtime mutation.
 
 ## Validation Result
 
@@ -39,7 +39,8 @@ PASS
 - M7-003 Next Stage Presentation is DONE.
 - M7-004 Battle Resume Presentation is DONE.
 - M7-005 Run Complete Presentation is DONE.
-- M7-006 Defeat Presentation is NEXT.
+- M7-006 Defeat Presentation is DONE.
+- M7-007 Validate Run Flow Presentation is NEXT.
 - M8_REWARD_SELECTION is PENDING and not implemented.
 - M9_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - `RunFlowPresenter` exists as a presentation-only component.
@@ -59,6 +60,11 @@ PASS
 - Run Complete presentation does not appear after non-boss Victory or Defeat.
 - Further Throw input remains blocked after run completion through existing run completion ownership.
 - Run Complete presentation does not add rewards, Dice replacement, meta progression, restart flow, new run creation, post-run economy, or runtime mutation.
+- Defeat presentation shows a short `Defeat` beat when `BattleOutcomeState` reaches Defeat.
+- Defeat presentation does not appear after Victory.
+- Stage does not advance after Defeat.
+- Run does not complete after Defeat.
+- Defeat presentation does not add restart UI, run summary, meta progression, rewards, Dice replacement, inventory, or runtime mutation.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
 - Starter Attack Face damage is now 10.
 - Guard, Spark, and Mend still resolve to No Effect.
@@ -136,8 +142,8 @@ PASS
 - No rarity, replacement preview, selected face highlight, rewards, progression, or Face replacement changes were added.
 - No Throw sequence, Dice Animation Layer, battle presentation, Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, inventory, or stage progression changes were added.
 - No Battle Resume presentation was added.
-- No Run Complete presentation was added.
-- No Defeat presentation was added.
+- Run Complete presentation was added without adding rewards, Dice replacement, meta progression, restart flow, new run creation, or post-run economy.
+- Defeat presentation was added without adding restart UI, run summary, meta progression, rewards, Dice replacement, or inventory.
 
 ## Stop Point
 

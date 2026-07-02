@@ -282,7 +282,7 @@ Completed:
 
 ## M7-006: Defeat Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -308,9 +308,16 @@ Validation:
 - Run does not complete after Defeat.
 - No restart, reward, Dice replacement, inventory, or meta progression system is added.
 
+Completed:
+
+- Added a short `Defeat` beat when `BattleOutcomeState` reaches Defeat.
+- Defeat is presented by `RunFlowPresenter` and does not mutate runtime state.
+- Battle input remains blocked by existing Defeat ownership.
+- No restart UI, run summary, meta progression, rewards, Dice replacement, or inventory was added.
+
 ## M7-007: Validate Run Flow Presentation
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

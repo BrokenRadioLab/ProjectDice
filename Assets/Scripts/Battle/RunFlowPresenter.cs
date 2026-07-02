@@ -8,6 +8,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
     private const float NextStageDurationSeconds = 0.65f;
     private const float BattleResumeDurationSeconds = 0.45f;
     private const float RunCompleteDurationSeconds = 0.95f;
+    private const float DefeatDurationSeconds = 0.85f;
     private static Font fallbackFont;
 
     [SerializeField] private RectTransform displayRoot;
@@ -23,8 +24,11 @@ public sealed class RunFlowPresenter : MonoBehaviour
     private Text battleResumeText;
     private RectTransform runCompleteRoot;
     private Text runCompleteText;
+    private RectTransform defeatRoot;
+    private Text defeatText;
     private bool nextStagePresentationPending;
     private bool runCompletePresentationShown;
+    private bool defeatPresentationShown;
 
     public BattleOutcome LastObservedOutcome { get; private set; } = BattleOutcome.InProgress;
     public int LastObservedStageIndex { get; private set; }
@@ -34,6 +38,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
     public bool LastNextStageShown { get; private set; }
     public bool LastBattleResumeShown { get; private set; }
     public bool LastRunCompleteShown { get; private set; }
+    public bool LastDefeatShown { get; private set; }
 
     public IEnumerator PlayBattleOutcome(
         BattleOutcomeState outcomeState,
@@ -60,6 +65,12 @@ public sealed class RunFlowPresenter : MonoBehaviour
         }
 
         LastObservedRunCompleted = runState != null && runState.IsCompleted;
+
+        if (ShouldShowDefeat(outcomeState))
+        {
+            yield return PlayDefeat();
+            yield break;
+        }
 
         if (ShouldShowRunComplete(outcomeState, runState))
         {
@@ -91,6 +102,13 @@ public sealed class RunFlowPresenter : MonoBehaviour
             runState != null &&
             runState.IsCompleted &&
             !runCompletePresentationShown;
+    }
+
+    private bool ShouldShowDefeat(BattleOutcomeState outcomeState)
+    {
+        return outcomeState != null &&
+            outcomeState.IsDefeat &&
+            !defeatPresentationShown;
     }
 
     private IEnumerator PlayStageClear()
@@ -202,6 +220,32 @@ public sealed class RunFlowPresenter : MonoBehaviour
         if (runCompleteRoot != null)
         {
             runCompleteRoot.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator PlayDefeat()
+    {
+        EnsureDefeatView();
+
+        if (defeatRoot == null)
+        {
+            yield break;
+        }
+
+        LastDefeatShown = true;
+        defeatPresentationShown = true;
+        defeatRoot.gameObject.SetActive(true);
+
+        if (defeatText != null)
+        {
+            defeatText.text = "Defeat";
+        }
+
+        yield return new WaitForSeconds(DefeatDurationSeconds);
+
+        if (defeatRoot != null)
+        {
+            defeatRoot.gameObject.SetActive(false);
         }
     }
 
@@ -324,6 +368,34 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         runCompleteText = CreateText("Run Complete Text", runCompleteRoot, 28, TextAnchor.MiddleCenter);
         runCompleteRoot.gameObject.SetActive(false);
+    }
+
+    private void EnsureDefeatView()
+    {
+        EnsureDisplayRoot();
+
+        if (displayRoot == null || defeatRoot != null)
+        {
+            return;
+        }
+
+        GameObject rootObject = new GameObject("Run Flow Defeat");
+        rootObject.layer = displayRoot.gameObject.layer;
+        rootObject.transform.SetParent(displayRoot, false);
+
+        defeatRoot = rootObject.AddComponent<RectTransform>();
+        defeatRoot.anchorMin = new Vector2(0.5f, 0.5f);
+        defeatRoot.anchorMax = new Vector2(0.5f, 0.5f);
+        defeatRoot.pivot = new Vector2(0.5f, 0.5f);
+        defeatRoot.anchoredPosition = new Vector2(0f, 58f);
+        defeatRoot.sizeDelta = new Vector2(340f, 78f);
+
+        Image panelImage = rootObject.AddComponent<Image>();
+        panelImage.raycastTarget = false;
+        panelImage.color = panelColor;
+
+        defeatText = CreateText("Defeat Text", defeatRoot, 28, TextAnchor.MiddleCenter);
+        defeatRoot.gameObject.SetActive(false);
     }
 
     private void EnsureDisplayRoot()
