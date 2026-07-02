@@ -142,7 +142,7 @@ Completed:
 
 ## M7-002: Stage Clear Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -168,9 +168,16 @@ Validation:
 - Stage Clear does not mutate runtime state.
 - Existing player Throw, enemy turn, damage, HP refresh, and battle outcome flow still work.
 
+Completed:
+
+- `RunFlowPresenter` now shows a short `Stage Cleared` presentation beat for non-boss Victory.
+- Stage Clear is skipped for Boss Victory, Defeat, and InProgress outcomes.
+- Stage Clear reads `BattleOutcomeState` and `LinearStageRuntimeState` only.
+- Stage Clear does not advance stages, prepare the next battle, reset battle state, modify HP, modify Dice, unlock rewards, or add reward UI.
+
 ## M7-003: Next Stage Presentation
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

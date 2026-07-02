@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Implemented M7-002 Stage Clear Presentation.
+- `RunFlowPresenter` now shows a short `Stage Cleared` beat after non-boss Victory.
+- Stage Clear is skipped for Boss Victory, Defeat, and InProgress outcomes.
+- Marked M7-002 as DONE and M7-003 Next Stage Presentation as NEXT.
+- No stage advance, next battle preparation, battle reset, reward unlock, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-002.
 - Implemented M7-001 Run Flow Presentation Entry Point.
 - Added `RunFlowPresenter` as a presentation-only consumer of battle outcome, stage, and run completion context.
 - Connected `BattleController` to call the run-flow presentation hook after Victory and Defeat outcomes.

@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Completed Work: M7-001_RUN_FLOW_PRESENTATION_ENTRY_POINT
+Completed Work: M7-002_STAGE_CLEAR_PRESENTATION
 
 ## Summary
 
-Added the M7 run-flow presentation entry point without implementing Stage Clear, Next Stage, Battle Resume, Run Complete, Defeat presentation, rewards, or Dice replacement.
+Added the Stage Clear presentation beat for non-boss Victory without advancing stages, preparing the next battle, unlocking rewards, or replacing Dice faces.
 
 ## Validation Result
 
@@ -35,13 +35,17 @@ PASS
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION is IN_PROGRESS.
 - M7-001 Run Flow Presentation Entry Point is DONE.
-- M7-002 Stage Clear Presentation is NEXT.
+- M7-002 Stage Clear Presentation is DONE.
+- M7-003 Next Stage Presentation is NEXT.
 - M8_REWARD_SELECTION is PENDING and not implemented.
 - M9_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.
 - The run-flow presentation hook does not mutate HP, turn ownership, stage runtime, run state, battle outcome, rewards, or Dice data.
+- Stage Clear appears only for non-boss Victory.
+- Stage Clear does not appear for Boss Victory, Defeat, or InProgress outcomes.
+- Stage Clear is presentation-only and does not advance stages, prepare the next battle, reset battle state, modify HP, modify Dice, unlock rewards, or add reward UI.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
 - Starter Attack Face damage is now 10.
 - Guard, Spark, and Mend still resolve to No Effect.
@@ -118,7 +122,6 @@ PASS
 - No enemy attack resolution or enemy presentation changes were added.
 - No rarity, replacement preview, selected face highlight, rewards, progression, or Face replacement changes were added.
 - No Throw sequence, Dice Animation Layer, battle presentation, Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, inventory, or stage progression changes were added.
-- No Stage Clear presentation was added.
 - No Next Stage presentation was added.
 - No Battle Resume presentation was added.
 - No Run Complete presentation was added.
@@ -126,8 +129,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M7-001 Run Flow Presentation Entry Point.
+Stopped after M7-002 Stage Clear Presentation.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m7_001_run_flow_entry.log`.
+- Unity validation log: `/tmp/projectdice_m7_002_stage_clear.log`.
