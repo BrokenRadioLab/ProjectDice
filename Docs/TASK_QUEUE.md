@@ -177,7 +177,7 @@ Completed:
 
 ## M7-003: Next Stage Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -202,9 +202,16 @@ Validation:
 - No hardcoded fake stage progression is added.
 - No branching map, reward, Dice replacement, inventory, or shop UI is added.
 
+Completed:
+
+- `RunFlowPresenter` now shows the current runtime stage after M6 stage advancement.
+- Next Stage presentation displays `Stage N` and the current `StageType`.
+- Next Stage presentation is triggered only after the previous non-boss Victory Stage Clear beat.
+- Next Stage reads `LinearStageRuntimeState` and does not advance stages, prepare battles, generate maps, create rewards, replace Dice, or mutate runtime state.
+
 ## M7-004: Battle Resume Presentation
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

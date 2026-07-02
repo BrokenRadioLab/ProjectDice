@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Implemented M7-003 Next Stage Presentation.
+- `RunFlowPresenter` now shows the current runtime stage number and stage type after non-boss stage advancement.
+- Next Stage presentation is triggered only after the previous non-boss Victory Stage Clear beat.
+- Marked M7-003 as DONE and M7-004 Battle Resume Presentation as NEXT.
+- No stage advance, battle preparation, map generation, reward creation, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-003.
 - Implemented M7-002 Stage Clear Presentation.
 - `RunFlowPresenter` now shows a short `Stage Cleared` beat after non-boss Victory.
 - Stage Clear is skipped for Boss Victory, Defeat, and InProgress outcomes.

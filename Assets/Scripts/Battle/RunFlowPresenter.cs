@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public sealed class RunFlowPresenter : MonoBehaviour
 {
     private const float StageClearDurationSeconds = 0.55f;
+    private const float NextStageDurationSeconds = 0.65f;
     private static Font fallbackFont;
 
     [SerializeField] private RectTransform displayRoot;
@@ -13,18 +14,29 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
     private RectTransform stageClearRoot;
     private Text stageClearText;
+    private RectTransform nextStageRoot;
+    private Text nextStageTitleText;
+    private Text nextStageTypeText;
+    private bool nextStagePresentationPending;
 
     public BattleOutcome LastObservedOutcome { get; private set; } = BattleOutcome.InProgress;
     public int LastObservedStageIndex { get; private set; }
     public StageType LastObservedStageType { get; private set; } = StageType.Normal;
     public bool LastObservedRunCompleted { get; private set; }
     public bool LastStageClearShown { get; private set; }
+    public bool LastNextStageShown { get; private set; }
 
     public IEnumerator PlayBattleOutcome(
         BattleOutcomeState outcomeState,
         LinearStageRuntimeState stageRuntimeState,
         LinearRunState runState)
     {
+        if (nextStagePresentationPending && stageRuntimeState != null)
+        {
+            yield return PlayNextStage(stageRuntimeState);
+            yield break;
+        }
+
         if (outcomeState == null || outcomeState.IsInProgress)
         {
             yield break;
@@ -43,6 +55,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
         if (ShouldShowStageClear(outcomeState, stageRuntimeState))
         {
             yield return PlayStageClear();
+            nextStagePresentationPending = true;
         }
     }
 
@@ -81,6 +94,40 @@ public sealed class RunFlowPresenter : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayNextStage(LinearStageRuntimeState stageRuntimeState)
+    {
+        EnsureNextStageView();
+
+        if (nextStageRoot == null || stageRuntimeState == null)
+        {
+            nextStagePresentationPending = false;
+            yield break;
+        }
+
+        LastObservedStageIndex = stageRuntimeState.CurrentStageIndex;
+        LastObservedStageType = stageRuntimeState.CurrentStageType;
+        LastNextStageShown = true;
+        nextStagePresentationPending = false;
+
+        if (nextStageTitleText != null)
+        {
+            nextStageTitleText.text = $"Stage {LastObservedStageIndex}";
+        }
+
+        if (nextStageTypeText != null)
+        {
+            nextStageTypeText.text = LastObservedStageType.ToString();
+        }
+
+        nextStageRoot.gameObject.SetActive(true);
+        yield return new WaitForSeconds(NextStageDurationSeconds);
+
+        if (nextStageRoot != null)
+        {
+            nextStageRoot.gameObject.SetActive(false);
+        }
+    }
+
     private void EnsureStageClearView()
     {
         EnsureDisplayRoot();
@@ -107,6 +154,43 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         stageClearText = CreateText("Stage Clear Text", stageClearRoot, 28, TextAnchor.MiddleCenter);
         stageClearRoot.gameObject.SetActive(false);
+    }
+
+    private void EnsureNextStageView()
+    {
+        EnsureDisplayRoot();
+
+        if (displayRoot == null || nextStageRoot != null)
+        {
+            return;
+        }
+
+        GameObject rootObject = new GameObject("Run Flow Next Stage");
+        rootObject.layer = displayRoot.gameObject.layer;
+        rootObject.transform.SetParent(displayRoot, false);
+
+        nextStageRoot = rootObject.AddComponent<RectTransform>();
+        nextStageRoot.anchorMin = new Vector2(0.5f, 0.5f);
+        nextStageRoot.anchorMax = new Vector2(0.5f, 0.5f);
+        nextStageRoot.pivot = new Vector2(0.5f, 0.5f);
+        nextStageRoot.anchoredPosition = new Vector2(0f, 58f);
+        nextStageRoot.sizeDelta = new Vector2(360f, 88f);
+
+        Image panelImage = rootObject.AddComponent<Image>();
+        panelImage.raycastTarget = false;
+        panelImage.color = panelColor;
+
+        nextStageTitleText = CreateText("Next Stage Title Text", nextStageRoot, 27, TextAnchor.UpperCenter);
+        nextStageTitleText.rectTransform.anchorMin = new Vector2(0f, 0.45f);
+        nextStageTitleText.rectTransform.anchorMax = Vector2.one;
+        nextStageTitleText.rectTransform.sizeDelta = new Vector2(-12f, -8f);
+
+        nextStageTypeText = CreateText("Next Stage Type Text", nextStageRoot, 18, TextAnchor.LowerCenter);
+        nextStageTypeText.rectTransform.anchorMin = Vector2.zero;
+        nextStageTypeText.rectTransform.anchorMax = new Vector2(1f, 0.55f);
+        nextStageTypeText.rectTransform.sizeDelta = new Vector2(-12f, -8f);
+
+        nextStageRoot.gameObject.SetActive(false);
     }
 
     private void EnsureDisplayRoot()

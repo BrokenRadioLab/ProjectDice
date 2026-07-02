@@ -2,19 +2,19 @@
 
 Date: 2026-07-02
 
-Task: M7-002_STAGE_CLEAR_PRESENTATION
+Task: M7-003_NEXT_STAGE_PRESENTATION
 
 ## Review Result
 
 PASS
 
-Stage Clear Presentation stays within the requested non-boss Victory presentation-only scope.
+Next Stage Presentation stays within the requested runtime-stage-information-only scope.
 
 ## Scope Check
 
-- Added a short `Stage Cleared` presentation beat to `RunFlowPresenter`.
-- Stage Clear appears only for non-boss Victory.
-- Did not implement Next Stage, Battle Resume, Run Complete, or Defeat presentation.
+- Added a short Next Stage presentation beat to `RunFlowPresenter`.
+- Next Stage displays the current runtime stage number and stage type.
+- Did not implement Battle Resume, Run Complete, or Defeat presentation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
 - Did not add battle end presentation or full battle reset flow.
@@ -76,6 +76,10 @@ Stage Clear Presentation stays within the requested non-boss Victory presentatio
 - Stage Clear does not appear for Boss Victory.
 - Stage Clear does not appear for Defeat.
 - Stage Clear does not mutate HP, Dice, battle outcome, stage runtime, run state, or turn ownership.
+- Next Stage presentation reads `LinearStageRuntimeState`.
+- Next Stage presentation does not advance stages.
+- Next Stage presentation does not prepare battles.
+- Next Stage presentation does not generate maps, create rewards, replace Dice, or mutate runtime state.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -90,4 +94,4 @@ Stage Clear Presentation stays within the requested non-boss Victory presentatio
 
 ## Status
 
-M7-002_STAGE_CLEAR_PRESENTATION is complete.
+M7-003_NEXT_STAGE_PRESENTATION is complete.
