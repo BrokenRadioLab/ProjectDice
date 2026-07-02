@@ -2,19 +2,19 @@
 
 Date: 2026-07-02
 
-Task: M7-003_NEXT_STAGE_PRESENTATION
+Task: M7-004_BATTLE_RESUME_PRESENTATION
 
 ## Review Result
 
 PASS
 
-Next Stage Presentation stays within the requested runtime-stage-information-only scope.
+Battle Resume Presentation stays within the requested return-to-battle readability scope.
 
 ## Scope Check
 
-- Added a short Next Stage presentation beat to `RunFlowPresenter`.
-- Next Stage displays the current runtime stage number and stage type.
-- Did not implement Battle Resume, Run Complete, or Defeat presentation.
+- Added a short Battle Resume presentation beat to `RunFlowPresenter`.
+- Battle Resume displays after Next Stage and before input resumes.
+- Did not implement Run Complete or Defeat presentation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
 - Did not add battle end presentation or full battle reset flow.
@@ -44,6 +44,7 @@ Next Stage Presentation stays within the requested runtime-stage-information-onl
 - Battle presentation and Dice Deck information UI remain separated.
 - Dice Deck remains a runtime build viewer, not battle presentation, reward UI, inventory, or Dice replacement UI.
 - `RunFlowPresenter` consumes runtime state but does not own outcome, stage progression, run completion, HP, turn ownership, rewards, or Dice data.
+- Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 
 ## Validation Review
 
@@ -80,6 +81,9 @@ Next Stage Presentation stays within the requested runtime-stage-information-onl
 - Next Stage presentation does not advance stages.
 - Next Stage presentation does not prepare battles.
 - Next Stage presentation does not generate maps, create rewards, replace Dice, or mutate runtime state.
+- Battle Resume presentation appears after Next Stage.
+- Battle Resume presentation does not mutate HP, turn ownership, battle outcome, stage runtime, run state, or Dice data.
+- Battle Resume presentation does not prepare battles, heal the player, add new enemy setup rules, or unlock rewards.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -89,9 +93,9 @@ Next Stage Presentation stays within the requested runtime-stage-information-onl
 ## Residual Risk
 
 - Human Play Mode review is still needed to confirm the existing battle loop still feels unchanged in-device.
-- Human Play Mode review is still needed to confirm the exact next battle transition feel once presentation is added later.
+- Human Play Mode review is still needed to confirm the exact next battle transition feel on device.
 - Human Play Mode review is still needed to confirm the full five-stage run pacing and in-device feel.
 
 ## Status
 
-M7-003_NEXT_STAGE_PRESENTATION is complete.
+M7-004_BATTLE_RESUME_PRESENTATION is complete.

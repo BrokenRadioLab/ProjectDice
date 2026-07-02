@@ -4,6 +4,11 @@
 
 ### Changed
 
+- Implemented M7-004 Battle Resume Presentation.
+- `RunFlowPresenter` now shows a short `Battle Start` beat after the Next Stage presentation.
+- Battle Resume keeps input locked until the run-flow presentation sequence completes.
+- Marked M7-004 as DONE and M7-005 Run Complete Presentation as NEXT.
+- No rewards, Dice replacement, healing, new enemy setup rules, battle reset logic, stage selection UI, inventory, meta progression, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-004.
 - Implemented M7-003 Next Stage Presentation.
 - `RunFlowPresenter` now shows the current runtime stage number and stage type after non-boss stage advancement.
 - Next Stage presentation is triggered only after the previous non-boss Victory Stage Clear beat.

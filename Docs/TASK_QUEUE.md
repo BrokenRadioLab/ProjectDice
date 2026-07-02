@@ -211,7 +211,7 @@ Completed:
 
 ## M7-004: Battle Resume Presentation
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -238,9 +238,16 @@ Validation:
 - Current runtime Dice persists.
 - Dice Deck still reads from current runtime Dice.
 
+Completed:
+
+- Added a short `Battle Start` beat after the Next Stage presentation.
+- Battle Resume is presented by `RunFlowPresenter` and does not mutate runtime state.
+- Input remains locked until the run-flow presentation sequence completes.
+- M6 next battle preparation behavior remains unchanged.
+
 ## M7-005: Run Complete Presentation
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

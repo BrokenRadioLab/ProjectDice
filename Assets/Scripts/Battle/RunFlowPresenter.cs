@@ -6,6 +6,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
 {
     private const float StageClearDurationSeconds = 0.55f;
     private const float NextStageDurationSeconds = 0.65f;
+    private const float BattleResumeDurationSeconds = 0.45f;
     private static Font fallbackFont;
 
     [SerializeField] private RectTransform displayRoot;
@@ -17,6 +18,8 @@ public sealed class RunFlowPresenter : MonoBehaviour
     private RectTransform nextStageRoot;
     private Text nextStageTitleText;
     private Text nextStageTypeText;
+    private RectTransform battleResumeRoot;
+    private Text battleResumeText;
     private bool nextStagePresentationPending;
 
     public BattleOutcome LastObservedOutcome { get; private set; } = BattleOutcome.InProgress;
@@ -25,6 +28,7 @@ public sealed class RunFlowPresenter : MonoBehaviour
     public bool LastObservedRunCompleted { get; private set; }
     public bool LastStageClearShown { get; private set; }
     public bool LastNextStageShown { get; private set; }
+    public bool LastBattleResumeShown { get; private set; }
 
     public IEnumerator PlayBattleOutcome(
         BattleOutcomeState outcomeState,
@@ -126,6 +130,33 @@ public sealed class RunFlowPresenter : MonoBehaviour
         {
             nextStageRoot.gameObject.SetActive(false);
         }
+
+        yield return PlayBattleResume();
+    }
+
+    private IEnumerator PlayBattleResume()
+    {
+        EnsureBattleResumeView();
+
+        if (battleResumeRoot == null)
+        {
+            yield break;
+        }
+
+        LastBattleResumeShown = true;
+        battleResumeRoot.gameObject.SetActive(true);
+
+        if (battleResumeText != null)
+        {
+            battleResumeText.text = "Battle Start";
+        }
+
+        yield return new WaitForSeconds(BattleResumeDurationSeconds);
+
+        if (battleResumeRoot != null)
+        {
+            battleResumeRoot.gameObject.SetActive(false);
+        }
     }
 
     private void EnsureStageClearView()
@@ -191,6 +222,34 @@ public sealed class RunFlowPresenter : MonoBehaviour
         nextStageTypeText.rectTransform.sizeDelta = new Vector2(-12f, -8f);
 
         nextStageRoot.gameObject.SetActive(false);
+    }
+
+    private void EnsureBattleResumeView()
+    {
+        EnsureDisplayRoot();
+
+        if (displayRoot == null || battleResumeRoot != null)
+        {
+            return;
+        }
+
+        GameObject rootObject = new GameObject("Run Flow Battle Resume");
+        rootObject.layer = displayRoot.gameObject.layer;
+        rootObject.transform.SetParent(displayRoot, false);
+
+        battleResumeRoot = rootObject.AddComponent<RectTransform>();
+        battleResumeRoot.anchorMin = new Vector2(0.5f, 0.5f);
+        battleResumeRoot.anchorMax = new Vector2(0.5f, 0.5f);
+        battleResumeRoot.pivot = new Vector2(0.5f, 0.5f);
+        battleResumeRoot.anchoredPosition = new Vector2(0f, 58f);
+        battleResumeRoot.sizeDelta = new Vector2(320f, 70f);
+
+        Image panelImage = rootObject.AddComponent<Image>();
+        panelImage.raycastTarget = false;
+        panelImage.color = panelColor;
+
+        battleResumeText = CreateText("Battle Resume Text", battleResumeRoot, 25, TextAnchor.MiddleCenter);
+        battleResumeRoot.gameObject.SetActive(false);
     }
 
     private void EnsureDisplayRoot()

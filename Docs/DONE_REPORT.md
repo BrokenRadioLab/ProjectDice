@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Completed Work: M7-003_NEXT_STAGE_PRESENTATION
+Completed Work: M7-004_BATTLE_RESUME_PRESENTATION
 
 ## Summary
 
-Added the Next Stage presentation beat after M6 stage advancement without advancing stages, preparing battles, generating maps, creating rewards, or replacing Dice faces.
+Added a short Battle Resume presentation beat after Next Stage without changing M6 next battle preparation, player HP persistence, runtime Dice persistence, or battle input ownership.
 
 ## Validation Result
 
@@ -37,7 +37,8 @@ PASS
 - M7-001 Run Flow Presentation Entry Point is DONE.
 - M7-002 Stage Clear Presentation is DONE.
 - M7-003 Next Stage Presentation is DONE.
-- M7-004 Battle Resume Presentation is NEXT.
+- M7-004 Battle Resume Presentation is DONE.
+- M7-005 Run Complete Presentation is NEXT.
 - M8_REWARD_SELECTION is PENDING and not implemented.
 - M9_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - `RunFlowPresenter` exists as a presentation-only component.
@@ -50,6 +51,9 @@ PASS
 - Next Stage presentation shows the current runtime stage number and stage type after stage advancement.
 - Next Stage presentation reads `LinearStageRuntimeState`.
 - Next Stage presentation does not advance stages, prepare battles, generate maps, create rewards, replace Dice, modify HP, modify Dice, or mutate runtime state.
+- Battle Resume presentation shows a short `Battle Start` beat after Next Stage.
+- Battle Resume presentation keeps input locked until the run-flow presentation sequence completes.
+- Battle Resume presentation does not advance stages, prepare battles, heal the player, modify HP, modify Dice, reset battle state, or mutate runtime state.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
 - Starter Attack Face damage is now 10.
 - Guard, Spark, and Mend still resolve to No Effect.

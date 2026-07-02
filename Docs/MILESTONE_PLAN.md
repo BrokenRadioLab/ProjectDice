@@ -344,8 +344,8 @@ Detailed Task Status:
 - M7-001 Run Flow Presentation Entry Point is DONE.
 - M7-002 Stage Clear Presentation is DONE.
 - M7-003 Next Stage Presentation is DONE.
-- M7-004 Battle Resume Presentation is NEXT.
-- M7-005 Run Complete Presentation is PENDING.
+- M7-004 Battle Resume Presentation is DONE.
+- M7-005 Run Complete Presentation is NEXT.
 - M7-006 Defeat Presentation is PENDING.
 - M7-007 Validate Run Flow Presentation is PENDING.
 - M7 must consume existing M6 runtime state and must not decide gameplay.
