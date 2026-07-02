@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-07-02
+
+### Changed
+
+- Updated the post-M6 roadmap to insert M7_RUN_FLOW_PRESENTATION before reward and Dice replacement milestones.
+- Split the future reward/build roadmap into M8_REWARD_SELECTION and M9_DICE_FACE_REPLACEMENT.
+- Moved MVP playtest polish behind the reward and Dice replacement flow as M10_MVP_PLAYTEST_POLISH.
+- Tuned starter `Attack` Face damage from 5 to 10 in both `StarterDiceFactory` and the Battle scene's serialized runtime Dice.
+- Guard, Spark, and Mend remain no-effect starter Faces.
+- No Run Flow Presentation, rewards, Dice replacement, new Faces, Guard/Spark/Mend effects, enemy AI, boss mechanics, inventory, or meta progression were added.
+
 ## 2026-07-01
 
 ### Changed
@@ -252,7 +263,7 @@
 - Confirmed each accepted Throw selects one Dice result slot and stores it in `BattleDiceState`.
 - Confirmed result validation text displays selected slot and face.
 - Confirmed selected `DiceFace.FixedThrowDamageValue` is the current Throw damage source.
-- Confirmed Attack faces deal 5 damage and Guard, Spark, and Mend currently deal 0 damage until skill effects are implemented later.
+- Confirmed Attack faces now deal 10 damage and Guard, Spark, and Mend currently deal 0 damage until skill effects are implemented later.
 - Confirmed no Dice overlay animation, face skill activation, enemy turn, rewards, progression, or future systems were added during M2.
 - Marked `M2-009_VALIDATE_M2_DICE_CORE` as DONE and `M2_DICE_CORE` as READY_FOR_DIRECTOR_REVIEW in project tracking documents.
 - Connected Throw damage to the selected Dice face's fixed throw damage value.

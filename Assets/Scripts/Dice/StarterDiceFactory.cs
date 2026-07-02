@@ -9,8 +9,8 @@ public static class StarterDiceFactory
     {
         return new[]
         {
-            new DiceFace("starter_attack", "Attack", DiceFaceCategory.Weapon, 5),
-            new DiceFace("starter_attack", "Attack", DiceFaceCategory.Weapon, 5),
+            new DiceFace("starter_attack", "Attack", DiceFaceCategory.Weapon, 10),
+            new DiceFace("starter_attack", "Attack", DiceFaceCategory.Weapon, 10),
             new DiceFace("starter_guard", "Guard", DiceFaceCategory.Skill, 0),
             new DiceFace("starter_guard", "Guard", DiceFaceCategory.Skill, 0),
             new DiceFace("starter_spark", "Spark", DiceFaceCategory.Skill, 0),

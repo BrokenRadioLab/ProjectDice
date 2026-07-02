@@ -1,14 +1,14 @@
 # DONE REPORT
 
-Date: 2026-07-01
+Date: 2026-07-02
 
 Selected Milestone: M6_LINEAR_STAGE_RUN
 
-Completed Work: TASK_M6-008_VALIDATE_LINEAR_STAGE_RUN
+Completed Work: TASK_ROADMAP_ADJUST_RUN_FLOW_AND_ATTACK_TUNING
 
 ## Summary
 
-Validated the fixed five-stage linear run structure after M6-007 without adding gameplay, rewards, Dice replacement, inventory, presentation, or progression systems.
+Updated the post-M6 roadmap to insert Run Flow Presentation before reward and Dice replacement milestones, and tuned starter Attack damage from 5 to 10.
 
 ## Validation Result
 
@@ -33,6 +33,12 @@ PASS
 - M6-007 Prepare Next Battle is DONE.
 - M6-008 Validate Linear Stage Run is DONE.
 - M6_LINEAR_STAGE_RUN is READY_FOR_DIRECTOR_REVIEW.
+- M7_RUN_FLOW_PRESENTATION is PENDING and not implemented.
+- M8_REWARD_SELECTION is PENDING and not implemented.
+- M9_DICE_FACE_REPLACEMENT is PENDING and not implemented.
+- Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
+- Starter Attack Face damage is now 10.
+- Guard, Spark, and Mend still resolve to No Effect.
 - `BattleOutcome` exists with `InProgress`, `Victory`, and `Defeat`.
 - `BattleOutcomeState` exists as a runtime state holder.
 - Initial battle outcome is `InProgress`.
@@ -109,8 +115,8 @@ PASS
 
 ## Stop Point
 
-Stopped after M6-008 Validate Linear Stage Run.
+Stopped after roadmap adjustment and starter Attack damage tuning.
 
 ## Validation Notes
 
-- Unity validation log: `/tmp/projectdice_m6_008_validate_linear_stage_run.log`.
+- Unity validation log: `/tmp/projectdice_roadmap_attack_tuning.log`.

@@ -68,8 +68,9 @@ Post-M4 Roadmap:
 
 - M5: Enemy Turn.
 - M6: Battle Complete.
-- M7: Reward.
-- M8: Dice Face Replacement.
+- M7: Run Flow Presentation.
+- M8: Reward Selection.
+- M9: Dice Face Replacement.
 - First complete Run.
 
 ## M6 Implementation Tasks
@@ -857,7 +858,7 @@ Implement `Attack` Face as the first MVP gameplay effect using the Face Resolver
 Requirements:
 
 - `Attack` Face resolves to deterministic damage using its current `FixedThrowDamageValue`.
-- Preserve the current 5 damage value for starter `Attack`.
+- Starter `Attack` damage has been tuned to 10 after M6 validation.
 - Applying damage belongs to this current Attack gameplay task because Attack is the only implemented gameplay effect.
 - Enemy HP damage must come from the resolved Attack Face effect, not from a generic Throw damage path.
 - The player-facing cause must remain: Attack Face appeared, therefore attack happened.
@@ -872,11 +873,11 @@ Requirements:
 
 Done Criteria:
 
-- When `Attack` is the selected Face, the resolved Attack effect applies 5 damage through `BattleCombatState` after presentation timing.
+- When `Attack` is the selected Face, the resolved Attack effect applies 10 damage through `BattleCombatState` after presentation timing.
 
 Validation:
 
-- Starter `Attack` Face still resolves to 5 damage.
+- Starter `Attack` Face now resolves to 10 damage.
 - Duplicate `Attack` faces remain separate Dice slots and do not become a unique-face probability table.
 - `BattleCombatState.ApplyDamageToEnemy` is still the only HP mutation path for enemy damage.
 - Damage application still occurs after presentation returns.

@@ -35,8 +35,10 @@ Required MVP pillars:
 5. M4_SKILL_RESOLUTION - DONE
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP - READY_FOR_DIRECTOR_REVIEW
 7. M6_LINEAR_STAGE_RUN - READY_FOR_DIRECTOR_REVIEW
-8. M7_REWARD_AND_FACE_REPLACEMENT - PENDING
-9. M8_MVP_PLAYTEST_POLISH - PENDING
+8. M7_RUN_FLOW_PRESENTATION - PENDING
+9. M8_REWARD_SELECTION - PENDING
+10. M9_DICE_FACE_REPLACEMENT - PENDING
+11. M10_MVP_PLAYTEST_POLISH - PENDING
 
 ## M0_PROJECT_SETUP
 
@@ -307,25 +309,77 @@ Detailed Task Status:
 - M6 must preserve the current player/enemy/player battle loop.
 - M6 must not add rewards, Dice replacement, inventory, shops, branching map, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic.
 
-## M7_REWARD_AND_FACE_REPLACEMENT
+## M7_RUN_FLOW_PRESENTATION
 
 Status: PENDING
 
 Goal:
 
-Validate the core build decision: choosing rewards that alter the Dice.
+Make the completed runtime stage progression visible to the player before introducing rewards or Dice replacement.
+
+Scope:
+
+- Stage Clear presentation after non-boss Victory.
+- Next Stage presentation before the next battle resumes.
+- Run Complete presentation after boss Victory.
+- Defeat presentation if needed for readability.
+- No rewards.
+- No Dice replacement.
+- No inventory, shops, meta progression, branching map, enemy AI, or new Face effects.
+
+Exit Criteria:
+
+- Player can visually understand Stage Clear, Next Stage, and battle resume flow.
+- Runtime stage progression remains owned by M6 systems.
+- Presentation consumes existing runtime state and does not decide gameplay.
+
+Human Review Point:
+
+Confirm the run flow feels readable before adding reward selection.
+
+## M8_REWARD_SELECTION
+
+Status: PENDING
+
+Goal:
+
+Introduce reward choice after eligible run-flow points without implementing Dice face replacement yet.
 
 Scope:
 
 - Basic reward selection after eligible battles.
 - Three reward options.
 - Choose exactly one reward.
-- Weapon and Skill rewards replace one Dice face.
-- Minimal Dice upgrade reward support if needed for MVP validation.
+- No Dice face replacement implementation in this milestone unless explicitly promoted by Director.
+- No inventory, shops, meta progression, branching map, enemy AI, or boss mechanics.
 
 Exit Criteria:
 
 - Player can select one reward.
+- Reward choice can be handed to a later Dice replacement step.
+
+Human Review Point:
+
+Confirm reward choices are understandable before adding face replacement.
+
+## M9_DICE_FACE_REPLACEMENT
+
+Status: PENDING
+
+Goal:
+
+Validate the core build decision: replacing one current runtime Dice face with a selected reward.
+
+Scope:
+
+- Choose which current runtime Dice face to replace.
+- Apply the selected reward to the current runtime Dice.
+- Duplicate faces remain legal.
+- Dice Deck automatically reflects the updated runtime Dice.
+- No inventory, shops, meta progression, branching map, enemy AI, or boss mechanics.
+
+Exit Criteria:
+
 - Player can choose which Dice face to replace.
 - Duplicate faces remain legal.
 - Updated Dice build affects later throws.
@@ -334,7 +388,7 @@ Human Review Point:
 
 Confirm reward choices create the intended question: "What should I replace on my Dice?"
 
-## M8_MVP_PLAYTEST_POLISH
+## M10_MVP_PLAYTEST_POLISH
 
 Status: PENDING
 

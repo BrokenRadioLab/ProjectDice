@@ -2176,11 +2176,11 @@ MonoBehaviour:
     - id: starter_attack
       displayName: Attack
       category: 0
-      fixedThrowDamageValue: 5
+      fixedThrowDamageValue: 10
     - id: starter_attack
       displayName: Attack
       category: 0
-      fixedThrowDamageValue: 5
+      fixedThrowDamageValue: 10
     - id: starter_guard
       displayName: Guard
       category: 1

@@ -1,6 +1,6 @@
 # CURRENT STATE
 
-Last Updated: 2026-07-01
+Last Updated: 2026-07-02
 
 ## Source of Truth
 
@@ -35,6 +35,9 @@ The project is in MVP foundation work.
 - M4_SKILL_RESOLUTION is DONE and approved by Director review.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
 - M6_LINEAR_STAGE_RUN is READY_FOR_DIRECTOR_REVIEW.
+- M7_RUN_FLOW_PRESENTATION is PENDING and must not be implemented until selected.
+- M8_REWARD_SELECTION is PENDING.
+- M9_DICE_FACE_REPLACEMENT is PENDING.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -148,10 +151,12 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 3. M2_DICE_CORE
 4. M3_DICE_PRESENTATION
 5. M4_SKILL_RESOLUTION
-6. M5_ENEMY_TURN_AND_BATTLE_END
+6. M5_ENEMY_TURN_AND_BATTLE_LOOP
 7. M6_LINEAR_STAGE_RUN
-8. M7_REWARD_AND_FACE_REPLACEMENT
-9. M8_MVP_PLAYTEST_POLISH
+8. M7_RUN_FLOW_PRESENTATION
+9. M8_REWARD_SELECTION
+10. M9_DICE_FACE_REPLACEMENT
+11. M10_MVP_PLAYTEST_POLISH
 
 ## MVP Must Include
 
@@ -228,8 +233,9 @@ Post-M3 roadmap:
 - M4: Face Skill Resolution. READY.
 - M5: Enemy Turn and Battle Loop. IN_PROGRESS.
 - M6: Battle Complete.
-- M7: Reward.
-- M8: Dice Face Replacement.
+- M7: Run Flow Presentation.
+- M8: Reward Selection.
+- M9: Dice Face Replacement.
 - First complete Run.
 
 Director-locked M4 principle:
@@ -328,7 +334,7 @@ Current Battle scene result:
 - Codex confirmed `BattleController` no longer directly reads `DiceFace.FixedThrowDamageValue` for damage application.
 - Codex confirmed starter Dice has six serialized face slots: Attack, Attack, Guard, Guard, Spark, and Mend.
 - Codex confirmed duplicate face slots are represented as duplicate entries in the selection pool.
-- Codex confirmed Attack faces have `fixedThrowDamageValue` 5.
+- Codex confirmed Attack faces have `fixedThrowDamageValue` 10.
 - Codex confirmed Guard, Spark, and Mend currently have `fixedThrowDamageValue` 0 because skill effects are not implemented yet.
 - Codex confirmed selected-slot validation text displays as small corner `RESULT S#: FaceName` through `BattleDiceResultPresenter`.
 - Codex confirmed `BattleCombatState` only applies received deterministic damage and does not own Dice logic.

@@ -1,19 +1,20 @@
 # SELF_REVIEW_REPORT
 
-Date: 2026-07-01
+Date: 2026-07-02
 
-Task: TASK_M6-008_VALIDATE_LINEAR_STAGE_RUN
+Task: TASK_ROADMAP_ADJUST_RUN_FLOW_AND_ATTACK_TUNING
 
 ## Review Result
 
 PASS
 
-Validate Linear Stage Run stays within the requested validation-only scope.
+Roadmap adjustment and starter Attack tuning stay within the requested narrow scope.
 
 ## Scope Check
 
-- Did not change gameplay code.
-- Completed M6-008 through static flow validation, scope checks, and Unity import/compile validation.
+- Changed only starter Attack Face damage from 5 to 10.
+- Updated roadmap documentation to insert Run Flow Presentation before Reward Selection and Dice Face Replacement.
+- Did not implement Run Flow Presentation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
 - Did not add battle end presentation or full battle reset flow.
@@ -21,9 +22,10 @@ Validate Linear Stage Run stays within the requested validation-only scope.
 - Did not add restart flow or new run creation.
 - Did not add healing rules.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
+- Did not add new Faces, Guard/Spark/Mend gameplay effects, enemy AI, or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
-- Did not change Dice Core, Face Resolution, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
+- Did not change Dice result selection, FaceResolver logic, EnemyAttackResolver, BattleTurnState, ThrowSequencePresenter, EnemyAttackPresenter, BattleHudPresenter, or Dice Deck logic.
 - Did not change post-outcome runtime flow: non-boss Victory can advance the fixed stage position and prepare the next battle, Boss Victory completes the run, and Defeat prevents PlayerTurn from resuming.
 
 ## Architecture Check
@@ -63,6 +65,9 @@ Validate Linear Stage Run stays within the requested validation-only scope.
 - Current runtime Dice persists across next battle preparation.
 - Player HP persists across next battle preparation.
 - Dice Deck runtime data continues to read from current runtime Dice.
+- Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
+- Attack Face now resolves to 10 damage because `FaceResolver` consumes the selected Face's `FixedThrowDamageValue`.
+- Guard, Spark, and Mend still resolve to No Effect.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -77,4 +82,4 @@ Validate Linear Stage Run stays within the requested validation-only scope.
 
 ## Status
 
-TASK_M6-008_VALIDATE_LINEAR_STAGE_RUN is complete.
+TASK_ROADMAP_ADJUST_RUN_FLOW_AND_ATTACK_TUNING is complete.
