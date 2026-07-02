@@ -174,6 +174,11 @@ The project is in MVP foundation work.
 - Every starter Face now has gameplay value: Attack offense, Guard defense, Lightning secondary offense, and Mend recovery.
 - No starter Face remains No Effect.
 - Reward Selection, Dice Face Replacement, inventory, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, and multi-enemy gameplay remain unimplemented.
+- Post-M8 presentation readability fix is complete.
+- Face Effect detail now remains visible long enough to read and uses a multi-line result format.
+- Enemy damage number now appears near the enemy body, floats upward, fades out, and represents actual enemy HP damage only.
+- Enemy hit feedback now includes stronger flash, a short shake, and a small hit spark.
+- Presentation still consumes already calculated runtime data and does not decide gameplay values.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.

@@ -4,6 +4,14 @@
 
 ### Changed
 
+- Completed `TASK_M8_PRESENTATION_READABILITY_FIX`.
+- Increased Face Effect detail readability by extending the Face Effect beat to 1.25 seconds.
+- Face Effect detail now shows the Face name, Base Throw Damage, Face modifier, and final enemy damage/recovery context in a multi-line format.
+- Enemy damage number now appears near the enemy body instead of only as central Dice Layer text.
+- Enemy damage number now shows actual enemy HP damage, floats upward, and fades out.
+- Enemy hit feedback now includes a stronger flash, a short enemy shake, and a small hit spark.
+- Damage Number remains presentation-only and consumes already calculated pending enemy HP damage.
+- No gameplay values, HP mutation order, FaceResolver logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI were changed.
 - Completed M8-006 Validate Starter Face Gameplay.
 - Confirmed starter Dice Base Throw Damage is 3.
 - Confirmed starter Dice contains Attack, Attack, Guard, Guard, Lightning, and Mend.

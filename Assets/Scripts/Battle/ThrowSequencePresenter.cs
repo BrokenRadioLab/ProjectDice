@@ -22,16 +22,19 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     [SerializeField, Min(0.01f)] private float enemyIdleFrameDuration = 0.18f;
     [SerializeField, Min(0)] private int projectileSpawnThrowFrame = 5;
     [SerializeField, Min(0.01f)] private float projectileDuration = 0.08f;
-    [SerializeField, Min(0.01f)] private float enemyFlashDuration = 0.05f;
+    [SerializeField, Min(0.01f)] private float enemyFlashDuration = 0.12f;
     [SerializeField, Min(0.01f)] private float diceLayerAppearDuration = 0.1f;
     [SerializeField, Min(0.01f)] private float diceRollingDuration = 0.45f;
     [SerializeField, Min(0.01f)] private float diceRollFrameDuration = 0.08f;
     [SerializeField, Min(0.01f)] private float faceRevealDuration = 0.2f;
-    [SerializeField, Min(0.01f)] private float faceEffectDuration = 0.15f;
-    [SerializeField, Min(0.01f)] private float damageNumberDuration = 0.15f;
+    [SerializeField, Min(0.01f)] private float faceEffectDuration = 1.25f;
+    [SerializeField, Min(0.01f)] private float damageNumberDuration = 0.55f;
     [SerializeField, Min(1f)] private float projectileThickness = 3f;
     [SerializeField] private Vector2 rollingDiceSize = new Vector2(288f, 288f);
     [SerializeField] private Vector2 diceResultPosition = new Vector2(0f, -56f);
+    [SerializeField] private Vector2 enemyDamageNumberOffset = new Vector2(0f, 72f);
+    [SerializeField] private Vector2 enemyDamageNumberFloatOffset = new Vector2(0f, 42f);
+    [SerializeField] private Vector2 enemyHitShakeOffset = new Vector2(10f, 0f);
     [SerializeField] private Color projectileColor = Color.white;
     [SerializeField] private Color enemyFlashColor = new Color(1f, 0.95f, 0.88f, 0.55f);
     [SerializeField] private Color diceFrameColor = new Color(0.16f, 0.13f, 0.12f, 0.96f);
@@ -48,6 +51,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     private Text faceRevealText;
     private Text faceEffectText;
     private Text damageNumberText;
+    private Image hitSpark;
     private Color originalEnemyColor;
     private Sprite[] heroIdleFrames;
     private Sprite[] heroThrowFrames;
@@ -91,6 +95,8 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         HideFaceEffectText();
         EnsureDamageNumberText();
         HideDamageNumberText();
+        EnsureHitSpark();
+        HideHitSpark();
         HideDiceAnimationLayer();
     }
 
@@ -104,24 +110,13 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     {
         CacheOriginalColors();
         yield return PlayHeroThrowAnimation();
-
-        if (enemyPlaceholder != null)
-        {
-            enemyPlaceholder.color = enemyFlashColor;
-        }
-
-        yield return new WaitForSeconds(enemyFlashDuration);
-
-        if (enemyPlaceholder != null)
-        {
-            enemyPlaceholder.color = originalEnemyColor;
-        }
+        yield return PlayEnemyHitFeedback();
 
         ShowDiceAnimationLayer();
         yield return new WaitForSeconds(diceLayerAppearDuration);
         yield return PlayRollingPresentation();
         yield return PlayFaceReveal(selectedFace);
-        yield return PlayFaceEffect(faceEffect, baseThrowDamage);
+        yield return PlayFaceEffect(faceEffect, baseThrowDamage, damageAmount);
         yield return PlayDamageNumber(damageAmount);
         HideDiceAnimationLayer();
     }
@@ -132,6 +127,46 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         {
             originalEnemyColor = enemyPlaceholder.color;
         }
+    }
+
+    private IEnumerator PlayEnemyHitFeedback()
+    {
+        RectTransform enemyTransform = enemySlot;
+        Vector2 originalEnemyPosition = enemyTransform != null ? enemyTransform.anchoredPosition : Vector2.zero;
+        float elapsed = 0f;
+
+        ShowHitSpark();
+
+        if (enemyPlaceholder != null)
+        {
+            enemyPlaceholder.color = enemyFlashColor;
+        }
+
+        while (elapsed < enemyFlashDuration)
+        {
+            elapsed += Time.deltaTime;
+            float phase = Mathf.Clamp01(elapsed / enemyFlashDuration);
+
+            if (enemyTransform != null)
+            {
+                float direction = phase < 0.5f ? 1f : -1f;
+                enemyTransform.anchoredPosition = originalEnemyPosition + enemyHitShakeOffset * direction;
+            }
+
+            yield return null;
+        }
+
+        if (enemyTransform != null)
+        {
+            enemyTransform.anchoredPosition = originalEnemyPosition;
+        }
+
+        if (enemyPlaceholder != null)
+        {
+            enemyPlaceholder.color = originalEnemyColor;
+        }
+
+        HideHitSpark();
     }
 
     public IEnumerator PlayHeroHitAnimation()
@@ -682,14 +717,30 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
 
         RectTransform damageTransform = damageNumberText.rectTransform;
-        damageTransform.anchoredPosition = diceResultPosition + new Vector2(0f, 168f);
+        Vector2 startPosition = GetEnemyPopupPosition(enemyDamageNumberOffset);
+        Vector2 endPosition = startPosition + enemyDamageNumberFloatOffset;
+        Color startColor = damageNumberTextColor;
+        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+        damageTransform.anchoredPosition = startPosition;
         damageNumberText.text = damageAmount.ToString();
+        damageNumberText.color = startColor;
         damageNumberText.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(damageNumberDuration);
+        float elapsed = 0f;
+        while (elapsed < damageNumberDuration)
+        {
+            elapsed += Time.deltaTime;
+            float phase = Mathf.Clamp01(elapsed / damageNumberDuration);
+            damageTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, phase);
+            damageNumberText.color = Color.Lerp(startColor, endColor, phase);
+            yield return null;
+        }
+
+        HideDamageNumberText();
     }
 
-    private IEnumerator PlayFaceEffect(FaceEffectData faceEffect, int baseThrowDamage)
+    private IEnumerator PlayFaceEffect(FaceEffectData faceEffect, int baseThrowDamage, int enemyDamageAmount)
     {
         EnsureFaceEffectText();
 
@@ -700,7 +751,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         RectTransform effectTransform = faceEffectText.rectTransform;
         effectTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
-        faceEffectText.text = GetFaceEffectText(faceEffect, baseThrowDamage);
+        faceEffectText.text = GetFaceEffectText(faceEffect, baseThrowDamage, enemyDamageAmount);
         faceEffectText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(faceEffectDuration);
@@ -775,15 +826,15 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         textTransform.anchorMax = new Vector2(0.5f, 0.5f);
         textTransform.pivot = new Vector2(0.5f, 0.5f);
         textTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
-        textTransform.sizeDelta = new Vector2(280f, 46f);
+        textTransform.sizeDelta = new Vector2(320f, 96f);
 
         faceEffectText = textObject.AddComponent<Text>();
         faceEffectText.raycastTarget = false;
         faceEffectText.alignment = TextAnchor.MiddleCenter;
-        faceEffectText.fontSize = 18;
+        faceEffectText.fontSize = 24;
         faceEffectText.resizeTextForBestFit = true;
         faceEffectText.resizeTextMinSize = 10;
-        faceEffectText.resizeTextMaxSize = 18;
+        faceEffectText.resizeTextMaxSize = 24;
         faceEffectText.color = faceEffectTextColor;
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
@@ -798,13 +849,14 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
     }
 
-    private static string GetFaceEffectText(FaceEffectData faceEffect, int baseThrowDamage)
+    private static string GetFaceEffectText(FaceEffectData faceEffect, int baseThrowDamage, int enemyDamageAmount)
     {
-        string baseText = $"Base {Mathf.Max(0, baseThrowDamage)}";
+        int safeBaseDamage = Mathf.Max(0, baseThrowDamage);
+        int safeEnemyDamage = Mathf.Max(0, enemyDamageAmount);
 
         if (faceEffect == null || !faceEffect.IsImplemented)
         {
-            return $"{baseText} + No Effect";
+            return $"Unknown\nBase {safeBaseDamage}\n= {safeEnemyDamage} Damage";
         }
 
         string faceName = string.IsNullOrWhiteSpace(faceEffect.SourceFaceDisplayName)
@@ -813,20 +865,20 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         if (faceEffect.EffectType == FaceEffectType.Damage)
         {
-            return $"{baseText} + {faceName} +{faceEffect.DamageAmount}";
+            return $"{faceName}\nBase {safeBaseDamage} + {faceEffect.DamageAmount}\n= {safeEnemyDamage} Damage";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Guard)
         {
-            return $"{baseText} + Guard -{faceEffect.IncomingDamageReductionAmount}";
+            return $"{faceName}\nBase {safeBaseDamage} = {safeEnemyDamage} Damage\nEnemy Damage -{faceEffect.IncomingDamageReductionAmount}";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Mend)
         {
-            return $"{baseText} + Mend +{faceEffect.HealAmount} HP";
+            return $"{faceName}\nBase {safeBaseDamage} = {safeEnemyDamage} Damage\nHeal +{faceEffect.HealAmount} HP";
         }
 
-        return $"{baseText} + Effect";
+        return $"{faceName}\nBase {safeBaseDamage}\n= {safeEnemyDamage} Damage";
     }
 
     private void EnsureDamageNumberText()
@@ -843,24 +895,24 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return;
         }
 
-        GameObject textObject = new GameObject("Damage Number Text");
-        textObject.layer = diceAnimationLayer.gameObject.layer;
-        textObject.transform.SetParent(diceAnimationLayer, false);
+        GameObject textObject = new GameObject("Enemy Damage Number Text");
+        textObject.layer = battleField != null ? battleField.gameObject.layer : diceAnimationLayer.gameObject.layer;
+        textObject.transform.SetParent(battleField != null ? battleField : diceAnimationLayer, false);
 
         RectTransform textTransform = textObject.AddComponent<RectTransform>();
         textTransform.anchorMin = new Vector2(0.5f, 0.5f);
         textTransform.anchorMax = new Vector2(0.5f, 0.5f);
         textTransform.pivot = new Vector2(0.5f, 0.5f);
-        textTransform.anchoredPosition = diceResultPosition + new Vector2(0f, 168f);
-        textTransform.sizeDelta = new Vector2(160f, 52f);
+        textTransform.anchoredPosition = GetEnemyPopupPosition(enemyDamageNumberOffset);
+        textTransform.sizeDelta = new Vector2(180f, 72f);
 
         damageNumberText = textObject.AddComponent<Text>();
         damageNumberText.raycastTarget = false;
         damageNumberText.alignment = TextAnchor.MiddleCenter;
-        damageNumberText.fontSize = 42;
+        damageNumberText.fontSize = 54;
         damageNumberText.resizeTextForBestFit = true;
         damageNumberText.resizeTextMinSize = 12;
-        damageNumberText.resizeTextMaxSize = 42;
+        damageNumberText.resizeTextMaxSize = 54;
         damageNumberText.color = damageNumberTextColor;
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
@@ -873,5 +925,65 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         {
             damageNumberText.gameObject.SetActive(false);
         }
+    }
+
+    private void EnsureHitSpark()
+    {
+        if (hitSpark != null)
+        {
+            return;
+        }
+
+        if (battleField == null)
+        {
+            return;
+        }
+
+        GameObject sparkObject = new GameObject("Enemy Hit Spark");
+        sparkObject.layer = battleField.gameObject.layer;
+        sparkObject.transform.SetParent(battleField, false);
+
+        RectTransform sparkTransform = sparkObject.AddComponent<RectTransform>();
+        sparkTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        sparkTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        sparkTransform.pivot = new Vector2(0.5f, 0.5f);
+        sparkTransform.anchoredPosition = GetEnemyPopupPosition(Vector2.zero);
+        sparkTransform.sizeDelta = new Vector2(28f, 28f);
+
+        hitSpark = sparkObject.AddComponent<Image>();
+        hitSpark.raycastTarget = false;
+        hitSpark.color = new Color(1f, 0.84f, 0.32f, 0.95f);
+    }
+
+    private void ShowHitSpark()
+    {
+        EnsureHitSpark();
+
+        if (hitSpark == null)
+        {
+            return;
+        }
+
+        RectTransform sparkTransform = hitSpark.rectTransform;
+        sparkTransform.anchoredPosition = GetEnemyPopupPosition(new Vector2(-22f, 8f));
+        hitSpark.gameObject.SetActive(true);
+    }
+
+    private void HideHitSpark()
+    {
+        if (hitSpark != null)
+        {
+            hitSpark.gameObject.SetActive(false);
+        }
+    }
+
+    private Vector2 GetEnemyPopupPosition(Vector2 offset)
+    {
+        if (enemySlot != null)
+        {
+            return enemySlot.anchoredPosition + offset;
+        }
+
+        return new Vector2(180f, 32f) + offset;
     }
 }

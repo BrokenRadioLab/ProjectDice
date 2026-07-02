@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Completed Work: M8-006_VALIDATE_STARTER_FACE_GAMEPLAY
+Completed Work: TASK_M8_PRESENTATION_READABILITY_FIX
 
 ## Summary
 
-Validated M8 Starter Face Gameplay and confirmed every starter Face now has meaningful gameplay value before Reward Selection.
+Improved post-M8 battle feedback readability without changing gameplay values.
 
 ## Validation Result
 
@@ -52,6 +52,7 @@ PASS
 - M8-004 Mend Gameplay is DONE.
 - M8-005 Face Presentation Polish is DONE.
 - M8-006 Validate Starter Face Gameplay is DONE.
+- TASK_M8_PRESENTATION_READABILITY_FIX is DONE.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
 - Starter Dice has Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
@@ -78,6 +79,13 @@ PASS
 - Mend is the recovery Face: Base 3 plus up to 5 HP recovery, clamped by Player Max HP.
 - No starter Face remains No Effect.
 - Reward Selection and Dice Face Replacement were not implemented.
+- Face Effect detail remains visible long enough to read.
+- Face Effect detail now shows Face name, Base Throw Damage, Face modifier, and total enemy damage or recovery context.
+- Enemy damage number appears near the enemy body.
+- Enemy damage number represents actual enemy HP damage only.
+- Enemy damage number floats upward and fades out.
+- Enemy hit feedback now includes stronger flash, a short enemy shake, and a small hit spark.
+- No gameplay values, HP mutation order, FaceResolver logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI were changed.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.

@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M8-006_VALIDATE_STARTER_FACE_GAMEPLAY
+Task: TASK_M8_PRESENTATION_READABILITY_FIX
 
 ## Review Result
 
 PASS
 
-Starter Face Gameplay validation confirms M8 satisfies the locked Dice Combat Philosophy before Reward Selection begins.
+Post-M8 presentation readability polish improves result clarity while preserving the locked gameplay formula and architecture.
 
 ## Scope Check
 
@@ -22,6 +22,7 @@ Starter Face Gameplay validation confirms M8 satisfies the locked Dice Combat Ph
 - Implemented M8-004 Mend Gameplay.
 - Implemented M8-005 Face Presentation Polish.
 - Completed M8-006 Validate Starter Face Gameplay.
+- Completed TASK_M8_PRESENTATION_READABILITY_FIX.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
@@ -42,6 +43,7 @@ Starter Face Gameplay validation confirms M8 satisfies the locked Dice Combat Ph
 - Did not add new Faces beyond renaming starter Spark to Lightning.
 - Did not add new Face effects during presentation polish.
 - Did not make presentation code decide gameplay values.
+- Did not change Base Throw Damage, Attack modifier, Guard reduction, Lightning damage, Mend heal amount, enemy damage, HP mutation order, FaceResolver gameplay logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI.
 - Did not add enemy AI or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
@@ -71,6 +73,9 @@ Starter Face Gameplay validation confirms M8 satisfies the locked Dice Combat Ph
 - `BattleCombatState.HealPlayer(int healing)` owns player HP recovery and clamps healing at Player Max HP.
 - `ThrowSequencePresenter` consumes selected Face, FaceEffectData, applied damage, and Base Throw Damage for presentation only.
 - M8 remains separate from Reward Selection and Dice Face Replacement.
+- `ThrowSequencePresenter` now uses already calculated pending enemy HP damage for the enemy-local damage number.
+- Enemy-local damage popup remains presentation-only and does not mutate HP.
+- Hit spark and enemy shake remain presentation-only feedback.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
@@ -105,6 +110,9 @@ Starter Face Gameplay validation confirms M8 satisfies the locked Dice Combat Ph
 - Lightning currently adds a 3 damage Face modifier after Base Throw Damage.
 - Mend currently heals up to 5 HP after Base Throw Damage.
 - Unity batchmode compile validation completed successfully for M8-006.
+- Face Effect detail duration is 1.25 seconds.
+- Enemy damage number appears near the enemy body, floats upward, and fades out.
+- Enemy damage number shows enemy HP damage only.
 - Run-flow presentation hook does not mutate HP.
 - Run-flow presentation hook does not mutate turn ownership.
 - Run-flow presentation hook does not mutate stage runtime or run state.

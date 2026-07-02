@@ -649,6 +649,39 @@ Completed:
 - Confirmed Unity batchmode compile passes with no `NullReferenceException` or `MissingReferenceException`.
 - M8_STARTER_FACE_GAMEPLAY is ready for Director review.
 
+## TASK_M8_PRESENTATION_READABILITY_FIX
+
+Status: DONE
+
+Goal:
+
+Improve battle feedback readability after M8 Starter Face Gameplay without changing gameplay values.
+
+Requirements:
+
+- Keep existing gameplay values unchanged.
+- Keep existing battle flow order.
+- Make Face Effect detail readable long enough for mobile landscape play.
+- Show Face name, Base Throw Damage, Face modifier, and total enemy damage or recovery context.
+- Show actual enemy HP damage near the enemy body.
+- Make enemy damage number float upward and fade out.
+- Strengthen enemy hit feedback with small SNES-style effects.
+- Presentation must consume already calculated runtime data and must not decide gameplay.
+
+Completed:
+
+- Increased Face Effect detail duration to 1.25 seconds.
+- Reformatted Face Effect detail into multi-line MVP-readable result text.
+- Attack can show `Attack`, `Base 3 + 5`, `= 8 Damage`.
+- Guard can show `Guard`, `Base 3 = 3 Damage`, `Enemy Damage -3`.
+- Lightning can show `Lightning`, `Base 3 + 3`, `= 6 Damage`.
+- Mend can show `Mend`, `Base 3 = 3 Damage`, `Heal +5 HP`.
+- Enemy damage number now appears near the enemy body.
+- Enemy damage number uses actual pending enemy HP damage only.
+- Enemy damage number floats upward and fades out.
+- Enemy hit feedback now includes stronger flash, a short enemy shake, and a small hit spark.
+- No Base Throw Damage, Face modifier, Guard reduction, Lightning damage, Mend healing, enemy damage, HP mutation order, FaceResolver gameplay logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI was changed.
+
 ## M6 Implementation Tasks
 
 Status: DONE
