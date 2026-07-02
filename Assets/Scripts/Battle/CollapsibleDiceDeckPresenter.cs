@@ -11,9 +11,9 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
     private const float ToggleHeight = 72f;
     private const float ToggleLeftPadding = 28f;
     private const float PanelGap = 12f;
-    private const float PanelWidth = 432f;
-    private const float PanelHeight = 72f;
-    private const float SlotSize = 52f;
+    private const float PanelWidth = 840f;
+    private const float PanelHeight = 140f;
+    private const float SlotSize = 120f;
     private const float SlotSpacing = 12f;
 
     [SerializeField] private BattleDiceState battleDiceState;
@@ -215,11 +215,11 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
         rowImage.raycastTarget = false;
         rowImage.color = rowColor;
 
-        Text rowText = CreateText("Dice Deck Slot Text", rowTransform, 13, TextAnchor.MiddleCenter);
+        Text rowText = CreateText("Dice Deck Slot Text", rowTransform, 30, TextAnchor.MiddleCenter);
         rowText.rectTransform.anchorMin = Vector2.zero;
         rowText.rectTransform.anchorMax = Vector2.one;
         rowText.rectTransform.anchoredPosition = Vector2.zero;
-        rowText.rectTransform.sizeDelta = new Vector2(-6f, -6f);
+        rowText.rectTransform.sizeDelta = new Vector2(-12f, -12f);
         return rowText;
     }
 
@@ -266,8 +266,9 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
                 continue;
             }
 
-            DiceFace face = dice != null && i < dice.FaceCount ? dice.GetFace(i) : null;
-            slotTexts[i].text = GetFaceLabel(face);
+            bool isLocked = dice != null && i >= dice.ActiveFaceSlotCount;
+            DiceFace face = dice != null && i < dice.FaceCount && !isLocked ? dice.GetFace(i) : null;
+            slotTexts[i].text = isLocked ? "Locked" : GetFaceLabel(face);
         }
     }
 

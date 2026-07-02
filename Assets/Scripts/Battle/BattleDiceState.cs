@@ -28,6 +28,17 @@ public sealed class BattleDiceState : MonoBehaviour
         }
     }
 
+    public void SetCurrentDice(DiceModel dice)
+    {
+        if (!HasPlayableDice(dice))
+        {
+            currentDice = StarterDiceFactory.CreateStarterDice();
+            return;
+        }
+
+        currentDice = new DiceModel(dice.GetFacesSnapshot(), dice.BaseThrowDamage, dice.ActiveFaceSlotCount);
+    }
+
     public void BeginThrowRoll()
     {
         EnsureStarterDice();
@@ -58,7 +69,7 @@ public sealed class BattleDiceState : MonoBehaviour
             return false;
         }
 
-        for (int i = 0; i < DiceModel.FaceSlotCount; i++)
+        for (int i = 0; i < dice.ActiveFaceSlotCount; i++)
         {
             if (dice.GetFace(i) == null)
             {

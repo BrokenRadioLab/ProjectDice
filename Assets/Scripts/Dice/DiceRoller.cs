@@ -15,6 +15,16 @@ public static class DiceRoller
             throw new InvalidOperationException($"Dice must contain exactly {DiceModel.FaceSlotCount} face slots.");
         }
 
-        return UnityEngine.Random.Range(0, DiceModel.FaceSlotCount);
+        int activeFaceSlotCount = dice.ActiveFaceSlotCount;
+
+        for (int i = 0; i < activeFaceSlotCount; i++)
+        {
+            if (dice.GetFace(i) == null)
+            {
+                throw new InvalidOperationException("Active Dice face slots must not be locked.");
+            }
+        }
+
+        return UnityEngine.Random.Range(0, activeFaceSlotCount);
     }
 }

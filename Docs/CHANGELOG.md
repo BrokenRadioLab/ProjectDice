@@ -4,6 +4,29 @@
 
 ### Changed
 
+- Implemented M9-001 Starter Dice Build UI.
+- Added Run Start flow before Battle input unlocks.
+- Added `StarterDiceBuildPresenter` for Main Menu, Start Run, Starter Dice Build, and Battle handoff.
+- Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Player can choose 4 active Faces for the Wood Dice before battle.
+- Wood Dice runtime build now uses 4 Active Face Slots and 2 Locked Slots.
+- `DiceModel` now tracks active Face slot count.
+- `DiceRoller` now selects only from active Face slots.
+- Starter Dice Build UI displays a live Dice preview and probability summary.
+- Existing Battle scene consumes the generated runtime Dice through `BattleDiceState`.
+- No Reward Selection, Dice Face Replacement, inventory, shops, meta progression UI, new Face gameplay, Dice Tier progression, Hunter progression, enemy AI, boss mechanics, or multi-enemy gameplay was added for M9-001.
+- Revised the roadmap before Reward Selection.
+- Marked M8_STARTER_FACE_GAMEPLAY as DONE after Director approval.
+- Inserted M9_STARTER_DICE_BUILD before Reward Selection.
+- Moved Reward Selection to M10.
+- Moved Dice Face Replacement to M11.
+- Moved MVP Playtest Polish to M12.
+- Documented Starter Dice Build design: choose 4 active Faces from Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Documented Wood Dice as physical D6 with 4 Active Face Slots and 2 Locked Slots.
+- Documented that Locked Slots are inactive, not rolled, not Blank, and not Retry.
+- Increased expanded Dice Deck slot/UI scale for readability while keeping the collapsed button position.
+- Dice Deck still reads current runtime Dice state and remains Battle Information UI only.
+- No Reward Selection, Dice Face Replacement, gameplay value changes, inventory, meta progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 - Completed `TASK_M8_PRESENTATION_READABILITY_FIX`.
 - Increased Face Effect detail readability by extending the Face Effect beat to 1.25 seconds.
 - Face Effect detail now shows the Face name, Base Throw Damage, Face modifier, and final enemy damage/recovery context in a multi-line format.

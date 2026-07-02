@@ -26,6 +26,7 @@ Required MVP pillars:
 - Five-stage linear progression.
 - Basic reward selection.
 - Dice face replacement.
+- Starter Dice build before reward selection.
 
 ## Milestone Status
 
@@ -37,10 +38,11 @@ Required MVP pillars:
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP - DONE
 7. M6_LINEAR_STAGE_RUN - DONE
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
-9. M8_STARTER_FACE_GAMEPLAY - READY_FOR_DIRECTOR_REVIEW
-10. M9_REWARD_SELECTION - PENDING
-11. M10_DICE_FACE_REPLACEMENT - PENDING
-12. M11_MVP_PLAYTEST_POLISH - PENDING
+9. M8_STARTER_FACE_GAMEPLAY - DONE
+10. M9_STARTER_DICE_BUILD - IN_PROGRESS
+11. M10_REWARD_SELECTION - PENDING
+12. M11_DICE_FACE_REPLACEMENT - PENDING
+13. M12_MVP_PLAYTEST_POLISH - PENDING
 
 ## M0_PROJECT_SETUP
 
@@ -313,7 +315,7 @@ Detailed Task Status:
 
 ## M7_RUN_FLOW_PRESENTATION
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 Goal:
 
@@ -395,10 +397,48 @@ Detailed Task Status:
 - M8-004 Mend Gameplay is DONE.
 - M8-005 Face Presentation Polish is DONE.
 - M8-006 Validate Starter Face Gameplay is DONE.
-- M8 is ready for Director review.
+- M8 is approved and DONE.
 - M8 must follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
 
-## M9_REWARD_SELECTION
+## M9_STARTER_DICE_BUILD
+
+Status: IN_PROGRESS
+
+Goal:
+
+Allow the player to build the starting Dice before a run begins.
+
+Scope:
+
+- Display the unlocked Starter Face Pool.
+- Initial unlocked Starter Face Pool is Attack x2, Guard x1, Mend x1, Lightning x1.
+- Wood Dice remains a physical D6.
+- Wood Dice has 4 Active Face Slots and 2 Locked Slots.
+- Locked Slots are inactive and never rolled.
+- Locked Slots are not Blank, Retry, or failed results.
+- Player chooses 4 active Faces from the available starter pool.
+- Duplicate Faces are allowed only when the pool contains duplicates.
+- Build the runtime starting Dice from the selected active Faces.
+- Preserve D6 battle presentation.
+- Keep Dice Deck compatible with active and locked slots.
+
+Exit Criteria:
+
+- Player can choose the 4 active Faces for the starting Wood Dice.
+- Only active Faces enter the roll pool.
+- Dice Deck communicates the active build and locked slots clearly.
+- Reward Selection has not been implemented.
+
+Human Review Point:
+
+Confirm the player understands starting Dice composition before rewards modify that build.
+
+Detailed Task Status:
+
+- M9-001 Starter Dice Build UI is DONE.
+- M9 implementation has started.
+
+## M10_REWARD_SELECTION
 
 Status: PENDING
 
@@ -410,6 +450,8 @@ Scope:
 
 - Basic reward selection after eligible battles.
 - Three reward options.
+- Reward options may include New Face, Recover HP, Run-only Max HP increase, or future Relic.
+- Keep all growth temporary within the Run unless explicitly defined as permanent meta progression.
 - Choose exactly one reward.
 - No Dice face replacement implementation in this milestone unless explicitly promoted by Director.
 - No inventory, shops, meta progression, branching map, enemy AI, or boss mechanics.
@@ -423,7 +465,7 @@ Human Review Point:
 
 Confirm reward choices are understandable before adding face replacement.
 
-## M10_DICE_FACE_REPLACEMENT
+## M11_DICE_FACE_REPLACEMENT
 
 Status: PENDING
 
@@ -449,7 +491,7 @@ Human Review Point:
 
 Confirm reward choices create the intended question: "What should I replace on my Dice?"
 
-## M11_MVP_PLAYTEST_POLISH
+## M12_MVP_PLAYTEST_POLISH
 
 Status: PENDING
 

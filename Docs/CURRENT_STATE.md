@@ -38,10 +38,11 @@ The project is in MVP foundation work.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
-- M8_STARTER_FACE_GAMEPLAY is READY_FOR_DIRECTOR_REVIEW.
-- M9_REWARD_SELECTION is PENDING.
-- M10_DICE_FACE_REPLACEMENT is PENDING.
-- M11_MVP_PLAYTEST_POLISH is PENDING.
+- M8_STARTER_FACE_GAMEPLAY is DONE.
+- M9_STARTER_DICE_BUILD is IN_PROGRESS.
+- M10_REWARD_SELECTION is PENDING.
+- M11_DICE_FACE_REPLACEMENT is PENDING.
+- M12_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
 - `M8-002_GUARD_GAMEPLAY` is DONE.
 - `M8-003_LIGHTNING_GAMEPLAY` is DONE.
@@ -213,9 +214,10 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 7. M6_LINEAR_STAGE_RUN
 8. M7_RUN_FLOW_PRESENTATION
 9. M8_STARTER_FACE_GAMEPLAY
-10. M9_REWARD_SELECTION
-11. M10_DICE_FACE_REPLACEMENT
-12. M11_MVP_PLAYTEST_POLISH
+10. M9_STARTER_DICE_BUILD
+11. M10_REWARD_SELECTION
+12. M11_DICE_FACE_REPLACEMENT
+13. M12_MVP_PLAYTEST_POLISH
 
 ## MVP Must Include
 
@@ -228,6 +230,7 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 - Five-stage linear progression.
 - Basic reward selection.
 - Dice face replacement.
+- Starter Dice Build before Reward Selection.
 
 ## Deferred Until After MVP
 
@@ -294,9 +297,10 @@ Post-M3 roadmap:
 - M6: Battle Complete.
 - M7: Run Flow Presentation.
 - M8: Starter Face Gameplay.
-- M9: Reward Selection.
-- M10: Dice Face Replacement.
-- M11: MVP Playtest Polish.
+- M9: Starter Dice Build.
+- M10: Reward Selection.
+- M11: Dice Face Replacement.
+- M12: MVP Playtest Polish.
 - First complete Run.
 
 M8 locked design:
@@ -309,6 +313,19 @@ M8 locked design:
 - Final Throw Result is Dice Tier Base Throw Damage plus Face Effect.
 - Dice Tier controls Active Face Slot count and Base Throw Damage.
 - Every starter Face must have meaningful gameplay value before Reward Selection begins.
+- Starter Dice Build must happen before Reward Selection.
+- M9_STARTER_DICE_BUILD will allow the player to choose 4 active Faces from Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Wood Dice remains physical D6 with 4 Active Face Slots and 2 Locked Slots.
+- Locked Slots are inactive, not rolled, and are not Blank or Retry.
+- Only active Faces enter the roll pool.
+- M9-001 Starter Dice Build UI is DONE.
+- Battle now begins with a Run Start / Starter Dice Build UI in the existing Battle scene.
+- Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Player chooses 4 active Faces before battle input unlocks.
+- `DiceModel` now tracks active Face slot count.
+- `DiceRoller` only rolls active Face slots.
+- Starter Dice Build displays a live Dice preview and probability summary.
+- Existing Battle scene consumes the generated runtime Dice through `BattleDiceState`.
 
 Director-locked M4 principle:
 

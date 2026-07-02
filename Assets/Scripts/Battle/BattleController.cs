@@ -16,6 +16,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
     [SerializeField] private RunFlowPresenter runFlowPresenter;
+    [SerializeField] private StarterDiceBuildPresenter starterDiceBuildPresenter;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -25,11 +26,16 @@ public sealed class BattleController : MonoBehaviour
 
     public EnemyAttackIntent PendingEnemyAttackIntent => pendingEnemyAttackIntent;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        inputLocked = true;
         EnsureRunFlowPresenter();
         hudPresenter?.Refresh();
+        SetBattleLog("Build your starting Dice.");
+        yield return PlayStarterDiceBuild();
+        hudPresenter?.Refresh();
         SetBattleLog("Ready to throw.");
+        inputLocked = false;
     }
 
     private void Update()
@@ -177,6 +183,38 @@ public sealed class BattleController : MonoBehaviour
         {
             runFlowPresenter = gameObject.AddComponent<RunFlowPresenter>();
         }
+    }
+
+    private IEnumerator PlayStarterDiceBuild()
+    {
+        EnsureStarterDiceBuildPresenter();
+
+        if (starterDiceBuildPresenter == null)
+        {
+            yield break;
+        }
+
+        starterDiceBuildPresenter.Begin();
+
+        while (!starterDiceBuildPresenter.IsComplete)
+        {
+            yield return null;
+        }
+    }
+
+    private void EnsureStarterDiceBuildPresenter()
+    {
+        if (starterDiceBuildPresenter == null)
+        {
+            starterDiceBuildPresenter = GetComponent<StarterDiceBuildPresenter>();
+        }
+
+        if (starterDiceBuildPresenter == null)
+        {
+            starterDiceBuildPresenter = gameObject.AddComponent<StarterDiceBuildPresenter>();
+        }
+
+        starterDiceBuildPresenter.Configure(battleDiceState);
     }
 
     private IEnumerator PlayRunFlowPresentation()

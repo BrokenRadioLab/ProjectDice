@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Selected Milestone: M8_STARTER_FACE_GAMEPLAY
+Selected Milestone: M9_STARTER_DICE_BUILD
 
-Completed Work: TASK_M8_PRESENTATION_READABILITY_FIX
+Completed Work: M9-001_STARTER_DICE_BUILD_UI
 
 ## Summary
 
-Improved post-M8 battle feedback readability without changing gameplay values.
+Implemented the first Starter Dice Build UI so the player chooses active Faces before battle begins.
 
 ## Validation Result
 
@@ -34,6 +34,7 @@ PASS
 - M6-008 Validate Linear Stage Run is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
+- M8_STARTER_FACE_GAMEPLAY is DONE.
 - M7-001 Run Flow Presentation Entry Point is DONE.
 - M7-002 Stage Clear Presentation is DONE.
 - M7-003 Next Stage Presentation is DONE.
@@ -41,10 +42,12 @@ PASS
 - M7-005 Run Complete Presentation is DONE.
 - M7-006 Defeat Presentation is DONE.
 - M7-007 Validate Run Flow Presentation is DONE.
-- M8_STARTER_FACE_GAMEPLAY is READY_FOR_DIRECTOR_REVIEW.
-- M9_REWARD_SELECTION is PENDING and not implemented.
-- M10_DICE_FACE_REPLACEMENT is PENDING and not implemented.
-- M11_MVP_PLAYTEST_POLISH is PENDING and not implemented.
+- M8_STARTER_FACE_GAMEPLAY is DONE.
+- M9_STARTER_DICE_BUILD is IN_PROGRESS.
+- M9-001 Starter Dice Build UI is DONE.
+- M10_REWARD_SELECTION is PENDING and not implemented.
+- M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
+- M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
@@ -86,6 +89,20 @@ PASS
 - Enemy damage number floats upward and fades out.
 - Enemy hit feedback now includes stronger flash, a short enemy shake, and a small hit spark.
 - No gameplay values, HP mutation order, FaceResolver logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI were changed.
+- Roadmap now inserts M9_STARTER_DICE_BUILD before Reward Selection.
+- Reward Selection is now M10.
+- Dice Face Replacement is now M11.
+- MVP Playtest Polish is now M12.
+- Starter Dice Build UI is implemented for M9-001.
+- Expanded Dice Deck slot/UI scale has been increased for readability.
+- Dice Deck remains collapsed by default and still reads runtime Dice state.
+- Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Player chooses 4 active Faces before entering battle.
+- Wood Dice runtime build has 4 Active Face Slots and 2 Locked Slots.
+- Locked Slots never enter the roll pool.
+- Starter Dice Build displays current Face probabilities.
+- Existing Battle scene consumes the generated runtime Dice.
+- No Reward Selection, Dice Face Replacement, inventory, shops, meta progression, new Face gameplay, Dice Tier progression, Hunter progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.

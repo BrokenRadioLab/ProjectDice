@@ -16,10 +16,12 @@ public sealed class DiceModel
 
     [SerializeField] private DiceFace[] faces = new DiceFace[FaceSlotCount];
     [SerializeField, Min(0)] private int baseThrowDamage;
+    [SerializeField, Range(1, FaceSlotCount)] private int activeFaceSlotCount = FaceSlotCount;
     [SerializeField] private DiceRuntimePhase runtimePhase = DiceRuntimePhase.Ready;
     [SerializeField] private int lastResultSlotIndex = -1;
 
     public int BaseThrowDamage => baseThrowDamage;
+    public int ActiveFaceSlotCount => Mathf.Clamp(activeFaceSlotCount <= 0 ? FaceSlotCount : activeFaceSlotCount, 1, FaceSlotCount);
     public DiceRuntimePhase RuntimePhase => runtimePhase;
     public int LastResultSlotIndex => lastResultSlotIndex;
 
@@ -35,8 +37,14 @@ public sealed class DiceModel
     }
 
     public DiceModel(DiceFace[] initialFaces, int baseThrowDamage)
+        : this(initialFaces, baseThrowDamage, FaceSlotCount)
+    {
+    }
+
+    public DiceModel(DiceFace[] initialFaces, int baseThrowDamage, int activeFaceSlotCount)
     {
         this.baseThrowDamage = Mathf.Max(0, baseThrowDamage);
+        this.activeFaceSlotCount = Mathf.Clamp(activeFaceSlotCount, 1, FaceSlotCount);
         SetFaces(initialFaces);
     }
 
@@ -72,6 +80,13 @@ public sealed class DiceModel
             faces[i] = newFaces[i]?.Clone();
         }
 
+        lastResultSlotIndex = -1;
+        runtimePhase = DiceRuntimePhase.Ready;
+    }
+
+    public void SetActiveFaceSlotCount(int nextActiveFaceSlotCount)
+    {
+        activeFaceSlotCount = Mathf.Clamp(nextActiveFaceSlotCount, 1, FaceSlotCount);
         lastResultSlotIndex = -1;
         runtimePhase = DiceRuntimePhase.Ready;
     }

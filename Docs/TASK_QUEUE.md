@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M8_STARTER_FACE_GAMEPLAY
+Selected Milestone: M9_STARTER_DICE_BUILD
 
-Milestone Status: READY_FOR_DIRECTOR_REVIEW
+Milestone Status: IN_PROGRESS
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -14,7 +14,8 @@ Director Review:
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
-- M8_STARTER_FACE_GAMEPLAY implementation is complete and ready for Director review.
+- M8_STARTER_FACE_GAMEPLAY is approved and DONE.
+- M9_STARTER_DICE_BUILD implementation has started.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 
@@ -73,9 +74,10 @@ Post-M4 Roadmap:
 - M6: Battle Complete.
 - M7: Run Flow Presentation.
 - M8: Starter Face Gameplay.
-- M9: Reward Selection.
-- M10: Dice Face Replacement.
-- M11: MVP Playtest Polish.
+- M9: Starter Dice Build.
+- M10: Reward Selection.
+- M11: Dice Face Replacement.
+- M12: MVP Playtest Polish.
 - First complete Run.
 
 M8 Locked Dice Combat Philosophy:
@@ -89,6 +91,76 @@ M8 Locked Dice Combat Philosophy:
 - Dice Tier determines the base power of every Throw.
 - Faces determine how that Throw is modified.
 - Reward Selection must wait until every starter Face has meaningful gameplay value.
+- Starter Dice Build must happen before Reward Selection.
+- Reward Selection must continue a player-authored starting Dice build instead of being the first Dice-building decision.
+
+M9 Starter Dice Build Locked Design:
+
+- Initial unlocked Starter Face Pool is Attack x2, Guard x1, Mend x1, Lightning x1.
+- Wood Dice physically remains D6.
+- Wood Dice has 4 Active Face Slots.
+- Wood Dice has 2 Locked Slots.
+- Locked Slots are not rolled.
+- Locked Slots are not Blank, Retry, or failed results.
+- Only active Faces enter the roll pool.
+- Player chooses 4 Faces from the available starter pool.
+- Duplicate Faces are allowed only if the pool contains duplicates.
+- Dice Deck must remain compatible with active and locked slots.
+
+## M9 Implementation Tasks
+
+Status: IN_PROGRESS
+
+M9 Goal:
+
+Allow the player to build the starting Dice before a run begins.
+
+M9 Scope Guardrails:
+
+- Implement Starter Dice Build only when a detailed M9 task is selected.
+- Do not add Reward Selection during M9-001.
+- Do not add Dice Face Replacement during M9-001.
+- Do not add inventory, shops, meta progression, branching map, new Face effects, enemy AI, boss mechanics, or multi-enemy gameplay.
+- Preserve physical D6 Dice presentation.
+- Locked Slots must never enter the roll pool.
+
+## M9-001: Starter Dice Build UI
+
+Status: DONE
+
+Goal:
+
+Create the Run Start Dice Build screen before Battle begins.
+
+Requirements:
+
+- Display a Main Menu style Start Run step.
+- Display the unlocked Starter Face Pool.
+- Display the current Wood Dice with 4 Active Slots and 2 Locked Slots.
+- Allow the player to choose which 4 Faces become active.
+- Update the Dice preview in real time.
+- Display current Face probabilities.
+- Prevent invalid builds.
+- Keep duplicate Faces legal when available in the pool.
+- Generate the runtime Starter Dice from the selected active Faces.
+- Do not implement Reward Selection.
+- Do not implement Dice Face Replacement.
+
+Completed:
+
+- Added `StarterDiceBuildPresenter` as a Run Start / Starter Dice Build UI.
+- Battle starts only after Starter Dice Build is completed.
+- Starter Face Pool contains Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Player chooses 4 active Faces from the available starter pool.
+- Duplicate Attack is legal because the starter pool contains two Attack entries.
+- Wood Dice runtime build uses 4 Active Face Slots and 2 Locked Slots.
+- Locked Slots are represented as null inactive slots and do not enter the roll pool.
+- `DiceModel` now tracks `ActiveFaceSlotCount`.
+- `DiceRoller` now selects only within active face slots.
+- Dice preview updates as Faces are picked or removed.
+- Probability display updates from the selected active Faces.
+- Existing Battle scene consumes the generated runtime Dice through `BattleDiceState.SetCurrentDice`.
+- No Reward Selection, Dice Face Replacement, inventory, shops, meta progression UI, new Face gameplay, Dice Tier progression, Hunter progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 
 ## M7 Implementation Tasks
 

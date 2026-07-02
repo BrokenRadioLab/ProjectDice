@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: TASK_M8_PRESENTATION_READABILITY_FIX
+Task: M9-001_STARTER_DICE_BUILD_UI
 
 ## Review Result
 
 PASS
 
-Post-M8 presentation readability polish improves result clarity while preserving the locked gameplay formula and architecture.
+Starter Dice Build UI establishes the first pre-run Dice composition choice without implementing rewards or face replacement.
 
 ## Scope Check
 
@@ -23,6 +23,16 @@ Post-M8 presentation readability polish improves result clarity while preserving
 - Implemented M8-005 Face Presentation Polish.
 - Completed M8-006 Validate Starter Face Gameplay.
 - Completed TASK_M8_PRESENTATION_READABILITY_FIX.
+- Completed roadmap revision before Reward Selection.
+- Inserted M9_STARTER_DICE_BUILD.
+- Moved Reward Selection to M10.
+- Moved Dice Face Replacement to M11.
+- Moved MVP Playtest Polish to M12.
+- Documented Starter Dice Build design without implementing it.
+- Enlarged expanded Dice Deck UI for readability.
+- Implemented M9-001 Starter Dice Build UI.
+- Added active slot runtime support for Wood Dice.
+- Added probability display for selected active Faces.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
@@ -44,6 +54,7 @@ Post-M8 presentation readability polish improves result clarity while preserving
 - Did not add new Face effects during presentation polish.
 - Did not make presentation code decide gameplay values.
 - Did not change Base Throw Damage, Attack modifier, Guard reduction, Lightning damage, Mend heal amount, enemy damage, HP mutation order, FaceResolver gameplay logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI.
+- Did not implement Reward Selection, Dice Face Replacement, inventory, shop, branching map, new Face effects, boss mechanics, or multi-enemy gameplay.
 - Did not add enemy AI or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
@@ -76,6 +87,10 @@ Post-M8 presentation readability polish improves result clarity while preserving
 - `ThrowSequencePresenter` now uses already calculated pending enemy HP damage for the enemy-local damage number.
 - Enemy-local damage popup remains presentation-only and does not mutate HP.
 - Hit spark and enemy shake remain presentation-only feedback.
+- Dice Deck remains Battle Information UI and reads runtime Dice state.
+- Dice Deck scale change does not alter battle gameplay.
+- Starter Dice Build generates runtime Dice through `BattleDiceState`.
+- `DiceRoller` consumes `DiceModel.ActiveFaceSlotCount` so Locked Slots are not rolled.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.

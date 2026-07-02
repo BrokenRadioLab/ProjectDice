@@ -55,9 +55,21 @@ Permanent progression expands choices, not raw power.
 -   Locked slots are inactive and never rolled.
 -   Locked slots are not Blank or Retry.
 -   Only active Faces participate in the roll pool.
+-   Starter Dice Build happens before Reward Selection.
+-   The player should understand their active Faces and odds before rewards modify the build.
 
 Example: - Wood Dice: 4 Active Faces - Iron Dice: 5 Active Faces -
 Hunter Dice: 6 Active Faces
+
+Starter Wood Dice Build:
+
+-   Initial unlocked Starter Face Pool: Attack x2, Guard x1, Mend x1,
+    Lightning x1.
+-   Wood Dice physically remains D6.
+-   Wood Dice starts with 4 Active Face Slots and 2 Locked Slots.
+-   The player chooses 4 active Faces from the available starter pool.
+-   Duplicate Faces are allowed only if the pool contains duplicates.
+-   Locked Slots do not enter the roll pool.
 
 ------------------------------------------------------------------------
 
