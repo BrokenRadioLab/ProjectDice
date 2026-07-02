@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Completed M9-002 Validate Starter Dice Build.
+- Verified Starter Dice Build creates a runtime Wood Dice with 4 Active Face Slots and 2 Locked Slots.
+- Verified Locked Slots do not enter the Dice roll pool.
+- Verified Battle consumes the generated runtime Dice through `BattleDiceState`.
+- Verified Dice Deck displays runtime active Faces and locked slots from `BattleDiceState.CurrentDice`.
+- Confirmed Unity batchmode import/compile validation completed successfully for M9-002.
+- Marked M9_STARTER_DICE_BUILD as READY_FOR_DIRECTOR_REVIEW.
 - Implemented M9-001 Starter Dice Build UI.
 - Added Run Start flow before Battle input unlocks.
 - Added `StarterDiceBuildPresenter` for Main Menu, Start Run, Starter Dice Build, and Battle handoff.

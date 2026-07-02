@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M9_STARTER_DICE_BUILD
 
-Completed Work: M9-001_STARTER_DICE_BUILD_UI
+Completed Work: M9-002_VALIDATE_STARTER_DICE_BUILD
 
 ## Summary
 
-Implemented the first Starter Dice Build UI so the player chooses active Faces before battle begins.
+Validated that Starter Dice Build creates the runtime Wood Dice and that battle systems consume the generated active-slot Dice.
 
 ## Validation Result
 
@@ -43,8 +43,9 @@ PASS
 - M7-006 Defeat Presentation is DONE.
 - M7-007 Validate Run Flow Presentation is DONE.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
-- M9_STARTER_DICE_BUILD is IN_PROGRESS.
+- M9_STARTER_DICE_BUILD is READY_FOR_DIRECTOR_REVIEW.
 - M9-001 Starter Dice Build UI is DONE.
+- M9-002 Validate Starter Dice Build is DONE.
 - M10_REWARD_SELECTION is PENDING and not implemented.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
@@ -102,6 +103,10 @@ PASS
 - Locked Slots never enter the roll pool.
 - Starter Dice Build displays current Face probabilities.
 - Existing Battle scene consumes the generated runtime Dice.
+- `DiceRoller` rolls only active Face slots.
+- Dice Deck displays the selected active Faces and inactive locked slots from runtime Dice state.
+- Unity batchmode import/compile validation completed successfully for M9-002.
+- M9 is awaiting Director review.
 - No Reward Selection, Dice Face Replacement, inventory, shops, meta progression, new Face gameplay, Dice Tier progression, Hunter progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.

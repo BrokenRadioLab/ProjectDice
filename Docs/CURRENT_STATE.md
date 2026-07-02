@@ -39,7 +39,7 @@ The project is in MVP foundation work.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
-- M9_STARTER_DICE_BUILD is IN_PROGRESS.
+- M9_STARTER_DICE_BUILD is READY_FOR_DIRECTOR_REVIEW.
 - M10_REWARD_SELECTION is PENDING.
 - M11_DICE_FACE_REPLACEMENT is PENDING.
 - M12_MVP_PLAYTEST_POLISH is PENDING.
@@ -319,6 +319,8 @@ M8 locked design:
 - Locked Slots are inactive, not rolled, and are not Blank or Retry.
 - Only active Faces enter the roll pool.
 - M9-001 Starter Dice Build UI is DONE.
+- M9-002 Validate Starter Dice Build is DONE.
+- M9 is awaiting Director review.
 - Battle now begins with a Run Start / Starter Dice Build UI in the existing Battle scene.
 - Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
 - Player chooses 4 active Faces before battle input unlocks.
@@ -326,6 +328,8 @@ M8 locked design:
 - `DiceRoller` only rolls active Face slots.
 - Starter Dice Build displays a live Dice preview and probability summary.
 - Existing Battle scene consumes the generated runtime Dice through `BattleDiceState`.
+- Locked Slots are preserved as inactive runtime slots and never enter the roll pool.
+- Dice Deck displays the current active Faces and locked slots from runtime Dice state.
 
 Director-locked M4 principle:
 

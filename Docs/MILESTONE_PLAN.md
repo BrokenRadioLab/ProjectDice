@@ -39,7 +39,7 @@ Required MVP pillars:
 7. M6_LINEAR_STAGE_RUN - DONE
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
 9. M8_STARTER_FACE_GAMEPLAY - DONE
-10. M9_STARTER_DICE_BUILD - IN_PROGRESS
+10. M9_STARTER_DICE_BUILD - READY_FOR_DIRECTOR_REVIEW
 11. M10_REWARD_SELECTION - PENDING
 12. M11_DICE_FACE_REPLACEMENT - PENDING
 13. M12_MVP_PLAYTEST_POLISH - PENDING
@@ -402,7 +402,7 @@ Detailed Task Status:
 
 ## M9_STARTER_DICE_BUILD
 
-Status: IN_PROGRESS
+Status: READY_FOR_DIRECTOR_REVIEW
 
 Goal:
 
@@ -436,7 +436,8 @@ Confirm the player understands starting Dice composition before rewards modify t
 Detailed Task Status:
 
 - M9-001 Starter Dice Build UI is DONE.
-- M9 implementation has started.
+- M9-002 Validate Starter Dice Build is DONE.
+- M9 is awaiting Director review.
 
 ## M10_REWARD_SELECTION
 

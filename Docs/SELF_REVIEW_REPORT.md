@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M9-001_STARTER_DICE_BUILD_UI
+Task: M9-002_VALIDATE_STARTER_DICE_BUILD
 
 ## Review Result
 
 PASS
 
-Starter Dice Build UI establishes the first pre-run Dice composition choice without implementing rewards or face replacement.
+Starter Dice Build validation confirms the first pre-run Dice composition choice feeds the runtime battle Dice without implementing rewards or face replacement.
 
 ## Scope Check
 
@@ -31,6 +31,7 @@ Starter Dice Build UI establishes the first pre-run Dice composition choice with
 - Documented Starter Dice Build design without implementing it.
 - Enlarged expanded Dice Deck UI for readability.
 - Implemented M9-001 Starter Dice Build UI.
+- Completed M9-002 Validate Starter Dice Build.
 - Added active slot runtime support for Wood Dice.
 - Added probability display for selected active Faces.
 - Starter Dice now owns Base Throw Damage 3.
@@ -91,6 +92,7 @@ Starter Dice Build UI establishes the first pre-run Dice composition choice with
 - Dice Deck scale change does not alter battle gameplay.
 - Starter Dice Build generates runtime Dice through `BattleDiceState`.
 - `DiceRoller` consumes `DiceModel.ActiveFaceSlotCount` so Locked Slots are not rolled.
+- `CollapsibleDiceDeckPresenter` consumes `BattleDiceState.CurrentDice` and displays inactive slots as `Locked`.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
@@ -118,6 +120,11 @@ Starter Dice Build UI establishes the first pre-run Dice composition choice with
 - Player HP persists across next battle preparation.
 - Dice Deck runtime data continues to read from current runtime Dice.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Lightning, and Mend.
+- Starter Dice Build runtime pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Starter Dice Build creates a Wood Dice with 4 active Face slots and 2 locked slots.
+- Locked slots do not enter the roll pool.
+- Dice Deck displays active Faces and locked slots from runtime Dice state.
+- Unity batchmode import/compile validation completed successfully for M9-002.
 - Starter Dice Base Throw Damage is 3.
 - Attack Face currently adds 5 damage as a Face modifier.
 - Starter Attack Throw total damage is 8 before enemy HP clamping.

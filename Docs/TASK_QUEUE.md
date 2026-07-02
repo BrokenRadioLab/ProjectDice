@@ -15,7 +15,7 @@ Director Review:
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
 - M8_STARTER_FACE_GAMEPLAY is approved and DONE.
-- M9_STARTER_DICE_BUILD implementation has started.
+- M9_STARTER_DICE_BUILD is READY_FOR_DIRECTOR_REVIEW.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 
@@ -109,7 +109,7 @@ M9 Starter Dice Build Locked Design:
 
 ## M9 Implementation Tasks
 
-Status: IN_PROGRESS
+Status: READY_FOR_DIRECTOR_REVIEW
 
 M9 Goal:
 
@@ -161,6 +161,36 @@ Completed:
 - Probability display updates from the selected active Faces.
 - Existing Battle scene consumes the generated runtime Dice through `BattleDiceState.SetCurrentDice`.
 - No Reward Selection, Dice Face Replacement, inventory, shops, meta progression UI, new Face gameplay, Dice Tier progression, Hunter progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
+
+## M9-002: Validate Starter Dice Build
+
+Status: DONE
+
+Goal:
+
+Validate that Starter Dice Build correctly creates the runtime Wood Dice before battle begins.
+
+Validation:
+
+- Confirm Starter Dice Build generates the selected runtime Dice through `BattleDiceState`.
+- Confirm Locked Slots never enter the roll pool.
+- Confirm probability display matches the selected active Faces.
+- Confirm Battle consumes the generated runtime Dice.
+- Confirm Dice Deck displays the same active Faces and locked slots during battle.
+- Confirm Reward Selection has not been added.
+- Confirm Dice Face Replacement has not been added.
+- Confirm Unity compile passes.
+
+Completed:
+
+- Verified `StarterDiceBuildPresenter` fills 4 active Face slots and leaves 2 inactive locked slots.
+- Verified `DiceModel.ActiveFaceSlotCount` is set to 4 for the Wood Dice runtime build.
+- Verified `DiceRoller` selects only from active Face slots and never rolls locked slots.
+- Verified `BattleDiceState.SetCurrentDice` preserves the generated runtime Dice and active slot count.
+- Verified `CollapsibleDiceDeckPresenter` reads `BattleDiceState.CurrentDice` and displays inactive slots as `Locked`.
+- Verified probability text is generated from the selected active Faces.
+- Unity batchmode import/compile validation completed successfully.
+- Verified no Reward Selection, Dice Face Replacement, inventory, shops, meta progression, new Face gameplay, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 
 ## M7 Implementation Tasks
 
