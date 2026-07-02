@@ -6,6 +6,7 @@ Current source-of-truth status:
 
 - `Docs/PROJECT_GDD_v1.0.md` is not currently present and will be provided by the Director later.
 - `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present and locked.
+- `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice progression and Dice combat philosophy.
 - M3 is approved by Director review. Do not invent GDD content while implementing later milestones.
 
 Detailed implementation tasks belong in `TASK_QUEUE.md` only after a milestone is selected for implementation.
@@ -17,9 +18,9 @@ The MVP must validate the core Dice Deck-Building Roguelite loop before expandin
 Required MVP pillars:
 
 - Dice throw combat loop.
-- Fixed throw damage.
+- Dice Tier Base Throw Damage.
 - Dice battle presentation.
-- Dice face skill activation.
+- Starter Face gameplay identity.
 - Enemy turn.
 - Victory and defeat.
 - Five-stage linear progression.
@@ -36,9 +37,10 @@ Required MVP pillars:
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP - DONE
 7. M6_LINEAR_STAGE_RUN - DONE
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
-9. M8_REWARD_SELECTION - PENDING
-10. M9_DICE_FACE_REPLACEMENT - PENDING
-11. M10_MVP_PLAYTEST_POLISH - PENDING
+9. M8_STARTER_FACE_GAMEPLAY - IN_PROGRESS
+10. M9_REWARD_SELECTION - PENDING
+11. M10_DICE_FACE_REPLACEMENT - PENDING
+12. M11_MVP_PLAYTEST_POLISH - PENDING
 
 ## M0_PROJECT_SETUP
 
@@ -352,7 +354,46 @@ Detailed Task Status:
 - M7 must consume existing M6 runtime state and must not decide gameplay.
 - M7 must not add rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay.
 
-## M8_REWARD_SELECTION
+## M8_STARTER_FACE_GAMEPLAY
+
+Status: IN_PROGRESS
+
+Goal:
+
+Give every starter Face a simple, meaningful gameplay identity before Reward Selection and Dice Face Replacement begin.
+
+Scope:
+
+- Establish the new Throw formula: Dice Tier Base Throw Damage plus Face Effect.
+- Base Throw Damage belongs to the Dice, never the Hunter.
+- Face effects modify the Throw and do not replace the Throw.
+- Attack remains the primary damage Face.
+- Guard becomes a simple defensive Face.
+- Spark becomes a simple secondary damage or utility Face.
+- Mend becomes a simple recovery Face.
+- Keep effects deterministic, readable, and minimal.
+- Do not add reward selection, Dice face replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, or complex status systems.
+
+Exit Criteria:
+
+- Every starter Face has meaningful gameplay value.
+- Every Throw deals Dice Tier Base Throw Damage.
+- Face effects are resolved as modifiers on top of the base Throw.
+- The player can begin making build decisions using only the starter Dice.
+
+Human Review Point:
+
+Confirm starter Faces create meaningful decisions before adding reward selection.
+
+Detailed Task Status:
+
+- M8 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
+- M8 implementation has started.
+- M8-001 Base Throw Damage Framework is DONE.
+- M8-002 Guard Gameplay is NEXT.
+- M8 must follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
+
+## M9_REWARD_SELECTION
 
 Status: PENDING
 
@@ -377,7 +418,7 @@ Human Review Point:
 
 Confirm reward choices are understandable before adding face replacement.
 
-## M9_DICE_FACE_REPLACEMENT
+## M10_DICE_FACE_REPLACEMENT
 
 Status: PENDING
 
@@ -403,7 +444,7 @@ Human Review Point:
 
 Confirm reward choices create the intended question: "What should I replace on my Dice?"
 
-## M10_MVP_PLAYTEST_POLISH
+## M11_MVP_PLAYTEST_POLISH
 
 Status: PENDING
 

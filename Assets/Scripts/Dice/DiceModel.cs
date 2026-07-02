@@ -15,9 +15,11 @@ public sealed class DiceModel
     public const int FaceSlotCount = 6;
 
     [SerializeField] private DiceFace[] faces = new DiceFace[FaceSlotCount];
+    [SerializeField, Min(0)] private int baseThrowDamage;
     [SerializeField] private DiceRuntimePhase runtimePhase = DiceRuntimePhase.Ready;
     [SerializeField] private int lastResultSlotIndex = -1;
 
+    public int BaseThrowDamage => baseThrowDamage;
     public DiceRuntimePhase RuntimePhase => runtimePhase;
     public int LastResultSlotIndex => lastResultSlotIndex;
 
@@ -28,7 +30,13 @@ public sealed class DiceModel
     }
 
     public DiceModel(DiceFace[] initialFaces)
+        : this(initialFaces, 0)
     {
+    }
+
+    public DiceModel(DiceFace[] initialFaces, int baseThrowDamage)
+    {
+        this.baseThrowDamage = Mathf.Max(0, baseThrowDamage);
         SetFaces(initialFaces);
     }
 

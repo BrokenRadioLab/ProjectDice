@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M7_RUN_FLOW_PRESENTATION
+Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Milestone Status: READY_FOR_DIRECTOR_REVIEW
+Milestone Status: IN_PROGRESS
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -14,7 +14,9 @@ Director Review:
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
+- M8_STARTER_FACE_GAMEPLAY implementation has started.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
+- `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 
 M4 Locked Principle:
 
@@ -70,9 +72,23 @@ Post-M4 Roadmap:
 - M5: Enemy Turn.
 - M6: Battle Complete.
 - M7: Run Flow Presentation.
-- M8: Reward Selection.
-- M9: Dice Face Replacement.
+- M8: Starter Face Gameplay.
+- M9: Reward Selection.
+- M10: Dice Face Replacement.
+- M11: MVP Playtest Polish.
 - First complete Run.
+
+M8 Locked Dice Combat Philosophy:
+
+- Every Throw always deals Base Throw Damage.
+- Base Throw Damage belongs to the Dice.
+- Base Throw Damage never belongs to the Hunter.
+- Face effects modify the Throw.
+- Face effects do not replace the Throw.
+- Final Throw Result is Base Throw Damage from Dice Tier plus Face Effect.
+- Dice Tier determines the base power of every Throw.
+- Faces determine how that Throw is modified.
+- Reward Selection must wait until every starter Face has meaningful gameplay value.
 
 ## M7 Implementation Tasks
 
@@ -352,6 +368,230 @@ Completed:
 
 - Validated the full M7 run-flow presentation scope.
 - Marked M7_RUN_FLOW_PRESENTATION as ready for Director review.
+
+## M8 Implementation Tasks
+
+Status: GENERATED
+
+M8 Goal:
+
+Implement the minimum gameplay identity required for every starter Face using the newly locked Dice Combat Philosophy.
+
+Core Formula:
+
+Final Throw Result = Dice Tier Base Throw Damage + Face Effect
+
+M8 Task Rule:
+
+- One gameplay concept per task.
+- Keep every task independently verifiable.
+- Every Throw must deal Base Throw Damage from the Dice.
+- Base Throw Damage belongs to the Dice, never the Hunter.
+- Face effects modify the Throw and do not replace the Throw.
+- Keep all starter Face effects deterministic, readable, and simple.
+- Do not add Reward Selection.
+- Do not add Dice Face Replacement.
+- Do not add inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay.
+- Follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
+
+## M8-001: Base Throw Damage Framework
+
+Status: DONE
+
+Goal:
+
+Establish the runtime framework where every accepted Throw deals Dice Tier Base Throw Damage before Face-specific modifiers are applied.
+
+Requirements:
+
+- Introduce or route Base Throw Damage as Dice-owned runtime data.
+- Do not store Base Throw Damage as Hunter-owned power.
+- Preserve the current physical D6 Dice model.
+- Preserve current runtime Dice Face selection.
+- Preserve current battle presentation order.
+- Attack should no longer be the only source of all damage meaning.
+- Guard, Spark, and Mend should still be allowed to produce base damage through the Throw even before their own effects are implemented.
+- Do not implement Guard, Spark, or Mend effects in this task.
+- Do not implement Dice Tier progression UI or active slot progression in this task.
+
+Done Criteria:
+
+- Every Throw can produce Dice-owned Base Throw Damage.
+- Face effects can be added on top of Base Throw Damage in later tasks.
+- Existing Throw, Face Reveal, Face Effect, Damage Number, Damage Apply, Enemy Turn, and Run Flow still work.
+
+Validation:
+
+- Attack Throw deals Base Throw Damage plus its Face effect if currently implemented.
+- Guard, Spark, and Mend Throws still deal Base Throw Damage.
+- No Hunter permanent Attack stat is introduced.
+- No Reward Selection or Dice Face Replacement is added.
+
+Completed:
+
+- Added Dice-owned Base Throw Damage to the runtime Dice model.
+- Starter Dice now owns Base Throw Damage 5.
+- Starter Attack now acts as a 5 damage Face modifier, making starter Attack Throw total damage 10.
+- BattleController now resolves total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- Guard, Spark, and Mend can now deal Base Throw Damage even before their own Face effects are implemented.
+- No Hunter permanent Attack stat, Reward Selection, or Dice Face Replacement was added.
+
+## M8-002: Guard Gameplay
+
+Status: NEXT
+
+Goal:
+
+Give Guard a simple defensive identity while preserving Base Throw Damage.
+
+Requirements:
+
+- Guard modifies the Throw with a deterministic defensive effect.
+- Guard does not replace the Throw.
+- Guard still allows Base Throw Damage to occur.
+- Keep the effect simple and MVP-readable.
+- Do not add complex shield stacks, block status systems, enemy AI changes, or reward systems.
+
+Done Criteria:
+
+- Guard has meaningful gameplay value.
+- Guard is no longer a No Effect Face.
+- Guard remains compatible with the existing enemy turn and player damage flow.
+
+Validation:
+
+- Guard deals Base Throw Damage.
+- Guard applies its defensive modifier.
+- Guard does not trigger rewards, Dice replacement, inventory, or progression.
+
+## M8-003: Spark Gameplay
+
+Status: PENDING
+
+Goal:
+
+Give Spark a simple secondary damage or utility identity while preserving Base Throw Damage.
+
+Requirements:
+
+- Spark modifies the Throw with a deterministic secondary damage or utility effect.
+- Spark does not replace the Throw.
+- Spark still allows Base Throw Damage to occur.
+- Keep the effect simple and MVP-readable.
+- Do not add complicated status systems, random chains, multi-enemy targeting, or reward systems.
+
+Done Criteria:
+
+- Spark has meaningful gameplay value.
+- Spark is no longer a No Effect Face.
+- Spark remains compatible with the existing single-enemy MVP battle flow.
+
+Validation:
+
+- Spark deals Base Throw Damage.
+- Spark applies its simple modifier.
+- Spark does not trigger rewards, Dice replacement, inventory, or progression.
+
+## M8-004: Mend Gameplay
+
+Status: PENDING
+
+Goal:
+
+Give Mend a simple recovery identity while preserving Base Throw Damage.
+
+Requirements:
+
+- Mend modifies the Throw with a deterministic recovery effect.
+- Mend does not replace the Throw.
+- Mend still allows Base Throw Damage to occur.
+- Keep the effect simple and MVP-readable.
+- Do not add long-term healing economy, meta progression, reward systems, or inventory.
+
+Done Criteria:
+
+- Mend has meaningful gameplay value.
+- Mend is no longer a No Effect Face.
+- Mend remains compatible with player HP and enemy turn flow.
+
+Validation:
+
+- Mend deals Base Throw Damage.
+- Mend applies its recovery modifier.
+- Mend does not trigger rewards, Dice replacement, inventory, or progression.
+
+## M8-005: Face Presentation Polish
+
+Status: PENDING
+
+Goal:
+
+Update battle presentation so Base Throw Damage and Face Effect are readable as one Throw result.
+
+Requirements:
+
+- Presentation should communicate that the Dice hit always causes Base Throw Damage.
+- Presentation should communicate that the revealed Face modifies that Throw.
+- Preserve the existing battle rhythm:
+  - Throw
+  - Hero Throw
+  - Projectile
+  - Enemy Hit
+  - Dice Layer
+  - Rolling
+  - Face Reveal
+  - Face Effect
+  - Damage Number
+  - Damage Apply
+  - HP Refresh
+- Do not add new gameplay.
+- Do not add reward, replacement, inventory, progression, or new UI systems.
+
+Done Criteria:
+
+- The player can understand both base damage and Face effect from the battle presentation.
+- The presentation remains short, readable, and SNES-style.
+
+Validation:
+
+- Attack, Guard, Spark, and Mend presentation remains readable.
+- Damage number and HP update still happen after presentation.
+- No gameplay is triggered directly from presentation code.
+
+## M8-006: Validate Starter Face Gameplay
+
+Status: PENDING
+
+Goal:
+
+Validate that every starter Face has meaningful gameplay value before Reward Selection begins.
+
+Requirements:
+
+- Confirm every Throw deals Dice-owned Base Throw Damage.
+- Confirm Attack remains the primary damage Face.
+- Confirm Guard has defensive value.
+- Confirm Spark has secondary damage or utility value.
+- Confirm Mend has recovery value.
+- Confirm no starter Face remains No Effect.
+- Confirm Reward Selection has not been implemented.
+- Confirm Dice Face Replacement has not been implemented.
+
+Done Criteria:
+
+- M8 can be submitted for Director review.
+- Starter Dice creates meaningful build decisions before rewards exist.
+
+Validation:
+
+- Unity compile passes.
+- No `NullReferenceException`.
+- Player Throw flow still works.
+- Enemy turn still works.
+- Battle outcome still works.
+- Stage runtime still works.
+- Run flow presentation still works.
+- No rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay are added.
 
 ## M6 Implementation Tasks
 

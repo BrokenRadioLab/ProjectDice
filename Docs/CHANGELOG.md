@@ -4,6 +4,19 @@
 
 ### Changed
 
+- Implemented M8-001 Base Throw Damage Framework.
+- Added Dice-owned Base Throw Damage to `DiceModel`.
+- Starter Dice now has Base Throw Damage 5.
+- Starter Attack now acts as a 5 damage Face modifier, preserving 10 total starter Attack Throw damage.
+- `BattleController` now resolves total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- Guard, Spark, and Mend can now deal Base Throw Damage before their dedicated Face effects are implemented.
+- Marked M8-001 as DONE and M8-002 Guard Gameplay as NEXT.
+- No Hunter permanent Attack stat, Reward Selection, Dice Face Replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay were added for M8-001.
+- Updated `PROJECT_CORE_PHILOSOPHY` and moved it under `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
+- Added Dice Combat Philosophy: every Throw deals Dice Tier Base Throw Damage and Faces modify the Throw.
+- Revised the roadmap so M8 is Starter Face Gameplay, M9 is Reward Selection, M10 is Dice Face Replacement, and M11 is MVP Playtest Polish.
+- Generated the M8_STARTER_FACE_GAMEPLAY task breakdown without implementing gameplay.
+- M8 implementation has started with M8-001 Base Throw Damage Framework.
 - Completed M7-007 Validate Run Flow Presentation.
 - Confirmed non-boss Victory presentation can show Stage Clear, Next Stage, and Battle Start.
 - Confirmed Boss Victory presentation can show Run Complete.

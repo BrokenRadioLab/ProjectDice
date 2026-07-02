@@ -61,6 +61,172 @@ Hunter Dice: 6 Active Faces
 
 ------------------------------------------------------------------------
 
+# Dice Combat Philosophy
+
+Every Throw always deals Base Throw Damage.
+
+Base Throw Damage belongs to the Dice.
+
+Base Throw Damage never belongs to the Hunter.
+
+Face effects modify the Throw.
+
+Face effects do not replace the Throw.
+
+Final Throw Result is:
+
+Base Throw Damage from Dice Tier
+
++
+
+Face Effect
+
+When the Hero throws the Dice and it hits the enemy, some damage must
+always occur. Even if the resulting Face is Guard, Mend, Spark, or any
+non-damage utility Face, the enemy still receives Base Throw Damage.
+
+The Face then adds its own effect.
+
+Dice Tier controls two things:
+
+-   Active Face Slot count
+-   Base Throw Damage
+
+Example:
+
+Wood Dice:
+
+-   4 Active Faces
+-   Base Throw Damage 5
+
+Iron Dice:
+
+-   5 Active Faces
+-   Base Throw Damage 7
+
+Hunter Dice:
+
+-   6 Active Faces
+-   Base Throw Damage 10
+
+These numbers are examples unless already locked elsewhere.
+
+The Hunter never becomes stronger.
+
+The Dice becomes stronger.
+
+Dice Tier determines the base power of every Throw.
+
+Faces determine how that Throw is modified.
+
+------------------------------------------------------------------------
+
+# Starter Face Philosophy
+
+Each starter Face must solve a different gameplay problem.
+
+The player should never think:
+
+"This Face is useless."
+
+The player should instead think:
+
+"This Face is useful in different situations."
+
+## Attack
+
+Purpose:
+
+End battles faster.
+
+Identity:
+
+Primary offensive modifier.
+
+Question it answers:
+
+"How do I defeat the enemy more quickly?"
+
+## Guard
+
+Purpose:
+
+Reduce incoming danger.
+
+Identity:
+
+Defensive modifier.
+
+Question it answers:
+
+"How do I survive longer?"
+
+Guard should never completely replace attacking.
+
+The Throw still deals Base Throw Damage.
+
+## Spark
+
+Purpose:
+
+Increase offensive efficiency.
+
+Identity:
+
+Utility / secondary offense.
+
+Spark should not become another Attack.
+
+It should modify combat differently from pure damage.
+
+Its exact implementation will remain intentionally simple during MVP.
+
+## Mend
+
+Purpose:
+
+Maintain long-term survival across the Run.
+
+Identity:
+
+Recovery modifier.
+
+Mend should preserve pressure.
+
+The Throw still damages the enemy.
+
+Healing is an additional effect.
+
+Every starter Face should represent a different strategic answer.
+
+Attack
+
+↓
+
+Kill faster.
+
+Guard
+
+↓
+
+Take less damage.
+
+Spark
+
+↓
+
+Improve offensive efficiency.
+
+Mend
+
+↓
+
+Recover for future battles.
+
+If two Faces solve the same problem, one of them is probably unnecessary.
+
+------------------------------------------------------------------------
+
 # Reward Philosophy
 
 Reward Selection should answer:

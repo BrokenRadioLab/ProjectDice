@@ -53,7 +53,7 @@ public sealed class BattleDiceState : MonoBehaviour
 
     private static bool HasPlayableDice(DiceModel dice)
     {
-        if (dice == null || dice.FaceCount != DiceModel.FaceSlotCount)
+        if (dice == null || dice.FaceCount != DiceModel.FaceSlotCount || dice.BaseThrowDamage <= 0)
         {
             return false;
         }

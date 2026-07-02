@@ -8,6 +8,8 @@ Last Updated: 2026-07-02
 
 `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present, locked, and is the current visual/presentation guide for the Battle scene layout.
 
+`Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present, locked, and defines Dice progression, active slots, Base Throw Damage, and Dice combat philosophy.
+
 Planning and presentation documents may organize work, but they must not redefine the game against the GDD.
 
 M3 is approved by Director review. GDD content must not be invented while the GDD source file is pending.
@@ -36,8 +38,12 @@ The project is in MVP foundation work.
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
-- M8_REWARD_SELECTION is PENDING.
-- M9_DICE_FACE_REPLACEMENT is PENDING.
+- M8_STARTER_FACE_GAMEPLAY is IN_PROGRESS.
+- M9_REWARD_SELECTION is PENDING.
+- M10_DICE_FACE_REPLACEMENT is PENDING.
+- M11_MVP_PLAYTEST_POLISH is PENDING.
+- `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
+- `M8-002_GUARD_GAMEPLAY` is NEXT.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -143,6 +149,12 @@ The project is in MVP foundation work.
 - M7 Run Flow Presentation validation is complete for static presentation sequence, runtime ownership, scope guardrails, and Unity import/compile.
 - M7 is ready for Director review.
 - M7 has not added rewards, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, or new Face effects yet.
+- Dice-owned Base Throw Damage now exists on `DiceModel`.
+- Starter Dice currently has Base Throw Damage 5.
+- Starter Attack currently modifies the Throw by 5 damage, producing 10 total starter Attack Throw damage.
+- Guard, Spark, and Mend currently deal Base Throw Damage through the Throw but still have no dedicated Face effects until their M8 tasks.
+- BattleController now applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- No Hunter permanent Attack stat was introduced for M8-001.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - `LinearStageRuntimeState` owns current stage index, current stage type, boss-stage check, and fixed-order advancement; it does not know battle outcome, rewards, next battle preparation, transition presentation, or run completion.
 - Accepted player Throw now moves turn ownership into `Transition`; current M5 flow then enters `EnemyTurn`, resolves a pending enemy attack intent, plays enemy attack presentation, applies player damage, refreshes HP, moves through `Transition`, and returns to `PlayerTurn`.
@@ -176,16 +188,17 @@ Milestones are defined only in `Docs/MILESTONE_PLAN.md`:
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP
 7. M6_LINEAR_STAGE_RUN
 8. M7_RUN_FLOW_PRESENTATION
-9. M8_REWARD_SELECTION
-10. M9_DICE_FACE_REPLACEMENT
-11. M10_MVP_PLAYTEST_POLISH
+9. M8_STARTER_FACE_GAMEPLAY
+10. M9_REWARD_SELECTION
+11. M10_DICE_FACE_REPLACEMENT
+12. M11_MVP_PLAYTEST_POLISH
 
 ## MVP Must Include
 
 - Dice throw combat loop.
-- Fixed throw damage.
+- Dice Tier Base Throw Damage.
 - Dice battle presentation.
-- Dice face skill activation.
+- Starter Face gameplay identity.
 - Enemy turn.
 - Victory and defeat.
 - Five-stage linear progression.
@@ -256,9 +269,22 @@ Post-M3 roadmap:
 - M5: Enemy Turn and Battle Loop. IN_PROGRESS.
 - M6: Battle Complete.
 - M7: Run Flow Presentation.
-- M8: Reward Selection.
-- M9: Dice Face Replacement.
+- M8: Starter Face Gameplay.
+- M9: Reward Selection.
+- M10: Dice Face Replacement.
+- M11: MVP Playtest Polish.
 - First complete Run.
+
+M8 locked design:
+
+- Every Throw always deals Base Throw Damage.
+- Base Throw Damage belongs to the Dice.
+- Base Throw Damage never belongs to the Hunter.
+- Face effects modify the Throw.
+- Face effects do not replace the Throw.
+- Final Throw Result is Dice Tier Base Throw Damage plus Face Effect.
+- Dice Tier controls Active Face Slot count and Base Throw Damage.
+- Every starter Face must have meaningful gameplay value before Reward Selection begins.
 
 Director-locked M4 principle:
 
