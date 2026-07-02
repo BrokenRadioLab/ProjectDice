@@ -37,7 +37,7 @@ Required MVP pillars:
 6. M5_ENEMY_TURN_AND_BATTLE_LOOP - DONE
 7. M6_LINEAR_STAGE_RUN - DONE
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
-9. M8_STARTER_FACE_GAMEPLAY - IN_PROGRESS
+9. M8_STARTER_FACE_GAMEPLAY - READY_FOR_DIRECTOR_REVIEW
 10. M9_REWARD_SELECTION - PENDING
 11. M10_DICE_FACE_REPLACEMENT - PENDING
 12. M11_MVP_PLAYTEST_POLISH - PENDING
@@ -356,7 +356,7 @@ Detailed Task Status:
 
 ## M8_STARTER_FACE_GAMEPLAY
 
-Status: IN_PROGRESS
+Status: READY_FOR_DIRECTOR_REVIEW
 
 Goal:
 
@@ -388,13 +388,14 @@ Confirm starter Faces create meaningful decisions before adding reward selection
 Detailed Task Status:
 
 - M8 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
-- M8 implementation has started.
+- M8 implementation is complete and ready for Director review.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.
 - M8-004 Mend Gameplay is DONE.
 - M8-005 Face Presentation Polish is DONE.
-- M8-006 Validate Starter Face Gameplay is NEXT.
+- M8-006 Validate Starter Face Gameplay is DONE.
+- M8 is ready for Director review.
 - M8 must follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
 
 ## M9_REWARD_SELECTION

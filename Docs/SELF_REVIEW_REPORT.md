@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M8-005_FACE_PRESENTATION_POLISH
+Task: M8-006_VALIDATE_STARTER_FACE_GAMEPLAY
 
 ## Review Result
 
 PASS
 
-Face Presentation Polish follows the locked Dice Combat Philosophy by making Base Throw Damage plus Face Effect readable during the battle sequence.
+Starter Face Gameplay validation confirms M8 satisfies the locked Dice Combat Philosophy before Reward Selection begins.
 
 ## Scope Check
 
@@ -21,12 +21,15 @@ Face Presentation Polish follows the locked Dice Combat Philosophy by making Bas
 - Implemented M8-003 Lightning Gameplay.
 - Implemented M8-004 Mend Gameplay.
 - Implemented M8-005 Face Presentation Polish.
+- Completed M8-006 Validate Starter Face Gameplay.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
 - Lightning can deal Base Throw Damage and add a deterministic 3 damage Lightning modifier.
 - Mend can deal Base Throw Damage and heal the player for up to 5 HP.
 - Face Effect presentation now communicates Base Throw Damage plus the resolved Face modifier.
+- Every starter Face now has meaningful gameplay value.
+- No starter Face remains No Effect.
 - Did not add victory gameplay.
 - Did not add restart UI.
 - Did not add run summary.
@@ -67,6 +70,7 @@ Face Presentation Polish follows the locked Dice Combat Philosophy by making Bas
 - Mend recovery is consumed by BattleController after the Throw damage application.
 - `BattleCombatState.HealPlayer(int healing)` owns player HP recovery and clamps healing at Player Max HP.
 - `ThrowSequencePresenter` consumes selected Face, FaceEffectData, applied damage, and Base Throw Damage for presentation only.
+- M8 remains separate from Reward Selection and Dice Face Replacement.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.
@@ -100,6 +104,7 @@ Face Presentation Polish follows the locked Dice Combat Philosophy by making Bas
 - Guard currently reduces the next incoming enemy attack damage by 3 after dealing Base Throw Damage.
 - Lightning currently adds a 3 damage Face modifier after Base Throw Damage.
 - Mend currently heals up to 5 HP after Base Throw Damage.
+- Unity batchmode compile validation completed successfully for M8-006.
 - Run-flow presentation hook does not mutate HP.
 - Run-flow presentation hook does not mutate turn ownership.
 - Run-flow presentation hook does not mutate stage runtime or run state.

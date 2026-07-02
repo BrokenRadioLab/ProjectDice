@@ -2,7 +2,7 @@
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Milestone Status: IN_PROGRESS
+Milestone Status: READY_FOR_DIRECTOR_REVIEW
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -14,7 +14,7 @@ Director Review:
 - M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
 - M6_LINEAR_STAGE_RUN is DONE.
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
-- M8_STARTER_FACE_GAMEPLAY implementation has started.
+- M8_STARTER_FACE_GAMEPLAY implementation is complete and ready for Director review.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 
@@ -603,7 +603,7 @@ Completed:
 
 ## M8-006: Validate Starter Face Gameplay
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -635,6 +635,19 @@ Validation:
 - Stage runtime still works.
 - Run flow presentation still works.
 - No rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay are added.
+
+Completed:
+
+- Confirmed starter Dice Base Throw Damage is 3.
+- Confirmed starter Dice contains Attack, Attack, Guard, Guard, Lightning, and Mend.
+- Confirmed Attack remains the primary offense Face: Base 3 plus Attack modifier 5, for 8 total damage before enemy HP clamping.
+- Confirmed Guard has defensive value: Base 3 plus same-exchange enemy attack reduction 3.
+- Confirmed Lightning has secondary offensive value: Base 3 plus Lightning modifier 3, for 6 total damage before enemy HP clamping.
+- Confirmed Mend has recovery value: Base 3 plus up to 5 HP recovery, clamped by Player Max HP.
+- Confirmed no starter Face remains No Effect.
+- Confirmed Reward Selection and Dice Face Replacement were not implemented.
+- Confirmed Unity batchmode compile passes with no `NullReferenceException` or `MissingReferenceException`.
+- M8_STARTER_FACE_GAMEPLAY is ready for Director review.
 
 ## M6 Implementation Tasks
 

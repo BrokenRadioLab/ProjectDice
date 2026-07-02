@@ -4,6 +4,14 @@
 
 ### Changed
 
+- Completed M8-006 Validate Starter Face Gameplay.
+- Confirmed starter Dice Base Throw Damage is 3.
+- Confirmed starter Dice contains Attack, Attack, Guard, Guard, Lightning, and Mend.
+- Confirmed Attack, Guard, Lightning, and Mend all have meaningful gameplay value.
+- Confirmed no starter Face remains No Effect.
+- Marked M8_STARTER_FACE_GAMEPLAY as READY_FOR_DIRECTOR_REVIEW.
+- Confirmed Unity batchmode compile validation for M8-006 completed successfully.
+- No Reward Selection, Dice Face Replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay was added for M8-006.
 - Implemented M8-005 Face Presentation Polish.
 - `ThrowSequencePresenter` now receives Dice Base Throw Damage for presentation.
 - Face Effect beat now communicates Base Throw Damage plus the resolved Face modifier.
@@ -48,7 +56,7 @@
 - Added Dice Combat Philosophy: every Throw deals Dice Tier Base Throw Damage and Faces modify the Throw.
 - Revised the roadmap so M8 is Starter Face Gameplay, M9 is Reward Selection, M10 is Dice Face Replacement, and M11 is MVP Playtest Polish.
 - Generated the M8_STARTER_FACE_GAMEPLAY task breakdown without implementing gameplay.
-- M8 implementation has started with M8-001 Base Throw Damage Framework.
+- M8 implementation started with M8-001 Base Throw Damage Framework.
 - Completed M7-007 Validate Run Flow Presentation.
 - Confirmed non-boss Victory presentation can show Stage Clear, Next Stage, and Battle Start.
 - Confirmed Boss Victory presentation can show Run Complete.

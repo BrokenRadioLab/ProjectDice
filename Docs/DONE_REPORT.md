@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Completed Work: M8-005_FACE_PRESENTATION_POLISH
+Completed Work: M8-006_VALIDATE_STARTER_FACE_GAMEPLAY
 
 ## Summary
 
-Improved Face Effect presentation so the battle result reads as Dice Base Throw Damage plus the resolved Face modifier.
+Validated M8 Starter Face Gameplay and confirmed every starter Face now has meaningful gameplay value before Reward Selection.
 
 ## Validation Result
 
@@ -41,7 +41,7 @@ PASS
 - M7-005 Run Complete Presentation is DONE.
 - M7-006 Defeat Presentation is DONE.
 - M7-007 Validate Run Flow Presentation is DONE.
-- M8_STARTER_FACE_GAMEPLAY is IN_PROGRESS.
+- M8_STARTER_FACE_GAMEPLAY is READY_FOR_DIRECTOR_REVIEW.
 - M9_REWARD_SELECTION is PENDING and not implemented.
 - M10_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M11_MVP_PLAYTEST_POLISH is PENDING and not implemented.
@@ -51,7 +51,7 @@ PASS
 - M8-003 Lightning Gameplay is DONE.
 - M8-004 Mend Gameplay is DONE.
 - M8-005 Face Presentation Polish is DONE.
-- M8-006 Validate Starter Face Gameplay is NEXT.
+- M8-006 Validate Starter Face Gameplay is DONE.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
 - Starter Dice has Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
@@ -71,6 +71,13 @@ PASS
 - Face Effect presentation now shows Dice Base Throw Damage plus the resolved Face modifier.
 - Damage Number remains the applied enemy damage value.
 - Presentation consumes runtime result data and does not decide gameplay.
+- Every starter Face now has gameplay value.
+- Attack remains the primary offense Face: Base 3 plus Attack modifier 5, for 8 total damage before enemy HP clamping.
+- Guard is the defensive Face: Base 3 plus same-exchange incoming damage reduction 3.
+- Lightning is the secondary offense Face: Base 3 plus Lightning modifier 3, for 6 total damage before enemy HP clamping.
+- Mend is the recovery Face: Base 3 plus up to 5 HP recovery, clamped by Player Max HP.
+- No starter Face remains No Effect.
+- Reward Selection and Dice Face Replacement were not implemented.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.
