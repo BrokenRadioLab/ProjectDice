@@ -101,7 +101,7 @@ public sealed class BattleController : MonoBehaviour
 
         if (throwSequencePresenter != null)
         {
-            yield return throwSequencePresenter.Play(selectedFace, faceEffect, pendingDamage);
+            yield return throwSequencePresenter.Play(selectedFace, faceEffect, pendingDamage, baseThrowDamage);
         }
 
         diceResultPresenter?.ShowResult(battleDiceState);

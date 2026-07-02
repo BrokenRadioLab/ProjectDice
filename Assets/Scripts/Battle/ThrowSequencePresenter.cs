@@ -100,7 +100,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         PlayEnemyIdleLoop();
     }
 
-    public IEnumerator Play(DiceFace selectedFace, FaceEffectData faceEffect, int damageAmount)
+    public IEnumerator Play(DiceFace selectedFace, FaceEffectData faceEffect, int damageAmount, int baseThrowDamage)
     {
         CacheOriginalColors();
         yield return PlayHeroThrowAnimation();
@@ -121,7 +121,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         yield return new WaitForSeconds(diceLayerAppearDuration);
         yield return PlayRollingPresentation();
         yield return PlayFaceReveal(selectedFace);
-        yield return PlayFaceEffect(faceEffect);
+        yield return PlayFaceEffect(faceEffect, baseThrowDamage);
         yield return PlayDamageNumber(damageAmount);
         HideDiceAnimationLayer();
     }
@@ -689,7 +689,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         yield return new WaitForSeconds(damageNumberDuration);
     }
 
-    private IEnumerator PlayFaceEffect(FaceEffectData faceEffect)
+    private IEnumerator PlayFaceEffect(FaceEffectData faceEffect, int baseThrowDamage)
     {
         EnsureFaceEffectText();
 
@@ -700,7 +700,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         RectTransform effectTransform = faceEffectText.rectTransform;
         effectTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
-        faceEffectText.text = GetFaceEffectText(faceEffect);
+        faceEffectText.text = GetFaceEffectText(faceEffect, baseThrowDamage);
         faceEffectText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(faceEffectDuration);
@@ -775,15 +775,15 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         textTransform.anchorMax = new Vector2(0.5f, 0.5f);
         textTransform.pivot = new Vector2(0.5f, 0.5f);
         textTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
-        textTransform.sizeDelta = new Vector2(220f, 36f);
+        textTransform.sizeDelta = new Vector2(280f, 46f);
 
         faceEffectText = textObject.AddComponent<Text>();
         faceEffectText.raycastTarget = false;
         faceEffectText.alignment = TextAnchor.MiddleCenter;
-        faceEffectText.fontSize = 20;
+        faceEffectText.fontSize = 18;
         faceEffectText.resizeTextForBestFit = true;
         faceEffectText.resizeTextMinSize = 10;
-        faceEffectText.resizeTextMaxSize = 20;
+        faceEffectText.resizeTextMaxSize = 18;
         faceEffectText.color = faceEffectTextColor;
         fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
@@ -798,29 +798,35 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
     }
 
-    private static string GetFaceEffectText(FaceEffectData faceEffect)
+    private static string GetFaceEffectText(FaceEffectData faceEffect, int baseThrowDamage)
     {
+        string baseText = $"Base {Mathf.Max(0, baseThrowDamage)}";
+
         if (faceEffect == null || !faceEffect.IsImplemented)
         {
-            return "No Effect";
+            return $"{baseText} + No Effect";
         }
+
+        string faceName = string.IsNullOrWhiteSpace(faceEffect.SourceFaceDisplayName)
+            ? "Face"
+            : faceEffect.SourceFaceDisplayName;
 
         if (faceEffect.EffectType == FaceEffectType.Damage)
         {
-            return "Damage";
+            return $"{baseText} + {faceName} +{faceEffect.DamageAmount}";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Guard)
         {
-            return "Guard";
+            return $"{baseText} + Guard -{faceEffect.IncomingDamageReductionAmount}";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Mend)
         {
-            return "Mend";
+            return $"{baseText} + Mend +{faceEffect.HealAmount} HP";
         }
 
-        return "Effect";
+        return $"{baseText} + Effect";
     }
 
     private void EnsureDamageNumberText()

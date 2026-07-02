@@ -549,12 +549,12 @@ Completed:
 - Added `BattleCombatState.HealPlayer(int healing)` as the single player HP recovery mutation path.
 - Mend Throw still deals Dice Base Throw Damage before applying recovery.
 - Mend healing is clamped by Player Max HP.
-- Mend presentation currently shows `Mend` as the Face Effect beat.
+- Mend presentation can now show Base Throw Damage plus Mend HP recovery as the Face Effect beat.
 - No long-term healing economy, reward selection, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, or multi-enemy gameplay was added.
 
 ## M8-005: Face Presentation Polish
 
-Status: NEXT
+Status: DONE
 
 Goal:
 
@@ -590,9 +590,20 @@ Validation:
 - Damage number and HP update still happen after presentation.
 - No gameplay is triggered directly from presentation code.
 
+Completed:
+
+- `ThrowSequencePresenter` now receives Dice Base Throw Damage for presentation.
+- Face Effect beat now displays Base Throw Damage plus the resolved Face modifier.
+- Attack and Lightning presentation can show Base Damage plus damage modifier.
+- Guard presentation can show Base Damage plus incoming damage reduction.
+- Mend presentation can show Base Damage plus HP recovery.
+- Damage Number remains the applied enemy damage value.
+- No gameplay values are decided by presentation code.
+- No reward selection, Dice replacement, inventory, progression, new Face effects, or new UI systems were added.
+
 ## M8-006: Validate Starter Face Gameplay
 
-Status: PENDING
+Status: NEXT
 
 Goal:
 

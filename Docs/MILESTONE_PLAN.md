@@ -393,7 +393,8 @@ Detailed Task Status:
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.
 - M8-004 Mend Gameplay is DONE.
-- M8-005 Face Presentation Polish is NEXT.
+- M8-005 Face Presentation Polish is DONE.
+- M8-006 Validate Starter Face Gameplay is NEXT.
 - M8 must follow `Docs/Design/PROJECT_CORE_PHILOSOPHY.md`.
 
 ## M9_REWARD_SELECTION

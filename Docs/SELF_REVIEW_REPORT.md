@@ -2,13 +2,13 @@
 
 Date: 2026-07-02
 
-Task: M8-004_MEND_GAMEPLAY
+Task: M8-005_FACE_PRESENTATION_POLISH
 
 ## Review Result
 
 PASS
 
-Mend Gameplay follows the locked starter Face philosophy and keeps Mend as a recovery modifier rather than a skipped attack.
+Face Presentation Polish follows the locked Dice Combat Philosophy by making Base Throw Damage plus Face Effect readable during the battle sequence.
 
 ## Scope Check
 
@@ -20,11 +20,13 @@ Mend Gameplay follows the locked starter Face philosophy and keeps Mend as a rec
 - Implemented M8-002 Guard Gameplay.
 - Implemented M8-003 Lightning Gameplay.
 - Implemented M8-004 Mend Gameplay.
+- Implemented M8-005 Face Presentation Polish.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard can deal Base Throw Damage and reduce the next incoming enemy attack damage by 3.
 - Lightning can deal Base Throw Damage and add a deterministic 3 damage Lightning modifier.
 - Mend can deal Base Throw Damage and heal the player for up to 5 HP.
+- Face Effect presentation now communicates Base Throw Damage plus the resolved Face modifier.
 - Did not add victory gameplay.
 - Did not add restart UI.
 - Did not add run summary.
@@ -35,6 +37,8 @@ Mend Gameplay follows the locked starter Face philosophy and keeps Mend as a rec
 - Did not add long-term healing economy.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
 - Did not add new Faces beyond renaming starter Spark to Lightning.
+- Did not add new Face effects during presentation polish.
+- Did not make presentation code decide gameplay values.
 - Did not add enemy AI or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.
 - Did not add victory presentation, full battle reset flow, transition UI, rewards, or post-run systems.
@@ -62,6 +66,7 @@ Mend Gameplay follows the locked starter Face philosophy and keeps Mend as a rec
 - Guard reduction is consumed by BattleController when applying the following enemy attack intent.
 - Mend recovery is consumed by BattleController after the Throw damage application.
 - `BattleCombatState.HealPlayer(int healing)` owns player HP recovery and clamps healing at Player Max HP.
+- `ThrowSequencePresenter` consumes selected Face, FaceEffectData, applied damage, and Base Throw Damage for presentation only.
 - No Hunter-owned permanent Attack stat was introduced.
 - Battle Resume is part of the run-flow presentation sequence and remains separate from battle preparation.
 - Run Complete is a presentation consumer of `LinearRunState.Completed` and remains separate from run completion ownership.

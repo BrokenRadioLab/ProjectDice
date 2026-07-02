@@ -4,11 +4,11 @@ Date: 2026-07-02
 
 Selected Milestone: M8_STARTER_FACE_GAMEPLAY
 
-Completed Work: M8-004_MEND_GAMEPLAY
+Completed Work: M8-005_FACE_PRESENTATION_POLISH
 
 ## Summary
 
-Implemented Mend as the starter recovery Face while preserving Dice Base Throw Damage.
+Improved Face Effect presentation so the battle result reads as Dice Base Throw Damage plus the resolved Face modifier.
 
 ## Validation Result
 
@@ -50,8 +50,8 @@ PASS
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.
 - M8-004 Mend Gameplay is DONE.
-- M8-005 Face Presentation Polish is NEXT.
-- M8-006 Validate Starter Face Gameplay is PENDING.
+- M8-005 Face Presentation Polish is DONE.
+- M8-006 Validate Starter Face Gameplay is NEXT.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
 - Starter Dice has Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
@@ -68,6 +68,9 @@ PASS
 - Mend still deals Base Throw Damage 3 before applying recovery.
 - Mend healing is clamped by Player Max HP.
 - `BattleCombatState.HealPlayer(int healing)` is the single player HP recovery mutation path.
+- Face Effect presentation now shows Dice Base Throw Damage plus the resolved Face modifier.
+- Damage Number remains the applied enemy damage value.
+- Presentation consumes runtime result data and does not decide gameplay.
 - `RunFlowPresenter` exists as a presentation-only component.
 - `RunFlowPresenter` consumes existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
 - `BattleController` calls the run-flow presentation hook after Victory and Defeat outcomes.
