@@ -33,9 +33,9 @@ Required MVP pillars:
 3. M2_DICE_CORE - DONE
 4. M3_DICE_PRESENTATION - DONE
 5. M4_SKILL_RESOLUTION - DONE
-6. M5_ENEMY_TURN_AND_BATTLE_LOOP - READY_FOR_DIRECTOR_REVIEW
-7. M6_LINEAR_STAGE_RUN - READY_FOR_DIRECTOR_REVIEW
-8. M7_RUN_FLOW_PRESENTATION - PENDING
+6. M5_ENEMY_TURN_AND_BATTLE_LOOP - DONE
+7. M6_LINEAR_STAGE_RUN - DONE
+8. M7_RUN_FLOW_PRESENTATION - IN_PROGRESS
 9. M8_REWARD_SELECTION - PENDING
 10. M9_DICE_FACE_REPLACEMENT - PENDING
 11. M10_MVP_PLAYTEST_POLISH - PENDING
@@ -213,7 +213,7 @@ Detailed Task Status:
 
 ## M5_ENEMY_TURN_AND_BATTLE_LOOP
 
-Status: IN_PROGRESS
+Status: DONE
 
 Goal:
 
@@ -253,7 +253,7 @@ Detailed Task Status:
 - M5-005 Turn Transition is DONE and approved.
 - M5-006 Collapsible Dice Deck is DONE and approved.
 - M5-007 Validate M5 Battle Loop is DONE.
-- M5 is ready for Director review.
+- M5 is DONE.
 - M5 must preserve the existing player Throw, Face Resolution, Dice presentation, damage apply, and HP refresh flow before adding the enemy response.
 - M5 includes battle-level turn ownership with `PlayerTurn`, `Transition`, and `EnemyTurn`.
 - Enemy attack resolution currently produces a deterministic pending fixed 5 Damage intent.
@@ -267,7 +267,7 @@ Detailed Task Status:
 
 ## M6_LINEAR_STAGE_RUN
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 Goal:
 
@@ -305,13 +305,13 @@ Detailed Task Status:
 - M6-006 Complete Linear Run is DONE.
 - M6-007 Prepare Next Battle is DONE.
 - M6-008 Validate Linear Stage Run is DONE.
-- M6 is ready for Director review as the first fixed five-stage linear run structure.
+- M6 is DONE as the first fixed five-stage linear run structure.
 - M6 must preserve the current player/enemy/player battle loop.
 - M6 must not add rewards, Dice replacement, inventory, shops, branching map, permanent progression, new Face effects, enemy AI, boss mechanics, or multi-enemy logic.
 
 ## M7_RUN_FLOW_PRESENTATION
 
-Status: PENDING
+Status: IN_PROGRESS
 
 Goal:
 
@@ -336,6 +336,20 @@ Exit Criteria:
 Human Review Point:
 
 Confirm the run flow feels readable before adding reward selection.
+
+Detailed Task Status:
+
+- M7 detailed implementation tasks have been generated in `Docs/TASK_QUEUE.md`.
+- M7 implementation has started.
+- M7-001 Run Flow Presentation Entry Point is DONE.
+- M7-002 Stage Clear Presentation is NEXT.
+- M7-003 Next Stage Presentation is PENDING.
+- M7-004 Battle Resume Presentation is PENDING.
+- M7-005 Run Complete Presentation is PENDING.
+- M7-006 Defeat Presentation is PENDING.
+- M7-007 Validate Run Flow Presentation is PENDING.
+- M7 must consume existing M6 runtime state and must not decide gameplay.
+- M7 must not add rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay.
 
 ## M8_REWARD_SELECTION
 

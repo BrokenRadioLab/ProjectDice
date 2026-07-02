@@ -15,6 +15,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private BattleHudPresenter hudPresenter;
     [SerializeField] private ThrowSequencePresenter throwSequencePresenter;
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
+    [SerializeField] private RunFlowPresenter runFlowPresenter;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -26,6 +27,7 @@ public sealed class BattleController : MonoBehaviour
 
     private void Start()
     {
+        EnsureRunFlowPresenter();
         hudPresenter?.Refresh();
         SetBattleLog("Ready to throw.");
     }
@@ -110,7 +112,9 @@ public sealed class BattleController : MonoBehaviour
         if (IsBattleVictory())
         {
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
+            yield return PlayRunFlowPresentation();
             bool preparedNextBattle = ResolvePostVictoryRunProgression();
+            yield return PlayRunFlowPresentation();
             SetBattleLog(GetFaceEffectLogMessage(faceEffect, damage));
             inputLocked = !preparedNextBattle;
             yield break;
@@ -131,6 +135,7 @@ public sealed class BattleController : MonoBehaviour
 
         if (IsBattleDefeat())
         {
+            yield return PlayRunFlowPresentation();
             SetBattleLog($"{GetFaceEffectLogMessage(faceEffect, damage)} {GetEnemyAttackLogMessage(playerDamage)}");
             yield break;
         }
@@ -154,6 +159,36 @@ public sealed class BattleController : MonoBehaviour
         }
 
         return battleTurnState == null || battleTurnState.CanAcceptPlayerAction;
+    }
+
+    private void EnsureRunFlowPresenter()
+    {
+        if (runFlowPresenter != null)
+        {
+            return;
+        }
+
+        runFlowPresenter = GetComponent<RunFlowPresenter>();
+
+        if (runFlowPresenter == null)
+        {
+            runFlowPresenter = gameObject.AddComponent<RunFlowPresenter>();
+        }
+    }
+
+    private IEnumerator PlayRunFlowPresentation()
+    {
+        EnsureRunFlowPresenter();
+
+        if (runFlowPresenter == null)
+        {
+            yield break;
+        }
+
+        yield return runFlowPresenter.PlayBattleOutcome(
+            battleOutcomeState,
+            linearStageRuntimeState,
+            linearRunState);
     }
 
     private DiceFace SelectDiceResult()

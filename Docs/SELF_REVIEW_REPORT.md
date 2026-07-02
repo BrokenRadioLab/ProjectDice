@@ -2,19 +2,19 @@
 
 Date: 2026-07-02
 
-Task: TASK_ROADMAP_ADJUST_RUN_FLOW_AND_ATTACK_TUNING
+Task: M7-001_RUN_FLOW_PRESENTATION_ENTRY_POINT
 
 ## Review Result
 
 PASS
 
-Roadmap adjustment and starter Attack tuning stay within the requested narrow scope.
+Run Flow Presentation Entry Point stays within the requested presentation-hook-only scope.
 
 ## Scope Check
 
-- Changed only starter Attack Face damage from 5 to 10.
-- Updated roadmap documentation to insert Run Flow Presentation before Reward Selection and Dice Face Replacement.
-- Did not implement Run Flow Presentation.
+- Added `RunFlowPresenter` as a presentation-only run-flow hook.
+- Connected `BattleController` to call the hook after battle outcome resolution.
+- Did not implement Stage Clear, Next Stage, Battle Resume, Run Complete, or Defeat presentation.
 - Did not add victory gameplay.
 - Did not add defeat presentation or restart UI.
 - Did not add battle end presentation or full battle reset flow.
@@ -43,6 +43,7 @@ Roadmap adjustment and starter Attack tuning stay within the requested narrow sc
 - Dice Deck remains Battle Information UI and reads from `BattleDiceState.CurrentDice`.
 - Battle presentation and Dice Deck information UI remain separated.
 - Dice Deck remains a runtime build viewer, not battle presentation, reward UI, inventory, or Dice replacement UI.
+- `RunFlowPresenter` consumes runtime state but does not own outcome, stage progression, run completion, HP, turn ownership, rewards, or Dice data.
 
 ## Validation Review
 
@@ -68,6 +69,10 @@ Roadmap adjustment and starter Attack tuning stay within the requested narrow sc
 - Starter Dice still contains Attack, Attack, Guard, Guard, Spark, and Mend.
 - Attack Face now resolves to 10 damage because `FaceResolver` consumes the selected Face's `FixedThrowDamageValue`.
 - Guard, Spark, and Mend still resolve to No Effect.
+- Run-flow presentation hook does not mutate HP.
+- Run-flow presentation hook does not mutate turn ownership.
+- Run-flow presentation hook does not mutate stage runtime or run state.
+- Boss Victory can be observed after run completion is marked.
 - Fixed run path is Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
 - Stage advance is not triggered by defeat.
 - Reward flow is not triggered by victory.
@@ -82,4 +87,4 @@ Roadmap adjustment and starter Attack tuning stay within the requested narrow sc
 
 ## Status
 
-TASK_ROADMAP_ADJUST_RUN_FLOW_AND_ATTACK_TUNING is complete.
+M7-001_RUN_FLOW_PRESENTATION_ENTRY_POINT is complete.

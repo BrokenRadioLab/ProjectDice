@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Implemented M7-001 Run Flow Presentation Entry Point.
+- Added `RunFlowPresenter` as a presentation-only consumer of battle outcome, stage, and run completion context.
+- Connected `BattleController` to call the run-flow presentation hook after Victory and Defeat outcomes.
+- Boss Victory can be observed again after M6 marks the linear run completed.
+- Marked M7-001 as DONE and M7-002 Stage Clear Presentation as NEXT.
+- No Stage Clear, Next Stage, Battle Resume, Run Complete, Defeat presentation, rewards, Dice replacement, inventory, meta progression, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay were added for M7-001.
 - Updated the post-M6 roadmap to insert M7_RUN_FLOW_PRESENTATION before reward and Dice replacement milestones.
 - Split the future reward/build roadmap into M8_REWARD_SELECTION and M9_DICE_FACE_REPLACEMENT.
 - Moved MVP playtest polish behind the reward and Dice replacement flow as M10_MVP_PLAYTEST_POLISH.

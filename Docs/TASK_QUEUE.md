@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M6_LINEAR_STAGE_RUN
+Selected Milestone: M7_RUN_FLOW_PRESENTATION
 
-Milestone Status: READY_FOR_DIRECTOR_REVIEW
+Milestone Status: IN_PROGRESS
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -11,8 +11,9 @@ Director Review:
 - M2_DICE_CORE is approved and DONE.
 - M3_DICE_PRESENTATION is approved and DONE.
 - M4_SKILL_RESOLUTION is approved and DONE.
-- M5_ENEMY_TURN_AND_BATTLE_LOOP is READY_FOR_DIRECTOR_REVIEW.
-- M6_LINEAR_STAGE_RUN task structure is generated and READY_FOR_DIRECTOR_REVIEW.
+- M5_ENEMY_TURN_AND_BATTLE_LOOP is DONE.
+- M6_LINEAR_STAGE_RUN is DONE.
+- M7_RUN_FLOW_PRESENTATION task structure is generated and implementation has started.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 
 M4 Locked Principle:
@@ -73,9 +74,250 @@ Post-M4 Roadmap:
 - M9: Dice Face Replacement.
 - First complete Run.
 
+## M7 Implementation Tasks
+
+Status: GENERATED
+
+M7 Goal:
+
+Make the existing M6 runtime run flow visible to the player before rewards and Dice replacement are introduced.
+
+Desired Presentation Shape:
+
+- Non-boss Victory.
+- Stage Clear.
+- Next Stage.
+- Battle resumes.
+- Boss Victory.
+- Run Complete.
+- Player Defeat.
+- Defeat feedback.
+
+M7 Task Rule:
+
+- One presentation concept per task.
+- Keep every task independently verifiable.
+- Presentation consumes existing runtime state only.
+- Runtime state remains owned by M6 systems.
+- Do not add rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay.
+- Do not make run flow presentation decide battle outcome, stage advance, next battle preparation, or run completion.
+
+## M7-001: Run Flow Presentation Entry Point
+
+Status: DONE
+
+Goal:
+
+Add the minimal presentation-only entry point needed for run flow beats after battle outcome resolution.
+
+Requirements:
+
+- Introduce a presentation-only component or hook for run flow presentation.
+- Consume existing `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` data.
+- Do not calculate Victory or Defeat.
+- Do not advance stages.
+- Do not prepare the next battle.
+- Do not reset battle state.
+- Do not add UI for rewards or Dice replacement.
+
+Done Criteria:
+
+- Battle flow has a clear place where run flow presentation can play after battle outcome changes.
+
+Validation:
+
+- Existing battle loop still works.
+- Presentation hook does not mutate HP.
+- Presentation hook does not mutate turn ownership.
+- Presentation hook does not mutate stage or run state.
+- No rewards, Dice replacement, inventory, meta progression, branching map, enemy AI, boss mechanics, or new Face effects are added.
+
+Completed:
+
+- Added `RunFlowPresenter` as a presentation-only run-flow entry point.
+- `RunFlowPresenter` consumes `BattleOutcomeState`, `LinearStageRuntimeState`, and `LinearRunState` context.
+- `BattleController` now calls the run-flow presentation hook after Victory and Defeat outcomes.
+- Boss Victory can be observed again after M6 run completion is marked.
+- The hook does not calculate outcome, advance stages, prepare battles, reset battle state, mutate HP, mutate turn ownership, or add reward/Dice replacement UI.
+
+## M7-002: Stage Clear Presentation
+
+Status: NEXT
+
+Goal:
+
+Show a short Stage Clear presentation after non-boss Victory.
+
+Requirements:
+
+- Stage Clear appears only after `BattleOutcomeState` is Victory.
+- Stage Clear appears only for non-boss stages.
+- Presentation should be short, readable, and 16-bit RPG appropriate.
+- Do not advance stages inside the presentation.
+- Do not prepare the next battle inside the presentation.
+- Do not show rewards.
+
+Done Criteria:
+
+- Winning Stage 1, 2, 3, or 4 produces a visible Stage Clear beat before the next run-flow beat.
+
+Validation:
+
+- Stage Clear does not appear on Defeat.
+- Stage Clear does not appear after Boss Victory.
+- Stage Clear does not mutate runtime state.
+- Existing player Throw, enemy turn, damage, HP refresh, and battle outcome flow still work.
+
+## M7-003: Next Stage Presentation
+
+Status: PENDING
+
+Goal:
+
+Show the next stage identity before the next battle resumes.
+
+Requirements:
+
+- Present the current runtime stage after non-boss stage advancement.
+- Use existing `LinearStageRuntimeState` values.
+- Show stage number and stage type in a simple temporary presentation.
+- Do not create a map.
+- Do not create branching stage selection.
+- Do not add rewards between stages.
+
+Done Criteria:
+
+- After Stage Clear, the player can see the next Stage number/type before battle resumes.
+
+Validation:
+
+- Next Stage presentation reads runtime stage state.
+- No hardcoded fake stage progression is added.
+- No branching map, reward, Dice replacement, inventory, or shop UI is added.
+
+## M7-004: Battle Resume Presentation
+
+Status: PENDING
+
+Goal:
+
+Make the transition from Next Stage back to active battle readable.
+
+Requirements:
+
+- Add a short battle resume beat after the next stage is presented.
+- Player input should resume only after the run-flow presentation sequence ends.
+- Preserve M6 next battle preparation behavior.
+- Preserve player HP and current runtime Dice persistence.
+- Do not add healing rules.
+- Do not add new enemy setup rules beyond existing M6 preparation.
+
+Done Criteria:
+
+- After non-boss Victory, the player sees Stage Clear, Next Stage, and then returns to a ready battle state.
+
+Validation:
+
+- Throw input is not accepted during run-flow presentation.
+- Throw input is accepted after battle resumes.
+- Player HP persists.
+- Current runtime Dice persists.
+- Dice Deck still reads from current runtime Dice.
+
+## M7-005: Run Complete Presentation
+
+Status: PENDING
+
+Goal:
+
+Show a clear Run Complete presentation after Boss Victory.
+
+Requirements:
+
+- Run Complete appears only when `LinearRunState` is completed.
+- Consume Boss Victory/run completion state from existing runtime systems.
+- Do not start a new run.
+- Do not show rewards.
+- Do not show meta progression.
+- Do not add restart flow.
+
+Done Criteria:
+
+- Winning Stage 5 Boss produces a visible Run Complete beat and does not resume battle input.
+
+Validation:
+
+- Run Complete does not appear after non-boss Victory.
+- Run Complete does not appear after Defeat.
+- Further Throw input remains blocked after run completion.
+- No reward, Dice replacement, meta progression, restart, or new run system is added.
+
+## M7-006: Defeat Presentation
+
+Status: PENDING
+
+Goal:
+
+Show a clear Defeat presentation when the player loses the battle.
+
+Requirements:
+
+- Defeat presentation appears only after `BattleOutcomeState` is Defeat.
+- Consume existing defeat state.
+- Do not add restart UI.
+- Do not add run summary.
+- Do not add meta progression.
+- Do not add rewards.
+
+Done Criteria:
+
+- Player HP reaching 0 leads to visible Defeat feedback and battle input remains blocked.
+
+Validation:
+
+- Defeat presentation does not appear after Victory.
+- Stage does not advance after Defeat.
+- Run does not complete after Defeat.
+- No restart, reward, Dice replacement, inventory, or meta progression system is added.
+
+## M7-007: Validate Run Flow Presentation
+
+Status: PENDING
+
+Goal:
+
+Validate the full run flow presentation sequence before starting reward selection.
+
+Requirements:
+
+- Confirm non-boss Victory shows Stage Clear.
+- Confirm next stage identity is shown before battle resumes.
+- Confirm battle resumes after non-boss run-flow presentation.
+- Confirm Boss Victory shows Run Complete.
+- Confirm Defeat shows Defeat presentation.
+- Confirm runtime state is still owned by M6 systems.
+- Confirm no rewards or Dice replacement were added.
+
+Done Criteria:
+
+- M7 can be submitted for Director review as the visible run-flow layer over M6 runtime progression.
+
+Validation:
+
+- No compile errors.
+- No `NullReferenceException`.
+- Player Throw flow still works.
+- Enemy turn still works.
+- Battle outcome still works.
+- Stage runtime still works.
+- Player HP persists across stages.
+- Current runtime Dice persists across stages.
+- Dice Deck persists and remains separate from run-flow presentation.
+- No rewards, Dice replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, new Face effects, or multi-enemy gameplay are added.
+
 ## M6 Implementation Tasks
 
-Status: READY_FOR_DIRECTOR_REVIEW
+Status: DONE
 
 M6 Goal:
 
@@ -414,7 +656,7 @@ Not Added:
 
 ## M5 Implementation Tasks
 
-Status: IN_PROGRESS
+Status: DONE
 
 M5 Goal:
 
