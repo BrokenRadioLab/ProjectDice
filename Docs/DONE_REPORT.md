@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Selected Milestone: COMBAT_SEQUENCING_CORRECTION
+Selected Milestone: M10_REWARD_SELECTION
 
-Completed Work: TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION
+Completed Work: M10-001_REWARD_RUNTIME_FRAMEWORK
 
 ## Summary
 
-Separated Base Throw Damage and Face Effect application into distinct battle timing steps without changing combat values.
+Added the reward runtime state holder and reward data structure without implementing reward generation, reward effects, or reward UI.
 
 ## Validation Result
 
@@ -48,12 +48,23 @@ PASS
 - M9-002 Validate Starter Dice Build is DONE.
 - M9-003 UI Foundation Polish is DONE.
 - M10_REWARD_SELECTION is READY and not implemented.
+- M10-001 Reward Runtime Framework is DONE.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.
 - `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.
+- `RewardSelectionState` exists.
+- `RewardData` exists.
+- `RewardType` defines Face, Heal, Max HP, and Relic categories.
+- Reward selection active/inactive state exists.
+- Current reward list state exists.
+- Selected reward state exists.
+- Reward consumed state exists.
+- Selecting one reward closes the reward selection state and clears the remaining current rewards.
+- No reward generation logic, reward effects, reward UI polish, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, or Boss drops were added.
+- Unity batchmode compile validation completed successfully for M10-001.
 - Base Throw Damage is applied immediately after enemy impact.
 - Enemy HP refreshes immediately after Base Throw Damage.
 - Dice Animation Layer appears only after Base Throw Damage application and popup.

@@ -29,7 +29,7 @@ Director Technical Lock:
 - Dice Deck uses an anchored horizontal layout for expanded slot presentation.
 - Damage Popup and Heal Popup now use a dedicated Combat Feedback Layer under the battle field instead of the Dice Animation Layer.
 - Damage and heal numbers remain target-local combat feedback and must never be shown on the Dice Layer.
-- Reward Selection has not been implemented.
+- Full Reward Selection gameplay has not been implemented; only M10-001 runtime framework exists.
 
 Recent Presentation Polish:
 
@@ -267,7 +267,7 @@ M9 Director Result:
 
 ## M10 Implementation Tasks
 
-Status: DESIGN_READY
+Status: IN_PROGRESS
 
 M10 Goal:
 
@@ -279,10 +279,39 @@ M10 Pre-Implementation Requirement:
 
 M10 Scope Guardrails:
 
-- Implement Reward Selection only after detailed M10 tasks are generated.
+- Implement Reward Selection only when a detailed M10 task is selected.
 - Do not implement Dice Face Replacement during M10 unless explicitly instructed.
 - Do not add inventory, shops, meta progression UI, permanent unlock economy, Dice Tier progression, new run creation, boss mechanics, or multi-enemy gameplay.
 - Reward Selection must improve an existing runtime Dice build, not create the Dice.
+
+## M10-001: Reward Runtime Framework
+
+Status: DONE
+
+Goal:
+
+Create the runtime state holder and data structure for Reward Selection without implementing reward generation, reward effects, or reward UI polish.
+
+Completed:
+
+- Added `RewardSelectionState`.
+- Added `RewardData`.
+- Added `RewardType` values:
+  - Face
+  - Heal
+  - MaxHp
+  - Relic
+- `RewardSelectionState` owns active/inactive selection state.
+- `RewardSelectionState` owns the current reward list.
+- `RewardSelectionState` owns the selected reward.
+- `RewardSelectionState` owns whether a reward has been consumed.
+- Selecting one reward closes the runtime selection state and clears remaining current rewards.
+- Runtime structure can represent Battle Victory -> Reward Selection opens -> reward data assigned -> one reward selected -> selection closes -> continue run.
+- No reward generation logic was added.
+- No reward effects were added.
+- No reward UI polish was added.
+- No Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, or Boss drops were added.
+- Unity batchmode compile validation completed successfully for M10-001.
 
 ## M7 Implementation Tasks
 
@@ -811,7 +840,7 @@ Requirements:
 - Confirm Lightning has secondary damage or utility value.
 - Confirm Mend has recovery value.
 - Confirm no starter Face remains No Effect.
-- Confirm Reward Selection has not been implemented.
+- Confirm Full Reward Selection gameplay has not been implemented; only M10-001 runtime framework exists.
 - Confirm Dice Face Replacement has not been implemented.
 
 Done Criteria:

@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Implemented `M10-001_REWARD_RUNTIME_FRAMEWORK`.
+- Added `RewardSelectionState` as a pure reward runtime state holder.
+- Added `RewardData` and `RewardType` for Face, Heal, Max HP, and Relic reward categories.
+- Reward runtime state now supports opening a selection, storing current rewards, selecting one reward, consuming it, clearing remaining rewards, and closing selection.
+- Reward effects, reward generation, reward UI polish, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops were not implemented.
+- Unity batchmode compile validation completed successfully for M10-001.
 - Completed `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION`.
 - Battle sequencing now applies Dice Base Throw Damage immediately after enemy impact and before Dice Animation Layer appears.
 - Enemy HP now refreshes after Base Throw Damage before Dice rolling begins.

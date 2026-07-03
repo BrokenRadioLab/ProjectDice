@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION
+Task: M10-001_REWARD_RUNTIME_FRAMEWORK
 
 ## Review Result
 
 PASS
 
-Base Throw Damage and Face Effect application are now separate battle sequencing steps while combat values and Dice result logic remain unchanged.
+Reward runtime framework exists as state and data only; reward generation, reward effects, and reward UI remain unimplemented.
 
 ## Scope Check
 
@@ -42,6 +42,15 @@ Base Throw Damage and Face Effect application are now separate battle sequencing
 - Added `TASK_UI_ARCHITECTURE_REFACTOR` as planned technical debt before large-scale UI expansion.
 - Completed `TASK_UI_ARCHITECTURE_REFACTOR`.
 - Completed `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION`.
+- Completed `M10-001_REWARD_RUNTIME_FRAMEWORK`.
+- Added `RewardSelectionState`.
+- Added `RewardData`.
+- Added `RewardType` categories for Face, Heal, Max HP, and Relic.
+- RewardSelectionState can open a runtime selection with assigned rewards.
+- RewardSelectionState can select exactly one reward.
+- RewardSelectionState clears remaining rewards after selection.
+- RewardSelectionState tracks selected reward and consumed state.
+- Unity batchmode compile validation completed successfully for M10-001.
 - Split enemy HP mutation into Base Throw Damage first and Face damage modifier later.
 - Base Throw Damage now applies immediately after enemy impact.
 - HUD refresh now happens after Base Throw Damage before Dice Layer appears.
@@ -91,14 +100,18 @@ Base Throw Damage and Face Effect application are now separate battle sequencing
 - Did not add post-run economy.
 - Did not add long-term healing economy.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
-- Did not implement Reward Selection.
+- Did not implement full Reward Selection gameplay.
+- Did not implement reward generation.
+- Did not implement reward effects.
+- Did not implement reward UI polish.
 - Did not implement Dice Face Replacement.
+- Did not implement Meta Progression, permanent unlocks, Iron Core, Boss drops, inventory, shops, or new run creation.
 - Did not change Base Throw Damage value, Attack modifier, Lightning modifier, Mend heal amount, Guard reduction, enemy attack damage, DiceRoller result logic, or Face selection logic.
 - Did not add new Faces beyond renaming starter Spark to Lightning.
 - Did not add new Face effects during presentation polish.
 - Did not make presentation code decide gameplay values.
 - Did not change Base Throw Damage, Attack modifier, Guard reduction, Lightning damage, Mend heal amount, enemy damage, HP mutation order, FaceResolver gameplay logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI.
-- Did not implement Reward Selection, Dice Face Replacement, inventory, shop, branching map, new Face effects, boss mechanics, or multi-enemy gameplay.
+- Did not implement full Reward Selection gameplay, Dice Face Replacement, inventory, shop, branching map, new Face effects, boss mechanics, or multi-enemy gameplay.
 - Did not implement inventory, shops, meta progression UI, permanent unlock economy, Dice Tier progression, or new run creation.
 - Did not add enemy AI or boss mechanics.
 - Did not add multi-enemy targeting, multiple enemy HP mutation, or multi-enemy UI.

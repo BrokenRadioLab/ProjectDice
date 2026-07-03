@@ -54,6 +54,7 @@ The project is in MVP foundation work.
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
 - `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE and Reward UI must build on the scene/prefab-style binding approach.
+- `M10-001_REWARD_RUNTIME_FRAMEWORK` is DONE.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -162,7 +163,7 @@ Status: DONE
 - Enemy damage numbers appear near the enemy.
 - Player damage and Mend healing numbers appear near the Hunter.
 - Damage and heal popups do not depend on or attach to the Dice Animation Layer.
-- Reward Selection and Dice Face Replacement remain unimplemented.
+- Full Reward Selection gameplay and Dice Face Replacement remain unimplemented.
 - The fixed runtime path now supports Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss progression.
 - Non-boss Victory advances and prepares the next battle; Boss Victory marks `LinearRunState` as completed.
 - Defeat stops player input and does not advance stages, complete the run, or trigger rewards.
@@ -377,6 +378,9 @@ M10 locked design direction:
 - Reward categories may include New Face, Recover HP, Run-only Max HP increase, and future Relic.
 - New Face selection and Dice Face Replacement remain separate responsibilities.
 - Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock conditions are documented in `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+- `RewardSelectionState` now exists as the reward runtime state holder.
+- `RewardData` and `RewardType` now define reward runtime data for Face, Heal, Max HP, and Relic rewards.
+- Reward generation, reward effects, reward UI polish, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops remain unimplemented.
 
 Director-locked M4 principle:
 
