@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: M10-003_REWARD_POOL
+Task: M10-004_REWARD_GENERATOR
 
 ## Review Result
 
 PASS
 
-M10-003 runtime Reward Pool is implemented as candidate data only while preserving existing gameplay and avoiding Reward Generator/UI/Apply implementation.
+M10-004 runtime Reward Generator is implemented as node-aware option generation only while preserving existing gameplay and avoiding Reward UI/Apply implementation.
 
 ## Scope Check
 
@@ -85,6 +85,16 @@ M10-003 runtime Reward Pool is implemented as candidate data only while preservi
 - RewardPool does not duplicate Face metadata.
 - RewardPool includes safe runtime Face rewards, run-only Heal data, run-only Max HP data, and a Relic placeholder category entry.
 - RewardPool does not decide probability, node behavior, reward generation, reward selection, or reward application.
+- Added `RewardNodeType`.
+- Added `RewardGenerator`.
+- RewardGenerator consumes `RewardPool` data.
+- RewardGenerator returns no options for Battle and Rest.
+- RewardGenerator returns 3 options for Elite, Treasure, and Boss.
+- RewardGenerator avoids exact duplicate reward IDs where possible.
+- Generated reward options are not applied.
+- Reward Selection UI was not implemented.
+- Reward Apply was not implemented.
+- Dice Face Replacement, Permanent Face Drops, Dice Shards, Node Map, and Meta Progression were not implemented.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.
 - RewardSelectionState clears remaining rewards after selection.

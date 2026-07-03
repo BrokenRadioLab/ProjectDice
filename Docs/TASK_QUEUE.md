@@ -521,7 +521,7 @@ Completed:
 
 ## M10-004: Reward Generator
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -559,9 +559,29 @@ Validation:
 - Generator consumes Reward Pool data instead of hardcoding UI choices.
 - Unity compile passes.
 
+Completed:
+
+- Added `RewardNodeType`:
+  - Battle
+  - Elite
+  - Treasure
+  - Rest
+  - Boss
+- Added `RewardGenerator`.
+- `RewardGenerator` consumes `RewardPool` candidates.
+- Default generation count is 3 reward options.
+- Elite generates 3 options from Face, Relic, and Heal category preference.
+- Treasure generates 3 options from Face, Relic, and Max HP category preference.
+- Boss generates 3 options from Face, Heal, Max HP, and Relic category preference.
+- Battle returns no reward options.
+- Rest returns no reward options.
+- Exact duplicate reward IDs are avoided inside one generated option set where possible.
+- Generated options are cloned structured `RewardData` only.
+- No Reward Selection UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, Dice Shards, Pity system, Shop, Gold, Inventory, Collection UI, Meta Progression, Node Map, New Run flow, or Boss mechanics were added.
+
 ## M10-005: Reward Selection UI
 
-Status: PENDING
+Status: READY
 
 Goal:
 

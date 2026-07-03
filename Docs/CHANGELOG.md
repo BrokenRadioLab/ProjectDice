@@ -41,6 +41,13 @@
 - RewardPool includes safe runtime Face rewards, run-only Heal reward data, run-only Max HP reward data, and a Relic placeholder category entry.
 - RewardPool does not decide drop probability, reward rarity weighting, node behavior, reward generation, reward selection, or reward application.
 - Reward Generator, Reward Selection UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, Dice Shards, Shop, Gold, Inventory, Collection UI, and Meta Progression were not implemented.
+- Implemented `M10-004_REWARD_GENERATOR`.
+- Added `RewardNodeType` for Battle, Elite, Treasure, Rest, and Boss reward generation requests.
+- Added `RewardGenerator` that consumes `RewardPool` data and returns structured reward option lists.
+- Elite, Treasure, and Boss generate 3 reward options.
+- Battle and Rest return no reward options.
+- Generated options avoid exact duplicate reward IDs where possible.
+- Reward Selection UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, Dice Shards, Pity system, Shop, Gold, Inventory, Collection UI, Meta Progression, Node Map, New Run flow, and Boss mechanics were not implemented.
 - Clarified that Battle nodes do not generate Reward Selection and that M10 reward generation should target Elite, Treasure, and Boss flows.
 - Implemented `M10-001_REWARD_RUNTIME_FRAMEWORK`.
 - Added `RewardSelectionState` as a pure reward runtime state holder.
