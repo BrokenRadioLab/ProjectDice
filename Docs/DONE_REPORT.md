@@ -4,11 +4,11 @@ Date: 2026-07-03
 
 Selected Milestone: M10_REWARD_SELECTION
 
-Completed Work: M10-005_REWARD_SELECTION_UI
+Completed Work: M10-006_REWARD_APPLY
 
 ## Summary
 
-Added the first playable Reward Selection UI so generated reward options can be displayed and exactly one reward can be selected without applying reward effects.
+Added Reward Apply so selected run-scoped rewards are consumed and applied or handed off without implementing Dice Face Replacement or permanent progression.
 
 ## Validation Result
 
@@ -53,6 +53,7 @@ PASS
 - M10-003 Reward Pool is DONE.
 - M10-004 Reward Generator is DONE.
 - M10-005 Reward Selection UI is DONE.
+- M10-006 Reward Apply is DONE.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
@@ -122,10 +123,16 @@ PASS
 - Normal Battle stages do not open Reward Selection.
 - Treasure flow was not invented.
 - Selected rewards are not applied yet.
-- M10-006 Reward Apply is READY.
-- M10-007 Validate Reward Selection is PENDING.
+- `RewardApplyService` exists.
+- Heal rewards restore HP through `BattleCombatState.HealPlayer(...)` and do not exceed Max HP.
+- Run-only Max HP rewards increase Player Max HP and Current HP by the same amount.
+- Face rewards are stored as pending runtime Face rewards only.
+- Current Dice is unchanged after Face reward selection.
+- Relic rewards are stored as placeholder runtime ownership only.
+- RewardSelectionState is reset after application.
+- M10-007 Validate Reward Selection is READY.
 - M10 Reward Selection is scoped to eligible reward-bearing nodes, not normal Battle nodes.
-- No Reward Apply, Dice Face Replacement, node map, permanent Face Drop, Shard drop, or Shop implementation was added.
+- No Dice Face Replacement, node map, permanent Face Drop, Shard drop, Shop implementation, or permanent progression was added.
 - Base Throw Damage is applied immediately after enemy impact.
 - Enemy HP refreshes immediately after Base Throw Damage.
 - Dice Animation Layer appears only after Base Throw Damage application and popup.

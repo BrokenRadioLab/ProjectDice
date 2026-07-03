@@ -385,7 +385,7 @@ M10 locked design direction:
 - `RewardSelectionState` now exists as the reward runtime state holder.
 - `RewardData` and `RewardType` now define reward runtime data for Face, Heal, Max HP, and Relic rewards.
 - M10 detailed task breakdown is generated.
-- Next recommended M10 task is `M10-006_REWARD_APPLY`.
+- Next recommended M10 task is `M10-007_VALIDATE_REWARD_SELECTION`.
 - Face Rarity direction is Common, Rare, Epic, and Legendary.
 - M10-002 Face Rarity and Definition Schema is implemented in runtime code.
 - FaceDefinition expected fields are Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
@@ -413,7 +413,13 @@ M10 locked design direction:
 - Elite and Boss victory can open Reward Selection in the current linear run.
 - Normal Battle stages do not open Reward Selection.
 - Treasure flow was not invented because the current linear run has no Treasure stage.
-- Reward effects, Reward Apply, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops remain unimplemented.
+- `RewardApplyService` now exists and consumes selected rewards from `RewardSelectionState`.
+- Heal rewards apply through `BattleCombatState.HealPlayer(...)` and respect Player Max HP.
+- Run-only Max HP rewards increase Player Max HP and Current HP by the same amount.
+- Face rewards become pending runtime Face rewards only and do not modify the current Dice.
+- Relic rewards are placeholder runtime ownership only and have no gameplay effect.
+- RewardSelectionState is reset after reward application.
+- Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, Boss drops, Dice Shards, Shop, Gold, Inventory, Collection UI, Node Map, New Run Flow, Treasure stage, Boss reward extras, and Relic gameplay remain unimplemented.
 - Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
 - Each Dice Tier uses its corresponding Shard for evolution.
 - Previous Tier Shards stop dropping after evolving to the next Dice Tier.

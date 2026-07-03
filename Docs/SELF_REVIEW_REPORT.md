@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: M10-005_REWARD_SELECTION_UI
+Task: M10-006_REWARD_APPLY
 
 ## Review Result
 
 PASS
 
-M10-005 Reward Selection UI is implemented as presentation and selection interaction only while preserving existing gameplay and avoiding Reward Apply implementation.
+M10-006 Reward Apply is implemented as selected reward consumption only while preserving Dice Face Replacement and permanent progression boundaries.
 
 ## Scope Check
 
@@ -102,7 +102,15 @@ M10-005 Reward Selection UI is implemented as presentation and selection interac
 - Elite and Boss victory can open Reward Selection in the current linear run.
 - Normal Battle stages do not open Reward Selection.
 - Treasure flow was not invented.
-- Reward Apply was not implemented.
+- Added `RewardApplyService`.
+- Heal rewards apply through `BattleCombatState.HealPlayer(...)`.
+- Heal rewards respect Player Max HP.
+- Run-only Max HP rewards increase Player Max HP and Current HP by the same amount.
+- Face rewards are stored as pending runtime Face rewards only.
+- Current Dice is not modified by Face rewards.
+- Relic rewards are stored as placeholder runtime ownership only.
+- RewardSelectionState resets after reward application.
+- Reward Apply does not own UI or Reward Generation.
 - Dice Face Replacement, Permanent Face Drops, Dice Shards, Node Map, and Meta Progression were not implemented.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.

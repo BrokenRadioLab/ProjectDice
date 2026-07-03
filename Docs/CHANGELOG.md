@@ -56,6 +56,14 @@
 - Normal Battle stages do not open Reward Selection.
 - Treasure stage flow was not added because the current linear run has no Treasure stage.
 - Reward Apply, Heal reward effect, Max HP reward effect, Face insertion, Dice Face Replacement, Permanent Face Drops, Dice Shards, Pity system, Shop, Gold, Inventory, Collection UI, Meta Progression, Node Map, New Run flow, and Boss mechanics were not implemented.
+- Implemented `M10-006_REWARD_APPLY`.
+- Added `RewardApplyService`.
+- Heal rewards now apply immediately through `BattleCombatState.HealPlayer(...)` and respect Player Max HP.
+- Run-only Max HP rewards increase Player Max HP and Current HP by the same amount.
+- Face rewards are stored as pending runtime Face rewards for M11 handoff and do not modify the current Dice.
+- Relic rewards are stored as placeholder runtime ownership only and have no gameplay effect.
+- RewardSelectionState is reset after reward application.
+- Dice Face Replacement, Permanent Face Drops, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection UI, Node Map, New Run flow, Treasure stage, Boss reward extras, and Relic gameplay were not implemented.
 - Clarified that Battle nodes do not generate Reward Selection and that M10 reward generation should target Elite, Treasure, and Boss flows.
 - Implemented `M10-001_REWARD_RUNTIME_FRAMEWORK`.
 - Added `RewardSelectionState` as a pure reward runtime state holder.

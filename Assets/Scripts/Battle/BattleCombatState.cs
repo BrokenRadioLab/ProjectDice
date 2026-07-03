@@ -40,6 +40,19 @@ public sealed class BattleCombatState : MonoBehaviour
         return playerCurrentHp - previousHp;
     }
 
+    public int IncreasePlayerMaxHpForRun(int amount)
+    {
+        int appliedAmount = Mathf.Max(0, amount);
+        if (appliedAmount <= 0)
+        {
+            return 0;
+        }
+
+        playerMaxHp += appliedAmount;
+        playerCurrentHp = Mathf.Min(playerMaxHp, playerCurrentHp + appliedAmount);
+        return appliedAmount;
+    }
+
     public void PrepareNextEnemy()
     {
         enemyCurrentHp = enemyMaxHp;

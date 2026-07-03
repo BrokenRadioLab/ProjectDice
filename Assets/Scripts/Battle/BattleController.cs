@@ -19,6 +19,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private StarterDiceBuildPresenter starterDiceBuildPresenter;
     [SerializeField] private RewardSelectionState rewardSelectionState;
     [SerializeField] private RewardSelectionPresenter rewardSelectionPresenter;
+    [SerializeField] private RewardApplyService rewardApplyService;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -138,6 +139,7 @@ public sealed class BattleController : MonoBehaviour
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
             yield return PlayRunFlowPresentation();
             yield return PlayRewardSelectionIfEligible();
+            ApplySelectedRewardIfAvailable();
             bool preparedNextBattle = ResolvePostVictoryRunProgression();
             yield return PlayRunFlowPresentation();
             SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing));
@@ -227,6 +229,16 @@ public sealed class BattleController : MonoBehaviour
         {
             rewardSelectionPresenter = gameObject.AddComponent<RewardSelectionPresenter>();
         }
+
+        if (rewardApplyService == null)
+        {
+            rewardApplyService = GetComponent<RewardApplyService>();
+        }
+
+        if (rewardApplyService == null)
+        {
+            rewardApplyService = gameObject.AddComponent<RewardApplyService>();
+        }
     }
 
     private IEnumerator PlayStarterDiceBuild()
@@ -298,6 +310,21 @@ public sealed class BattleController : MonoBehaviour
 
         rewardSelectionState.OpenSelection(rewardOptions);
         yield return rewardSelectionPresenter.Play(rewardSelectionState);
+    }
+
+    private void ApplySelectedRewardIfAvailable()
+    {
+        if (rewardSelectionState == null || !rewardSelectionState.HasSelectedReward)
+        {
+            return;
+        }
+
+        EnsureRewardSelectionSystems();
+
+        if (rewardApplyService != null && rewardApplyService.ApplySelectedReward(rewardSelectionState, combatState))
+        {
+            hudPresenter?.Refresh();
+        }
     }
 
     private RewardPool GetRewardPool()

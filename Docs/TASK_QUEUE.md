@@ -640,7 +640,7 @@ Completed:
 
 ## M10-006: Reward Apply
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -669,9 +669,26 @@ Validation:
 - Face reward handoff remains separate from M11 Dice Face Replacement.
 - Unity compile passes.
 
+Completed:
+
+- Added `RewardApplyService`.
+- RewardApplyService reads the selected reward from `RewardSelectionState`.
+- Heal rewards apply immediately through `BattleCombatState.HealPlayer(...)`.
+- Heal rewards respect Player Max HP.
+- Run-only Max HP rewards apply through `BattleCombatState.IncreasePlayerMaxHpForRun(...)`.
+- Max HP rewards increase Player Max HP and Current HP by the same amount.
+- Face rewards are stored as pending runtime Face rewards for M11 handoff only.
+- Face rewards do not modify the current Dice.
+- Relic rewards are stored as placeholder runtime ownership only.
+- Relic rewards have no gameplay effect.
+- RewardSelectionState is reset after reward application.
+- `BattleController` applies the selected reward after Reward Selection UI closes.
+- HUD refreshes after reward application.
+- No Dice Face Replacement, Permanent Face Drops, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection UI, Node Map, New Run Flow, Treasure stage, Boss reward extras, or Relic gameplay was added.
+
 ## M10-007: Validate Reward Selection
 
-Status: PENDING
+Status: READY
 
 Goal:
 
