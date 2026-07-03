@@ -110,15 +110,17 @@ M8 Locked Dice Combat Philosophy:
 
 M9 Starter Dice Build Locked Design:
 
-- Initial unlocked Starter Face Pool is Attack x2, Guard x1, Mend x1, Lightning x1.
+- Fixed Starter Face Pool has been removed.
+- Starter Build displays all permanently unlocked Faces whose Face Tier is less than or equal to the current Dice Tier.
 - Wood Dice physically remains D6.
 - Wood Dice has 4 Active Face Slots.
 - Wood Dice has 2 Locked Slots.
 - Locked Slots are not rolled.
 - Locked Slots are not Blank, Retry, or failed results.
 - Only active Faces enter the roll pool.
-- Player chooses 4 Faces from the available starter pool.
-- Duplicate Faces are allowed only if the pool contains duplicates.
+- Player chooses 4 Faces from the available unlocked Faces.
+- Duplicate Faces are allowed without duplicate source entries.
+- The only build restrictions are Face Tier and Active Face Slot count.
 - Dice Deck must remain compatible with active and locked slots.
 
 M10 Reward Selection Locked Direction:
@@ -129,6 +131,25 @@ M10 Reward Selection Locked Direction:
 - New Face rewards should be selected in M10 and inserted into the Dice later in M11.
 - Dice Face Replacement remains separate from Reward Selection.
 - Meta progression unlocks choices, not raw Hunter power.
+
+## M9-003: UI Foundation Polish
+
+Status: DONE
+
+Goal:
+
+Fix Starter Build and Dice Deck readability issues before M10 Reward Selection.
+
+Completed:
+
+- Starter Build panel width was increased for mobile landscape readability.
+- Starter Build active and locked Dice slots now fit inside the panel without clipping.
+- Starter Build Face Pool buttons now wrap across rows as more unlocked Faces become available.
+- Dice Deck expanded panel now opens above the bottom HUD instead of across the Throw button line.
+- Dice Deck expanded panel no longer overlaps the Throw button.
+- Damage/heal popup readability was rechecked after combat feedback polish.
+- Unity batchmode compile validation completed successfully for M9-003.
+- No Reward Selection, Dice Face Replacement, Meta Progression, or new Face effects were added.
 
 ## M9 Implementation Tasks
 
@@ -164,7 +185,7 @@ Requirements:
 - Update the Dice preview in real time.
 - Display current Face probabilities.
 - Prevent invalid builds.
-- Keep duplicate Faces legal when available in the pool.
+- Keep duplicate Faces legal without requiring duplicate pool entries.
 - Generate the runtime Starter Dice from the selected active Faces.
 - Do not implement Reward Selection.
 - Do not implement Dice Face Replacement.
@@ -173,13 +194,16 @@ Completed:
 
 - Added `StarterDiceBuildPresenter` as a Run Start / Starter Dice Build UI.
 - Battle starts only after Starter Dice Build is completed.
-- Starter Face Pool contains Attack x2, Guard x1, Mend x1, and Lightning x1.
-- Player chooses 4 active Faces from the available starter pool.
-- Duplicate Attack is legal because the starter pool contains two Attack entries.
+- Fixed Starter Face Pool has been removed.
+- Starter Build displays all permanently unlocked Faces filtered by current Dice Tier.
+- Player chooses 4 active Faces from the available unlocked Faces.
+- Duplicate Faces are legal without duplicate source entries.
 - Wood Dice runtime build uses 4 Active Face Slots and 2 Locked Slots.
 - Locked Slots are represented as null inactive slots and do not enter the roll pool.
 - `DiceModel` now tracks `ActiveFaceSlotCount`.
+- `DiceFace` now tracks `FaceTier`.
 - `DiceRoller` now selects only within active face slots.
+- Unity batchmode compile validation completed successfully for Starter Dice Build revision.
 - Dice preview updates as Faces are picked or removed.
 - Probability display updates from the selected active Faces.
 - Existing Battle scene consumes the generated runtime Dice through `BattleDiceState.SetCurrentDice`.

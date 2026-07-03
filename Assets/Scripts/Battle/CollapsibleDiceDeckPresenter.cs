@@ -11,10 +11,10 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
     private const float ToggleHeight = 72f;
     private const float ToggleLeftPadding = 28f;
     private const float PanelGap = 12f;
-    private const float PanelWidth = 840f;
-    private const float PanelHeight = 140f;
-    private const float SlotSize = 120f;
-    private const float SlotSpacing = 12f;
+    private const float PanelWidth = 760f;
+    private const float PanelHeight = 128f;
+    private const float SlotSize = 104f;
+    private const float SlotSpacing = 10f;
 
     [SerializeField] private BattleDiceState battleDiceState;
     [SerializeField] private RectTransform displayRoot;
@@ -180,10 +180,10 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
         panelObject.transform.SetParent(displayRoot, false);
 
         panelRoot = panelObject.AddComponent<RectTransform>();
-        panelRoot.anchorMin = new Vector2(0f, 0.5f);
-        panelRoot.anchorMax = new Vector2(0f, 0.5f);
-        panelRoot.pivot = new Vector2(0f, 0.5f);
-        panelRoot.anchoredPosition = new Vector2(ToggleLeftPadding + ToggleWidth + PanelGap, 0f);
+        panelRoot.anchorMin = new Vector2(0f, 1f);
+        panelRoot.anchorMax = new Vector2(0f, 1f);
+        panelRoot.pivot = new Vector2(0f, 0f);
+        panelRoot.anchoredPosition = new Vector2(ToggleLeftPadding, PanelGap);
         panelRoot.sizeDelta = new Vector2(PanelWidth, PanelHeight);
 
         Image panelImage = panelObject.AddComponent<Image>();
@@ -215,7 +215,7 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
         rowImage.raycastTarget = false;
         rowImage.color = rowColor;
 
-        Text rowText = CreateText("Dice Deck Slot Text", rowTransform, 30, TextAnchor.MiddleCenter);
+        Text rowText = CreateText("Dice Deck Slot Text", rowTransform, 26, TextAnchor.MiddleCenter);
         rowText.rectTransform.anchorMin = Vector2.zero;
         rowText.rectTransform.anchorMax = Vector2.one;
         rowText.rectTransform.anchoredPosition = Vector2.zero;

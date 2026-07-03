@@ -8,7 +8,7 @@ Task: TASK_COMBAT_FEEDBACK_ORDER_POLISH
 
 PASS
 
-Combat presentation now separates Dice Base Throw Damage from Face Effect feedback without changing gameplay values.
+Starter Dice Build now follows the locked player-driven Face Tier and Active Slot restriction model; combat presentation polish remains included.
 
 ## Scope Check
 
@@ -24,6 +24,8 @@ Combat presentation now separates Dice Base Throw Damage from Face Effect feedba
 - Completed M8-006 Validate Starter Face Gameplay.
 - Completed TASK_M8_PRESENTATION_READABILITY_FIX.
 - Completed TASK_COMBAT_FEEDBACK_ORDER_POLISH.
+- Completed STARTER_DICE_BUILD_FIXED_POOL_REMOVAL.
+- Completed M9-003 UI Foundation Polish.
 - Completed roadmap revision before Reward Selection.
 - Inserted M9_STARTER_DICE_BUILD.
 - Moved Reward Selection to M10.
@@ -37,6 +39,16 @@ Combat presentation now separates Dice Base Throw Damage from Face Effect feedba
 - Marked M9_STARTER_DICE_BUILD as DONE after Director approval.
 - Marked M10_REWARD_SELECTION as READY.
 - Added active slot runtime support for Wood Dice.
+- Added Face Tier to `DiceFace`.
+- Removed fixed Starter Face Pool architecture.
+- Starter Build now displays permanently unlocked Faces filtered by current Dice Tier.
+- Duplicate Face selection no longer requires duplicate source entries.
+- The only Starter Build restrictions are Face Tier and Active Face Slot count.
+- Unity batchmode compile validation completed successfully for Starter Dice Build revision.
+- Starter Build layout now avoids Dice slot clipping/overflow on mobile landscape.
+- Dice Deck expanded panel now opens above BottomHUD and does not overlap the Throw button.
+- Damage/heal popup timing remains readable.
+- Unity batchmode compile validation completed successfully for M9-003.
 - Added probability display for selected active Faces.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
@@ -130,7 +142,7 @@ Combat presentation now separates Dice Base Throw Damage from Face Effect feedba
 - Player HP persists across next battle preparation.
 - Dice Deck runtime data continues to read from current runtime Dice.
 - Starter Dice still contains Attack, Attack, Guard, Guard, Lightning, and Mend.
-- Starter Dice Build runtime pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Starter Dice Build runtime source is permanently unlocked Faces filtered by current Dice Tier.
 - Starter Dice Build creates a Wood Dice with 4 active Face slots and 2 locked slots.
 - Locked slots do not enter the roll pool.
 - Dice Deck displays active Faces and locked slots from runtime Dice state.

@@ -321,22 +321,28 @@ M8 locked design:
 - Dice Tier controls Active Face Slot count and Base Throw Damage.
 - Every starter Face must have meaningful gameplay value before Reward Selection begins.
 - Starter Dice Build must happen before Reward Selection.
-- M9_STARTER_DICE_BUILD will allow the player to choose 4 active Faces from Attack x2, Guard x1, Mend x1, and Lightning x1.
+- M9_STARTER_DICE_BUILD allows the player to choose 4 active Faces from permanently unlocked Faces whose Face Tier is less than or equal to the current Dice Tier.
 - Wood Dice remains physical D6 with 4 Active Face Slots and 2 Locked Slots.
 - Locked Slots are inactive, not rolled, and are not Blank or Retry.
 - Only active Faces enter the roll pool.
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
+- M9-003 UI Foundation Polish is DONE.
 - M9 is approved by Director review.
 - Battle now begins with a Run Start / Starter Dice Build UI in the existing Battle scene.
-- Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Fixed Starter Face Pool has been removed.
 - Player chooses 4 active Faces before battle input unlocks.
+- Duplicate Faces are legal without duplicate source entries.
+- The only build restrictions are Face Tier and Active Face Slot count.
 - `DiceModel` now tracks active Face slot count.
+- `DiceFace` now tracks Face Tier.
 - `DiceRoller` only rolls active Face slots.
 - Starter Dice Build displays a live Dice preview and probability summary.
 - Existing Battle scene consumes the generated runtime Dice through `BattleDiceState`.
 - Locked Slots are preserved as inactive runtime slots and never enter the roll pool.
 - Dice Deck displays the current active Faces and locked slots from runtime Dice state.
+- Starter Build layout has been adjusted to avoid clipping/overflow on mobile landscape.
+- Dice Deck expanded panel opens above BottomHUD and does not overlap the Throw button.
 
 M10 locked design direction:
 

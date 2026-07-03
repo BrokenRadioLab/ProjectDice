@@ -63,11 +63,11 @@ Hunter Dice: 6 Active Faces
 
 Starter Wood Dice Build:
 
--   Initial unlocked Starter Face Pool: Attack x2, Guard x1, Mend x1,
-    Lightning x1.
+-   Starter Build displays all permanently unlocked Faces whose Face Tier
+    is less than or equal to the current Dice Tier.
 -   Wood Dice physically remains D6.
 -   Wood Dice starts with 4 Active Face Slots and 2 Locked Slots.
--   The player chooses 4 active Faces from the available starter pool.
+-   The player chooses 4 active Faces from the available unlocked Faces.
 -   Locked Slots do not enter the roll pool.
 
 ------------------------------------------------------------------------

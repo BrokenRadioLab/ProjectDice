@@ -412,13 +412,14 @@ Allow the player to build the starting Dice before a run begins.
 Scope:
 
 - Display the unlocked Starter Face Pool.
-- Initial unlocked Starter Face Pool is Attack x2, Guard x1, Mend x1, Lightning x1.
+- Starter Build displays all permanently unlocked Faces whose Face Tier is less than or equal to the current Dice Tier.
 - Wood Dice remains a physical D6.
 - Wood Dice has 4 Active Face Slots and 2 Locked Slots.
 - Locked Slots are inactive and never rolled.
 - Locked Slots are not Blank, Retry, or failed results.
 - Player chooses 4 active Faces from the available starter pool.
-- Duplicate Faces are allowed only when the pool contains duplicates.
+- Duplicate Faces are allowed without duplicate source entries.
+- The only build restrictions are Face Tier and Active Face Slot count.
 - Build the runtime starting Dice from the selected active Faces.
 - Preserve D6 battle presentation.
 - Keep Dice Deck compatible with active and locked slots.
@@ -438,6 +439,7 @@ Detailed Task Status:
 
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
+- M9-003 UI Foundation Polish is DONE.
 - M9 is approved by Director review.
 
 ## M10_REWARD_SELECTION

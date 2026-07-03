@@ -11,6 +11,14 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
     private const int ActiveSlotCount = 4;
     private const int BuildSlotCount = DiceModel.FaceSlotCount;
     private const int StarterBaseThrowDamage = 3;
+    private const int CurrentDiceTier = 1;
+    private const int PoolColumns = 5;
+    private const float PoolButtonStartX = -372f;
+    private const float PoolButtonStartY = 136f;
+    private const float PoolButtonStepX = 186f;
+    private const float PoolButtonStepY = 82f;
+    private const float DiceSlotStartX = -390f;
+    private const float DiceSlotStepX = 156f;
 
     [SerializeField] private BattleDiceState battleDiceState;
     [SerializeField] private RectTransform displayRoot;
@@ -30,7 +38,7 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
     private Text[] lockedSlotTexts;
     private Button[] poolButtons;
     private Text[] poolButtonTexts;
-    private DiceFace[] starterPool;
+    private DiceFace[] unlockedFaces;
     private readonly List<int> selectedPoolIndexes = new List<int>(ActiveSlotCount);
     private bool isComplete;
     private static Font fallbackFont;
@@ -86,13 +94,13 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
             return;
         }
 
-        starterPool = StarterDiceFactory.CreateStarterFacePool();
+        unlockedFaces = StarterDiceFactory.CreateUnlockedFacesForDiceTier(CurrentDiceTier);
         overlayRoot = CreateRoot("Starter Dice Build Overlay", displayRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
         Image overlayImage = overlayRoot.gameObject.AddComponent<Image>();
         overlayImage.color = overlayColor;
 
         mainMenuRoot = CreateCenteredPanel("Run Start Panel", new Vector2(560f, 300f));
-        buildRoot = CreateCenteredPanel("Starter Dice Build Panel", new Vector2(900f, 520f));
+        buildRoot = CreateCenteredPanel("Starter Dice Build Panel", new Vector2(1040f, 560f));
 
         BuildMainMenu();
         BuildStarterDiceBuildView();
@@ -122,18 +130,20 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         poolTitle.rectTransform.anchorMax = new Vector2(0.48f, 0.82f);
         poolTitle.text = "Face Pool";
 
-        poolButtons = new Button[starterPool.Length];
-        poolButtonTexts = new Text[starterPool.Length];
+        poolButtons = new Button[unlockedFaces.Length];
+        poolButtonTexts = new Text[unlockedFaces.Length];
 
-        for (int i = 0; i < starterPool.Length; i++)
+        for (int i = 0; i < unlockedFaces.Length; i++)
         {
             int poolIndex = i;
+            int column = i % PoolColumns;
+            int row = i / PoolColumns;
             Button button = CreateButton(
                 $"Starter Face Pool Button {i + 1}",
                 buildRoot,
-                new Vector2(-320f + (i * 160f), 122f),
-                new Vector2(138f, 72f),
-                starterPool[i].DisplayName,
+                new Vector2(PoolButtonStartX + (column * PoolButtonStepX), PoolButtonStartY - (row * PoolButtonStepY)),
+                new Vector2(164f, 70f),
+                unlockedFaces[i].DisplayName,
                 20);
             button.onClick.AddListener(() => AddFace(poolIndex));
             poolButtons[i] = button;
@@ -152,8 +162,8 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
             Button slotButton = CreateButton(
                 $"Starter Active Slot {i + 1}",
                 buildRoot,
-                new Vector2(-300f + (i * 156f), 4f),
-                new Vector2(136f, 90f),
+                new Vector2(DiceSlotStartX + (i * DiceSlotStepX), -6f),
+                new Vector2(132f, 88f),
                 "Empty",
                 20);
             slotButton.onClick.AddListener(() => RemoveSlot(slotIndex));
@@ -166,8 +176,8 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
             Button lockedButton = CreateButton(
                 $"Starter Locked Slot {i + 1}",
                 buildRoot,
-                new Vector2(324f + (i * 156f), 4f),
-                new Vector2(136f, 90f),
+                new Vector2(DiceSlotStartX + ((ActiveSlotCount + i) * DiceSlotStepX), -6f),
+                new Vector2(132f, 88f),
                 "Locked",
                 18);
             lockedButton.interactable = false;
@@ -181,11 +191,11 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         }
 
         probabilityText = CreateText("Starter Dice Probability Text", buildRoot, 22, TextAnchor.UpperLeft);
-        probabilityText.rectTransform.anchorMin = new Vector2(0.08f, 0.07f);
-        probabilityText.rectTransform.anchorMax = new Vector2(0.66f, 0.34f);
+        probabilityText.rectTransform.anchorMin = new Vector2(0.06f, 0.06f);
+        probabilityText.rectTransform.anchorMax = new Vector2(0.66f, 0.30f);
         probabilityText.text = string.Empty;
 
-        startBattleButton = CreateButton("Start Battle Button", buildRoot, new Vector2(300f, -174f), new Vector2(250f, 76f), "Start Battle", 24);
+        startBattleButton = CreateButton("Start Battle Button", buildRoot, new Vector2(330f, -192f), new Vector2(260f, 76f), "Start Battle", 24);
         startBattleButton.onClick.AddListener(CompleteBuild);
         RefreshBuildView();
     }
@@ -220,7 +230,7 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
 
     private void AddFace(int poolIndex)
     {
-        if (selectedPoolIndexes.Count >= ActiveSlotCount || selectedPoolIndexes.Contains(poolIndex))
+        if (selectedPoolIndexes.Count >= ActiveSlotCount || !IsValidPoolIndex(poolIndex))
         {
             return;
         }
@@ -250,7 +260,7 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         DiceFace[] faces = new DiceFace[BuildSlotCount];
         for (int i = 0; i < ActiveSlotCount; i++)
         {
-            faces[i] = starterPool[selectedPoolIndexes[i]].Clone();
+            faces[i] = unlockedFaces[selectedPoolIndexes[i]].Clone();
         }
 
         battleDiceState?.SetCurrentDice(new DiceModel(faces, StarterBaseThrowDamage, ActiveSlotCount));
@@ -268,7 +278,7 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         {
             for (int i = 0; i < activeSlotTexts.Length; i++)
             {
-                DiceFace face = i < selectedPoolIndexes.Count ? starterPool[selectedPoolIndexes[i]] : null;
+                DiceFace face = i < selectedPoolIndexes.Count ? unlockedFaces[selectedPoolIndexes[i]] : null;
                 activeSlotTexts[i].text = face != null ? face.DisplayName : "Empty";
             }
         }
@@ -277,11 +287,12 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         {
             for (int i = 0; i < poolButtons.Length; i++)
             {
-                bool isSelected = selectedPoolIndexes.Contains(i);
-                poolButtons[i].interactable = !isSelected && selectedPoolIndexes.Count < ActiveSlotCount;
+                int selectedCount = CountSelectedPoolIndex(i);
+                poolButtons[i].interactable = selectedPoolIndexes.Count < ActiveSlotCount;
                 if (poolButtonTexts[i] != null)
                 {
-                    poolButtonTexts[i].text = isSelected ? $"{starterPool[i].DisplayName}\nPicked" : starterPool[i].DisplayName;
+                    string countText = selectedCount > 0 ? $"\nx{selectedCount}" : string.Empty;
+                    poolButtonTexts[i].text = $"{unlockedFaces[i].DisplayName}{countText}";
                 }
             }
         }
@@ -307,7 +318,7 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         Dictionary<string, int> counts = new Dictionary<string, int>();
         for (int i = 0; i < selectedPoolIndexes.Count; i++)
         {
-            string faceName = starterPool[selectedPoolIndexes[i]].DisplayName;
+            string faceName = unlockedFaces[selectedPoolIndexes[i]].DisplayName;
             counts.TryGetValue(faceName, out int currentCount);
             counts[faceName] = currentCount + 1;
         }
@@ -320,6 +331,32 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         }
 
         return text;
+    }
+
+    private bool IsValidPoolIndex(int poolIndex)
+    {
+        if (unlockedFaces == null || poolIndex < 0 || poolIndex >= unlockedFaces.Length)
+        {
+            return false;
+        }
+
+        DiceFace face = unlockedFaces[poolIndex];
+        return face != null && face.FaceTier <= CurrentDiceTier;
+    }
+
+    private int CountSelectedPoolIndex(int poolIndex)
+    {
+        int count = 0;
+
+        for (int i = 0; i < selectedPoolIndexes.Count; i++)
+        {
+            if (selectedPoolIndexes[i] == poolIndex)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     private RectTransform CreateCenteredPanel(string objectName, Vector2 size)

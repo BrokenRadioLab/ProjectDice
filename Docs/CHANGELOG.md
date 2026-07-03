@@ -4,6 +4,20 @@
 
 ### Changed
 
+- Completed M9-003 UI Foundation Polish.
+- Starter Build panel width and Dice slot layout were adjusted to prevent clipping/overflow on mobile landscape.
+- Starter Build Face Pool buttons now wrap across rows as unlocked Face count grows.
+- Dice Deck expanded panel now opens above the bottom HUD so it does not overlap the Throw button.
+- Dice Deck expanded slot scale remains readable while avoiding Throw button overlap.
+- Confirmed recent damage/heal popup timing remains readable after combat feedback polish.
+- Unity batchmode compile validation completed successfully for M9-003.
+- Revised Starter Dice Build architecture to remove the fixed Starter Face Pool.
+- Starter Build now displays permanently unlocked Faces filtered by current Dice Tier.
+- `DiceFace` now tracks Face Tier.
+- Starter Build now allows duplicate Face selection without requiring duplicate source entries.
+- The only Starter Build restrictions are Face Tier and Active Face Slot count.
+- Unity batchmode compile validation completed successfully for Starter Dice Build revision.
+- No Reward Selection, Meta Progression, Face gameplay values, HP mutation rules, or Dice replacement systems were added.
 - Completed `TASK_COMBAT_FEEDBACK_ORDER_POLISH`.
 - Player throw presentation now shows enemy-local Base Throw Damage before the Dice Animation Layer appears.
 - Dice Layer now appears after physical impact/base damage feedback.
@@ -34,7 +48,7 @@
 - Implemented M9-001 Starter Dice Build UI.
 - Added Run Start flow before Battle input unlocks.
 - Added `StarterDiceBuildPresenter` for Main Menu, Start Run, Starter Dice Build, and Battle handoff.
-- Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Starter Build displayed the then-current unlocked starter Face list.
 - Player can choose 4 active Faces for the Wood Dice before battle.
 - Wood Dice runtime build now uses 4 Active Face Slots and 2 Locked Slots.
 - `DiceModel` now tracks active Face slot count.
@@ -48,7 +62,7 @@
 - Moved Reward Selection to M10.
 - Moved Dice Face Replacement to M11.
 - Moved MVP Playtest Polish to M12.
-- Documented Starter Dice Build design: choose 4 active Faces from Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Documented Starter Dice Build design.
 - Documented Wood Dice as physical D6 with 4 Active Face Slots and 2 Locked Slots.
 - Documented that Locked Slots are inactive, not rolled, not Blank, and not Retry.
 - Increased expanded Dice Deck slot/UI scale for readability while keeping the collapsed button position.

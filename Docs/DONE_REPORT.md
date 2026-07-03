@@ -8,7 +8,7 @@ Completed Work: TASK_COMBAT_FEEDBACK_ORDER_POLISH
 
 ## Summary
 
-Separated Base Throw Damage feedback from Face Effect presentation so players can read physical Dice impact before Face modification.
+Revised Starter Dice Build to remove fixed Starter Face Pool restrictions while preserving presentation-only combat feedback polish.
 
 ## Validation Result
 
@@ -46,6 +46,7 @@ PASS
 - M9_STARTER_DICE_BUILD is DONE.
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
+- M9-003 UI Foundation Polish is DONE.
 - M10_REWARD_SELECTION is READY and not implemented.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
@@ -59,6 +60,7 @@ PASS
 - M8-006 Validate Starter Face Gameplay is DONE.
 - TASK_M8_PRESENTATION_READABILITY_FIX is DONE.
 - TASK_COMBAT_FEEDBACK_ORDER_POLISH is DONE.
+- STARTER_DICE_BUILD_FIXED_POOL_REMOVAL is DONE.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
 - Starter Dice has Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
@@ -105,7 +107,15 @@ PASS
 - Starter Dice Build UI is implemented for M9-001.
 - Expanded Dice Deck slot/UI scale has been increased for readability.
 - Dice Deck remains collapsed by default and still reads runtime Dice state.
-- Starter Face Pool is Attack x2, Guard x1, Mend x1, and Lightning x1.
+- Fixed Starter Face Pool has been removed.
+- Starter Build displays permanently unlocked Faces filtered by current Dice Tier.
+- Duplicate Face selection is allowed without duplicate source entries.
+- The only Starter Build restrictions are Face Tier and Active Face Slot count.
+- Unity batchmode compile validation completed successfully for Starter Dice Build revision.
+- Starter Build panel and Dice slot layout no longer clip on mobile landscape.
+- Dice Deck expanded panel no longer overlaps the Throw button.
+- Damage/heal popup readability remains improved after combat feedback polish.
+- Unity batchmode compile validation completed successfully for M9-003.
 - Player chooses 4 active Faces before entering battle.
 - Wood Dice runtime build has 4 Active Face Slots and 2 Locked Slots.
 - Locked Slots never enter the roll pool.
