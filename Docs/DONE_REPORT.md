@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Selected Milestone: UI_ARCHITECTURE_REFACTOR
+Selected Milestone: COMBAT_SEQUENCING_CORRECTION
 
-Completed Work: TASK_UI_ARCHITECTURE_REFACTOR
+Completed Work: TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION
 
 ## Summary
 
-Refactored core battle UI presenters toward scene/prefab-style anchored UI binding while preserving current gameplay and combat logic.
+Separated Base Throw Damage and Face Effect application into distinct battle timing steps without changing combat values.
 
 ## Validation Result
 
@@ -53,6 +53,16 @@ PASS
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.
+- `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.
+- Base Throw Damage is applied immediately after enemy impact.
+- Enemy HP refreshes immediately after Base Throw Damage.
+- Dice Animation Layer appears only after Base Throw Damage application and popup.
+- Attack and Lightning Face damage are applied only after Face reveal.
+- Mend healing is applied only after Face reveal.
+- Guard reduction is active only after Face reveal for the same battle exchange.
+- BattleCombatState receives separate enemy damage calls for Base damage and Face damage.
+- Damage and heal popups remain near the affected target and not on the Dice Animation Layer.
+- Unity batchmode compile validation completed successfully for the sequencing correction.
 - Starter Dice Build, Dice Deck, Run Flow, and combat feedback presenters now expose bindable UI references for production scene/prefab hierarchy.
 - Runtime fallback UI remains only to keep the current prototype scene playable until production UI prefabs are fully authored.
 - Damage and heal popups now use a dedicated Combat Feedback Layer under the Battle Field.
@@ -73,7 +83,7 @@ PASS
 - Starter Dice has Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
 - Guard, Lightning, and Mend can deal Base Throw Damage through the Throw.
-- BattleController applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- BattleController applies Dice Base Throw Damage and Face damage modifier as separate enemy HP mutation steps.
 - No Hunter permanent Attack stat was introduced.
 - Guard applies a deterministic defensive modifier.
 - Guard reduces the next incoming enemy attack damage by 3.

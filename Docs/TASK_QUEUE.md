@@ -33,6 +33,16 @@ Director Technical Lock:
 
 Recent Presentation Polish:
 
+- `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.
+- Base Throw Damage and Face Effect application are now separate battle sequencing steps.
+- `BattleCombatState.ApplyDamageToEnemy(baseDamage)` is called immediately after enemy impact and before Dice Animation Layer appears.
+- Enemy HP refreshes immediately after Base Throw Damage is applied.
+- Base damage popup appears near the enemy before Dice rolling begins.
+- Face damage, Mend healing, and Guard reduction are applied only after Dice roll and Face reveal.
+- Face damage popup appears near the enemy and shows only the applied Face damage modifier.
+- Mend healing popup appears near the Hunter after Face reveal.
+- Guard applies its reduction after Face reveal and does not show extra enemy damage popup.
+- No combat values, DiceRoller logic, Face selection logic, Reward Selection, or Dice Face Replacement systems were changed.
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
 - Base Throw Damage popup appears near the enemy before Dice Animation Layer appears.
 - Dice Layer appears after physical impact/base damage feedback.
@@ -616,7 +626,7 @@ Completed:
 - Added Dice-owned Base Throw Damage to the runtime Dice model.
 - Starter Dice now owns Base Throw Damage 3.
 - Starter Attack now acts as a 5 damage Face modifier, making starter Attack Throw total damage 8.
-- BattleController now resolves total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- BattleController now calculates Dice Base Throw Damage and Face damage modifier separately. Current sequencing applies them at separate timing points.
 - Guard, Lightning, and Mend can now deal Base Throw Damage even before their own Face effects are implemented.
 - No Hunter permanent Attack stat, Reward Selection, or Dice Face Replacement was added.
 

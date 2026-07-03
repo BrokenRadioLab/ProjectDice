@@ -52,6 +52,7 @@ The project is in MVP foundation work.
 - `M8-005_FACE_PRESENTATION_POLISH` is DONE.
 - `M8-006_VALIDATE_STARTER_FACE_GAMEPLAY` is DONE.
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
+- `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE and Reward UI must build on the scene/prefab-style binding approach.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
@@ -138,6 +139,14 @@ The project is in MVP foundation work.
 - Prepare Next Battle preserves current runtime Dice and player HP.
 - Prepare Next Battle does not add rewards, Dice replacement, inventory, meta progression, battle presentation, new run creation, or healing rules.
 - M6 Linear Stage Run validation is complete for static runtime flow and Unity import/compile.
+- Base Throw Damage and Face Effect application are now separated in battle sequencing.
+- Base Throw Damage is applied immediately after enemy impact, before the Dice Animation Layer appears.
+- Enemy HP refreshes after Base Throw Damage is applied.
+- Dice rolling and Face reveal happen after Base Throw Damage is already visible.
+- Attack and Lightning Face damage are applied only after Face reveal.
+- Mend healing is applied only after Face reveal.
+- Guard reduction becomes active only after Face reveal for the same battle exchange.
+- Damage and heal popups appear near the affected target, not on the Dice Animation Layer.
 
 ## UI Architecture Refactor
 
@@ -178,7 +187,7 @@ Status: DONE
 - Starter Dice currently has Base Throw Damage 3.
 - Starter Attack currently modifies the Throw by 5 damage, producing 8 total starter Attack Throw damage.
 - Guard, Lightning, and Mend currently deal Base Throw Damage through the Throw.
-- BattleController now applies total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- BattleController now applies Dice Base Throw Damage and Face damage modifier as separate enemy HP mutation steps.
 - No Hunter permanent Attack stat was introduced for M8-001.
 - Guard now has a deterministic defensive Face effect.
 - Guard Throw still deals Base Throw Damage, then reduces the next incoming enemy attack damage by 3.

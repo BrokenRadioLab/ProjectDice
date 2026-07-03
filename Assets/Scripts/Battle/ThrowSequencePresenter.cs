@@ -114,19 +114,41 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         PlayEnemyIdleLoop();
     }
 
-    public IEnumerator Play(DiceFace selectedFace, FaceEffectData faceEffect, int damageAmount, int baseThrowDamage)
+    public IEnumerator PlayThrowImpact()
     {
         CacheOriginalColors();
         yield return PlayHeroThrowAnimation();
         yield return PlayEnemyHitFeedback();
-        yield return PlayEnemyPopup(baseThrowDamage.ToString());
+    }
 
+    public IEnumerator PlayBaseDamagePopup(int baseDamageAmount)
+    {
+        if (baseDamageAmount <= 0)
+        {
+            yield break;
+        }
+
+        yield return PlayEnemyPopup(baseDamageAmount.ToString());
+    }
+
+    public IEnumerator PlayDiceResolution(DiceFace selectedFace, FaceEffectData faceEffect, int faceDamageAmount)
+    {
+        yield return PlayDiceRollAndReveal(selectedFace);
+        yield return PlayFaceEffectFeedback(faceEffect, faceDamageAmount);
+    }
+
+    public IEnumerator PlayDiceRollAndReveal(DiceFace selectedFace)
+    {
         ShowDiceAnimationLayer();
         yield return new WaitForSeconds(diceLayerAppearDuration);
         yield return PlayRollingPresentation();
         yield return PlayFaceReveal(selectedFace);
-        yield return PlayFaceEffect(faceEffect, baseThrowDamage, damageAmount);
-        yield return PlayFaceSpecificFeedback(faceEffect);
+    }
+
+    public IEnumerator PlayFaceEffectFeedback(FaceEffectData faceEffect, int faceDamageAmount)
+    {
+        yield return PlayFaceEffect(faceEffect, faceDamageAmount);
+        yield return PlayFaceSpecificFeedback(faceEffect, faceDamageAmount);
         HideDiceAnimationLayer();
     }
 
@@ -727,16 +749,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         yield return new WaitForSeconds(faceRevealDuration);
     }
 
-    private IEnumerator PlayFaceSpecificFeedback(FaceEffectData faceEffect)
+    private IEnumerator PlayFaceSpecificFeedback(FaceEffectData faceEffect, int faceDamageAmount)
     {
         if (faceEffect == null || !faceEffect.IsImplemented)
         {
             yield break;
         }
 
-        if (faceEffect.EffectType == FaceEffectType.Damage && faceEffect.DamageAmount > 0)
+        if (faceEffect.EffectType == FaceEffectType.Damage && faceDamageAmount > 0)
         {
-            yield return PlayEnemyPopup($"+{faceEffect.DamageAmount}");
+            yield return PlayEnemyPopup($"+{faceDamageAmount}");
             yield break;
         }
 
@@ -821,7 +843,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayFaceEffect(FaceEffectData faceEffect, int baseThrowDamage, int enemyDamageAmount)
+    private IEnumerator PlayFaceEffect(FaceEffectData faceEffect, int faceDamageAmount)
     {
         EnsureFaceEffectText();
 
@@ -832,7 +854,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         RectTransform effectTransform = faceEffectText.rectTransform;
         effectTransform.anchoredPosition = diceResultPosition + new Vector2(0f, -168f);
-        faceEffectText.text = GetFaceEffectText(faceEffect, baseThrowDamage, enemyDamageAmount);
+        faceEffectText.text = GetFaceEffectText(faceEffect, faceDamageAmount);
         faceEffectText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(faceEffectDuration);
@@ -930,14 +952,13 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
     }
 
-    private static string GetFaceEffectText(FaceEffectData faceEffect, int baseThrowDamage, int enemyDamageAmount)
+    private static string GetFaceEffectText(FaceEffectData faceEffect, int faceDamageAmount)
     {
-        int safeBaseDamage = Mathf.Max(0, baseThrowDamage);
-        int safeEnemyDamage = Mathf.Max(0, enemyDamageAmount);
+        int safeFaceDamage = Mathf.Max(0, faceDamageAmount);
 
         if (faceEffect == null || !faceEffect.IsImplemented)
         {
-            return $"Unknown\nBase {safeBaseDamage}\n= {safeEnemyDamage} Damage";
+            return "Unknown\nNo Face Effect";
         }
 
         string faceName = string.IsNullOrWhiteSpace(faceEffect.SourceFaceDisplayName)
@@ -946,7 +967,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         if (faceEffect.EffectType == FaceEffectType.Damage)
         {
-            return $"{faceName} +{faceEffect.DamageAmount}\n= {safeEnemyDamage} Total Damage";
+            return $"{faceName}\nFace Damage +{safeFaceDamage}";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Guard)
@@ -959,7 +980,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return $"{faceName}\nHeal +{faceEffect.HealAmount} HP";
         }
 
-        return $"{faceName}\nBase {safeBaseDamage}\n= {safeEnemyDamage} Damage";
+        return $"{faceName}\nNo Face Effect";
     }
 
     private void EnsureDamageNumberText()

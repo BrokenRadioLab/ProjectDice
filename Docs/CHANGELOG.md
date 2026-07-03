@@ -4,6 +4,16 @@
 
 ### Changed
 
+- Completed `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION`.
+- Battle sequencing now applies Dice Base Throw Damage immediately after enemy impact and before Dice Animation Layer appears.
+- Enemy HP now refreshes after Base Throw Damage before Dice rolling begins.
+- Dice Face damage modifiers are applied separately after Face reveal.
+- Mend healing is applied separately after Face reveal.
+- Guard reduction becomes active only after Face reveal for the same battle exchange.
+- Face damage popups show only the applied Face damage modifier near the enemy.
+- Base damage, Face damage, player healing, and player damage popups remain target-local and do not appear on the Dice Layer.
+- Unity batchmode compile validation completed successfully for the split Base/Face damage sequencing correction.
+- No combat values, DiceRoller result logic, Face selection logic, Reward Selection, Dice Face Replacement, inventory, or meta progression systems were changed.
 - Completed `TASK_UI_ARCHITECTURE_REFACTOR`.
 - Core battle UI presenters now prefer scene/prefab-style serialized references and named anchored scene objects before runtime fallback creation.
 - `StarterDiceBuildPresenter` now exposes bindable UI references for production overlay, menu, build panel, Face pool, Dice slots, probability text, and buttons.
@@ -134,7 +144,7 @@
 - Added Dice-owned Base Throw Damage to `DiceModel`.
 - Starter Dice now has Base Throw Damage 3.
 - Starter Attack now acts as a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
-- `BattleController` now resolves total Throw damage as Dice Base Throw Damage plus Face damage modifier.
+- `BattleController` now calculates Dice Base Throw Damage and Face damage modifier separately. Current sequencing applies them at separate timing points.
 - Guard, Lightning, and Mend can now deal Base Throw Damage before their dedicated Face effects are implemented.
 - Marked M8-001 as DONE and M8-002 Guard Gameplay as NEXT.
 - No Hunter permanent Attack stat, Reward Selection, Dice Face Replacement, inventory, shops, meta progression, branching map, enemy AI, boss mechanics, complex status systems, new Face pools, or multi-enemy gameplay were added for M8-001.

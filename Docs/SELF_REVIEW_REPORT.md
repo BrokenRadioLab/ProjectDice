@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: TASK_UI_ARCHITECTURE_REFACTOR
+Task: TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION
 
 ## Review Result
 
 PASS
 
-Core battle UI now moves away from temporary runtime-created debug UI by preferring scene/prefab-style anchored references while preserving gameplay values and combat logic.
+Base Throw Damage and Face Effect application are now separate battle sequencing steps while combat values and Dice result logic remain unchanged.
 
 ## Scope Check
 
@@ -41,6 +41,17 @@ Core battle UI now moves away from temporary runtime-created debug UI by preferr
 - Marked M10_REWARD_SELECTION as BLOCKED_BY_UI_ARCHITECTURE_REFACTOR after Director Technical Lock.
 - Added `TASK_UI_ARCHITECTURE_REFACTOR` as planned technical debt before large-scale UI expansion.
 - Completed `TASK_UI_ARCHITECTURE_REFACTOR`.
+- Completed `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION`.
+- Split enemy HP mutation into Base Throw Damage first and Face damage modifier later.
+- Base Throw Damage now applies immediately after enemy impact.
+- HUD refresh now happens after Base Throw Damage before Dice Layer appears.
+- Dice roll and Face reveal now occur after Base Throw Damage has been applied.
+- Attack and Lightning apply only their Face damage modifiers after Face reveal.
+- Mend applies healing after Face reveal.
+- Guard reduction becomes available after Face reveal for the same battle exchange.
+- Face-specific enemy popup now displays only the applied Face damage modifier.
+- Base damage, Face damage, player healing, and player damage popups remain target-local.
+- Unity batchmode compile validation completed successfully for the sequencing correction.
 - Marked M10_REWARD_SELECTION as READY after UI architecture refactor completion.
 - Refactored Starter Dice Build, Dice Deck, Run Flow, and combat feedback presenters to prefer serialized scene/prefab UI references.
 - Kept runtime fallback creation only as a prototype compatibility path.
@@ -82,6 +93,7 @@ Core battle UI now moves away from temporary runtime-created debug UI by preferr
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
 - Did not implement Reward Selection.
 - Did not implement Dice Face Replacement.
+- Did not change Base Throw Damage value, Attack modifier, Lightning modifier, Mend heal amount, Guard reduction, enemy attack damage, DiceRoller result logic, or Face selection logic.
 - Did not add new Faces beyond renaming starter Spark to Lightning.
 - Did not add new Face effects during presentation polish.
 - Did not make presentation code decide gameplay values.

@@ -102,19 +102,31 @@ public sealed class BattleController : MonoBehaviour
         DiceFace selectedFace = SelectDiceResult();
         FaceEffectData faceEffect = FaceResolver.Resolve(selectedFace);
         int baseThrowDamage = GetBaseThrowDamage();
-        int totalThrowDamage = GetTotalThrowDamage(baseThrowDamage, faceEffect);
-        int pendingDamage = GetPendingDamage(totalThrowDamage);
 
         if (throwSequencePresenter != null)
         {
-            yield return throwSequencePresenter.Play(selectedFace, faceEffect, pendingDamage, baseThrowDamage);
+            yield return throwSequencePresenter.PlayThrowImpact();
+        }
+
+        int baseDamage = ApplyThrowDamage(baseThrowDamage);
+        hudPresenter?.Refresh();
+
+        if (throwSequencePresenter != null)
+        {
+            yield return throwSequencePresenter.PlayBaseDamagePopup(baseDamage);
+            yield return throwSequencePresenter.PlayDiceRollAndReveal(selectedFace);
         }
 
         diceResultPresenter?.ShowResult(battleDiceState);
 
-        int damage = ApplyThrowDamage(totalThrowDamage);
+        int faceDamage = ApplyFaceDamage(faceEffect);
         int healing = ApplyFaceHealing(faceEffect);
         hudPresenter?.Refresh();
+
+        if (throwSequencePresenter != null)
+        {
+            yield return throwSequencePresenter.PlayFaceEffectFeedback(faceEffect, faceDamage);
+        }
 
         ResolveEnemyDefeatOutcome();
 
@@ -124,7 +136,7 @@ public sealed class BattleController : MonoBehaviour
             yield return PlayRunFlowPresentation();
             bool preparedNextBattle = ResolvePostVictoryRunProgression();
             yield return PlayRunFlowPresentation();
-            SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, damage, healing));
+            SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing));
             inputLocked = !preparedNextBattle;
             yield break;
         }
@@ -150,13 +162,13 @@ public sealed class BattleController : MonoBehaviour
         if (IsBattleDefeat())
         {
             yield return PlayRunFlowPresentation();
-            SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, damage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
+            SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
             yield break;
         }
 
         battleTurnState?.BeginTransition();
         battleTurnState?.BeginPlayerTurn();
-        SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, damage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
+        SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
         inputLocked = false;
     }
 
@@ -261,6 +273,11 @@ public sealed class BattleController : MonoBehaviour
         return combatState.ApplyDamageToEnemy(totalThrowDamage);
     }
 
+    private int ApplyFaceDamage(FaceEffectData faceEffect)
+    {
+        return ApplyThrowDamage(GetFaceDamageModifier(faceEffect));
+    }
+
     private int ApplyFaceHealing(FaceEffectData faceEffect)
     {
         if (combatState == null || faceEffect == null || faceEffect.EffectType != FaceEffectType.Mend)
@@ -355,11 +372,6 @@ public sealed class BattleController : MonoBehaviour
         return currentDice != null ? currentDice.BaseThrowDamage : 0;
     }
 
-    private static int GetTotalThrowDamage(int baseThrowDamage, FaceEffectData faceEffect)
-    {
-        return Mathf.Max(0, baseThrowDamage) + GetFaceDamageModifier(faceEffect);
-    }
-
     private static int GetFaceDamageModifier(FaceEffectData faceEffect)
     {
         if (faceEffect == null || faceEffect.EffectType != FaceEffectType.Damage)
@@ -380,21 +392,18 @@ public sealed class BattleController : MonoBehaviour
         return faceEffect.IncomingDamageReductionAmount;
     }
 
-    private int GetPendingDamage(int totalThrowDamage)
+    private static string GetThrowLogMessage(
+        FaceEffectData faceEffect,
+        int baseThrowDamage,
+        int appliedBaseDamage,
+        int appliedFaceDamage,
+        int appliedHealing)
     {
-        if (combatState == null || totalThrowDamage <= 0)
-        {
-            return 0;
-        }
+        int appliedDamage = appliedBaseDamage + appliedFaceDamage;
 
-        return Mathf.Min(combatState.EnemyCurrentHp, totalThrowDamage);
-    }
-
-    private static string GetThrowLogMessage(FaceEffectData faceEffect, int baseThrowDamage, int appliedDamage, int appliedHealing)
-    {
         if (faceEffect == null)
         {
-            return $"Throw dealt {appliedDamage} from base {baseThrowDamage}.";
+            return $"Throw dealt {appliedBaseDamage} base damage.";
         }
 
         string faceName = string.IsNullOrWhiteSpace(faceEffect.SourceFaceDisplayName)
@@ -403,25 +412,25 @@ public sealed class BattleController : MonoBehaviour
 
         if (!faceEffect.IsImplemented)
         {
-            return $"{faceName} added no effect; Throw dealt {appliedDamage} from base {baseThrowDamage}.";
+            return $"{faceName} added no effect after {appliedBaseDamage} base damage.";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Damage)
         {
-            return $"{faceName} modified the Throw for {appliedDamage} damage from base {baseThrowDamage}.";
+            return $"{faceName} added {appliedFaceDamage} after {appliedBaseDamage} base damage, for {appliedDamage} total.";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Guard)
         {
-            return $"{faceName} guarded after a {appliedDamage} damage Throw.";
+            return $"{faceName} guarded after {appliedBaseDamage} base damage.";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Mend)
         {
-            return $"{faceName} healed {appliedHealing} after a {appliedDamage} damage Throw.";
+            return $"{faceName} healed {appliedHealing} after {appliedBaseDamage} base damage.";
         }
 
-        return $"{faceName} modified the Throw for {appliedDamage} damage from base {baseThrowDamage}.";
+        return $"{faceName} modified the Throw after {baseThrowDamage} base damage.";
     }
 
     private static string GetEnemyAttackLogMessage(int appliedDamage)
