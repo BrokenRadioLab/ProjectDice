@@ -24,10 +24,10 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
     [SerializeField] private Color rowColor = new Color(0.25f, 0.22f, 0.18f, 0.86f);
     [SerializeField] private Color textColor = new Color(0.94f, 0.90f, 0.78f, 1f);
 
-    private RectTransform toggleRoot;
-    private Text toggleText;
-    private RectTransform panelRoot;
-    private Text[] slotTexts;
+    [SerializeField] private RectTransform toggleRoot;
+    [SerializeField] private Text toggleText;
+    [SerializeField] private RectTransform panelRoot;
+    [SerializeField] private Text[] slotTexts;
     private bool isExpanded;
     private static Font fallbackFont;
 
@@ -140,6 +140,16 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
     {
         if (toggleRoot != null)
         {
+            BindToggleButton();
+            return;
+        }
+
+        Transform existingToggle = displayRoot.Find("Dice Deck Toggle");
+        if (existingToggle != null)
+        {
+            toggleRoot = existingToggle.GetComponent<RectTransform>();
+            toggleText = toggleText != null ? toggleText : existingToggle.GetComponentInChildren<Text>(true);
+            BindToggleButton();
             return;
         }
 
@@ -159,19 +169,28 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
 
         Button button = toggleObject.AddComponent<Button>();
         button.targetGraphic = image;
-        button.onClick.AddListener(Toggle);
 
         toggleText = CreateText("Dice Deck Toggle Text", toggleRoot, 16, TextAnchor.MiddleCenter);
         toggleText.rectTransform.anchorMin = Vector2.zero;
         toggleText.rectTransform.anchorMax = Vector2.one;
         toggleText.rectTransform.sizeDelta = Vector2.zero;
         toggleText.text = "Dice Deck";
+        BindToggleButton();
     }
 
     private void EnsurePanel()
     {
         if (panelRoot != null)
         {
+            BindExistingSlotTexts();
+            return;
+        }
+
+        Transform existingPanel = displayRoot.Find("Dice Deck Expanded View");
+        if (existingPanel != null)
+        {
+            panelRoot = existingPanel.GetComponent<RectTransform>();
+            BindExistingSlotTexts();
             return;
         }
 
@@ -190,6 +209,15 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
         panelImage.raycastTarget = true;
         panelImage.color = expandedPanelColor;
 
+        HorizontalLayoutGroup layoutGroup = panelObject.AddComponent<HorizontalLayoutGroup>();
+        layoutGroup.padding = new RectOffset(16, 16, 12, 12);
+        layoutGroup.spacing = SlotSpacing;
+        layoutGroup.childAlignment = TextAnchor.MiddleLeft;
+        layoutGroup.childControlWidth = false;
+        layoutGroup.childControlHeight = false;
+        layoutGroup.childForceExpandWidth = false;
+        layoutGroup.childForceExpandHeight = false;
+
         slotTexts = new Text[DiceModel.FaceSlotCount];
 
         for (int i = 0; i < DiceModel.FaceSlotCount; i++)
@@ -205,10 +233,6 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
         rowObject.transform.SetParent(panelRoot, false);
 
         RectTransform rowTransform = rowObject.AddComponent<RectTransform>();
-        rowTransform.anchorMin = new Vector2(0f, 0.5f);
-        rowTransform.anchorMax = new Vector2(0f, 0.5f);
-        rowTransform.pivot = new Vector2(0f, 0.5f);
-        rowTransform.anchoredPosition = new Vector2(16f + (slotIndex * (SlotSize + SlotSpacing)), 0f);
         rowTransform.sizeDelta = new Vector2(SlotSize, SlotSize);
 
         Image rowImage = rowObject.AddComponent<Image>();
@@ -221,6 +245,52 @@ public sealed class CollapsibleDiceDeckPresenter : MonoBehaviour
         rowText.rectTransform.anchoredPosition = Vector2.zero;
         rowText.rectTransform.sizeDelta = new Vector2(-12f, -12f);
         return rowText;
+    }
+
+    private void BindToggleButton()
+    {
+        if (toggleRoot == null)
+        {
+            return;
+        }
+
+        Button button = toggleRoot.GetComponent<Button>();
+        if (button == null)
+        {
+            button = toggleRoot.gameObject.AddComponent<Button>();
+        }
+
+        Graphic targetGraphic = button.targetGraphic != null ? button.targetGraphic : toggleRoot.GetComponent<Graphic>();
+        if (targetGraphic == null)
+        {
+            Image image = toggleRoot.gameObject.AddComponent<Image>();
+            image.color = collapsedButtonColor;
+            targetGraphic = image;
+        }
+
+        button.targetGraphic = targetGraphic;
+        button.onClick.RemoveListener(Toggle);
+        button.onClick.AddListener(Toggle);
+    }
+
+    private void BindExistingSlotTexts()
+    {
+        if (panelRoot == null)
+        {
+            return;
+        }
+
+        if (slotTexts != null && slotTexts.Length == DiceModel.FaceSlotCount)
+        {
+            return;
+        }
+
+        slotTexts = new Text[DiceModel.FaceSlotCount];
+        for (int i = 0; i < DiceModel.FaceSlotCount; i++)
+        {
+            Transform slot = panelRoot.Find($"Dice Deck Slot {i + 1}");
+            slotTexts[i] = slot != null ? slot.GetComponentInChildren<Text>(true) : null;
+        }
     }
 
     private Text CreateText(string objectName, RectTransform parent, int fontSize, TextAnchor alignment)

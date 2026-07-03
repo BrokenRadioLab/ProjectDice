@@ -15,17 +15,17 @@ public sealed class RunFlowPresenter : MonoBehaviour
     [SerializeField] private Color panelColor = new Color(0.10f, 0.09f, 0.08f, 0.92f);
     [SerializeField] private Color textColor = new Color(0.96f, 0.90f, 0.70f, 1f);
 
-    private RectTransform stageClearRoot;
-    private Text stageClearText;
-    private RectTransform nextStageRoot;
-    private Text nextStageTitleText;
-    private Text nextStageTypeText;
-    private RectTransform battleResumeRoot;
-    private Text battleResumeText;
-    private RectTransform runCompleteRoot;
-    private Text runCompleteText;
-    private RectTransform defeatRoot;
-    private Text defeatText;
+    [SerializeField] private RectTransform stageClearRoot;
+    [SerializeField] private Text stageClearText;
+    [SerializeField] private RectTransform nextStageRoot;
+    [SerializeField] private Text nextStageTitleText;
+    [SerializeField] private Text nextStageTypeText;
+    [SerializeField] private RectTransform battleResumeRoot;
+    [SerializeField] private Text battleResumeText;
+    [SerializeField] private RectTransform runCompleteRoot;
+    [SerializeField] private Text runCompleteText;
+    [SerializeField] private RectTransform defeatRoot;
+    [SerializeField] private Text defeatText;
     private bool nextStagePresentationPending;
     private bool runCompletePresentationShown;
     private bool defeatPresentationShown;
@@ -255,6 +255,12 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         if (displayRoot == null || stageClearRoot != null)
         {
+            BindTextIfNeeded(stageClearRoot, ref stageClearText);
+            return;
+        }
+
+        if (TryBindPanel("Run Flow Stage Clear", ref stageClearRoot, ref stageClearText))
+        {
             return;
         }
 
@@ -283,6 +289,17 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         if (displayRoot == null || nextStageRoot != null)
         {
+            BindTextIfNeeded(nextStageRoot, ref nextStageTitleText, "Next Stage Title Text");
+            BindTextIfNeeded(nextStageRoot, ref nextStageTypeText, "Next Stage Type Text");
+            return;
+        }
+
+        Transform existing = displayRoot.Find("Run Flow Next Stage");
+        if (existing != null)
+        {
+            nextStageRoot = existing.GetComponent<RectTransform>();
+            BindTextIfNeeded(nextStageRoot, ref nextStageTitleText, "Next Stage Title Text");
+            BindTextIfNeeded(nextStageRoot, ref nextStageTypeText, "Next Stage Type Text");
             return;
         }
 
@@ -320,6 +337,12 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         if (displayRoot == null || battleResumeRoot != null)
         {
+            BindTextIfNeeded(battleResumeRoot, ref battleResumeText);
+            return;
+        }
+
+        if (TryBindPanel("Run Flow Battle Resume", ref battleResumeRoot, ref battleResumeText))
+        {
             return;
         }
 
@@ -348,6 +371,12 @@ public sealed class RunFlowPresenter : MonoBehaviour
 
         if (displayRoot == null || runCompleteRoot != null)
         {
+            BindTextIfNeeded(runCompleteRoot, ref runCompleteText);
+            return;
+        }
+
+        if (TryBindPanel("Run Flow Run Complete", ref runCompleteRoot, ref runCompleteText))
+        {
             return;
         }
 
@@ -375,6 +404,12 @@ public sealed class RunFlowPresenter : MonoBehaviour
         EnsureDisplayRoot();
 
         if (displayRoot == null || defeatRoot != null)
+        {
+            BindTextIfNeeded(defeatRoot, ref defeatText);
+            return;
+        }
+
+        if (TryBindPanel("Run Flow Defeat", ref defeatRoot, ref defeatText))
         {
             return;
         }
@@ -442,5 +477,38 @@ public sealed class RunFlowPresenter : MonoBehaviour
         fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
         text.font = fallbackFont;
         return text;
+    }
+
+    private bool TryBindPanel(string objectName, ref RectTransform root, ref Text text)
+    {
+        Transform existing = displayRoot != null ? displayRoot.Find(objectName) : null;
+        if (existing == null)
+        {
+            return false;
+        }
+
+        root = existing.GetComponent<RectTransform>();
+        BindTextIfNeeded(root, ref text);
+        return root != null;
+    }
+
+    private static void BindTextIfNeeded(RectTransform root, ref Text text, string childName = null)
+    {
+        if (root == null || text != null)
+        {
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(childName))
+        {
+            Transform child = root.Find(childName);
+            text = child != null ? child.GetComponent<Text>() : null;
+            if (text != null)
+            {
+                return;
+            }
+        }
+
+        text = root.GetComponentInChildren<Text>(true);
     }
 }

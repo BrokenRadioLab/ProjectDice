@@ -42,7 +42,7 @@ The project is in MVP foundation work.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
 - M9_STARTER_DICE_BUILD is DONE.
-- M10_REWARD_SELECTION is BLOCKED_BY_UI_ARCHITECTURE_REFACTOR.
+- M10_REWARD_SELECTION is READY.
 - M11_DICE_FACE_REPLACEMENT is PENDING.
 - M12_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
@@ -52,7 +52,7 @@ The project is in MVP foundation work.
 - `M8-005_FACE_PRESENTATION_POLISH` is DONE.
 - `M8-006_VALIDATE_STARTER_FACE_GAMEPLAY` is DONE.
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
-- `TASK_UI_ARCHITECTURE_REFACTOR` is PLANNED and must be completed before Reward UI expands further.
+- `TASK_UI_ARCHITECTURE_REFACTOR` is DONE and Reward UI must build on the scene/prefab-style binding approach.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -138,6 +138,22 @@ The project is in MVP foundation work.
 - Prepare Next Battle preserves current runtime Dice and player HP.
 - Prepare Next Battle does not add rewards, Dice replacement, inventory, meta progression, battle presentation, new run creation, or healing rules.
 - M6 Linear Stage Run validation is complete for static runtime flow and Unity import/compile.
+
+## UI Architecture Refactor
+
+Status: DONE
+
+- Core UI presenters now prefer serialized scene/prefab references and named anchored scene objects before creating runtime fallback UI.
+- Runtime fallback creation remains only to keep the current prototype scene playable until production UI prefabs are fully authored.
+- Starter Dice Build exposes bindable references for overlay, main menu, build panel, Face pool buttons, active slots, locked slots, probability text, and Start buttons.
+- Dice Deck exposes bindable references for the toggle, expanded panel, and six runtime slot labels.
+- Dice Deck expanded slots are arranged with an anchored horizontal layout.
+- Run Flow presentation exposes bindable references for Stage Clear, Next Stage, Battle Start, Run Complete, and Defeat panels.
+- Combat feedback now uses a dedicated Combat Feedback Layer under the Battle Field.
+- Enemy damage numbers appear near the enemy.
+- Player damage and Mend healing numbers appear near the Hunter.
+- Damage and heal popups do not depend on or attach to the Dice Animation Layer.
+- Reward Selection and Dice Face Replacement remain unimplemented.
 - The fixed runtime path now supports Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss progression.
 - Non-boss Victory advances and prepares the next battle; Boss Victory marks `LinearRunState` as completed.
 - Defeat stops player input and does not advance stages, complete the run, or trigger rewards.

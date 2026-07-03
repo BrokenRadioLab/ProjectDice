@@ -8,10 +8,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     [SerializeField] private RectTransform heroSlot;
     [SerializeField] private RectTransform enemySlot;
     [SerializeField] private RectTransform diceAnimationLayer;
+    [SerializeField] private RectTransform combatFeedbackRoot;
     [SerializeField] private Graphic heroPlaceholder;
     [SerializeField] private Image heroSpriteImage;
     [SerializeField] private Graphic enemyPlaceholder;
     [SerializeField] private Image enemySpriteImage;
+    [SerializeField] private Text faceRevealText;
+    [SerializeField] private Text faceEffectText;
+    [SerializeField] private Text damageNumberText;
+    [SerializeField] private Text heroPopupText;
+    [SerializeField] private Image hitSpark;
     [SerializeField] private Texture2D[] heroIdleTextures;
     [SerializeField] private Texture2D[] heroThrowTextures;
     [SerializeField] private Texture2D[] heroHitTextures;
@@ -51,11 +57,6 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     private Image diceFrame;
     private Image diceBacking;
     private Image rollingDiceVisual;
-    private Text faceRevealText;
-    private Text faceEffectText;
-    private Text damageNumberText;
-    private Text heroPopupText;
-    private Image hitSpark;
     private Color originalEnemyColor;
     private Sprite[] heroIdleFrames;
     private Sprite[] heroThrowFrames;
@@ -81,6 +82,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
     private void Awake()
     {
+        EnsureCombatFeedbackRoot();
         heroSpriteImage = heroSpriteImage != null ? heroSpriteImage : heroPlaceholder as Image;
         enemySpriteImage = enemySpriteImage != null ? enemySpriteImage : enemyPlaceholder as Image;
         originalEnemyColor = enemyPlaceholder != null ? enemyPlaceholder.color : Color.white;
@@ -967,16 +969,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return;
         }
 
-        EnsureDiceAnimationLayer();
+        EnsureCombatFeedbackRoot();
 
-        if (diceAnimationLayer == null)
+        if (combatFeedbackRoot == null)
         {
             return;
         }
 
         GameObject textObject = new GameObject("Enemy Damage Number Text");
-        textObject.layer = battleField != null ? battleField.gameObject.layer : diceAnimationLayer.gameObject.layer;
-        textObject.transform.SetParent(battleField != null ? battleField : diceAnimationLayer, false);
+        textObject.layer = combatFeedbackRoot.gameObject.layer;
+        textObject.transform.SetParent(combatFeedbackRoot, false);
 
         RectTransform textTransform = textObject.AddComponent<RectTransform>();
         textTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -1013,14 +1015,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return;
         }
 
-        if (battleField == null)
+        EnsureCombatFeedbackRoot();
+
+        if (combatFeedbackRoot == null)
         {
             return;
         }
 
         GameObject textObject = new GameObject("Hero Popup Text");
-        textObject.layer = battleField.gameObject.layer;
-        textObject.transform.SetParent(battleField, false);
+        textObject.layer = combatFeedbackRoot.gameObject.layer;
+        textObject.transform.SetParent(combatFeedbackRoot, false);
 
         RectTransform textTransform = textObject.AddComponent<RectTransform>();
         textTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -1057,14 +1061,16 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
             return;
         }
 
-        if (battleField == null)
+        EnsureCombatFeedbackRoot();
+
+        if (combatFeedbackRoot == null)
         {
             return;
         }
 
         GameObject sparkObject = new GameObject("Enemy Hit Spark");
-        sparkObject.layer = battleField.gameObject.layer;
-        sparkObject.transform.SetParent(battleField, false);
+        sparkObject.layer = combatFeedbackRoot.gameObject.layer;
+        sparkObject.transform.SetParent(combatFeedbackRoot, false);
 
         RectTransform sparkTransform = sparkObject.AddComponent<RectTransform>();
         sparkTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -1118,5 +1124,39 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
 
         return new Vector2(-180f, 32f) + offset;
+    }
+
+    private void EnsureCombatFeedbackRoot()
+    {
+        if (combatFeedbackRoot != null)
+        {
+            return;
+        }
+
+        if (battleField == null)
+        {
+            return;
+        }
+
+        Transform existing = battleField.Find("Combat Feedback Layer");
+        if (existing != null)
+        {
+            combatFeedbackRoot = existing.GetComponent<RectTransform>();
+            if (combatFeedbackRoot != null)
+            {
+                return;
+            }
+        }
+
+        GameObject rootObject = new GameObject("Combat Feedback Layer");
+        rootObject.layer = battleField.gameObject.layer;
+        rootObject.transform.SetParent(battleField, false);
+
+        combatFeedbackRoot = rootObject.AddComponent<RectTransform>();
+        combatFeedbackRoot.anchorMin = Vector2.zero;
+        combatFeedbackRoot.anchorMax = Vector2.one;
+        combatFeedbackRoot.pivot = new Vector2(0.5f, 0.5f);
+        combatFeedbackRoot.anchoredPosition = Vector2.zero;
+        combatFeedbackRoot.sizeDelta = Vector2.zero;
     }
 }

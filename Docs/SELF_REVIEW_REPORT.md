@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: TASK_COMBAT_FEEDBACK_ORDER_POLISH
+Task: TASK_UI_ARCHITECTURE_REFACTOR
 
 ## Review Result
 
 PASS
 
-Starter Dice Build now follows the locked player-driven Face Tier and Active Slot restriction model; combat presentation polish remains included.
+Core battle UI now moves away from temporary runtime-created debug UI by preferring scene/prefab-style anchored references while preserving gameplay values and combat logic.
 
 ## Scope Check
 
@@ -40,6 +40,15 @@ Starter Dice Build now follows the locked player-driven Face Tier and Active Slo
 - Marked M10_REWARD_SELECTION as READY.
 - Marked M10_REWARD_SELECTION as BLOCKED_BY_UI_ARCHITECTURE_REFACTOR after Director Technical Lock.
 - Added `TASK_UI_ARCHITECTURE_REFACTOR` as planned technical debt before large-scale UI expansion.
+- Completed `TASK_UI_ARCHITECTURE_REFACTOR`.
+- Marked M10_REWARD_SELECTION as READY after UI architecture refactor completion.
+- Refactored Starter Dice Build, Dice Deck, Run Flow, and combat feedback presenters to prefer serialized scene/prefab UI references.
+- Kept runtime fallback creation only as a prototype compatibility path.
+- Added a dedicated Combat Feedback Layer for target-local damage/heal popups.
+- Removed Dice Animation Layer dependency from combat damage popup creation.
+- Confirmed enemy damage popups target the enemy position.
+- Confirmed player damage and Mend heal popups target the Hunter position.
+- Unity batchmode compile validation completed successfully for `TASK_UI_ARCHITECTURE_REFACTOR`.
 - Added active slot runtime support for Wood Dice.
 - Added Face Tier to `DiceFace`.
 - Removed fixed Starter Face Pool architecture.
@@ -71,6 +80,8 @@ Starter Dice Build now follows the locked player-driven Face Tier and Active Slo
 - Did not add post-run economy.
 - Did not add long-term healing economy.
 - Did not add rewards, Dice replacement, inventory, shops, permanent progression, boss systems, or multi-enemy logic.
+- Did not implement Reward Selection.
+- Did not implement Dice Face Replacement.
 - Did not add new Faces beyond renaming starter Spark to Lightning.
 - Did not add new Face effects during presentation polish.
 - Did not make presentation code decide gameplay values.

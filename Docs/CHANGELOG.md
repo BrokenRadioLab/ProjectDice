@@ -4,6 +4,16 @@
 
 ### Changed
 
+- Completed `TASK_UI_ARCHITECTURE_REFACTOR`.
+- Core battle UI presenters now prefer scene/prefab-style serialized references and named anchored scene objects before runtime fallback creation.
+- `StarterDiceBuildPresenter` now exposes bindable UI references for production overlay, menu, build panel, Face pool, Dice slots, probability text, and buttons.
+- `CollapsibleDiceDeckPresenter` now supports binding to an existing Dice Deck toggle/panel and uses an anchored horizontal layout for expanded slots.
+- `RunFlowPresenter` now supports binding to existing Stage Clear, Next Stage, Battle Start, Run Complete, and Defeat presentation panels.
+- Combat damage and heal popups now use a dedicated Combat Feedback Layer under the battle field instead of depending on the Dice Animation Layer.
+- Enemy damage popups remain near the enemy, and player damage/heal popups remain near the Hunter.
+- Marked M10_REWARD_SELECTION as READY after UI architecture refactor completion.
+- Unity batchmode compile validation completed successfully for `TASK_UI_ARCHITECTURE_REFACTOR`.
+- Reward Selection and Dice Face Replacement were not implemented.
 - Added Director Technical Lock for `TASK_UI_ARCHITECTURE_REFACTOR`.
 - Marked M10_REWARD_SELECTION as blocked by UI architecture refactor before Reward UI expands further.
 - Documented that future production UI should use scene/prefab UI, anchored layout, layout groups, TextMeshPro, and data binding instead of runtime-created UI hierarchy.

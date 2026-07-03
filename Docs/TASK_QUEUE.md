@@ -16,22 +16,20 @@ Director Review:
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
 - M8_STARTER_FACE_GAMEPLAY is approved and DONE.
 - M9_STARTER_DICE_BUILD is approved and DONE.
-- M10_REWARD_SELECTION is READY after long-term progression design lock.
+- M10_REWARD_SELECTION is READY after long-term progression design lock and UI architecture refactor.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` locks reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction before M10 implementation.
 
 Director Technical Lock:
 
-- `TASK_UI_ARCHITECTURE_REFACTOR` is PLANNED.
-- This refactor must be completed before Reward UI expands further.
-- Current runtime-created UI was acceptable for prototype validation only.
-- Future production UI must use scene/prefab UI, anchored layout, layout groups, TextMeshPro, and data binding.
-- Scripts should bind data, update UI, and receive button events.
-- Scripts should not construct entire production UI with `Create()` methods.
-- Target systems include Starter Dice Build, Reward Selection, Dice Deck, Damage Popup, Heal Popup, Future Run Summary, Future Shop, and Future Node Map.
-- Gameplay systems must not depend on runtime-generated UI hierarchy.
-- Do not continue building major production UI on the temporary runtime-generated approach.
+- `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.
+- Core battle UI presenters now prefer scene/prefab-style serialized UI references and named anchored scene objects before using runtime fallback creation.
+- Starter Dice Build, Dice Deck, Run Flow, and combat feedback presenters now expose bindable UI references for production scene/prefab hierarchy.
+- Dice Deck uses an anchored horizontal layout for expanded slot presentation.
+- Damage Popup and Heal Popup now use a dedicated Combat Feedback Layer under the battle field instead of the Dice Animation Layer.
+- Damage and heal numbers remain target-local combat feedback and must never be shown on the Dice Layer.
+- Reward Selection has not been implemented.
 
 Recent Presentation Polish:
 

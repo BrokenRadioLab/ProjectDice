@@ -28,16 +28,17 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
     [SerializeField] private Color disabledButtonColor = new Color(0.11f, 0.10f, 0.09f, 0.92f);
     [SerializeField] private Color textColor = new Color(0.94f, 0.90f, 0.78f, 1f);
 
-    private RectTransform overlayRoot;
-    private RectTransform mainMenuRoot;
-    private RectTransform buildRoot;
-    private Text titleText;
-    private Text probabilityText;
-    private Button startBattleButton;
-    private Text[] activeSlotTexts;
-    private Text[] lockedSlotTexts;
-    private Button[] poolButtons;
-    private Text[] poolButtonTexts;
+    [SerializeField] private RectTransform overlayRoot;
+    [SerializeField] private RectTransform mainMenuRoot;
+    [SerializeField] private RectTransform buildRoot;
+    [SerializeField] private Text titleText;
+    [SerializeField] private Button startRunButton;
+    [SerializeField] private Text probabilityText;
+    [SerializeField] private Button startBattleButton;
+    [SerializeField] private Text[] activeSlotTexts;
+    [SerializeField] private Text[] lockedSlotTexts;
+    [SerializeField] private Button[] poolButtons;
+    [SerializeField] private Text[] poolButtonTexts;
     private DiceFace[] unlockedFaces;
     private readonly List<int> selectedPoolIndexes = new List<int>(ActiveSlotCount);
     private bool isComplete;
@@ -89,12 +90,30 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
     {
         EnsureReferences();
 
-        if (displayRoot == null || overlayRoot != null)
+        if (displayRoot == null)
         {
             return;
         }
 
         unlockedFaces = StarterDiceFactory.CreateUnlockedFacesForDiceTier(CurrentDiceTier);
+
+        if (overlayRoot != null)
+        {
+            TryBindExistingView();
+            BindViewEvents();
+            RefreshBuildView();
+            overlayRoot.gameObject.SetActive(false);
+            return;
+        }
+
+        if (TryBindExistingView())
+        {
+            BindViewEvents();
+            RefreshBuildView();
+            overlayRoot.gameObject.SetActive(false);
+            return;
+        }
+
         overlayRoot = CreateRoot("Starter Dice Build Overlay", displayRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
         Image overlayImage = overlayRoot.gameObject.AddComponent<Image>();
         overlayImage.color = overlayColor;
@@ -114,8 +133,8 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         titleText.rectTransform.anchorMax = new Vector2(1f, 0.95f);
         titleText.text = "Project Dice";
 
-        Button startRunButton = CreateButton("Start Run Button", mainMenuRoot, new Vector2(0f, -74f), new Vector2(240f, 82f), "Start Run", 28);
-        startRunButton.onClick.AddListener(ShowBuildView);
+        startRunButton = CreateButton("Start Run Button", mainMenuRoot, new Vector2(0f, -74f), new Vector2(240f, 82f), "Start Run", 28);
+        BindStartRunButton();
     }
 
     private void BuildStarterDiceBuildView()
@@ -196,7 +215,7 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
         probabilityText.text = string.Empty;
 
         startBattleButton = CreateButton("Start Battle Button", buildRoot, new Vector2(330f, -192f), new Vector2(260f, 76f), "Start Battle", 24);
-        startBattleButton.onClick.AddListener(CompleteBuild);
+        BindStartBattleButton();
         RefreshBuildView();
     }
 
@@ -448,5 +467,152 @@ public sealed class StarterDiceBuildPresenter : MonoBehaviour
             eventSystem.gameObject.AddComponent<StandaloneInputModule>();
         }
 #endif
+    }
+
+    private bool TryBindExistingView()
+    {
+        Transform existingOverlay = displayRoot.Find("Starter Dice Build Overlay");
+        overlayRoot = existingOverlay != null ? existingOverlay.GetComponent<RectTransform>() : overlayRoot;
+
+        if (overlayRoot == null)
+        {
+            return false;
+        }
+
+        mainMenuRoot = mainMenuRoot != null ? mainMenuRoot : FindRect(overlayRoot, "Run Start Panel");
+        buildRoot = buildRoot != null ? buildRoot : FindRect(overlayRoot, "Starter Dice Build Panel");
+        titleText = titleText != null ? titleText : FindText(mainMenuRoot, "Run Start Title");
+        startRunButton = startRunButton != null ? startRunButton : FindButton(mainMenuRoot, "Start Run Button");
+        probabilityText = probabilityText != null ? probabilityText : FindText(buildRoot, "Starter Dice Probability Text");
+        startBattleButton = startBattleButton != null ? startBattleButton : FindButton(buildRoot, "Start Battle Button");
+
+        BindPoolButtonsFromExistingView();
+        BindSlotTextsFromExistingView();
+        return mainMenuRoot != null && buildRoot != null;
+    }
+
+    private void BindViewEvents()
+    {
+        BindStartRunButton();
+        BindStartBattleButton();
+
+        if (poolButtons != null)
+        {
+            for (int i = 0; i < poolButtons.Length; i++)
+            {
+                int poolIndex = i;
+                if (poolButtons[i] == null)
+                {
+                    continue;
+                }
+
+                poolButtons[i].onClick.RemoveAllListeners();
+                poolButtons[i].onClick.AddListener(() => AddFace(poolIndex));
+            }
+        }
+    }
+
+    private void BindStartRunButton()
+    {
+        if (startRunButton == null)
+        {
+            return;
+        }
+
+        startRunButton.onClick.RemoveAllListeners();
+        startRunButton.onClick.AddListener(ShowBuildView);
+    }
+
+    private void BindStartBattleButton()
+    {
+        if (startBattleButton == null)
+        {
+            return;
+        }
+
+        startBattleButton.onClick.RemoveAllListeners();
+        startBattleButton.onClick.AddListener(CompleteBuild);
+    }
+
+    private void BindPoolButtonsFromExistingView()
+    {
+        if (buildRoot == null || unlockedFaces == null)
+        {
+            return;
+        }
+
+        poolButtons = poolButtons != null && poolButtons.Length == unlockedFaces.Length
+            ? poolButtons
+            : new Button[unlockedFaces.Length];
+        poolButtonTexts = poolButtonTexts != null && poolButtonTexts.Length == unlockedFaces.Length
+            ? poolButtonTexts
+            : new Text[unlockedFaces.Length];
+
+        for (int i = 0; i < unlockedFaces.Length; i++)
+        {
+            poolButtons[i] = poolButtons[i] != null
+                ? poolButtons[i]
+                : FindButton(buildRoot, $"Starter Face Pool Button {i + 1}");
+            poolButtonTexts[i] = poolButtonTexts[i] != null && poolButtons[i] != null
+                ? poolButtonTexts[i]
+                : poolButtons[i]?.GetComponentInChildren<Text>(true);
+        }
+    }
+
+    private void BindSlotTextsFromExistingView()
+    {
+        if (buildRoot == null)
+        {
+            return;
+        }
+
+        activeSlotTexts = activeSlotTexts != null && activeSlotTexts.Length == ActiveSlotCount
+            ? activeSlotTexts
+            : new Text[ActiveSlotCount];
+
+        for (int i = 0; i < ActiveSlotCount; i++)
+        {
+            Button slotButton = FindButton(buildRoot, $"Starter Active Slot {i + 1}");
+            int slotIndex = i;
+            if (slotButton != null)
+            {
+                slotButton.onClick.RemoveAllListeners();
+                slotButton.onClick.AddListener(() => RemoveSlot(slotIndex));
+            }
+
+            activeSlotTexts[i] = activeSlotTexts[i] != null
+                ? activeSlotTexts[i]
+                : slotButton?.GetComponentInChildren<Text>(true);
+        }
+
+        lockedSlotTexts = lockedSlotTexts != null && lockedSlotTexts.Length == 2
+            ? lockedSlotTexts
+            : new Text[2];
+
+        for (int i = 0; i < lockedSlotTexts.Length; i++)
+        {
+            Button lockedButton = FindButton(buildRoot, $"Starter Locked Slot {i + 1}");
+            lockedSlotTexts[i] = lockedSlotTexts[i] != null
+                ? lockedSlotTexts[i]
+                : lockedButton?.GetComponentInChildren<Text>(true);
+        }
+    }
+
+    private static RectTransform FindRect(RectTransform parent, string objectName)
+    {
+        Transform child = parent != null ? parent.Find(objectName) : null;
+        return child != null ? child.GetComponent<RectTransform>() : null;
+    }
+
+    private static Text FindText(RectTransform parent, string objectName)
+    {
+        Transform child = parent != null ? parent.Find(objectName) : null;
+        return child != null ? child.GetComponent<Text>() : null;
+    }
+
+    private static Button FindButton(RectTransform parent, string objectName)
+    {
+        Transform child = parent != null ? parent.Find(objectName) : null;
+        return child != null ? child.GetComponent<Button>() : null;
     }
 }

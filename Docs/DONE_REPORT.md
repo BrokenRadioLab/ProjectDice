@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Selected Milestone: COMBAT_FEEDBACK_ORDER_POLISH
+Selected Milestone: UI_ARCHITECTURE_REFACTOR
 
-Completed Work: TASK_COMBAT_FEEDBACK_ORDER_POLISH
+Completed Work: TASK_UI_ARCHITECTURE_REFACTOR
 
 ## Summary
 
-Revised Starter Dice Build to remove fixed Starter Face Pool restrictions while preserving presentation-only combat feedback polish.
+Refactored core battle UI presenters toward scene/prefab-style anchored UI binding while preserving current gameplay and combat logic.
 
 ## Validation Result
 
@@ -47,12 +47,19 @@ PASS
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
 - M9-003 UI Foundation Polish is DONE.
-- M10_REWARD_SELECTION is BLOCKED_BY_UI_ARCHITECTURE_REFACTOR and not implemented.
+- M10_REWARD_SELECTION is READY and not implemented.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
-- `TASK_UI_ARCHITECTURE_REFACTOR` is PLANNED and must be completed before Reward UI expands further.
+- `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.
+- Starter Dice Build, Dice Deck, Run Flow, and combat feedback presenters now expose bindable UI references for production scene/prefab hierarchy.
+- Runtime fallback UI remains only to keep the current prototype scene playable until production UI prefabs are fully authored.
+- Damage and heal popups now use a dedicated Combat Feedback Layer under the Battle Field.
+- Damage popups remain near the enemy target.
+- Player damage and Mend heal popups remain near the Hunter target.
+- Damage and heal popups do not attach to the Dice Animation Layer.
+- Unity batchmode compile validation completed successfully for `TASK_UI_ARCHITECTURE_REFACTOR`.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.

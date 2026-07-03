@@ -41,7 +41,7 @@ Required MVP pillars:
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
 9. M8_STARTER_FACE_GAMEPLAY - DONE
 10. M9_STARTER_DICE_BUILD - DONE
-11. M10_REWARD_SELECTION - BLOCKED_BY_UI_ARCHITECTURE_REFACTOR
+11. M10_REWARD_SELECTION - READY
 12. M11_DICE_FACE_REPLACEMENT - PENDING
 13. M12_MVP_PLAYTEST_POLISH - PENDING
 
@@ -444,7 +444,7 @@ Detailed Task Status:
 
 ## M10_REWARD_SELECTION
 
-Status: BLOCKED_BY_UI_ARCHITECTURE_REFACTOR
+Status: READY
 
 Goal:
 
@@ -452,8 +452,9 @@ Introduce reward choice after eligible run-flow points without implementing Dice
 
 Precondition:
 
-- Complete `TASK_UI_ARCHITECTURE_REFACTOR` before Reward UI expands further.
-- Transition temporary runtime-created UI to production-ready scene/prefab UI where applicable.
+- `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.
+- Reward UI must build on scene/prefab-style anchored UI references and data binding.
+- Runtime fallback UI must not become the production pattern for Reward Selection.
 
 Scope:
 
