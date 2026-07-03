@@ -41,8 +41,8 @@ Required MVP pillars:
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
 9. M8_STARTER_FACE_GAMEPLAY - DONE
 10. M9_STARTER_DICE_BUILD - DONE
-11. M10_REWARD_SELECTION - READY
-12. M11_DICE_FACE_REPLACEMENT - PENDING
+11. M10_REWARD_SELECTION - DONE
+12. M11_DICE_FACE_REPLACEMENT - READY
 13. M12_MVP_PLAYTEST_POLISH - PENDING
 
 ## M0_PROJECT_SETUP
@@ -444,7 +444,7 @@ Detailed Task Status:
 
 ## M10_REWARD_SELECTION
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -479,11 +479,11 @@ Detailed Task Structure:
 
 - M10-001 Reward Runtime Framework - DONE.
 - M10-002 Face Rarity and Definition Schema Lock - DONE.
-- M10-003 Reward Pool - NEXT.
-- M10-004 Reward Generator - PENDING.
-- M10-005 Reward Selection UI - PENDING.
-- M10-006 Reward Apply - PENDING.
-- M10-007 Validate Reward Selection - PENDING.
+- M10-003 Reward Pool - DONE.
+- M10-004 Reward Generator - DONE.
+- M10-005 Reward Selection UI - DONE.
+- M10-006 Reward Apply - DONE.
+- M10-007 Validate Reward Selection - DONE.
 
 Exit Criteria:
 
@@ -496,7 +496,7 @@ Confirm reward choices are understandable before adding face replacement.
 
 ## M11_DICE_FACE_REPLACEMENT
 
-Status: PENDING
+Status: READY
 
 Goal:
 

@@ -46,8 +46,8 @@ The project is in MVP foundation work.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
 - M9_STARTER_DICE_BUILD is DONE.
-- M10_REWARD_SELECTION is READY.
-- M11_DICE_FACE_REPLACEMENT is PENDING.
+- M10_REWARD_SELECTION is DONE.
+- M11_DICE_FACE_REPLACEMENT is READY.
 - M12_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
 - `M8-002_GUARD_GAMEPLAY` is DONE.
@@ -385,7 +385,7 @@ M10 locked design direction:
 - `RewardSelectionState` now exists as the reward runtime state holder.
 - `RewardData` and `RewardType` now define reward runtime data for Face, Heal, Max HP, and Relic rewards.
 - M10 detailed task breakdown is generated.
-- Next recommended M10 task is `M10-007_VALIDATE_REWARD_SELECTION`.
+- Next recommended milestone is `M11_DICE_FACE_REPLACEMENT`.
 - Face Rarity direction is Common, Rare, Epic, and Legendary.
 - M10-002 Face Rarity and Definition Schema is implemented in runtime code.
 - FaceDefinition expected fields are Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
@@ -419,6 +419,18 @@ M10 locked design direction:
 - Face rewards become pending runtime Face rewards only and do not modify the current Dice.
 - Relic rewards are placeholder runtime ownership only and have no gameplay effect.
 - RewardSelectionState is reset after reward application.
+- M10-007 validation confirms the complete Reward Selection pipeline from generation through application.
+- M10 Reward Selection is feature complete.
+- Completed M10 loop:
+  - Starter Dice Build.
+  - Battle.
+  - Elite/Boss Victory.
+  - Reward Generation.
+  - Reward Selection.
+  - Reward Apply.
+  - Continue Run.
+- No Dice modification occurs during M10.
+- Dice Face Replacement remains entirely owned by M11.
 - Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, Boss drops, Dice Shards, Shop, Gold, Inventory, Collection UI, Node Map, New Run Flow, Treasure stage, Boss reward extras, and Relic gameplay remain unimplemented.
 - Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
 - Each Dice Tier uses its corresponding Shard for evolution.

@@ -64,6 +64,15 @@
 - Relic rewards are stored as placeholder runtime ownership only and have no gameplay effect.
 - RewardSelectionState is reset after reward application.
 - Dice Face Replacement, Permanent Face Drops, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection UI, Node Map, New Run flow, Treasure stage, Boss reward extras, and Relic gameplay were not implemented.
+- Completed `M10-007_VALIDATE_REWARD_SELECTION`.
+- Validated the full Reward Selection pipeline from RewardGenerator through RewardSelectionState, RewardSelectionPresenter, and RewardApplyService.
+- Confirmed Elite and Boss reward flow can open Reward Selection in the current linear run.
+- Confirmed Battle and Rest return no reward options.
+- Confirmed Treasure generation support exists, while Treasure stage flow was not invented.
+- Confirmed selected rewards are applied or handed off according to reward type.
+- Confirmed Face rewards remain pending runtime rewards and do not modify the current Dice.
+- Marked M10_REWARD_SELECTION as DONE.
+- Marked M11_DICE_FACE_REPLACEMENT as READY.
 - Clarified that Battle nodes do not generate Reward Selection and that M10 reward generation should target Elite, Treasure, and Boss flows.
 - Implemented `M10-001_REWARD_RUNTIME_FRAMEWORK`.
 - Added `RewardSelectionState` as a pure reward runtime state holder.

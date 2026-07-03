@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: M10-006_REWARD_APPLY
+Task: M10-007_VALIDATE_REWARD_SELECTION
 
 ## Review Result
 
 PASS
 
-M10-006 Reward Apply is implemented as selected reward consumption only while preserving Dice Face Replacement and permanent progression boundaries.
+M10 Reward Selection is validated end to end and is feature complete while Dice Face Replacement remains reserved for M11.
 
 ## Scope Check
 
@@ -111,6 +111,16 @@ M10-006 Reward Apply is implemented as selected reward consumption only while pr
 - Relic rewards are stored as placeholder runtime ownership only.
 - RewardSelectionState resets after reward application.
 - Reward Apply does not own UI or Reward Generation.
+- Completed `M10-007_VALIDATE_REWARD_SELECTION`.
+- Validated complete Reward Selection flow from RewardGenerator to RewardApplyService.
+- Validated Battle and Rest return no reward options.
+- Validated Elite, Treasure, and Boss generator support returns 3 options.
+- Validated current linear run opens Reward Selection for Elite and Boss only.
+- Validated selected rewards are applied or handed off by type.
+- Validated Face reward leaves the current Dice unchanged and remains pending for M11.
+- Validated RewardSelectionState resets after reward application.
+- Marked M10_REWARD_SELECTION as DONE.
+- Marked M11_DICE_FACE_REPLACEMENT as READY.
 - Dice Face Replacement, Permanent Face Drops, Dice Shards, Node Map, and Meta Progression were not implemented.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.

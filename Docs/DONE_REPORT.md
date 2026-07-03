@@ -4,11 +4,11 @@ Date: 2026-07-03
 
 Selected Milestone: M10_REWARD_SELECTION
 
-Completed Work: M10-006_REWARD_APPLY
+Completed Work: M10-007_VALIDATE_REWARD_SELECTION
 
 ## Summary
 
-Added Reward Apply so selected run-scoped rewards are consumed and applied or handed off without implementing Dice Face Replacement or permanent progression.
+Validated the complete M10 Reward Selection loop from reward generation through reward selection and reward application.
 
 ## Validation Result
 
@@ -47,14 +47,15 @@ PASS
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
 - M9-003 UI Foundation Polish is DONE.
-- M10_REWARD_SELECTION is READY and not implemented.
+- M10_REWARD_SELECTION is DONE.
 - M10-001 Reward Runtime Framework is DONE.
 - M10-002 Face Rarity and Definition Schema Lock is DONE.
 - M10-003 Reward Pool is DONE.
 - M10-004 Reward Generator is DONE.
 - M10-005 Reward Selection UI is DONE.
 - M10-006 Reward Apply is DONE.
-- M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
+- M10-007 Validate Reward Selection is DONE.
+- M11_DICE_FACE_REPLACEMENT is READY and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
@@ -130,7 +131,17 @@ PASS
 - Current Dice is unchanged after Face reward selection.
 - Relic rewards are stored as placeholder runtime ownership only.
 - RewardSelectionState is reset after application.
-- M10-007 Validate Reward Selection is READY.
+- RewardGenerator output rules are validated for Battle, Elite, Treasure, Rest, and Boss.
+- RewardSelectionPresenter binding and one-choice selection flow are validated.
+- RewardApplyService reward handling is validated for Heal, Max HP, Face, and Relic reward types.
+- RewardSelectionState reset after application is validated.
+- Pending Face reward remains available for M11.
+- RewardGenerator remains stateless after generation.
+- Normal Battle stages do not show Reward Selection.
+- Elite and Boss reward flow can open Reward Selection in the current linear run.
+- M10-007 Validate Reward Selection is DONE.
+- M10_REWARD_SELECTION is feature complete.
+- M11_DICE_FACE_REPLACEMENT is READY.
 - M10 Reward Selection is scoped to eligible reward-bearing nodes, not normal Battle nodes.
 - No Dice Face Replacement, node map, permanent Face Drop, Shard drop, Shop implementation, or permanent progression was added.
 - Base Throw Damage is applied immediately after enemy impact.

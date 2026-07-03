@@ -2,7 +2,7 @@
 
 Selected Milestone: M10_REWARD_SELECTION
 
-Milestone Status: READY
+Milestone Status: DONE
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -16,7 +16,8 @@ Director Review:
 - M7_RUN_FLOW_PRESENTATION implementation is complete and ready for Director review.
 - M8_STARTER_FACE_GAMEPLAY is approved and DONE.
 - M9_STARTER_DICE_BUILD is approved and DONE.
-- M10_REWARD_SELECTION is READY after long-term progression design lock and UI architecture refactor.
+- M10_REWARD_SELECTION is DONE.
+- M11_DICE_FACE_REPLACEMENT is READY.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` locks reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction before M10 implementation.
@@ -688,7 +689,7 @@ Completed:
 
 ## M10-007: Validate Reward Selection
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -707,6 +708,35 @@ Validation:
 - Dice Face Replacement remains separate unless explicitly promoted.
 - No Meta Progression, Shop, Gold economy, Boss drop system, or node map is added.
 - Unity compile passes.
+
+Completed:
+
+- Validated RewardGenerator output rules:
+  - Elite generates 3 reward options.
+  - Treasure generates 3 reward options from generator support.
+  - Boss generates 3 reward options.
+  - Battle returns no reward options.
+  - Rest returns no reward options.
+- Confirmed RewardGenerator consumes RewardPool data and does not redefine reward definitions.
+- Confirmed RewardSelectionPresenter binds to RewardSelectionState.
+- Confirmed Reward Selection UI can display up to 3 reward options with reward name, reward type, and short description.
+- Confirmed player selection records exactly one selected reward in RewardSelectionState.
+- Confirmed remaining active reward options disappear after selection.
+- Confirmed Reward UI closes after selection.
+- Confirmed RewardApplyService consumes selected reward and resets RewardSelectionState.
+- Confirmed Heal rewards use `BattleCombatState.HealPlayer(...)` and do not exceed Max HP.
+- Confirmed Max HP rewards use `BattleCombatState.IncreasePlayerMaxHpForRun(...)` and increase Max HP and Current HP by the same amount.
+- Confirmed Face rewards become pending runtime Face rewards only.
+- Confirmed current Dice is unchanged after Face reward selection.
+- Confirmed Relic rewards remain placeholder runtime ownership only and have no gameplay effect.
+- Confirmed RewardGenerator remains stateless after generation.
+- Confirmed pending Face reward remains available for M11.
+- Confirmed Reward UI does not reopen unexpectedly in the static flow.
+- Confirmed Normal Battle stages do not show Reward Selection.
+- Confirmed Elite and Boss reward flow can open Reward Selection in the current linear run.
+- Confirmed Treasure stage flow was not invented.
+- Confirmed Dice Face Replacement, Permanent Face Drops, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection UI, Node Map, Treasure stage, New Run Flow, Boss reward extras, and Relic gameplay remain unimplemented.
+- Unity batchmode compile validation passed.
 
 ## M7 Implementation Tasks
 
