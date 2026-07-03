@@ -2,7 +2,9 @@ public static class StarterDiceFactory
 {
     private const int StarterBaseThrowDamage = 3;
     private const int StarterAttackModifierDamage = 5;
+    private const int StarterGuardIncomingDamageReduction = 3;
     private const int StarterLightningModifierDamage = 3;
+    private const int StarterMendHealAmount = 5;
     private const int WoodDiceActiveFaceSlotCount = 4;
     private const int WoodDiceTier = 1;
 
@@ -57,10 +59,58 @@ public static class StarterDiceFactory
     {
         return new[]
         {
-            new DiceFace("starter_attack", "Attack", DiceFaceCategory.Weapon, StarterAttackModifierDamage),
-            new DiceFace("starter_guard", "Guard", DiceFaceCategory.Skill, 0),
-            new DiceFace("starter_lightning", "Lightning", DiceFaceCategory.Skill, StarterLightningModifierDamage),
-            new DiceFace("starter_mend", "Mend", DiceFaceCategory.Skill, 0),
+            new DiceFace(
+                "starter_attack",
+                "Attack",
+                FaceCategory.Attack,
+                FaceRarity.Common,
+                WoodDiceTier,
+                FaceEffectType.Damage,
+                new FaceEffectParameters(StarterAttackModifierDamage),
+                "Deal +5 damage.",
+                string.Empty,
+                null,
+                true,
+                true),
+            new DiceFace(
+                "starter_guard",
+                "Guard",
+                FaceCategory.Defense,
+                FaceRarity.Common,
+                WoodDiceTier,
+                FaceEffectType.Guard,
+                new FaceEffectParameters(StarterGuardIncomingDamageReduction),
+                "Reduce incoming enemy damage by 3.",
+                string.Empty,
+                null,
+                true,
+                true),
+            new DiceFace(
+                "starter_lightning",
+                "Lightning",
+                FaceCategory.Attack,
+                FaceRarity.Common,
+                WoodDiceTier,
+                FaceEffectType.Damage,
+                new FaceEffectParameters(StarterLightningModifierDamage),
+                "Deal +3 lightning damage.",
+                string.Empty,
+                null,
+                true,
+                true),
+            new DiceFace(
+                "starter_mend",
+                "Mend",
+                FaceCategory.Recovery,
+                FaceRarity.Common,
+                WoodDiceTier,
+                FaceEffectType.Heal,
+                new FaceEffectParameters(StarterMendHealAmount),
+                "Heal 5 HP.",
+                string.Empty,
+                null,
+                true,
+                true),
         };
     }
 }

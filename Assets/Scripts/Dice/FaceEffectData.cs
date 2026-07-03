@@ -3,10 +3,12 @@ using UnityEngine;
 
 public enum FaceEffectType
 {
-    None,
-    Damage,
-    Guard,
-    Mend
+    None = 0,
+    Damage = 1,
+    Guard = 2,
+    DamageReduction = Guard,
+    Heal = 3,
+    Mend = Heal
 }
 
 [Serializable]

@@ -271,7 +271,7 @@ Status: IN_PROGRESS
 
 M10 Goal:
 
-Introduce Reward Selection after eligible battle/run-flow points.
+Introduce Reward Selection after eligible reward-bearing nodes.
 
 M10 Pre-Implementation Requirement:
 
@@ -283,6 +283,9 @@ M10 Scope Guardrails:
 - Do not implement Dice Face Replacement during M10 unless explicitly instructed.
 - Do not add inventory, shops, meta progression UI, permanent unlock economy, Dice Tier progression, new run creation, boss mechanics, or multi-enemy gameplay.
 - Reward Selection must improve an existing runtime Dice build, not create the Dice.
+- Battle nodes grant no Reward Selection.
+- Reward Selection belongs to Elite, Treasure, and Boss reward flow only.
+- Permanent Face Drops and Dice Shards remain separate from Reward Selection.
 
 ## M10-001: Reward Runtime Framework
 
@@ -312,6 +315,332 @@ Completed:
 - No reward UI polish was added.
 - No Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, or Boss drops were added.
 - Unity batchmode compile validation completed successfully for M10-001.
+
+## M10-002: Face Rarity and Definition Schema Lock
+
+Status: DONE
+
+Goal:
+
+Define the shared Face rarity model and lifetime Face definition schema before Reward Pool and Reward Generator implementation.
+
+Scope:
+
+- Add the runtime structure for Face rarity.
+- Define approved rarity values for M10.
+- Recommended values:
+  - Common
+  - Rare
+  - Epic
+  - Legendary
+- Define the long-term `FaceDefinition` shape.
+- `FaceDefinition` should be the shared source used by Reward Pool, Reward Generator, Permanent Face Drops, Collection, Encyclopedia, Save Data, and future synergy systems.
+- Lock the expected FaceDefinition fields:
+  - Face ID
+  - Display Name
+  - Category
+  - Rarity
+  - Tier
+  - Effect Type
+  - Effect Parameters
+  - Short Description
+  - Flavor Text
+  - Icon
+  - IsStarterFace
+  - IsUnlockedByDefault
+- Effect Parameters should be a structured value set rather than a single integer.
+- Expected Effect Parameters fields:
+  - Primary Value
+  - Secondary Value
+  - Duration
+  - Chance
+- Early starter Faces mostly use Primary Value.
+- Future Faces can use additional fields without changing the FaceDefinition schema.
+- Example parameter usage:
+  - Attack: Primary Value = Damage.
+  - Guard: Primary Value = Reduction.
+  - Mend: Primary Value = Heal.
+  - Poison: Primary Value = Damage, Duration = turns.
+  - Burn: Primary Value = Damage, Duration = turns.
+  - Freeze: Primary Value = SkipTurns.
+  - Rage: Primary Value = BonusDamage, Duration = turns.
+- Define Face Category values:
+  - Attack
+  - Defense
+  - Recovery
+  - Utility
+  - Status
+  - Summon (Future)
+  - Special (Future)
+- Category represents the player-facing role of a Face.
+- Effect Type represents the gameplay effect that executes.
+- Short Description is used by Reward UI, Dice Deck, and Collection.
+- Flavor Text is used by Encyclopedia or Collection flavor surfaces only.
+- Example role/effect split:
+  - Attack Face: Category Attack, Effect Type Damage.
+  - Lightning Face: Category Attack, Effect Type Damage.
+  - Guard Face: Category Defense, Effect Type Guard.
+  - Mend Face: Category Recovery, Effect Type Heal.
+  - Poison Face: Category Status, Effect Type Poison.
+- Assign rarity to current starter Faces.
+- Define rarity philosophy:
+  - Common: basic attack, healing, and defense.
+  - Rare: stronger or more specialized effects.
+  - Epic: build-defining Faces.
+  - Legendary: Faces that can change the direction of a run.
+- Define how Reward Generator should consume rarity.
+- Define how Permanent Face Drops should consume rarity.
+- Ensure Face rarity can be reused by:
+  - Reward Pool
+  - Reward Generator
+  - Permanent Face Drops
+  - Future Face Collection
+  - Future synergy and balance systems
+
+Do Not:
+
+- Do not implement reward generation.
+- Do not implement permanent Face Drops.
+- Do not rebalance existing Faces.
+- Do not implement Dice Face Replacement.
+- Do not implement Meta Progression.
+- Do not implement Collection.
+- Do not implement Encyclopedia.
+- Do not implement Save Data.
+- Do not implement future synergy logic.
+
+Validation:
+
+- Face rarity structure exists for runtime use.
+- FaceDefinition-compatible DiceFace structure is implemented and locked for runtime use.
+- Effect Parameters are implemented as structured data rather than a single integer.
+- Face Category is implemented separately from Effect Type.
+- Short Description and Flavor Text are implemented separately.
+- Starter Face rarity is assigned in runtime data.
+- Rarity philosophy is documented.
+- Reward Generator rarity consumption rule is documented.
+- Permanent Drop rarity consumption rule is documented.
+- Existing starter Faces remain valid.
+- No reward gameplay is added.
+- Unity compile passes.
+
+Completed:
+
+- Added `FaceRarity` enum:
+  - Common
+  - Rare
+  - Epic
+  - Legendary
+- Added `FaceCategory` enum:
+  - Attack
+  - Defense
+  - Recovery
+  - Utility
+  - Status
+  - Summon
+  - Special
+- Added `FaceEffectParameters` structured value data:
+  - PrimaryValue
+  - SecondaryValue
+  - Duration
+  - Chance
+- Extended `DiceFace` to carry FaceDefinition-compatible runtime fields:
+  - Face ID
+  - Display Name
+  - Category
+  - Rarity
+  - Tier
+  - Effect Type
+  - Effect Parameters
+  - Short Description
+  - Flavor Text
+  - Icon
+  - IsStarterFace
+  - IsUnlockedByDefault
+- Starter Face runtime defaults now include Common rarity, category, Tier 1, effect type, effect parameters, starter flag, and default unlock flag.
+- Guard and Mend now resolve their gameplay values from `EffectParameters.PrimaryValue`.
+- Existing Base Throw Damage, Attack, Guard, Lightning, and Mend values were preserved.
+- No Reward Pool, Reward Generator, Reward UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, or Dice Shards were added.
+
+## M10-003: Reward Pool
+
+Status: READY
+
+Goal:
+
+Define what rewards can exist in the current M10 reward pool.
+
+Scope:
+
+- Create reward pool data for run-scoped rewards.
+- Include only the smallest set needed to prove reward selection.
+- Reward candidates may include:
+  - Face rewards
+  - Heal rewards
+  - Max HP run-only rewards
+  - Relic placeholders if low risk
+- Face reward candidates may prepare entries such as:
+  - Attack
+  - Lightning
+  - Guard
+  - Mend
+  - Poison
+  - Burn
+  - Freeze
+  - Crit
+  - Rage
+- Faces without implemented gameplay may be data-only or excluded from active generation until safe.
+
+Do Not:
+
+- Do not implement reward random selection yet.
+- Do not implement reward effects yet.
+- Do not implement Reward UI yet.
+- Do not implement Dice Face Replacement.
+- Do not implement permanent Face Drops.
+- Do not implement Shard drops.
+- Do not implement Gold or Shop economy.
+
+Validation:
+
+- Reward pool can provide structured reward candidates.
+- Reward pool distinguishes run-only rewards from meta progression drops.
+- Battle nodes are not configured to provide rewards.
+- Unity compile passes.
+
+## M10-004: Reward Generator
+
+Status: PENDING
+
+Goal:
+
+Generate reward options from the Reward Pool based on reward-bearing node type.
+
+Scope:
+
+- Add node-aware reward generation for eligible node types.
+- Generate a small set of reward options, likely 3.
+- Supported reward-bearing nodes:
+  - Elite
+  - Treasure
+  - Boss
+- Battle nodes must generate no rewards.
+- Rest nodes must not use Reward Selection.
+- Suggested early generation direction:
+  - Elite: Face / Relic / Heal mix.
+  - Treasure: Face / Relic / Max HP mix.
+  - Boss: Reward Selection plus separate future Shard and permanent Face Drop hooks.
+
+Do Not:
+
+- Do not implement node map.
+- Do not implement permanent Face Drops.
+- Do not implement Shard drops.
+- Do not implement pity systems.
+- Do not implement reward application.
+- Do not implement Reward UI polish.
+- Do not implement Dice Face Replacement.
+
+Validation:
+
+- Elite, Treasure, and Boss can request reward options.
+- Battle returns no Reward Selection options.
+- Generator consumes Reward Pool data instead of hardcoding UI choices.
+- Unity compile passes.
+
+## M10-005: Reward Selection UI
+
+Status: PENDING
+
+Goal:
+
+Create the first playable reward choice screen.
+
+Desired presentation:
+
+- Victory or reward-bearing node result.
+- "Choose One".
+- Three clear reward options.
+- Player selects exactly one.
+- Remaining options disappear.
+
+Scope:
+
+- Scene/prefab-style anchored UI following the UI architecture refactor.
+- Bind UI to `RewardSelectionState`.
+- Display reward type, name, and short readable description.
+- Keep the UI readable on mobile landscape.
+- Keep Reward Selection separate from Dice Face Replacement.
+
+Do Not:
+
+- Do not implement Dice Face Replacement UI.
+- Do not implement inventory.
+- Do not implement Shop.
+- Do not implement Meta Progression UI.
+- Do not implement node map.
+- Do not implement Reward UI as a long-term runtime-created debug hierarchy.
+
+Validation:
+
+- Reward UI opens only when RewardSelectionState is active.
+- Player can choose exactly one reward.
+- Selection closes the runtime reward state.
+- Existing Battle flow still works.
+- Unity compile passes.
+
+## M10-006: Reward Apply
+
+Status: PENDING
+
+Goal:
+
+Apply the selected run-scoped reward.
+
+Scope:
+
+- Apply Heal reward.
+- Apply run-only Max HP reward if included.
+- Store selected Face reward for later Dice Face Replacement if Face rewards are included.
+- Apply simple Relic placeholder only if a prior task explicitly included relic data.
+
+Do Not:
+
+- Do not directly replace Dice Faces during Reward Apply unless Director promotes that scope.
+- Do not permanently unlock Faces.
+- Do not apply Dice Shards.
+- Do not implement permanent account progression.
+- Do not implement Shop or Gold.
+
+Validation:
+
+- Selected reward applies once.
+- Remaining rewards do not apply.
+- Run-only rewards remain run-scoped.
+- Face reward handoff remains separate from M11 Dice Face Replacement.
+- Unity compile passes.
+
+## M10-007: Validate Reward Selection
+
+Status: PENDING
+
+Goal:
+
+Validate the complete first Reward Selection loop.
+
+Validation:
+
+- Battle nodes produce no rewards.
+- Elite/Treasure/Boss reward flow can produce Reward Selection.
+- Player can select exactly one reward.
+- Reward is applied or handed off according to type.
+- Remaining rewards disappear.
+- Reward Selection improves the current Run only.
+- Permanent Face Drops are not part of Reward Selection.
+- Dice Shards are not part of Reward Selection.
+- Dice Face Replacement remains separate unless explicitly promoted.
+- No Meta Progression, Shop, Gold economy, Boss drop system, or node map is added.
+- Unity compile passes.
 
 ## M7 Implementation Tasks
 

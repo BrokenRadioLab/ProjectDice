@@ -4,11 +4,11 @@ Date: 2026-07-03
 
 Selected Milestone: M10_REWARD_SELECTION
 
-Completed Work: M10-001_REWARD_RUNTIME_FRAMEWORK
+Completed Work: M10-002_FACE_RARITY_AND_DEFINITION_SCHEMA_LOCK
 
 ## Summary
 
-Added the reward runtime state holder and reward data structure without implementing reward generation, reward effects, or reward UI.
+Converted the locked Face rarity and FaceDefinition schema into runtime code/data structures without adding reward gameplay.
 
 ## Validation Result
 
@@ -49,6 +49,7 @@ PASS
 - M9-003 UI Foundation Polish is DONE.
 - M10_REWARD_SELECTION is READY and not implemented.
 - M10-001 Reward Runtime Framework is DONE.
+- M10-002 Face Rarity and Definition Schema Lock is DONE.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
@@ -65,6 +66,45 @@ PASS
 - Selecting one reward closes the reward selection state and clears the remaining current rewards.
 - No reward generation logic, reward effects, reward UI polish, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, or Boss drops were added.
 - Unity batchmode compile validation completed successfully for M10-001.
+- Dice Shard Drop Philosophy is documented in `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+- `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` now records Dice Shards as Meta Progression items.
+- Each Dice Tier uses corresponding evolution Shards.
+- Shards never appear as Reward Selection.
+- Previous Tier Shards stop dropping after evolving to the next Dice Tier.
+- Shard drops use fixed probability.
+- Pity systems are not implemented and remain future balancing consideration only.
+- No code, Reward Selection behavior, Meta Progression implementation, drop table, or pity system was added.
+- Node Reward Philosophy is documented in `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
+- Battle nodes are locked as survival gates with no rewards.
+- Elite nodes are locked as high-risk encounters with Reward Selection and low-probability permanent Face Drop.
+- Treasure nodes are locked as safe Reward Selection with very low-probability permanent Face Drop.
+- Rest nodes are locked as HP recovery or current-run Dice rebuilding.
+- Boss nodes are locked as Reward Selection, current Dice Tier Shard chance, and permanent Face Drop chance.
+- Shop is documented as removed for now because Project Dice has no permanent currency system.
+- No node map, node reward logic, permanent Face Drop implementation, Shard drop implementation, Rest action, or Shop system was added.
+- M10 detailed task breakdown is generated in `Docs/TASK_QUEUE.md`.
+- M10-002 Face Rarity and Definition Schema Lock is implemented.
+- M10-002 locks FaceDefinition lifetime structure in runtime code, not only documentation.
+- `FaceRarity` exists with Common, Rare, Epic, and Legendary.
+- `FaceCategory` exists with Attack, Defense, Recovery, Utility, Status, Summon, and Special.
+- `FaceEffectParameters` exists with PrimaryValue, SecondaryValue, Duration, and Chance.
+- `DiceFace` now carries FaceDefinition-compatible runtime fields.
+- FaceDefinition expected fields are Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
+- Face Category is documented as the player-facing role.
+- Effect Type is documented as the gameplay effect that executes.
+- Effect Parameters are documented as structured data with Primary Value, Secondary Value, Duration, and Chance.
+- Short Description and Flavor Text are documented as separate text fields.
+- Starter Faces are assigned Common rarity in runtime data.
+- Guard and Mend now resolve their existing values from `EffectParameters.PrimaryValue`.
+- Existing gameplay values were preserved.
+- Reward Generator and Permanent Face Drop should consume FaceDefinition rarity instead of hardcoded Face names.
+- M10-003 Reward Pool is NEXT.
+- M10-004 Reward Generator is PENDING.
+- M10-005 Reward Selection UI is PENDING.
+- M10-006 Reward Apply is PENDING.
+- M10-007 Validate Reward Selection is PENDING.
+- M10 Reward Selection is scoped to eligible reward-bearing nodes, not normal Battle nodes.
+- No Reward Pool, Reward Generator, Reward UI, Reward Apply, Dice Face Replacement, node map, permanent Face Drop, Shard drop, or Shop implementation was added.
 - Base Throw Damage is applied immediately after enemy impact.
 - Enemy HP refreshes immediately after Base Throw Damage.
 - Dice Animation Layer appears only after Base Throw Damage application and popup.

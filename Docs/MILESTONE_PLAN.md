@@ -448,7 +448,7 @@ Status: READY
 
 Goal:
 
-Introduce reward choice after eligible run-flow points without implementing Dice face replacement yet.
+Introduce reward choice after eligible reward-bearing nodes without implementing Dice face replacement yet.
 
 Precondition:
 
@@ -458,7 +458,10 @@ Precondition:
 
 Scope:
 
-- Basic reward selection after eligible battles.
+- Basic reward selection after eligible reward-bearing nodes.
+- Battle nodes grant no Reward Selection.
+- Elite, Treasure, and Boss are Reward Selection sources.
+- Rest is not Reward Selection; Rest is reserved for healing or current-run Dice rebuild.
 - Three reward options.
 - Reward options may include New Face, Recover HP, Run-only Max HP increase, or future Relic.
 - Keep all growth temporary within the Run unless explicitly defined as permanent meta progression.
@@ -468,6 +471,19 @@ Scope:
 - Reward Selection must not create the player's Dice.
 - No Dice face replacement implementation in this milestone unless explicitly promoted by Director.
 - No inventory, shops, meta progression, branching map, enemy AI, or boss mechanics.
+- No permanent Face Drop implementation.
+- No Dice Shard drop implementation.
+- No Shop or Gold economy.
+
+Detailed Task Structure:
+
+- M10-001 Reward Runtime Framework - DONE.
+- M10-002 Face Rarity and Definition Schema Lock - DONE.
+- M10-003 Reward Pool - NEXT.
+- M10-004 Reward Generator - PENDING.
+- M10-005 Reward Selection UI - PENDING.
+- M10-006 Reward Apply - PENDING.
+- M10-007 Validate Reward Selection - PENDING.
 
 Exit Criteria:
 

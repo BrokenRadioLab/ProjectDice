@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: M10-001_REWARD_RUNTIME_FRAMEWORK
+Task: M10-002_FACE_RARITY_AND_DEFINITION_SCHEMA_LOCK
 
 ## Review Result
 
 PASS
 
-Reward runtime framework exists as state and data only; reward generation, reward effects, and reward UI remain unimplemented.
+M10-002 runtime schema is implemented while preserving all existing starter Face gameplay and avoiding Reward Pool implementation.
 
 ## Scope Check
 
@@ -43,6 +43,39 @@ Reward runtime framework exists as state and data only; reward generation, rewar
 - Completed `TASK_UI_ARCHITECTURE_REFACTOR`.
 - Completed `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION`.
 - Completed `M10-001_REWARD_RUNTIME_FRAMEWORK`.
+- Completed `DICE_SHARD_DROP_PHILOSOPHY_LOCK` documentation update.
+- Completed `NODE_REWARD_PHILOSOPHY_LOCK` documentation update.
+- Completed `M10_REWARD_SELECTION_TASK_BREAKDOWN` documentation update.
+- Completed `M10-002_FACE_RARITY_AND_DEFINITION_SCHEMA_LOCK`.
+- Implemented and locked FaceDefinition-compatible runtime fields for long-term Face data.
+- Added runtime `FaceRarity` enum.
+- Added runtime `FaceCategory` enum.
+- Added runtime `FaceEffectParameters` structure.
+- Extended `DiceFace` with category, rarity, tier, effect type, effect parameters, short description, flavor text, icon, starter status, and default unlock status.
+- Added Face Category to separate player-facing role from Effect Type.
+- Replaced single Effect Value with structured Effect Parameters.
+- Documented Effect Parameters as Primary Value, Secondary Value, Duration, and Chance.
+- Split Description into Short Description and Flavor Text.
+- Documented starter Face rarity direction as Common.
+- Documented Reward Generator and Permanent Face Drop rarity consumption direction.
+- Added M10-003 Reward Pool.
+- Added M10-004 Reward Generator.
+- Added M10-005 Reward Selection UI.
+- Added M10-006 Reward Apply.
+- Added M10-007 Validate Reward Selection.
+- Updated M10 scope so Battle nodes do not generate Reward Selection.
+- Preserved Elite, Treasure, and Boss as reward-bearing node directions.
+- Documented Tier-specific Dice Shards for Dice evolution.
+- Documented Shards as Meta Progression items outside Reward Selection.
+- Documented that previous Tier Shards stop dropping after Dice Tier evolution.
+- Documented fixed-probability Shard drops.
+- Documented pity systems as future balancing consideration only.
+- Documented Battle nodes as survival gates with no rewards.
+- Documented Elite nodes as high-risk reward and permanent Face Drop chance nodes.
+- Documented Treasure nodes as safe Reward Selection nodes with very low permanent Face Drop chance.
+- Documented Rest nodes as HP recovery or current-run Dice rebuild nodes.
+- Documented Boss nodes as Reward Selection, current Dice Tier Shard chance, and permanent Face Drop chance nodes.
+- Documented Shop as removed for now due to lack of permanent currency system.
 - Added `RewardSelectionState`.
 - Added `RewardData`.
 - Added `RewardType` categories for Face, Heal, Max HP, and Relic.
@@ -106,6 +139,18 @@ Reward runtime framework exists as state and data only; reward generation, rewar
 - Did not implement reward UI polish.
 - Did not implement Dice Face Replacement.
 - Did not implement Meta Progression, permanent unlocks, Iron Core, Boss drops, inventory, shops, or new run creation.
+- Did not implement Dice Shards.
+- Did not implement Shard drop tables.
+- Did not implement pity systems.
+- Did not implement node map.
+- Did not implement node reward routing.
+- Did not implement permanent Face Drops.
+- Did not implement Rest actions.
+- Did not implement Shop.
+- Did not implement Reward Pool.
+- Did not implement Reward Generator.
+- Did not implement Reward Selection UI.
+- Did not implement Reward Apply.
 - Did not change Base Throw Damage value, Attack modifier, Lightning modifier, Mend heal amount, Guard reduction, enemy attack damage, DiceRoller result logic, or Face selection logic.
 - Did not add new Faces beyond renaming starter Spark to Lightning.
 - Did not add new Face effects during presentation polish.

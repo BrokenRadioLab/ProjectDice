@@ -12,6 +12,10 @@ Last Updated: 2026-07-02
 
 `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present, locked, and defines long-term Reward Selection and progression direction before M10.
 
+Dice Shard Drop Philosophy is documented and locked as design-only long-term progression direction.
+
+Node Reward Philosophy is documented and locked as design-only long-term progression direction.
+
 Planning and presentation documents may organize work, but they must not redefine the game against the GDD.
 
 M3 is approved by Director review. GDD content must not be invented while the GDD source file is pending.
@@ -380,7 +384,34 @@ M10 locked design direction:
 - Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock conditions are documented in `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
 - `RewardSelectionState` now exists as the reward runtime state holder.
 - `RewardData` and `RewardType` now define reward runtime data for Face, Heal, Max HP, and Relic rewards.
+- M10 detailed task breakdown is generated.
+- Next recommended M10 task is `M10-003_REWARD_POOL`.
+- Face Rarity direction is Common, Rare, Epic, and Legendary.
+- M10-002 Face Rarity and Definition Schema is implemented in runtime code.
+- FaceDefinition expected fields are Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
+- Face Category is player-facing role; Effect Type is executed gameplay effect.
+- Effect Parameters are structured data with Primary Value, Secondary Value, Duration, and Chance.
+- `FaceRarity`, `FaceCategory`, and `FaceEffectParameters` now exist in runtime code.
+- `DiceFace` now carries FaceDefinition-compatible runtime fields.
+- Starter Faces now carry Common rarity, category, Tier 1, effect type, effect parameters, starter status, and default unlock status.
+- Guard and Mend gameplay values now resolve from `EffectParameters.PrimaryValue`.
+- Short Description is compact system UI text; Flavor Text is collection/encyclopedia text.
+- Reward Pool, Reward Generator, Permanent Face Drops, Collection, Encyclopedia, Save Data, and future synergy systems should consume shared FaceDefinition data.
+- Reward Pool and Reward Generator should consume the locked FaceDefinition schema.
 - Reward generation, reward effects, reward UI polish, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops remain unimplemented.
+- Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
+- Each Dice Tier uses its corresponding Shard for evolution.
+- Previous Tier Shards stop dropping after evolving to the next Dice Tier.
+- Shard drops use fixed probability; pity systems are future balancing consideration only.
+- Dice Shard implementation and drop tables remain unimplemented.
+- Node rewards are locked by node identity:
+  - Battle nodes are survival gates and grant no rewards.
+  - Elite nodes grant Reward Selection and low-probability permanent Face Drop.
+  - Treasure nodes grant Reward Selection and very low-probability permanent Face Drop.
+  - Rest nodes offer HP recovery or current-run Dice rebuilding.
+  - Boss nodes grant Reward Selection, current Dice Tier Shard chance, and permanent Face Drop chance.
+- Shop is currently removed because Project Dice has no permanent currency system.
+- Node map, node reward routing, permanent Face Drops, Shard drops, Rest actions, and Shop systems remain unimplemented.
 
 Director-locked M4 principle:
 

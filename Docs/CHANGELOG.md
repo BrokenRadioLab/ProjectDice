@@ -4,6 +4,38 @@
 
 ### Changed
 
+- Added Dice Shard Drop Philosophy to long-term progression design.
+- Locked Dice Shards as Meta Progression items, not Reward Selection rewards.
+- Documented Tier-specific Shards such as Wood Shard, Iron Shard, and Crystal Shard.
+- Documented that previous Tier Shards stop dropping after evolving to the next Dice Tier.
+- Documented fixed-probability Shard drops with no pity system at this stage.
+- No Dice Shard implementation, Reward Selection change, Meta Progression system, drop table, or pity system was added.
+- Added Node Reward Philosophy to long-term progression design.
+- Locked Battle nodes as survival gates with no rewards.
+- Locked Elite, Treasure, Rest, and Boss node reward identities.
+- Documented Permanent Face Drops and Dice Shards as systems separate from Reward Selection.
+- Documented Shop as removed for now because there is no permanent currency system.
+- No node map, node reward logic, permanent Face Drop implementation, Shard drop implementation, Rest action, or Shop system was added.
+- Generated the M10_REWARD_SELECTION detailed task breakdown.
+- Expanded M10-002 into Face Rarity and Definition Schema Lock before Reward Pool implementation.
+- Documented FaceDefinition expected fields: Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
+- Added Face Category as a player-facing role separate from gameplay Effect Type.
+- Replaced single Face Effect Value design with structured Effect Parameters.
+- Locked Effect Parameters as Primary Value, Secondary Value, Duration, and Chance so future Faces can expand without changing the FaceDefinition schema.
+- Split Face text into Short Description for compact system UI and Flavor Text for collection/encyclopedia surfaces.
+- Documented starter Face rarity direction as Common for Attack, Guard, Lightning, and Mend.
+- Documented that Reward Pool, Reward Generator, Permanent Face Drops, Collection, Encyclopedia, Save Data, and future synergy systems should consume shared FaceDefinition data.
+- Added M10-003 Reward Pool, M10-004 Reward Generator, M10-005 Reward Selection UI, M10-006 Reward Apply, and M10-007 Validate Reward Selection.
+- Updated Face Rarity direction to include Common, Rare, Epic, and Legendary.
+- Locked M10-002 Face Rarity and Definition Schema as a design schema milestone.
+- Implemented `M10-002_FACE_RARITY_AND_DEFINITION_SCHEMA_LOCK`.
+- Added runtime `FaceRarity`, `FaceCategory`, and `FaceEffectParameters` structures.
+- Extended `DiceFace` with FaceDefinition-compatible runtime fields.
+- Starter Face runtime data now includes Common rarity, category, Tier 1, effect type, effect parameters, starter flag, and default unlock flag.
+- Guard and Mend now resolve their existing values from `EffectParameters.PrimaryValue`.
+- Existing starter gameplay values, Starter Dice Build behavior, duplicate Face legality, Dice roll selection, and Base Throw Damage + Face Effect separation were preserved.
+- Reward Pool, Reward Generator, Reward UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, and Dice Shards were not implemented.
+- Clarified that Battle nodes do not generate Reward Selection and that M10 reward generation should target Elite, Treasure, and Boss flows.
 - Implemented `M10-001_REWARD_RUNTIME_FRAMEWORK`.
 - Added `RewardSelectionState` as a pure reward runtime state holder.
 - Added `RewardData` and `RewardType` for Face, Heal, Max HP, and Relic reward categories.
