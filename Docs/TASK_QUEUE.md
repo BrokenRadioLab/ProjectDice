@@ -464,7 +464,7 @@ Completed:
 
 ## M10-003: Reward Pool
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -508,9 +508,20 @@ Validation:
 - Battle nodes are not configured to provide rewards.
 - Unity compile passes.
 
+Completed:
+
+- Added `RewardPool` as the runtime source for run-scoped reward candidates.
+- Face reward candidates reference existing `DiceFace` FaceDefinition-compatible runtime data.
+- RewardPool does not redefine Attack, Guard, Lightning, or Mend Face metadata.
+- RewardPool includes currently safe runtime Face rewards from unlocked Tier-valid Faces.
+- RewardPool includes simple run-only Heal and Max HP reward entries.
+- RewardPool includes a Relic placeholder entry only as runtime category data.
+- RewardPool does not decide drop probability, node behavior, reward generation, reward selection, or reward application.
+- No Reward Generator, Reward Selection UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, Dice Shards, Shop, Gold, Inventory, Collection UI, or Meta Progression was added.
+
 ## M10-004: Reward Generator
 
-Status: PENDING
+Status: READY
 
 Goal:
 

@@ -4,11 +4,11 @@ Date: 2026-07-03
 
 Selected Milestone: M10_REWARD_SELECTION
 
-Completed Work: M10-002_FACE_RARITY_AND_DEFINITION_SCHEMA_LOCK
+Completed Work: M10-003_REWARD_POOL
 
 ## Summary
 
-Converted the locked Face rarity and FaceDefinition schema into runtime code/data structures without adding reward gameplay.
+Added the runtime Reward Pool as the central source for run-scoped reward candidates without adding reward generation, UI, or application.
 
 ## Validation Result
 
@@ -50,6 +50,7 @@ PASS
 - M10_REWARD_SELECTION is READY and not implemented.
 - M10-001 Reward Runtime Framework is DONE.
 - M10-002 Face Rarity and Definition Schema Lock is DONE.
+- M10-003 Reward Pool is DONE.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
@@ -98,13 +99,18 @@ PASS
 - Guard and Mend now resolve their existing values from `EffectParameters.PrimaryValue`.
 - Existing gameplay values were preserved.
 - Reward Generator and Permanent Face Drop should consume FaceDefinition rarity instead of hardcoded Face names.
-- M10-003 Reward Pool is NEXT.
-- M10-004 Reward Generator is PENDING.
+- `RewardPool` exists as the central runtime source for run-scoped reward candidates.
+- RewardPool Face rewards reference existing `DiceFace` FaceDefinition-compatible runtime data.
+- RewardPool includes safe runtime Face rewards from unlocked Tier-valid Faces.
+- RewardPool includes run-only Heal and Max HP reward entries.
+- RewardPool includes a Relic placeholder category entry only.
+- RewardPool does not decide drop probability, reward rarity weighting, node behavior, reward generation, reward selection, or reward application.
+- M10-004 Reward Generator is READY.
 - M10-005 Reward Selection UI is PENDING.
 - M10-006 Reward Apply is PENDING.
 - M10-007 Validate Reward Selection is PENDING.
 - M10 Reward Selection is scoped to eligible reward-bearing nodes, not normal Battle nodes.
-- No Reward Pool, Reward Generator, Reward UI, Reward Apply, Dice Face Replacement, node map, permanent Face Drop, Shard drop, or Shop implementation was added.
+- No Reward Generator, Reward UI, Reward Apply, Dice Face Replacement, node map, permanent Face Drop, Shard drop, or Shop implementation was added.
 - Base Throw Damage is applied immediately after enemy impact.
 - Enemy HP refreshes immediately after Base Throw Damage.
 - Dice Animation Layer appears only after Base Throw Damage application and popup.

@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: M10-002_FACE_RARITY_AND_DEFINITION_SCHEMA_LOCK
+Task: M10-003_REWARD_POOL
 
 ## Review Result
 
 PASS
 
-M10-002 runtime schema is implemented while preserving all existing starter Face gameplay and avoiding Reward Pool implementation.
+M10-003 runtime Reward Pool is implemented as candidate data only while preserving existing gameplay and avoiding Reward Generator/UI/Apply implementation.
 
 ## Scope Check
 
@@ -79,6 +79,12 @@ M10-002 runtime schema is implemented while preserving all existing starter Face
 - Added `RewardSelectionState`.
 - Added `RewardData`.
 - Added `RewardType` categories for Face, Heal, Max HP, and Relic.
+- Added `RewardPool`.
+- RewardPool contains run-scoped reward candidates only.
+- RewardPool Face rewards reference existing `DiceFace` FaceDefinition-compatible runtime data.
+- RewardPool does not duplicate Face metadata.
+- RewardPool includes safe runtime Face rewards, run-only Heal data, run-only Max HP data, and a Relic placeholder category entry.
+- RewardPool does not decide probability, node behavior, reward generation, reward selection, or reward application.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.
 - RewardSelectionState clears remaining rewards after selection.

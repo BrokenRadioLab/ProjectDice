@@ -385,7 +385,7 @@ M10 locked design direction:
 - `RewardSelectionState` now exists as the reward runtime state holder.
 - `RewardData` and `RewardType` now define reward runtime data for Face, Heal, Max HP, and Relic rewards.
 - M10 detailed task breakdown is generated.
-- Next recommended M10 task is `M10-003_REWARD_POOL`.
+- Next recommended M10 task is `M10-004_REWARD_GENERATOR`.
 - Face Rarity direction is Common, Rare, Epic, and Legendary.
 - M10-002 Face Rarity and Definition Schema is implemented in runtime code.
 - FaceDefinition expected fields are Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
@@ -398,6 +398,10 @@ M10 locked design direction:
 - Short Description is compact system UI text; Flavor Text is collection/encyclopedia text.
 - Reward Pool, Reward Generator, Permanent Face Drops, Collection, Encyclopedia, Save Data, and future synergy systems should consume shared FaceDefinition data.
 - Reward Pool and Reward Generator should consume the locked FaceDefinition schema.
+- `RewardPool` now exists as the runtime source for run-scoped reward candidates.
+- RewardPool Face rewards reference existing `DiceFace` FaceDefinition-compatible runtime data instead of redefining Face metadata.
+- RewardPool includes safe runtime Face rewards, run-only Heal reward data, run-only Max HP reward data, and a Relic placeholder category entry.
+- RewardPool does not decide probability, node behavior, reward generation, reward selection, or reward application.
 - Reward generation, reward effects, reward UI polish, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops remain unimplemented.
 - Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
 - Each Dice Tier uses its corresponding Shard for evolution.

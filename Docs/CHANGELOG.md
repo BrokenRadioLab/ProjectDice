@@ -35,6 +35,12 @@
 - Guard and Mend now resolve their existing values from `EffectParameters.PrimaryValue`.
 - Existing starter gameplay values, Starter Dice Build behavior, duplicate Face legality, Dice roll selection, and Base Throw Damage + Face Effect separation were preserved.
 - Reward Pool, Reward Generator, Reward UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, and Dice Shards were not implemented.
+- Implemented `M10-003_REWARD_POOL`.
+- Added `RewardPool` as a runtime source for run-scoped reward candidates.
+- RewardPool Face rewards consume existing FaceDefinition-compatible `DiceFace` data instead of redefining Face data.
+- RewardPool includes safe runtime Face rewards, run-only Heal reward data, run-only Max HP reward data, and a Relic placeholder category entry.
+- RewardPool does not decide drop probability, reward rarity weighting, node behavior, reward generation, reward selection, or reward application.
+- Reward Generator, Reward Selection UI, Reward Apply, Dice Face Replacement, Permanent Face Drops, Dice Shards, Shop, Gold, Inventory, Collection UI, and Meta Progression were not implemented.
 - Clarified that Battle nodes do not generate Reward Selection and that M10 reward generation should target Elite, Treasure, and Boss flows.
 - Implemented `M10-001_REWARD_RUNTIME_FRAMEWORK`.
 - Added `RewardSelectionState` as a pure reward runtime state holder.
