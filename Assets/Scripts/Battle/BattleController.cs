@@ -138,6 +138,11 @@ public sealed class BattleController : MonoBehaviour
 
         int playerDamage = ApplyEnemyAttackIntent(pendingEnemyAttackIntent, faceEffect);
         pendingEnemyAttackIntent = EnemyAttackIntent.None();
+        if (throwSequencePresenter != null)
+        {
+            yield return throwSequencePresenter.PlayPlayerDamagePopup(playerDamage);
+        }
+
         hudPresenter?.Refresh();
 
         ResolvePlayerDefeatOutcome();

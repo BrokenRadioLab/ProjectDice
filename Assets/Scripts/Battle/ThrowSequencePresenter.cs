@@ -28,12 +28,15 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     [SerializeField, Min(0.01f)] private float diceRollFrameDuration = 0.08f;
     [SerializeField, Min(0.01f)] private float faceRevealDuration = 0.2f;
     [SerializeField, Min(0.01f)] private float faceEffectDuration = 1.25f;
-    [SerializeField, Min(0.01f)] private float damageNumberDuration = 0.55f;
+    [SerializeField, Min(0.01f)] private float damageNumberDuration = 0.9f;
+    [SerializeField, Min(0f)] private float damageNumberHoldDuration = 0.18f;
     [SerializeField, Min(1f)] private float projectileThickness = 3f;
     [SerializeField] private Vector2 rollingDiceSize = new Vector2(288f, 288f);
     [SerializeField] private Vector2 diceResultPosition = new Vector2(0f, -56f);
     [SerializeField] private Vector2 enemyDamageNumberOffset = new Vector2(0f, 72f);
     [SerializeField] private Vector2 enemyDamageNumberFloatOffset = new Vector2(0f, 42f);
+    [SerializeField] private Vector2 heroPopupOffset = new Vector2(0f, 76f);
+    [SerializeField] private Vector2 heroPopupFloatOffset = new Vector2(0f, 42f);
     [SerializeField] private Vector2 enemyHitShakeOffset = new Vector2(10f, 0f);
     [SerializeField] private Color projectileColor = Color.white;
     [SerializeField] private Color enemyFlashColor = new Color(1f, 0.95f, 0.88f, 0.55f);
@@ -51,6 +54,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
     private Text faceRevealText;
     private Text faceEffectText;
     private Text damageNumberText;
+    private Text heroPopupText;
     private Image hitSpark;
     private Color originalEnemyColor;
     private Sprite[] heroIdleFrames;
@@ -95,6 +99,8 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         HideFaceEffectText();
         EnsureDamageNumberText();
         HideDamageNumberText();
+        EnsureHeroPopupText();
+        HideHeroPopupText();
         EnsureHitSpark();
         HideHitSpark();
         HideDiceAnimationLayer();
@@ -111,14 +117,25 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         CacheOriginalColors();
         yield return PlayHeroThrowAnimation();
         yield return PlayEnemyHitFeedback();
+        yield return PlayEnemyPopup(baseThrowDamage.ToString());
 
         ShowDiceAnimationLayer();
         yield return new WaitForSeconds(diceLayerAppearDuration);
         yield return PlayRollingPresentation();
         yield return PlayFaceReveal(selectedFace);
         yield return PlayFaceEffect(faceEffect, baseThrowDamage, damageAmount);
-        yield return PlayDamageNumber(damageAmount);
+        yield return PlayFaceSpecificFeedback(faceEffect);
         HideDiceAnimationLayer();
+    }
+
+    public IEnumerator PlayPlayerDamagePopup(int damageAmount)
+    {
+        if (damageAmount <= 0)
+        {
+            yield break;
+        }
+
+        yield return PlayHeroPopup(damageAmount.ToString(), damageNumberTextColor);
     }
 
     private void CacheOriginalColors()
@@ -481,6 +498,7 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         HideFaceRevealText();
         HideFaceEffectText();
         HideDamageNumberText();
+        HideHeroPopupText();
     }
 
     private void EnsureDiceAnimationLayer()
@@ -707,11 +725,30 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         yield return new WaitForSeconds(faceRevealDuration);
     }
 
-    private IEnumerator PlayDamageNumber(int damageAmount)
+    private IEnumerator PlayFaceSpecificFeedback(FaceEffectData faceEffect)
+    {
+        if (faceEffect == null || !faceEffect.IsImplemented)
+        {
+            yield break;
+        }
+
+        if (faceEffect.EffectType == FaceEffectType.Damage && faceEffect.DamageAmount > 0)
+        {
+            yield return PlayEnemyPopup($"+{faceEffect.DamageAmount}");
+            yield break;
+        }
+
+        if (faceEffect.EffectType == FaceEffectType.Mend && faceEffect.HealAmount > 0)
+        {
+            yield return PlayHeroPopup($"+{faceEffect.HealAmount} HP", new Color(0.52f, 1f, 0.58f, 1f));
+        }
+    }
+
+    private IEnumerator PlayEnemyPopup(string popupText)
     {
         EnsureDamageNumberText();
 
-        if (damageNumberText == null)
+        if (damageNumberText == null || string.IsNullOrWhiteSpace(popupText))
         {
             yield break;
         }
@@ -723,21 +760,63 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
 
         damageTransform.anchoredPosition = startPosition;
-        damageNumberText.text = damageAmount.ToString();
+        damageNumberText.text = popupText;
         damageNumberText.color = startColor;
         damageNumberText.gameObject.SetActive(true);
 
-        float elapsed = 0f;
-        while (elapsed < damageNumberDuration)
+        yield return AnimatePopup(damageNumberText, damageTransform, startPosition, endPosition, startColor, endColor);
+        HideDamageNumberText();
+    }
+
+    private IEnumerator PlayHeroPopup(string popupText, Color popupColor)
+    {
+        EnsureHeroPopupText();
+
+        if (heroPopupText == null || string.IsNullOrWhiteSpace(popupText))
         {
-            elapsed += Time.deltaTime;
-            float phase = Mathf.Clamp01(elapsed / damageNumberDuration);
-            damageTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, phase);
-            damageNumberText.color = Color.Lerp(startColor, endColor, phase);
-            yield return null;
+            yield break;
         }
 
-        HideDamageNumberText();
+        RectTransform popupTransform = heroPopupText.rectTransform;
+        Vector2 startPosition = GetHeroPopupPosition(heroPopupOffset);
+        Vector2 endPosition = startPosition + heroPopupFloatOffset;
+        Color endColor = new Color(popupColor.r, popupColor.g, popupColor.b, 0f);
+
+        popupTransform.anchoredPosition = startPosition;
+        heroPopupText.text = popupText;
+        heroPopupText.color = popupColor;
+        heroPopupText.gameObject.SetActive(true);
+
+        yield return AnimatePopup(heroPopupText, popupTransform, startPosition, endPosition, popupColor, endColor);
+        HideHeroPopupText();
+    }
+
+    private IEnumerator AnimatePopup(
+        Text popupText,
+        RectTransform popupTransform,
+        Vector2 startPosition,
+        Vector2 endPosition,
+        Color startColor,
+        Color endColor)
+    {
+        float holdDuration = Mathf.Min(damageNumberHoldDuration, damageNumberDuration);
+        if (holdDuration > 0f)
+        {
+            popupTransform.anchoredPosition = startPosition;
+            popupText.color = startColor;
+            yield return new WaitForSeconds(holdDuration);
+        }
+
+        float moveDuration = Mathf.Max(0.01f, damageNumberDuration - holdDuration);
+        float elapsed = 0f;
+        while (elapsed < moveDuration)
+        {
+            elapsed += Time.deltaTime;
+            float phase = Mathf.Clamp01(elapsed / moveDuration);
+            popupTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, phase);
+            popupText.color = Color.Lerp(startColor, endColor, phase);
+            yield return null;
+        }
     }
 
     private IEnumerator PlayFaceEffect(FaceEffectData faceEffect, int baseThrowDamage, int enemyDamageAmount)
@@ -865,17 +944,17 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
         if (faceEffect.EffectType == FaceEffectType.Damage)
         {
-            return $"{faceName}\nBase {safeBaseDamage} + {faceEffect.DamageAmount}\n= {safeEnemyDamage} Damage";
+            return $"{faceName} +{faceEffect.DamageAmount}\n= {safeEnemyDamage} Total Damage";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Guard)
         {
-            return $"{faceName}\nBase {safeBaseDamage} = {safeEnemyDamage} Damage\nEnemy Damage -{faceEffect.IncomingDamageReductionAmount}";
+            return $"{faceName}\nEnemy Damage -{faceEffect.IncomingDamageReductionAmount}";
         }
 
         if (faceEffect.EffectType == FaceEffectType.Mend)
         {
-            return $"{faceName}\nBase {safeBaseDamage} = {safeEnemyDamage} Damage\nHeal +{faceEffect.HealAmount} HP";
+            return $"{faceName}\nHeal +{faceEffect.HealAmount} HP";
         }
 
         return $"{faceName}\nBase {safeBaseDamage}\n= {safeEnemyDamage} Damage";
@@ -924,6 +1003,50 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         if (damageNumberText != null)
         {
             damageNumberText.gameObject.SetActive(false);
+        }
+    }
+
+    private void EnsureHeroPopupText()
+    {
+        if (heroPopupText != null)
+        {
+            return;
+        }
+
+        if (battleField == null)
+        {
+            return;
+        }
+
+        GameObject textObject = new GameObject("Hero Popup Text");
+        textObject.layer = battleField.gameObject.layer;
+        textObject.transform.SetParent(battleField, false);
+
+        RectTransform textTransform = textObject.AddComponent<RectTransform>();
+        textTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        textTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        textTransform.pivot = new Vector2(0.5f, 0.5f);
+        textTransform.anchoredPosition = GetHeroPopupPosition(heroPopupOffset);
+        textTransform.sizeDelta = new Vector2(200f, 72f);
+
+        heroPopupText = textObject.AddComponent<Text>();
+        heroPopupText.raycastTarget = false;
+        heroPopupText.alignment = TextAnchor.MiddleCenter;
+        heroPopupText.fontSize = 48;
+        heroPopupText.resizeTextForBestFit = true;
+        heroPopupText.resizeTextMinSize = 12;
+        heroPopupText.resizeTextMaxSize = 48;
+        heroPopupText.color = damageNumberTextColor;
+        fallbackFont ??= Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        fallbackFont ??= Resources.GetBuiltinResource<Font>("Arial.ttf");
+        heroPopupText.font = fallbackFont;
+    }
+
+    private void HideHeroPopupText()
+    {
+        if (heroPopupText != null)
+        {
+            heroPopupText.gameObject.SetActive(false);
         }
     }
 
@@ -985,5 +1108,15 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
         }
 
         return new Vector2(180f, 32f) + offset;
+    }
+
+    private Vector2 GetHeroPopupPosition(Vector2 offset)
+    {
+        if (heroSlot != null)
+        {
+            return heroSlot.anchoredPosition + offset;
+        }
+
+        return new Vector2(-180f, 32f) + offset;
     }
 }

@@ -68,8 +68,89 @@ Starter Wood Dice Build:
 -   Wood Dice physically remains D6.
 -   Wood Dice starts with 4 Active Face Slots and 2 Locked Slots.
 -   The player chooses 4 active Faces from the available starter pool.
--   Duplicate Faces are allowed only if the pool contains duplicates.
 -   Locked Slots do not enter the roll pool.
+
+------------------------------------------------------------------------
+
+# Starter Dice Build Freedom
+
+Starter Dice Build is intentionally player-driven.
+
+The game should not artificially prevent specialized or risky Dice builds.
+
+Players are free to create offensive, defensive, recovery, or utility-focused Dice.
+
+The strengths and weaknesses of those builds are part of the intended gameplay.
+
+Only two permanent equipment restrictions exist.
+
+## Rule 1 - Face Tier
+
+A Face may only be equipped if:
+
+Face Tier <= Current Dice Tier
+
+Examples:
+
+-   Wood Dice can equip Tier 1 Faces only.
+-   Iron Dice can equip Tier 1 and Tier 2 Faces.
+-   Crystal Dice can equip Tier 1, Tier 2, and Tier 3 Faces.
+
+## Rule 2 - Active Face Slots
+
+The player may equip Faces only up to the current Active Face Slot count.
+
+Examples:
+
+Wood Dice:
+
+-   Physical D6
+-   4 Active Slots
+-   2 Locked Slots
+
+Iron Dice:
+
+-   Physical D6
+-   5 Active Slots
+-   1 Locked Slot
+
+Crystal Dice:
+
+-   Physical D6
+-   6 Active Slots
+
+Do not introduce additional build restrictions such as:
+
+-   Face category limits
+-   Duplicate Face limits
+-   Mandatory composition rules
+-   Required balance between attack and recovery
+-   Forced starter templates
+
+The following builds are valid if they satisfy Face Tier and Active Face Slot rules:
+
+-   Attack / Attack / Attack / Attack
+-   Lightning / Lightning / Lightning / Lightning
+-   Guard / Guard / Guard / Guard
+-   Attack / Mend / Lightning / Guard
+
+The game should never reject these builds simply because they are specialized.
+
+If a build becomes too strong, solve it through Face balance, Face values, or Face effects.
+
+Do not solve balance by preventing player creativity.
+
+Project Dice gives players freedom.
+
+Players are responsible for the consequences of their Dice build.
+
+An all-offense build may struggle to survive.
+
+An all-recovery build may struggle to deal damage.
+
+This is intentional.
+
+Players should learn through experimentation.
 
 ------------------------------------------------------------------------
 

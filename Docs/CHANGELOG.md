@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2026-07-03
+
+### Changed
+
+- Completed `TASK_COMBAT_FEEDBACK_ORDER_POLISH`.
+- Player throw presentation now shows enemy-local Base Throw Damage before the Dice Animation Layer appears.
+- Dice Layer now appears after physical impact/base damage feedback.
+- Face-specific enemy damage feedback now shows only the Face modifier near the enemy, such as `+5` for Attack and `+3` for Lightning.
+- Mend feedback now shows healing near the Hunter as `+5 HP`.
+- Enemy attack damage feedback now appears near the Hunter after enemy attack presentation and before HUD refresh.
+- Damage and heal popups now hold briefly, float upward, and fade for improved readability.
+- Unity batchmode compile validation completed successfully.
+- No gameplay values, HP mutation rules, FaceResolver logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI were changed.
+
 ## 2026-07-02
 
 ### Changed

@@ -21,6 +21,18 @@ Director Review:
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` locks reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction before M10 implementation.
 
+Recent Presentation Polish:
+
+- `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
+- Base Throw Damage popup appears near the enemy before Dice Animation Layer appears.
+- Dice Layer appears after physical impact/base damage feedback.
+- Face reveal and Face effect detail happen after rolling.
+- Face-specific enemy damage popup shows only the Face damage modifier near the enemy.
+- Mend healing popup appears near the Hunter.
+- Enemy attack damage popup appears near the Hunter.
+- Unity batchmode compile validation completed successfully.
+- Presentation consumes already calculated runtime values and does not decide gameplay.
+
 M4 Locked Principle:
 
 - Face is not a simple skill button.

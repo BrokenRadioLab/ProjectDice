@@ -1,14 +1,14 @@
 # DONE REPORT
 
-Date: 2026-07-02
+Date: 2026-07-03
 
-Selected Milestone: M10_REWARD_SELECTION
+Selected Milestone: COMBAT_FEEDBACK_ORDER_POLISH
 
-Completed Work: LONG_TERM_PROGRESSION_DESIGN_LOCK
+Completed Work: TASK_COMBAT_FEEDBACK_ORDER_POLISH
 
 ## Summary
 
-Documented long-term Reward Selection and progression direction before M10 implementation.
+Separated Base Throw Damage feedback from Face Effect presentation so players can read physical Dice impact before Face modification.
 
 ## Validation Result
 
@@ -58,6 +58,7 @@ PASS
 - M8-005 Face Presentation Polish is DONE.
 - M8-006 Validate Starter Face Gameplay is DONE.
 - TASK_M8_PRESENTATION_READABILITY_FIX is DONE.
+- TASK_COMBAT_FEEDBACK_ORDER_POLISH is DONE.
 - Dice-owned Base Throw Damage exists on `DiceModel`.
 - Starter Dice has Base Throw Damage 3.
 - Starter Attack is a 5 damage Face modifier, producing 8 total starter Attack Throw damage.
@@ -89,6 +90,12 @@ PASS
 - Enemy damage number appears near the enemy body.
 - Enemy damage number represents actual enemy HP damage only.
 - Enemy damage number floats upward and fades out.
+- Base Throw Damage popup appears near the enemy before Dice Animation Layer appears.
+- Face-specific enemy damage popup shows only the Face damage modifier near the enemy.
+- Mend healing popup appears near the Hunter.
+- Enemy attack damage popup appears near the Hunter.
+- Damage/heal popups hold briefly, float upward, and fade.
+- Unity batchmode compile validation completed successfully.
 - Enemy hit feedback now includes stronger flash, a short enemy shake, and a small hit spark.
 - No gameplay values, HP mutation order, FaceResolver logic, Reward Selection, Dice Face Replacement, inventory, meta progression, or enemy AI were changed.
 - Roadmap now inserts M9_STARTER_DICE_BUILD before Reward Selection.

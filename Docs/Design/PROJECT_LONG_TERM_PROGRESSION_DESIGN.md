@@ -66,6 +66,10 @@ Run Complete
 
 Starter Dice Build is the first strategic decision of every run.
 
+Starter Dice Build is intentionally player-driven.
+
+The game should not artificially prevent specialized or risky Dice builds.
+
 Reward Selection improves an already-existing Dice build.
 
 Reward Selection must never feel like the place where the player first creates a Dice.
@@ -204,6 +208,27 @@ Starter Pool progression must preserve the M9 rule:
 
 The player chooses active Faces before the run begins.
 
+Starter Dice Build must remain as open as possible.
+
+Do not introduce:
+
+- Face category limits
+- Duplicate Face limits
+- Mandatory composition rules
+- Required balance between attack and recovery
+- Forced starter templates
+
+The following builds are valid if they satisfy Face Tier and Active Face Slot rules:
+
+- Attack / Attack / Attack / Attack
+- Lightning / Lightning / Lightning / Lightning
+- Guard / Guard / Guard / Guard
+- Attack / Mend / Lightning / Guard
+
+Specialized builds are allowed to be strong in one area and weak in another.
+
+Balance should come from Face values and Face effects, not from restricting player creativity.
+
 ------------------------------------------------------------------------
 
 # Dice Tier Unlock Progression
@@ -224,6 +249,51 @@ Locked slots are not Blank.
 Locked slots are not Retry.
 
 Locked slots never enter the roll pool.
+
+------------------------------------------------------------------------
+
+# Equipment Restrictions
+
+Only two permanent equipment restrictions exist.
+
+## Rule 1 - Face Tier
+
+A Face may only be equipped if:
+
+Face Tier <= Current Dice Tier
+
+Examples:
+
+- Wood Dice can equip Tier 1 Faces only.
+- Iron Dice can equip Tier 1 and Tier 2 Faces.
+- Crystal Dice can equip Tier 1, Tier 2, and Tier 3 Faces.
+
+## Rule 2 - Active Face Slots
+
+The player may equip Faces only up to the current Active Face Slot count.
+
+Examples:
+
+Wood Dice:
+
+- Physical D6
+- 4 Active Slots
+- 2 Locked Slots
+
+Iron Dice:
+
+- Physical D6
+- 5 Active Slots
+- 1 Locked Slot
+
+Crystal Dice:
+
+- Physical D6
+- 6 Active Slots
+
+These rules are permanent.
+
+No additional build restrictions should be added.
 
 Example tier direction:
 

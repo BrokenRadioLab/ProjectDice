@@ -1,14 +1,14 @@
 # SELF_REVIEW_REPORT
 
-Date: 2026-07-02
+Date: 2026-07-03
 
-Task: LONG_TERM_PROGRESSION_DESIGN_LOCK_BEFORE_M10
+Task: TASK_COMBAT_FEEDBACK_ORDER_POLISH
 
 ## Review Result
 
 PASS
 
-Long-term progression design is documented before M10 Reward Selection implementation.
+Combat presentation now separates Dice Base Throw Damage from Face Effect feedback without changing gameplay values.
 
 ## Scope Check
 
@@ -23,6 +23,7 @@ Long-term progression design is documented before M10 Reward Selection implement
 - Implemented M8-005 Face Presentation Polish.
 - Completed M8-006 Validate Starter Face Gameplay.
 - Completed TASK_M8_PRESENTATION_READABILITY_FIX.
+- Completed TASK_COMBAT_FEEDBACK_ORDER_POLISH.
 - Completed roadmap revision before Reward Selection.
 - Inserted M9_STARTER_DICE_BUILD.
 - Moved Reward Selection to M10.
@@ -43,6 +44,8 @@ Long-term progression design is documented before M10 Reward Selection implement
 - Lightning can deal Base Throw Damage and add a deterministic 3 damage Lightning modifier.
 - Mend can deal Base Throw Damage and heal the player for up to 5 HP.
 - Face Effect presentation now communicates Base Throw Damage plus the resolved Face modifier.
+- Throw presentation now shows Base Throw Damage before Dice Layer presentation.
+- Face-specific feedback now shows Face modifiers separately from Base Throw Damage.
 - Every starter Face now has meaningful gameplay value.
 - No starter Face remains No Effect.
 - Did not add victory gameplay.
@@ -88,6 +91,7 @@ Long-term progression design is documented before M10 Reward Selection implement
 - Mend recovery is consumed by BattleController after the Throw damage application.
 - `BattleCombatState.HealPlayer(int healing)` owns player HP recovery and clamps healing at Player Max HP.
 - `ThrowSequencePresenter` consumes selected Face, FaceEffectData, applied damage, and Base Throw Damage for presentation only.
+- `ThrowSequencePresenter` displays Base Throw Damage before Dice Layer presentation.
 - M8 remains separate from Reward Selection and Dice Face Replacement.
 - M10 Reward Selection remains separate from M11 Dice Face Replacement.
 - Long-term progression design defines reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction without implementing them.
@@ -141,6 +145,9 @@ Long-term progression design is documented before M10 Reward Selection implement
 - Face Effect detail duration is 1.25 seconds.
 - Enemy damage number appears near the enemy body, floats upward, and fades out.
 - Enemy damage number shows enemy HP damage only.
+- Enemy attack damage popup appears near the Hunter.
+- Mend healing popup appears near the Hunter.
+- Unity batchmode compile validation completed successfully.
 - Run-flow presentation hook does not mutate HP.
 - Run-flow presentation hook does not mutate turn ownership.
 - Run-flow presentation hook does not mutate stage runtime or run state.

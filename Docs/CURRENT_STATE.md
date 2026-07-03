@@ -51,6 +51,7 @@ The project is in MVP foundation work.
 - `M8-004_MEND_GAMEPLAY` is DONE.
 - `M8-005_FACE_PRESENTATION_POLISH` is DONE.
 - `M8-006_VALIDATE_STARTER_FACE_GAMEPLAY` is DONE.
+- `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.
@@ -180,6 +181,10 @@ The project is in MVP foundation work.
 - Post-M8 presentation readability fix is complete.
 - Face Effect detail now remains visible long enough to read and uses a multi-line result format.
 - Enemy damage number now appears near the enemy body, floats upward, fades out, and represents actual enemy HP damage only.
+- Base Throw Damage popup now appears near the enemy before Dice Animation Layer appears.
+- Face-specific damage popup now shows only the Face damage modifier near the enemy.
+- Mend healing popup now appears near the Hunter.
+- Enemy attack damage popup now appears near the Hunter.
 - Enemy hit feedback now includes stronger flash, a short shake, and a small hit spark.
 - Presentation still consumes already calculated runtime data and does not decide gameplay values.
 - Linear stage runtime state now exists through `LinearStageRuntimeState` with fixed current-stage lookup for Stage 1 Normal, Stage 2 Normal, Stage 3 Normal, Stage 4 Elite, and Stage 5 Boss.
