@@ -385,7 +385,7 @@ M10 locked design direction:
 - `RewardSelectionState` now exists as the reward runtime state holder.
 - `RewardData` and `RewardType` now define reward runtime data for Face, Heal, Max HP, and Relic rewards.
 - M10 detailed task breakdown is generated.
-- Next recommended M10 task is `M10-005_REWARD_SELECTION_UI`.
+- Next recommended M10 task is `M10-006_REWARD_APPLY`.
 - Face Rarity direction is Common, Rare, Epic, and Legendary.
 - M10-002 Face Rarity and Definition Schema is implemented in runtime code.
 - FaceDefinition expected fields are Face ID, Display Name, Category, Rarity, Tier, Effect Type, Effect Parameters, Short Description, Flavor Text, Icon, IsStarterFace, and IsUnlockedByDefault.
@@ -407,7 +407,13 @@ M10 locked design direction:
 - Battle and Rest return no reward options.
 - Elite, Treasure, and Boss return 3 structured reward options.
 - RewardGenerator avoids exact duplicate reward IDs in one option set where possible.
-- Reward effects, reward UI polish, Reward Apply, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops remain unimplemented.
+- `RewardSelectionPresenter` now exists and binds to `RewardSelectionState`.
+- Reward Selection UI can display up to 3 generated options with reward name, type, and short description.
+- Selecting one reward stores it in `RewardSelectionState` and closes the UI.
+- Elite and Boss victory can open Reward Selection in the current linear run.
+- Normal Battle stages do not open Reward Selection.
+- Treasure flow was not invented because the current linear run has no Treasure stage.
+- Reward effects, Reward Apply, Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, and Boss drops remain unimplemented.
 - Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
 - Each Dice Tier uses its corresponding Shard for evolution.
 - Previous Tier Shards stop dropping after evolving to the next Dice Tier.

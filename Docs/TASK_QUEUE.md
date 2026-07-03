@@ -581,7 +581,7 @@ Completed:
 
 ## M10-005: Reward Selection UI
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -620,9 +620,27 @@ Validation:
 - Existing Battle flow still works.
 - Unity compile passes.
 
+Completed:
+
+- Added `RewardSelectionPresenter`.
+- RewardSelectionPresenter binds to `RewardSelectionState`.
+- RewardSelectionPresenter displays Reward Selection title, Choose One text, and up to 3 reward options.
+- Reward option buttons display reward name, reward type, and short description.
+- Selecting one option calls `RewardSelectionState.TrySelectReward(...)`.
+- Selected reward remains stored in `RewardSelectionState`.
+- Reward UI hides after selection and remaining options disappear through `RewardSelectionState`.
+- Reward UI uses scene/prefab-style references when available and runtime-created UI only as fallback.
+- `BattleController` opens Reward Selection only for eligible current linear stages:
+  - Elite
+  - Boss
+- Normal Battle stages do not open Reward Selection.
+- Current linear run has no Treasure stage, so no Treasure flow was invented.
+- Selected rewards are not applied in this task.
+- No Reward Apply, Dice Face Replacement, Permanent Face Drops, Dice Shards, Pity system, Shop, Gold, Inventory, Collection UI, Meta Progression, Node Map, Treasure node flow, New Run flow, or Boss mechanics were added.
+
 ## M10-006: Reward Apply
 
-Status: PENDING
+Status: READY
 
 Goal:
 

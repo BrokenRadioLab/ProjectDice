@@ -80,6 +80,9 @@ public sealed class RewardPool
                 $"reward_face_{face.Id}",
                 face.DisplayName,
                 RewardType.Face,
+                string.IsNullOrWhiteSpace(face.ShortDescription)
+                    ? "Add this Face to this run."
+                    : face.ShortDescription,
                 0,
                 face));
         }
@@ -91,17 +94,20 @@ public sealed class RewardPool
             "reward_heal_10",
             "Recover 10 HP",
             RewardType.Heal,
+            "Recover HP for this run.",
             HealRewardAmount));
 
         rewards.Add(new RewardData(
             "reward_max_hp_5",
             "Max HP +5",
             RewardType.MaxHp,
+            "Increase Max HP for this run.",
             MaxHpRewardAmount));
 
         rewards.Add(new RewardData(
             "reward_relic_placeholder",
             "Relic Placeholder",
-            RewardType.Relic));
+            RewardType.Relic,
+            "Future run modifier placeholder."));
     }
 }

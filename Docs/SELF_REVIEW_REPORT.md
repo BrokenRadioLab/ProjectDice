@@ -2,13 +2,13 @@
 
 Date: 2026-07-03
 
-Task: M10-004_REWARD_GENERATOR
+Task: M10-005_REWARD_SELECTION_UI
 
 ## Review Result
 
 PASS
 
-M10-004 runtime Reward Generator is implemented as node-aware option generation only while preserving existing gameplay and avoiding Reward UI/Apply implementation.
+M10-005 Reward Selection UI is implemented as presentation and selection interaction only while preserving existing gameplay and avoiding Reward Apply implementation.
 
 ## Scope Check
 
@@ -92,7 +92,16 @@ M10-004 runtime Reward Generator is implemented as node-aware option generation 
 - RewardGenerator returns 3 options for Elite, Treasure, and Boss.
 - RewardGenerator avoids exact duplicate reward IDs where possible.
 - Generated reward options are not applied.
-- Reward Selection UI was not implemented.
+- Added `RewardSelectionPresenter`.
+- RewardSelectionPresenter binds to `RewardSelectionState`.
+- RewardSelectionPresenter displays up to 3 generated reward options.
+- Reward option buttons show reward name, reward type, and short description.
+- Selecting one reward stores it in `RewardSelectionState`.
+- Reward UI closes after selection.
+- Remaining options disappear after selection.
+- Elite and Boss victory can open Reward Selection in the current linear run.
+- Normal Battle stages do not open Reward Selection.
+- Treasure flow was not invented.
 - Reward Apply was not implemented.
 - Dice Face Replacement, Permanent Face Drops, Dice Shards, Node Map, and Meta Progression were not implemented.
 - RewardSelectionState can open a runtime selection with assigned rewards.

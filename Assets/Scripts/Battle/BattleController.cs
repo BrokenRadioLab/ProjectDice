@@ -17,12 +17,15 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private EnemyAttackPresenter enemyAttackPresenter;
     [SerializeField] private RunFlowPresenter runFlowPresenter;
     [SerializeField] private StarterDiceBuildPresenter starterDiceBuildPresenter;
+    [SerializeField] private RewardSelectionState rewardSelectionState;
+    [SerializeField] private RewardSelectionPresenter rewardSelectionPresenter;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
     [SerializeField] private bool inputLocked;
 
     private EnemyAttackIntent pendingEnemyAttackIntent = EnemyAttackIntent.None();
+    private RewardPool rewardPool;
 
     public EnemyAttackIntent PendingEnemyAttackIntent => pendingEnemyAttackIntent;
 
@@ -134,6 +137,7 @@ public sealed class BattleController : MonoBehaviour
         {
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
             yield return PlayRunFlowPresentation();
+            yield return PlayRewardSelectionIfEligible();
             bool preparedNextBattle = ResolvePostVictoryRunProgression();
             yield return PlayRunFlowPresentation();
             SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing));
@@ -202,6 +206,29 @@ public sealed class BattleController : MonoBehaviour
         }
     }
 
+    private void EnsureRewardSelectionSystems()
+    {
+        if (rewardSelectionState == null)
+        {
+            rewardSelectionState = GetComponent<RewardSelectionState>();
+        }
+
+        if (rewardSelectionState == null)
+        {
+            rewardSelectionState = gameObject.AddComponent<RewardSelectionState>();
+        }
+
+        if (rewardSelectionPresenter == null)
+        {
+            rewardSelectionPresenter = GetComponent<RewardSelectionPresenter>();
+        }
+
+        if (rewardSelectionPresenter == null)
+        {
+            rewardSelectionPresenter = gameObject.AddComponent<RewardSelectionPresenter>();
+        }
+    }
+
     private IEnumerator PlayStarterDiceBuild()
     {
         EnsureStarterDiceBuildPresenter();
@@ -247,6 +274,64 @@ public sealed class BattleController : MonoBehaviour
             battleOutcomeState,
             linearStageRuntimeState,
             linearRunState);
+    }
+
+    private IEnumerator PlayRewardSelectionIfEligible()
+    {
+        if (!TryGetRewardNodeTypeForCurrentStage(out RewardNodeType rewardNodeType))
+        {
+            yield break;
+        }
+
+        EnsureRewardSelectionSystems();
+
+        if (rewardSelectionState == null || rewardSelectionPresenter == null)
+        {
+            yield break;
+        }
+
+        RewardData[] rewardOptions = RewardGenerator.GenerateOptions(GetRewardPool(), rewardNodeType);
+        if (rewardOptions == null || rewardOptions.Length == 0)
+        {
+            yield break;
+        }
+
+        rewardSelectionState.OpenSelection(rewardOptions);
+        yield return rewardSelectionPresenter.Play(rewardSelectionState);
+    }
+
+    private RewardPool GetRewardPool()
+    {
+        if (rewardPool == null)
+        {
+            rewardPool = RewardPool.CreateDefaultRunRewardPool();
+        }
+
+        return rewardPool;
+    }
+
+    private bool TryGetRewardNodeTypeForCurrentStage(out RewardNodeType rewardNodeType)
+    {
+        rewardNodeType = RewardNodeType.Battle;
+
+        if (linearStageRuntimeState == null)
+        {
+            return false;
+        }
+
+        if (linearStageRuntimeState.CurrentStageType == StageType.Elite)
+        {
+            rewardNodeType = RewardNodeType.Elite;
+            return true;
+        }
+
+        if (linearStageRuntimeState.CurrentStageType == StageType.Boss)
+        {
+            rewardNodeType = RewardNodeType.Boss;
+            return true;
+        }
+
+        return false;
     }
 
     private DiceFace SelectDiceResult()
