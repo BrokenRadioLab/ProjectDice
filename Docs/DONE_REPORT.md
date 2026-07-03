@@ -47,11 +47,12 @@ PASS
 - M9-001 Starter Dice Build UI is DONE.
 - M9-002 Validate Starter Dice Build is DONE.
 - M9-003 UI Foundation Polish is DONE.
-- M10_REWARD_SELECTION is READY and not implemented.
+- M10_REWARD_SELECTION is BLOCKED_BY_UI_ARCHITECTURE_REFACTOR and not implemented.
 - M11_DICE_FACE_REPLACEMENT is PENDING and not implemented.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
+- `TASK_UI_ARCHITECTURE_REFACTOR` is PLANNED and must be completed before Reward UI expands further.
 - M8-001 Base Throw Damage Framework is DONE.
 - M8-002 Guard Gameplay is DONE.
 - M8-003 Lightning Gameplay is DONE.

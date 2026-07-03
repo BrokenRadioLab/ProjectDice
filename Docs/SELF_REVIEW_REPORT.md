@@ -38,6 +38,8 @@ Starter Dice Build now follows the locked player-driven Face Tier and Active Slo
 - Added `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md`.
 - Marked M9_STARTER_DICE_BUILD as DONE after Director approval.
 - Marked M10_REWARD_SELECTION as READY.
+- Marked M10_REWARD_SELECTION as BLOCKED_BY_UI_ARCHITECTURE_REFACTOR after Director Technical Lock.
+- Added `TASK_UI_ARCHITECTURE_REFACTOR` as planned technical debt before large-scale UI expansion.
 - Added active slot runtime support for Wood Dice.
 - Added Face Tier to `DiceFace`.
 - Removed fixed Starter Face Pool architecture.
@@ -107,6 +109,7 @@ Starter Dice Build now follows the locked player-driven Face Tier and Active Slo
 - M8 remains separate from Reward Selection and Dice Face Replacement.
 - M10 Reward Selection remains separate from M11 Dice Face Replacement.
 - Long-term progression design defines reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction without implementing them.
+- Future production UI should transition to scene/prefab hierarchy, anchored layout, layout groups, TextMeshPro, and data binding.
 - `ThrowSequencePresenter` now uses already calculated pending enemy HP damage for the enemy-local damage number.
 - Enemy-local damage popup remains presentation-only and does not mutate HP.
 - Hit spark and enemy shake remain presentation-only feedback.

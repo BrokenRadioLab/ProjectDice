@@ -4,7 +4,7 @@
 
 Current source-of-truth status:
 
-- `Docs/PROJECT_GDD_v1.0.md` is not currently present and will be provided by the Director later.
+- `Docs/PROJECT_GDD_v1.0.md` is present.
 - `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present and locked.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice progression and Dice combat philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward and progression direction before M10.
@@ -41,7 +41,7 @@ Required MVP pillars:
 8. M7_RUN_FLOW_PRESENTATION - READY_FOR_DIRECTOR_REVIEW
 9. M8_STARTER_FACE_GAMEPLAY - DONE
 10. M9_STARTER_DICE_BUILD - DONE
-11. M10_REWARD_SELECTION - READY
+11. M10_REWARD_SELECTION - BLOCKED_BY_UI_ARCHITECTURE_REFACTOR
 12. M11_DICE_FACE_REPLACEMENT - PENDING
 13. M12_MVP_PLAYTEST_POLISH - PENDING
 
@@ -444,11 +444,16 @@ Detailed Task Status:
 
 ## M10_REWARD_SELECTION
 
-Status: READY
+Status: BLOCKED_BY_UI_ARCHITECTURE_REFACTOR
 
 Goal:
 
 Introduce reward choice after eligible run-flow points without implementing Dice face replacement yet.
+
+Precondition:
+
+- Complete `TASK_UI_ARCHITECTURE_REFACTOR` before Reward UI expands further.
+- Transition temporary runtime-created UI to production-ready scene/prefab UI where applicable.
 
 Scope:
 

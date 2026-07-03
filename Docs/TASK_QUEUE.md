@@ -21,6 +21,18 @@ Director Review:
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` locks reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction before M10 implementation.
 
+Director Technical Lock:
+
+- `TASK_UI_ARCHITECTURE_REFACTOR` is PLANNED.
+- This refactor must be completed before Reward UI expands further.
+- Current runtime-created UI was acceptable for prototype validation only.
+- Future production UI must use scene/prefab UI, anchored layout, layout groups, TextMeshPro, and data binding.
+- Scripts should bind data, update UI, and receive button events.
+- Scripts should not construct entire production UI with `Create()` methods.
+- Target systems include Starter Dice Build, Reward Selection, Dice Deck, Damage Popup, Heal Popup, Future Run Summary, Future Shop, and Future Node Map.
+- Gameplay systems must not depend on runtime-generated UI hierarchy.
+- Do not continue building major production UI on the temporary runtime-generated approach.
+
 Recent Presentation Polish:
 
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.

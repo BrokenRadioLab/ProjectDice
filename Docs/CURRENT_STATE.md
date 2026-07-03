@@ -4,7 +4,7 @@ Last Updated: 2026-07-02
 
 ## Source of Truth
 
-`Docs/PROJECT_GDD_v1.0.md` is the source of truth for Project Dice. It is not currently present and will be provided by the Director later.
+`Docs/PROJECT_GDD_v1.0.md` is present and is the source of truth for Project Dice.
 
 `Docs/PROJECT_BATTLE_PRESENTATION_GUIDE_v1.0.md` is present, locked, and is the current visual/presentation guide for the Battle scene layout.
 
@@ -42,7 +42,7 @@ The project is in MVP foundation work.
 - M7_RUN_FLOW_PRESENTATION is READY_FOR_DIRECTOR_REVIEW.
 - M8_STARTER_FACE_GAMEPLAY is DONE.
 - M9_STARTER_DICE_BUILD is DONE.
-- M10_REWARD_SELECTION is READY.
+- M10_REWARD_SELECTION is BLOCKED_BY_UI_ARCHITECTURE_REFACTOR.
 - M11_DICE_FACE_REPLACEMENT is PENDING.
 - M12_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
@@ -52,6 +52,7 @@ The project is in MVP foundation work.
 - `M8-005_FACE_PRESENTATION_POLISH` is DONE.
 - `M8-006_VALIDATE_STARTER_FACE_GAMEPLAY` is DONE.
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
+- `TASK_UI_ARCHITECTURE_REFACTOR` is PLANNED and must be completed before Reward UI expands further.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
 - `M4-003_ATTACK_FACE` is DONE.

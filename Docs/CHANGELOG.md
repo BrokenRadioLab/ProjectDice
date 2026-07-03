@@ -4,6 +4,10 @@
 
 ### Changed
 
+- Added Director Technical Lock for `TASK_UI_ARCHITECTURE_REFACTOR`.
+- Marked M10_REWARD_SELECTION as blocked by UI architecture refactor before Reward UI expands further.
+- Documented that future production UI should use scene/prefab UI, anchored layout, layout groups, TextMeshPro, and data binding instead of runtime-created UI hierarchy.
+- Updated source-of-truth status to reflect that `Docs/PROJECT_GDD_v1.0.md` is present.
 - Completed M9-003 UI Foundation Polish.
 - Starter Build panel width and Dice slot layout were adjusted to prevent clipping/overflow on mobile landscape.
 - Starter Build Face Pool buttons now wrap across rows as unlocked Face count grows.
