@@ -1129,9 +1129,9 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
     private Vector2 GetEnemyPopupPosition(Vector2 offset)
     {
-        if (enemySlot != null)
+        if (TryGetTargetPopupPosition(enemySlot, offset, out Vector2 targetPosition))
         {
-            return enemySlot.anchoredPosition + offset;
+            return targetPosition;
         }
 
         return new Vector2(180f, 32f) + offset;
@@ -1139,12 +1139,39 @@ public sealed class ThrowSequencePresenter : MonoBehaviour
 
     private Vector2 GetHeroPopupPosition(Vector2 offset)
     {
-        if (heroSlot != null)
+        if (TryGetTargetPopupPosition(heroSlot, offset, out Vector2 targetPosition))
         {
-            return heroSlot.anchoredPosition + offset;
+            return targetPosition;
         }
 
         return new Vector2(-180f, 32f) + offset;
+    }
+
+    private bool TryGetTargetPopupPosition(RectTransform target, Vector2 offset, out Vector2 localPosition)
+    {
+        localPosition = Vector2.zero;
+
+        if (target == null || combatFeedbackRoot == null)
+        {
+            return false;
+        }
+
+        Vector3[] corners = new Vector3[4];
+        target.GetWorldCorners(corners);
+        Vector3 topCenterWorld = (corners[1] + corners[2]) * 0.5f;
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, topCenterWorld);
+
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            combatFeedbackRoot,
+            screenPoint,
+            null,
+            out localPosition))
+        {
+            return false;
+        }
+
+        localPosition += offset;
+        return true;
     }
 
     private void EnsureCombatFeedbackRoot()
