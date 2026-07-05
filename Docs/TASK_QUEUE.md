@@ -792,7 +792,7 @@ Completed:
 
 ## M11-002: Dice Face Replacement UI
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -805,6 +805,40 @@ Scope:
 - Hide or mark Locked Slots as unavailable without allowing selection.
 - Store the selected replacement slot in `DiceFaceReplacementState`.
 - Do not mutate Dice yet unless explicitly promoted by Director.
+
+Completed:
+
+- Added `DiceFaceReplacementPresenter`.
+- Presenter binds to `DiceFaceReplacementState`.
+- Replacement UI opens only while replacement state is active.
+- Pending Face reward is displayed as the emphasized new Face.
+- Pending Face name and short description are displayed.
+- Current runtime Dice slots are displayed as replacement targets.
+- Active slots are selectable.
+- Locked slots are visible and disabled.
+- Locked slots never call replacement slot selection.
+- Selecting an active slot stores the selected slot index in `DiceFaceReplacementState`.
+- UI hides after an active slot is selected.
+- `BattleController` plays the replacement UI after Face reward apply and before post-victory progression.
+- No Dice mutation, Face insertion, Face removal, Dice probability update, Dice Deck refresh, confirm replacement, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade was added.
+- Unity batchmode compile validation completed successfully for M11-002.
+
+## M11-003: Dice Face Replacement Apply
+
+Status: READY
+
+Goal:
+
+Apply the selected pending Face reward into the selected active runtime Dice slot.
+
+Scope:
+
+- Consume `DiceFaceReplacementState.PendingFaceReward`.
+- Replace only the selected active runtime Dice slot.
+- Preserve duplicate Face legality.
+- Preserve locked slot rules.
+- Refresh runtime state after mutation.
+- Do not add permanent unlocks, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade.
 
 ## M7 Implementation Tasks
 

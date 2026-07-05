@@ -4,11 +4,11 @@ Date: 2026-07-06
 
 Selected Milestone: M11_DICE_FACE_REPLACEMENT
 
-Completed Work: M11-001_DICE_FACE_REPLACEMENT_RUNTIME_FRAMEWORK
+Completed Work: M11-002_DICE_FACE_REPLACEMENT_UI
 
 ## Summary
 
-Implemented the runtime state framework for Dice Face Replacement without modifying Dice or adding replacement UI.
+Implemented the first playable Dice Face Replacement UI without modifying Dice.
 
 ## Validation Result
 
@@ -57,7 +57,8 @@ PASS
 - M10-007 Validate Reward Selection is DONE.
 - M11_DICE_FACE_REPLACEMENT is IN_PROGRESS.
 - M11-001 Dice Face Replacement Runtime Framework is DONE.
-- M11-002 Dice Face Replacement UI is READY.
+- M11-002 Dice Face Replacement UI is DONE.
+- M11-003 Dice Face Replacement Apply is READY.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `DiceFaceReplacementState` exists.
 - Runtime replacement state can hold the current runtime Dice reference.
@@ -69,6 +70,16 @@ PASS
 - No Dice changes occur during M11-001.
 - No replacement UI, Face insertion, Face removal, Dice probability update, Dice Deck update, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Upgrade, or Face Merge was added.
 - Unity batchmode compile validation completed successfully for M11-001.
+- `DiceFaceReplacementPresenter` exists.
+- Replacement UI binds to `DiceFaceReplacementState`.
+- UI opens only while replacement state is active.
+- Pending Face reward is displayed with name and short description.
+- Current runtime Dice active slots are displayed and selectable.
+- Locked slots are displayed but disabled.
+- Selecting an active slot stores the selected slot index in `DiceFaceReplacementState`.
+- Dice remains unchanged after selection.
+- No Dice mutation, Face insertion, Face removal, Dice probability update, Dice Deck refresh, confirm replacement, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade was added.
+- Unity batchmode compile validation completed successfully for M11-002.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.

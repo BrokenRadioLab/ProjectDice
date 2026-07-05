@@ -21,6 +21,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private RewardSelectionPresenter rewardSelectionPresenter;
     [SerializeField] private RewardApplyService rewardApplyService;
     [SerializeField] private DiceFaceReplacementState diceFaceReplacementState;
+    [SerializeField] private DiceFaceReplacementPresenter diceFaceReplacementPresenter;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -141,6 +142,7 @@ public sealed class BattleController : MonoBehaviour
             yield return PlayRunFlowPresentation();
             yield return PlayRewardSelectionIfEligible();
             ApplySelectedRewardIfAvailable();
+            yield return PlayDiceFaceReplacementIfActive();
             bool preparedNextBattle = ResolvePostVictoryRunProgression();
             yield return PlayRunFlowPresentation();
             SetBattleLog(GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing));
@@ -250,6 +252,16 @@ public sealed class BattleController : MonoBehaviour
         {
             diceFaceReplacementState = gameObject.AddComponent<DiceFaceReplacementState>();
         }
+
+        if (diceFaceReplacementPresenter == null)
+        {
+            diceFaceReplacementPresenter = GetComponent<DiceFaceReplacementPresenter>();
+        }
+
+        if (diceFaceReplacementPresenter == null)
+        {
+            diceFaceReplacementPresenter = gameObject.AddComponent<DiceFaceReplacementPresenter>();
+        }
     }
 
     private IEnumerator PlayStarterDiceBuild()
@@ -344,6 +356,23 @@ public sealed class BattleController : MonoBehaviour
 
             hudPresenter?.Refresh();
         }
+    }
+
+    private IEnumerator PlayDiceFaceReplacementIfActive()
+    {
+        if (diceFaceReplacementState == null || !diceFaceReplacementState.IsReplacementActive)
+        {
+            yield break;
+        }
+
+        EnsureRewardSelectionSystems();
+
+        if (diceFaceReplacementPresenter == null)
+        {
+            yield break;
+        }
+
+        yield return diceFaceReplacementPresenter.Play(diceFaceReplacementState);
     }
 
     private RewardPool GetRewardPool()

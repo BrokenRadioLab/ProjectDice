@@ -49,7 +49,8 @@ The project is in MVP foundation work.
 - M10_REWARD_SELECTION is DONE.
 - M11_DICE_FACE_REPLACEMENT is IN_PROGRESS.
 - `M11-001_DICE_FACE_REPLACEMENT_RUNTIME_FRAMEWORK` is DONE.
-- `M11-002_DICE_FACE_REPLACEMENT_UI` is READY.
+- `M11-002_DICE_FACE_REPLACEMENT_UI` is DONE.
+- `M11-003_DICE_FACE_REPLACEMENT_APPLY` is READY.
 - M12_MVP_PLAYTEST_POLISH is PENDING.
 - `M8-001_BASE_THROW_DAMAGE_FRAMEWORK` is DONE.
 - `M8-002_GUARD_GAMEPLAY` is DONE.
@@ -439,6 +440,12 @@ M10 locked design direction:
 - Locked Slots are excluded from replacement candidates through `DiceModel.ActiveFaceSlotCount`.
 - M11-001 does not modify Dice, insert Faces, remove Faces, update Dice probability, update Dice Deck, or add replacement UI.
 - Unity batchmode compile validation completed successfully for M11-001.
+- `DiceFaceReplacementPresenter` now exists as the first playable replacement UI.
+- Replacement UI displays the pending Face reward, current runtime Dice active slots, and locked slots.
+- Active slots can be selected and store the slot index in `DiceFaceReplacementState`.
+- Locked slots are visible but disabled and never become replacement targets.
+- M11-002 does not modify Dice, insert Faces, remove Faces, update Dice probability, refresh Dice Deck, or confirm replacement.
+- Unity batchmode compile validation completed successfully for M11-002.
 - Dice Face Replacement, Meta Progression, permanent unlocks, Iron Core, Boss drops, Dice Shards, Shop, Gold, Inventory, Collection UI, Node Map, New Run Flow, Treasure stage, Boss reward extras, and Relic gameplay remain unimplemented.
 - Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
 - Each Dice Tier uses its corresponding Shard for evolution.

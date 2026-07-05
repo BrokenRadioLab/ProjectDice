@@ -2,13 +2,13 @@
 
 Date: 2026-07-06
 
-Task: M11-001_DICE_FACE_REPLACEMENT_RUNTIME_FRAMEWORK
+Task: M11-002_DICE_FACE_REPLACEMENT_UI
 
 ## Review Result
 
 PASS
 
-Dice Face Replacement now has a runtime framework, with Dice mutation and UI still reserved for later M11 tasks.
+Dice Face Replacement now has a playable replacement UI, with Dice mutation still reserved for M11-003.
 
 ## Scope Check
 
@@ -128,10 +128,19 @@ Dice Face Replacement now has a runtime framework, with Dice mutation and UI sti
 - Replacement state exposes active replacement candidate slots.
 - Locked Slots are excluded from replacement candidates using `DiceModel.ActiveFaceSlotCount`.
 - `BattleController` begins replacement state after a Face reward is selected and applied.
+- Implemented `M11-002_DICE_FACE_REPLACEMENT_UI`.
+- Added `DiceFaceReplacementPresenter`.
+- Presenter binds to `DiceFaceReplacementState`.
+- UI opens only while replacement state is active.
+- Pending Face reward is displayed with Face name and short description.
+- Active current runtime Dice slots are displayed as selectable targets.
+- Locked Slots are displayed but disabled.
+- Selecting an active slot stores the selected slot index in replacement state.
+- `BattleController` plays replacement UI after Face reward apply and before post-victory progression.
 - Dice mutation remains unimplemented.
-- Replacement UI remains unimplemented.
 - Face insertion, Face removal, Dice probability updates, Dice Deck updates, Permanent Face Unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, New Dice Tier, Face Upgrade, and Face Merge remain unimplemented.
 - Unity batchmode compile validation completed successfully for M11-001.
+- Unity batchmode compile validation completed successfully for M11-002.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.
 - RewardSelectionState clears remaining rewards after selection.
