@@ -23,6 +23,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private DiceFaceReplacementState diceFaceReplacementState;
     [SerializeField] private DiceFaceReplacementPresenter diceFaceReplacementPresenter;
     [SerializeField] private DiceFaceReplacementService diceFaceReplacementService;
+    [SerializeField] private PlaytestLogger playtestLogger;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -36,10 +37,15 @@ public sealed class BattleController : MonoBehaviour
     private IEnumerator Start()
     {
         inputLocked = true;
+        EnsurePlaytestLogger();
+        playtestLogger?.LogSessionStart();
+        playtestLogger?.LogRunStart();
         EnsureRunFlowPresenter();
         hudPresenter?.Refresh();
         SetBattleLog("Build your starting Dice.");
         yield return PlayStarterDiceBuild();
+        playtestLogger?.LogStarterDice(battleDiceState != null ? battleDiceState.CurrentDice : null);
+        LogBattleStart();
         hudPresenter?.Refresh();
         SetBattleLog("Ready to throw.");
         inputLocked = false;
@@ -128,6 +134,7 @@ public sealed class BattleController : MonoBehaviour
 
         int faceDamage = ApplyFaceDamage(faceEffect);
         int healing = ApplyFaceHealing(faceEffect);
+        playtestLogger?.LogDiceRoll(selectedFace, baseThrowDamage, faceEffect, faceDamage, baseDamage + faceDamage);
         hudPresenter?.Refresh();
 
         if (throwSequencePresenter != null)
@@ -139,6 +146,7 @@ public sealed class BattleController : MonoBehaviour
 
         if (IsBattleVictory())
         {
+            playtestLogger?.LogBattleResult("Victory", combatState);
             pendingEnemyAttackIntent = EnemyAttackIntent.None();
             yield return PlayRunFlowPresentation();
             yield return PlayRewardSelectionIfEligible();
@@ -171,6 +179,8 @@ public sealed class BattleController : MonoBehaviour
 
         if (IsBattleDefeat())
         {
+            playtestLogger?.LogBattleResult("Defeat", combatState);
+            playtestLogger?.LogRunEnd("Run Defeat", linearStageRuntimeState, combatState);
             yield return PlayRunFlowPresentation();
             SetBattleLog($"{GetThrowLogMessage(faceEffect, baseThrowDamage, baseDamage, faceDamage, healing)} {GetEnemyAttackLogMessage(playerDamage)}");
             yield break;
@@ -275,6 +285,21 @@ public sealed class BattleController : MonoBehaviour
         }
     }
 
+    private void EnsurePlaytestLogger()
+    {
+        if (playtestLogger != null)
+        {
+            return;
+        }
+
+        playtestLogger = GetComponent<PlaytestLogger>();
+
+        if (playtestLogger == null)
+        {
+            playtestLogger = gameObject.AddComponent<PlaytestLogger>();
+        }
+    }
+
     private IEnumerator PlayStarterDiceBuild()
     {
         EnsureStarterDiceBuildPresenter();
@@ -342,8 +367,10 @@ public sealed class BattleController : MonoBehaviour
             yield break;
         }
 
+        playtestLogger?.LogRewardOptions(rewardOptions);
         rewardSelectionState.OpenSelection(rewardOptions);
         yield return rewardSelectionPresenter.Play(rewardSelectionState);
+        playtestLogger?.LogRewardSelection(rewardSelectionState.SelectedReward);
     }
 
     private void ApplySelectedRewardIfAvailable()
@@ -357,6 +384,11 @@ public sealed class BattleController : MonoBehaviour
 
         bool selectedFaceReward = rewardSelectionState.SelectedReward != null &&
             rewardSelectionState.SelectedReward.RewardType == RewardType.Face;
+        RewardData selectedReward = rewardSelectionState.SelectedReward != null
+            ? rewardSelectionState.SelectedReward.Clone()
+            : null;
+        int previousPlayerHp = combatState != null ? combatState.PlayerCurrentHp : 0;
+        int previousPlayerMaxHp = combatState != null ? combatState.PlayerMaxHp : 0;
 
         if (rewardApplyService != null && rewardApplyService.ApplySelectedReward(rewardSelectionState, combatState))
         {
@@ -365,6 +397,7 @@ public sealed class BattleController : MonoBehaviour
                 diceFaceReplacementState.BeginReplacement(battleDiceState, rewardApplyService.PendingFaceReward);
             }
 
+            playtestLogger?.LogRewardApply(selectedReward, combatState, previousPlayerHp, previousPlayerMaxHp);
             hudPresenter?.Refresh();
         }
     }
@@ -387,7 +420,14 @@ public sealed class BattleController : MonoBehaviour
 
         if (diceFaceReplacementState.HasSelectedFaceSlot && diceFaceReplacementService != null)
         {
-            diceFaceReplacementService.ReplaceSelectedFace(diceFaceReplacementState, rewardApplyService);
+            if (diceFaceReplacementService.ReplaceSelectedFace(diceFaceReplacementState, rewardApplyService))
+            {
+                playtestLogger?.LogFaceReplacement(
+                    diceFaceReplacementService.LastRemovedFace,
+                    diceFaceReplacementService.LastReplacedFace,
+                    diceFaceReplacementService.LastReplacedSlotIndex,
+                    battleDiceState != null ? battleDiceState.CurrentDice : null);
+            }
         }
     }
 
@@ -503,6 +543,7 @@ public sealed class BattleController : MonoBehaviour
         if (linearStageRuntimeState.IsBossStage)
         {
             linearRunState?.MarkCompleted();
+            playtestLogger?.LogRunEnd("Run Complete", linearStageRuntimeState, combatState);
             return false;
         }
 
@@ -512,7 +553,16 @@ public sealed class BattleController : MonoBehaviour
         }
 
         PrepareNextBattleRuntime();
+        LogBattleStart();
         return true;
+    }
+
+    private void LogBattleStart()
+    {
+        playtestLogger?.LogBattleStart(
+            linearStageRuntimeState != null ? linearStageRuntimeState.CurrentStageIndex : 0,
+            linearStageRuntimeState != null ? linearStageRuntimeState.CurrentStageType : StageType.Normal,
+            combatState);
     }
 
     private void PrepareNextBattleRuntime()

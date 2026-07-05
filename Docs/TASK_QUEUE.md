@@ -32,6 +32,16 @@ Director Technical Lock:
 - Damage and heal numbers remain target-local combat feedback and must never be shown on the Dice Layer.
 - M10 Reward Selection is DONE and M11 Dice Face Replacement is now the selected implementation milestone.
 
+Developer Tooling:
+
+- `TASK_PLAYTEST_LOGGING` is DONE.
+- Playtest logging is append-only and writes to `Application.persistentDataPath/Playtest/Playtest.log`.
+- Playtest logging is developer tooling only and must never affect gameplay.
+- Logging catches file IO failures and continues silently.
+- Logging records session starts, run starts, starter Dice, battle starts, rolls, battle results, reward options, reward selection, reward apply, Face replacement, and run end.
+- No analytics SDK, cloud upload, networking, user tracking, device ID, account ID, replay system, save system, screenshots, balance changes, or UI changes were added.
+- Unity batchmode compile validation completed successfully for `TASK_PLAYTEST_LOGGING`.
+
 Recent Presentation Polish:
 
 - `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.

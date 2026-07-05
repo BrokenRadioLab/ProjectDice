@@ -3,9 +3,11 @@ using UnityEngine;
 public sealed class DiceFaceReplacementService : MonoBehaviour
 {
     [SerializeField] private DiceFace lastReplacedFace;
+    [SerializeField] private DiceFace lastRemovedFace;
     [SerializeField] private int lastReplacedSlotIndex = -1;
 
     public DiceFace LastReplacedFace => lastReplacedFace;
+    public DiceFace LastRemovedFace => lastRemovedFace;
     public int LastReplacedSlotIndex => lastReplacedSlotIndex;
 
     public bool ReplaceSelectedFace(DiceFaceReplacementState replacementState, RewardApplyService rewardApplyService = null)
@@ -29,9 +31,11 @@ public sealed class DiceFaceReplacementService : MonoBehaviour
             return false;
         }
 
+        DiceFace removedFace = runtimeDice.GetFace(selectedSlotIndex);
         runtimeDice.SetFace(selectedSlotIndex, pendingFace);
         lastReplacedSlotIndex = selectedSlotIndex;
         lastReplacedFace = pendingFace.Clone();
+        lastRemovedFace = removedFace?.Clone();
 
         replacementState.ResetReplacement();
         rewardApplyService?.ClearPendingFaceReward();

@@ -62,6 +62,7 @@ The project is in MVP foundation work.
 - `TASK_COMBAT_FEEDBACK_ORDER_POLISH` is DONE.
 - `TASK_SPLIT_BASE_THROW_DAMAGE_AND_FACE_EFFECT_APPLICATION` is DONE.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE and Reward UI must build on the scene/prefab-style binding approach.
+- `TASK_PLAYTEST_LOGGING` is DONE as developer tooling.
 - `M10-001_REWARD_RUNTIME_FRAMEWORK` is DONE.
 - `M4-001_FACE_EFFECT_DATA_MODEL` is DONE.
 - `M4-002_FACE_RESOLVER` is DONE.
@@ -456,6 +457,11 @@ M10 locked design direction:
 - Dice Deck can naturally reflect replacement because it reads from `BattleDiceState.CurrentDice`.
 - Unity batchmode compile validation completed successfully for M11-003.
 - Permanent Face unlocks, permanent Face Drops, Dice Shards, Meta Progression, Iron Core, Boss drops, Shop, Gold, Inventory, Collection UI, Node Map, New Run Flow, Treasure stage, Boss reward extras, and Relic gameplay remain unimplemented.
+- `PlaytestLogger` now writes append-only human-readable logs to `Application.persistentDataPath/Playtest/Playtest.log`.
+- Playtest logging records session starts, run starts, starter Dice builds, battle starts, dice rolls, battle results, reward options, selected rewards, reward application, Face replacement, and run end.
+- Playtest logging catches IO failures and continues silently so gameplay is never interrupted.
+- Playtest logging does not add analytics SDKs, cloud upload, networking, user tracking, device ID, account ID, replay system, save system, screenshots, balance changes, or UI changes.
+- Unity batchmode compile validation completed successfully for `TASK_PLAYTEST_LOGGING`.
 - Dice Shards are locked as Meta Progression items, not Reward Selection rewards.
 - Each Dice Tier uses its corresponding Shard for evolution.
 - Previous Tier Shards stop dropping after evolving to the next Dice Tier.

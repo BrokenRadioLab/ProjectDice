@@ -4,11 +4,11 @@ Date: 2026-07-06
 
 Selected Milestone: M11_DICE_FACE_REPLACEMENT
 
-Completed Work: M11-003_REPLACE_SELECTED_DICE_FACE
+Completed Work: TASK_PLAYTEST_LOGGING
 
 ## Summary
 
-Implemented selected runtime Dice Face replacement for active slots.
+Implemented lightweight append-only developer playtest logging without changing gameplay.
 
 ## Validation Result
 
@@ -60,6 +60,23 @@ PASS
 - M11-002 Dice Face Replacement UI is DONE.
 - M11-003 Replace Selected Dice Face is DONE.
 - M11-004 Validate Dice Face Replacement is READY.
+- TASK_PLAYTEST_LOGGING is DONE.
+- `PlaytestLogger` exists.
+- Log path is `Application.persistentDataPath/Playtest/Playtest.log`.
+- Session start entries are appended.
+- Run start entries are appended.
+- Starter Dice build decisions are logged.
+- Battle starts are logged with stage, node type, player HP, and enemy HP.
+- Dice rolls are logged with selected Face, Base Throw Damage, Face Effect, and total damage.
+- Battle results are logged with remaining Player HP and Enemy HP.
+- Reward options and selected rewards are logged.
+- Reward Apply logs Heal, Max HP, pending Face, and Relic placeholder outcomes.
+- Face Replacement logs removed Face, inserted Face, slot, and resulting active Dice.
+- Run Complete and Run Defeat are logged with final stage and final HP.
+- Logging catches IO failures and continues silently.
+- Existing logs are preserved because the logger only appends.
+- No gameplay values, battle flow, Reward Selection, Reward Apply, Dice Face Replacement behavior, Starter Dice Build, Dice Roll, Run Flow, analytics SDK, cloud upload, networking, user tracking, save system, screenshots, balance changes, or UI changes were added.
+- Unity batchmode compile validation completed successfully for `TASK_PLAYTEST_LOGGING`.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `DiceFaceReplacementState` exists.
 - Runtime replacement state can hold the current runtime Dice reference.

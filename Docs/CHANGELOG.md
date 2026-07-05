@@ -22,6 +22,12 @@
 - Successful replacement consumes the pending Face reward and resets replacement state.
 - `RewardApplyService` clears its pending Face handoff after successful replacement.
 - Runtime Dice replacement is run-scoped only.
+- Implemented `TASK_PLAYTEST_LOGGING`.
+- Added `PlaytestLogger`.
+- Playtest logs are written as append-only text to `Application.persistentDataPath/Playtest/Playtest.log`.
+- Session start, run start, starter Dice build, battle start, dice roll, battle result, reward options, selected reward, reward apply, Face replacement, and run end events are logged.
+- `BattleController` now calls the logger at existing gameplay decision points without changing gameplay behavior.
+- `DiceFaceReplacementService` exposes the removed and inserted Faces for replacement logging.
 
 ### Confirmed
 
@@ -33,6 +39,9 @@
 - Invalid slot selection fails safely without automatic replacement.
 - Duplicate Faces remain legal.
 - No permanent Face unlock, permanent Face Drop, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection, new Dice Tier, Face Upgrade, Face Merge, Face Level, rarity upgrade, additional reward choices, multi-replacement, drag-and-drop UI, node map, or Boss extras were added during M11-003.
+- Playtest logging catches IO failures and never interrupts gameplay.
+- Existing logs are preserved because entries are appended and never automatically overwritten.
+- No analytics SDK, cloud upload, networking, user tracking, device ID, account ID, replay system, save system, screenshots, balance changes, or UI changes were added.
 
 ## 2026-07-03
 

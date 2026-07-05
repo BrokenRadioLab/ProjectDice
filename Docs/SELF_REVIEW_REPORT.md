@@ -2,13 +2,13 @@
 
 Date: 2026-07-06
 
-Task: M11-003_REPLACE_SELECTED_DICE_FACE
+Task: TASK_PLAYTEST_LOGGING
 
 ## Review Result
 
 PASS
 
-Dice Face Replacement now mutates the selected active runtime Dice slot while preserving locked slot and run-scoped rules.
+Developer playtest logging now records major gameplay decisions to an append-only local text file without affecting gameplay.
 
 ## Scope Check
 
@@ -152,6 +152,15 @@ Dice Face Replacement now mutates the selected active runtime Dice slot while pr
 - Duplicate Faces remain legal.
 - Permanent Face Unlock, Permanent Face Drop, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection, New Dice Tier, Face Upgrade, Face Merge, Face Level, rarity upgrade, additional reward choices, multi-replacement, drag-and-drop UI, node map, and Boss extras remain unimplemented.
 - Unity batchmode compile validation completed successfully for M11-003.
+- Implemented `TASK_PLAYTEST_LOGGING`.
+- Added `PlaytestLogger`.
+- Logger writes append-only text to `Application.persistentDataPath/Playtest/Playtest.log`.
+- Logger creates the `Playtest` directory when possible.
+- Logger records session start, run start, starter Dice, battle start, roll, battle result, reward options, selected reward, reward apply, Face replacement, and run end.
+- Logger catches file IO exceptions and continues silently.
+- Logging calls observe existing gameplay data and do not decide gameplay.
+- No analytics SDK, cloud upload, networking, user tracking, device ID, account ID, replay system, save system, screenshots, balance changes, or UI changes were added.
+- Unity batchmode compile validation completed successfully for `TASK_PLAYTEST_LOGGING`.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.
 - RewardSelectionState clears remaining rewards after selection.
