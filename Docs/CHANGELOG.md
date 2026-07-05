@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-07-06
+
+### Added
+
+- Implemented `M11-001_DICE_FACE_REPLACEMENT_RUNTIME_FRAMEWORK`.
+- Added `DiceFaceReplacementState` as the runtime state holder for Dice Face Replacement.
+- Replacement state holds the current runtime Dice reference, pending Face reward, active state, and selected replacement slot.
+- Replacement state exposes active replacement candidate slots for future UI.
+- `BattleController` now begins replacement state after a Face reward is selected and applied through M10 Reward Apply.
+
+### Confirmed
+
+- Locked Slots are excluded from replacement candidates by using `DiceModel.ActiveFaceSlotCount`.
+- No Dice mutation, replacement UI, Face insertion, Face removal, probability update, Dice Deck update, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Upgrade, or Face Merge was added.
+- Existing Battle, Starter Dice Build, Reward Selection, Reward Apply, Dice Roll, Face Resolution, and Dice Deck behavior was preserved.
+
 ## 2026-07-03
 
 ### Changed

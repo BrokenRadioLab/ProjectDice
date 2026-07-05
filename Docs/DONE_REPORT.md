@@ -1,14 +1,14 @@
 # DONE REPORT
 
-Date: 2026-07-03
+Date: 2026-07-06
 
-Selected Milestone: M10_REWARD_SELECTION
+Selected Milestone: M11_DICE_FACE_REPLACEMENT
 
-Completed Work: M10-007_VALIDATE_REWARD_SELECTION
+Completed Work: M11-001_DICE_FACE_REPLACEMENT_RUNTIME_FRAMEWORK
 
 ## Summary
 
-Validated the complete M10 Reward Selection loop from reward generation through reward selection and reward application.
+Implemented the runtime state framework for Dice Face Replacement without modifying Dice or adding replacement UI.
 
 ## Validation Result
 
@@ -55,8 +55,20 @@ PASS
 - M10-005 Reward Selection UI is DONE.
 - M10-006 Reward Apply is DONE.
 - M10-007 Validate Reward Selection is DONE.
-- M11_DICE_FACE_REPLACEMENT is READY and not implemented.
+- M11_DICE_FACE_REPLACEMENT is IN_PROGRESS.
+- M11-001 Dice Face Replacement Runtime Framework is DONE.
+- M11-002 Dice Face Replacement UI is READY.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
+- `DiceFaceReplacementState` exists.
+- Runtime replacement state can hold the current runtime Dice reference.
+- Runtime replacement state can hold the pending Face reward from M10 Reward Apply.
+- Runtime replacement state tracks whether replacement is active.
+- Runtime replacement state tracks the selected replacement slot.
+- Locked Slots are excluded from replacement candidate slots.
+- `BattleController` begins replacement state only after a Face reward is selected and applied.
+- No Dice changes occur during M11-001.
+- No replacement UI, Face insertion, Face removal, Dice probability update, Dice Deck update, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Upgrade, or Face Merge was added.
+- Unity batchmode compile validation completed successfully for M11-001.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.

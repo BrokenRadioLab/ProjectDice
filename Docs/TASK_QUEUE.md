@@ -1,8 +1,8 @@
 # TASK QUEUE
 
-Selected Milestone: M10_REWARD_SELECTION
+Selected Milestone: M11_DICE_FACE_REPLACEMENT
 
-Milestone Status: DONE
+Milestone Status: IN_PROGRESS
 
 Source Milestone: `MILESTONE_PLAN.md`
 
@@ -17,7 +17,7 @@ Director Review:
 - M8_STARTER_FACE_GAMEPLAY is approved and DONE.
 - M9_STARTER_DICE_BUILD is approved and DONE.
 - M10_REWARD_SELECTION is DONE.
-- M11_DICE_FACE_REPLACEMENT is READY.
+- M11_DICE_FACE_REPLACEMENT is IN_PROGRESS.
 - The current M3 sequence is the Project Dice Signature Battle Flow.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` locks Dice progression and Dice combat philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` locks reward categories, Face rarity, Face unlock progression, Dice Tier unlock progression, and meta unlock direction before M10 implementation.
@@ -30,7 +30,7 @@ Director Technical Lock:
 - Dice Deck uses an anchored horizontal layout for expanded slot presentation.
 - Damage Popup and Heal Popup now use a dedicated Combat Feedback Layer under the battle field instead of the Dice Animation Layer.
 - Damage and heal numbers remain target-local combat feedback and must never be shown on the Dice Layer.
-- Full Reward Selection gameplay has not been implemented; only M10-001 runtime framework exists.
+- M10 Reward Selection is DONE and M11 Dice Face Replacement is now the selected implementation milestone.
 
 Recent Presentation Polish:
 
@@ -153,6 +153,18 @@ M10 Reward Selection Locked Direction:
 - Dice Face Replacement remains separate from Reward Selection.
 - Meta progression unlocks choices, not raw Hunter power.
 
+M11 Dice Face Replacement Locked Direction:
+
+- Reward Selection gives the player a new Face.
+- Dice Face Replacement asks the player: "Which Face should I replace?"
+- This is the first true Dice-building decision during a Run.
+- Reward Selection and Dice Face Replacement remain separate systems.
+- Locked Slots are never replacement targets.
+- Current Wood Dice has 4 Active Slots and 2 Locked Slots.
+- Replacement must operate on the current runtime Dice.
+- Duplicate Faces remain legal.
+- No permanent unlocks, Dice Shards, Meta Progression, Shop, Inventory, Collection, Face Upgrade, or Face Merge belongs to M11-001.
+
 ## M9-003: UI Foundation Polish
 
 Status: DONE
@@ -268,7 +280,7 @@ M9 Director Result:
 
 ## M10 Implementation Tasks
 
-Status: IN_PROGRESS
+Status: DONE
 
 M10 Goal:
 
@@ -737,6 +749,62 @@ Completed:
 - Confirmed Treasure stage flow was not invented.
 - Confirmed Dice Face Replacement, Permanent Face Drops, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection UI, Node Map, Treasure stage, New Run Flow, Boss reward extras, and Relic gameplay remain unimplemented.
 - Unity batchmode compile validation passed.
+
+## M11 Implementation Tasks
+
+Status: IN_PROGRESS
+
+M11 Goal:
+
+Validate the core build decision of replacing one current runtime Dice Face with a selected Face reward.
+
+M11 Scope Guardrails:
+
+- Implement Dice Face Replacement only when a detailed M11 task is selected.
+- Keep Reward Selection and Dice Face Replacement as separate systems.
+- Do not modify Dice during M11-001.
+- Do not add permanent Face unlocks, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Upgrade, or Face Merge.
+- Locked Slots must never be selectable as replacement targets.
+
+## M11-001: Dice Face Replacement Runtime Framework
+
+Status: DONE
+
+Goal:
+
+Create the runtime replacement state required after a Face reward is selected, without modifying Dice and without adding UI.
+
+Completed:
+
+- Added `DiceFaceReplacementState`.
+- Replacement state holds the current runtime Dice reference.
+- Replacement state holds the pending Face reward cloned from M10 reward apply handoff.
+- Replacement state tracks whether replacement is active.
+- Replacement state tracks a nullable selected replacement slot through `SelectedFaceSlotIndex`.
+- Replacement state exposes replacement candidate slots for future UI.
+- `BattleController` starts replacement state only after a Face reward is selected and applied.
+- Locked Slots are excluded from replacement candidates by checking `DiceModel.ActiveFaceSlotCount`.
+- Current Wood Dice replacement candidates are limited to active slots 0-3.
+- No Dice mutation occurs.
+- No replacement UI, Face insertion, Face removal, probability update, Dice Deck update, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Upgrade, or Face Merge was added.
+- Existing Battle, Starter Dice Build, Reward Pool, Reward Generator, Reward Selection, Reward Apply, Dice Roll, Face Resolution, and Dice Deck behavior is preserved.
+- Unity batchmode compile validation completed successfully for M11-001.
+
+## M11-002: Dice Face Replacement UI
+
+Status: READY
+
+Goal:
+
+Present the active replacement state and allow the player to choose which active runtime Dice Face slot should be replaced.
+
+Scope:
+
+- Display the pending Face reward.
+- Display only active current runtime Dice slots as replacement targets.
+- Hide or mark Locked Slots as unavailable without allowing selection.
+- Store the selected replacement slot in `DiceFaceReplacementState`.
+- Do not mutate Dice yet unless explicitly promoted by Director.
 
 ## M7 Implementation Tasks
 

@@ -20,6 +20,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private RewardSelectionState rewardSelectionState;
     [SerializeField] private RewardSelectionPresenter rewardSelectionPresenter;
     [SerializeField] private RewardApplyService rewardApplyService;
+    [SerializeField] private DiceFaceReplacementState diceFaceReplacementState;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -239,6 +240,16 @@ public sealed class BattleController : MonoBehaviour
         {
             rewardApplyService = gameObject.AddComponent<RewardApplyService>();
         }
+
+        if (diceFaceReplacementState == null)
+        {
+            diceFaceReplacementState = GetComponent<DiceFaceReplacementState>();
+        }
+
+        if (diceFaceReplacementState == null)
+        {
+            diceFaceReplacementState = gameObject.AddComponent<DiceFaceReplacementState>();
+        }
     }
 
     private IEnumerator PlayStarterDiceBuild()
@@ -321,8 +332,16 @@ public sealed class BattleController : MonoBehaviour
 
         EnsureRewardSelectionSystems();
 
+        bool selectedFaceReward = rewardSelectionState.SelectedReward != null &&
+            rewardSelectionState.SelectedReward.RewardType == RewardType.Face;
+
         if (rewardApplyService != null && rewardApplyService.ApplySelectedReward(rewardSelectionState, combatState))
         {
+            if (selectedFaceReward && diceFaceReplacementState != null && rewardApplyService.HasPendingFaceReward)
+            {
+                diceFaceReplacementState.BeginReplacement(battleDiceState, rewardApplyService.PendingFaceReward);
+            }
+
             hudPresenter?.Refresh();
         }
     }
