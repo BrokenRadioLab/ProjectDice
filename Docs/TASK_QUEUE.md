@@ -825,7 +825,7 @@ Completed:
 
 ## M11-003: Dice Face Replacement Apply
 
-Status: READY
+Status: DONE
 
 Goal:
 
@@ -839,6 +839,46 @@ Scope:
 - Preserve locked slot rules.
 - Refresh runtime state after mutation.
 - Do not add permanent unlocks, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade.
+
+Completed:
+
+- Added `DiceFaceReplacementService`.
+- Replacement service reads the current runtime Dice from `DiceFaceReplacementState`.
+- Replacement service reads the pending Face reward from `DiceFaceReplacementState`.
+- Replacement service reads the selected active slot index from `DiceFaceReplacementState`.
+- Replacement service replaces only the selected active slot.
+- Invalid or locked slot selection fails safely.
+- No fallback replacement or automatic replacement exists.
+- Pending Face reward is consumed after successful replacement.
+- Selected slot index is cleared after successful replacement.
+- Replacement state is inactive after successful replacement.
+- `RewardApplyService` clears its pending Face handoff after successful replacement.
+- `BattleController` executes replacement after the replacement UI stores a selected slot.
+- Replacement modifies only the current runtime Dice.
+- Duplicate Faces remain legal because replacement does not restrict Face identity.
+- Dice Deck can naturally reflect the updated runtime Dice because it reads from `BattleDiceState.CurrentDice`.
+- No permanent Face unlock, permanent Face Drop, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection, new Dice Tier, Face Upgrade, Face Merge, Face Level, rarity upgrade, additional reward choices, multi-replacement, drag-and-drop UI, node map, or Boss extras were added.
+- Unity batchmode compile validation completed successfully for M11-003.
+
+## M11-004: Validate Dice Face Replacement
+
+Status: READY
+
+Goal:
+
+Validate the complete M11 Dice Face Replacement loop from Face reward handoff through runtime Dice mutation.
+
+Validation:
+
+- Confirm Face reward opens replacement state.
+- Confirm replacement UI displays pending Face and current runtime Dice.
+- Confirm locked slots are disabled.
+- Confirm selecting an active slot replaces that slot.
+- Confirm Dice Deck reflects the changed runtime Dice.
+- Confirm the next throw uses the updated Dice pool.
+- Confirm duplicate Faces remain legal.
+- Confirm no permanent data, Reward Pool data, or FaceDefinition source data changes.
+- Confirm Unity compile passes.
 
 ## M7 Implementation Tasks
 

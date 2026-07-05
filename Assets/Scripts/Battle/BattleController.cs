@@ -22,6 +22,7 @@ public sealed class BattleController : MonoBehaviour
     [SerializeField] private RewardApplyService rewardApplyService;
     [SerializeField] private DiceFaceReplacementState diceFaceReplacementState;
     [SerializeField] private DiceFaceReplacementPresenter diceFaceReplacementPresenter;
+    [SerializeField] private DiceFaceReplacementService diceFaceReplacementService;
     [SerializeField] private BattleDiceResultPresenter diceResultPresenter;
     [SerializeField] private Text battleLogText;
     [SerializeField] private RectTransform throwButtonHitArea;
@@ -262,6 +263,16 @@ public sealed class BattleController : MonoBehaviour
         {
             diceFaceReplacementPresenter = gameObject.AddComponent<DiceFaceReplacementPresenter>();
         }
+
+        if (diceFaceReplacementService == null)
+        {
+            diceFaceReplacementService = GetComponent<DiceFaceReplacementService>();
+        }
+
+        if (diceFaceReplacementService == null)
+        {
+            diceFaceReplacementService = gameObject.AddComponent<DiceFaceReplacementService>();
+        }
     }
 
     private IEnumerator PlayStarterDiceBuild()
@@ -373,6 +384,11 @@ public sealed class BattleController : MonoBehaviour
         }
 
         yield return diceFaceReplacementPresenter.Play(diceFaceReplacementState);
+
+        if (diceFaceReplacementState.HasSelectedFaceSlot && diceFaceReplacementService != null)
+        {
+            diceFaceReplacementService.ReplaceSelectedFace(diceFaceReplacementState, rewardApplyService);
+        }
     }
 
     private RewardPool GetRewardPool()

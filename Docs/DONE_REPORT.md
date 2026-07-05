@@ -4,11 +4,11 @@ Date: 2026-07-06
 
 Selected Milestone: M11_DICE_FACE_REPLACEMENT
 
-Completed Work: M11-002_DICE_FACE_REPLACEMENT_UI
+Completed Work: M11-003_REPLACE_SELECTED_DICE_FACE
 
 ## Summary
 
-Implemented the first playable Dice Face Replacement UI without modifying Dice.
+Implemented selected runtime Dice Face replacement for active slots.
 
 ## Validation Result
 
@@ -58,7 +58,8 @@ PASS
 - M11_DICE_FACE_REPLACEMENT is IN_PROGRESS.
 - M11-001 Dice Face Replacement Runtime Framework is DONE.
 - M11-002 Dice Face Replacement UI is DONE.
-- M11-003 Dice Face Replacement Apply is READY.
+- M11-003 Replace Selected Dice Face is DONE.
+- M11-004 Validate Dice Face Replacement is READY.
 - M12_MVP_PLAYTEST_POLISH is PENDING and not implemented.
 - `DiceFaceReplacementState` exists.
 - Runtime replacement state can hold the current runtime Dice reference.
@@ -77,9 +78,22 @@ PASS
 - Current runtime Dice active slots are displayed and selectable.
 - Locked slots are displayed but disabled.
 - Selecting an active slot stores the selected slot index in `DiceFaceReplacementState`.
-- Dice remains unchanged after selection.
-- No Dice mutation, Face insertion, Face removal, Dice probability update, Dice Deck refresh, confirm replacement, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade was added.
+- Dice remains unchanged after selection during M11-002.
+- No Dice mutation, Face insertion, Face removal, Dice probability update, Dice Deck refresh, confirm replacement, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade was added during M11-002.
 - Unity batchmode compile validation completed successfully for M11-002.
+- `DiceFaceReplacementService` exists.
+- Replacement service reads current runtime Dice, pending Face reward, and selected slot index from `DiceFaceReplacementState`.
+- Selected active slot is replaced with the pending Face reward.
+- Locked slots cannot be replaced.
+- Invalid slot selection fails safely.
+- No fallback replacement or automatic replacement exists.
+- Current runtime Dice changes only after replacement execution.
+- Pending Face reward is consumed after successful replacement.
+- Replacement state closes after successful replacement.
+- `RewardApplyService` clears its pending Face handoff after successful replacement.
+- Duplicate Faces remain legal.
+- No permanent data, Reward Pool data, or FaceDefinition source data was changed.
+- Unity batchmode compile validation completed successfully for M11-003.
 - `Docs/Design/PROJECT_CORE_PHILOSOPHY.md` is present and locks Dice Combat Philosophy.
 - `Docs/Design/PROJECT_LONG_TERM_PROGRESSION_DESIGN.md` is present and locks long-term reward/progression design before M10.
 - `TASK_UI_ARCHITECTURE_REFACTOR` is DONE.

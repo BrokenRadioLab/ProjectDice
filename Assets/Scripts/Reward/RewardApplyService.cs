@@ -16,6 +16,11 @@ public sealed class RewardApplyService : MonoBehaviour
     public bool HasPendingFaceReward => pendingFaceReward != null;
     public bool HasPlaceholderRelicReward => placeholderRelicReward != null;
 
+    public void ClearPendingFaceReward()
+    {
+        pendingFaceReward = null;
+    }
+
     public bool ApplySelectedReward(RewardSelectionState rewardSelectionState, BattleCombatState combatState)
     {
         if (rewardSelectionState == null || !rewardSelectionState.HasSelectedReward)

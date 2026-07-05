@@ -2,13 +2,13 @@
 
 Date: 2026-07-06
 
-Task: M11-002_DICE_FACE_REPLACEMENT_UI
+Task: M11-003_REPLACE_SELECTED_DICE_FACE
 
 ## Review Result
 
 PASS
 
-Dice Face Replacement now has a playable replacement UI, with Dice mutation still reserved for M11-003.
+Dice Face Replacement now mutates the selected active runtime Dice slot while preserving locked slot and run-scoped rules.
 
 ## Scope Check
 
@@ -137,10 +137,21 @@ Dice Face Replacement now has a playable replacement UI, with Dice mutation stil
 - Locked Slots are displayed but disabled.
 - Selecting an active slot stores the selected slot index in replacement state.
 - `BattleController` plays replacement UI after Face reward apply and before post-victory progression.
-- Dice mutation remains unimplemented.
+- Dice mutation is now implemented only for the selected active runtime Dice slot.
 - Face insertion, Face removal, Dice probability updates, Dice Deck updates, Permanent Face Unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, New Dice Tier, Face Upgrade, and Face Merge remain unimplemented.
 - Unity batchmode compile validation completed successfully for M11-001.
 - Unity batchmode compile validation completed successfully for M11-002.
+- Implemented `M11-003_REPLACE_SELECTED_DICE_FACE`.
+- Added `DiceFaceReplacementService`.
+- Replacement service mutates only the selected active runtime Dice slot.
+- Locked slots cannot be replaced.
+- Invalid selection fails safely without fallback replacement.
+- Pending Face reward is consumed after successful replacement.
+- Replacement state is reset after successful replacement.
+- `RewardApplyService` clears its pending Face handoff after successful replacement.
+- Duplicate Faces remain legal.
+- Permanent Face Unlock, Permanent Face Drop, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection, New Dice Tier, Face Upgrade, Face Merge, Face Level, rarity upgrade, additional reward choices, multi-replacement, drag-and-drop UI, node map, and Boss extras remain unimplemented.
+- Unity batchmode compile validation completed successfully for M11-003.
 - RewardSelectionState can open a runtime selection with assigned rewards.
 - RewardSelectionState can select exactly one reward.
 - RewardSelectionState clears remaining rewards after selection.

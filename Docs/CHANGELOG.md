@@ -16,6 +16,12 @@
 - Locked Slots are visible but disabled.
 - Selecting an active slot stores the selected slot index in `DiceFaceReplacementState`.
 - `BattleController` now plays the replacement UI after Face reward apply and before post-victory progression.
+- Implemented `M11-003_REPLACE_SELECTED_DICE_FACE`.
+- Added `DiceFaceReplacementService`.
+- Selected active runtime Dice slot is replaced with the pending Face reward.
+- Successful replacement consumes the pending Face reward and resets replacement state.
+- `RewardApplyService` clears its pending Face handoff after successful replacement.
+- Runtime Dice replacement is run-scoped only.
 
 ### Confirmed
 
@@ -23,6 +29,10 @@
 - No Dice mutation, replacement UI, Face insertion, Face removal, probability update, Dice Deck update, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Upgrade, or Face Merge was added during M11-001.
 - Existing Battle, Starter Dice Build, Reward Selection, Reward Apply, Dice Roll, Face Resolution, and Dice Deck behavior was preserved.
 - No Dice mutation, Face insertion, Face removal, Dice probability update, Dice Deck refresh, confirm replacement, permanent Face unlock, Dice Shards, Meta Progression, Shop, Inventory, Collection, new Dice Tier, Face Merge, or Face Upgrade was added during M11-002.
+- Locked Slots cannot be replaced.
+- Invalid slot selection fails safely without automatic replacement.
+- Duplicate Faces remain legal.
+- No permanent Face unlock, permanent Face Drop, Dice Shards, Meta Progression, Shop, Gold, Inventory, Collection, new Dice Tier, Face Upgrade, Face Merge, Face Level, rarity upgrade, additional reward choices, multi-replacement, drag-and-drop UI, node map, or Boss extras were added during M11-003.
 
 ## 2026-07-03
 
